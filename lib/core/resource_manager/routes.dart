@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inturn/core/models/vacancey_model.dart';
 import 'package:inturn/core/widgets/vacancy_details.dart';
 import 'package:inturn/features/auth/presentation/add_info_flow/acdemic_info.dart';
+import 'package:inturn/features/auth/presentation/add_info_flow/exprince_info.dart';
 import 'package:inturn/features/auth/presentation/add_info_flow/personal_info.dart';
 import 'package:inturn/features/auth/presentation/forget%20password/change_password.dart';
 import 'package:inturn/features/auth/presentation/forget%20password/forget_password.dart';
@@ -69,7 +70,12 @@ class RouteGenerator {
             pageBuilder: (context, animation, secondaryAnimation) =>
                 const AcademicInfo(),
             transitionsBuilder: customAnimate);
-
+        case Routes.experienceInfo:
+        return PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const ExperienceInfo(),
+            transitionsBuilder: customAnimate);
+////////////////////////////////////
       case Routes.forgetPassword:
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
