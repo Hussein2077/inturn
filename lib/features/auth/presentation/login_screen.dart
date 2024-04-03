@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:inturn/core/resource_manager/asset_path.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/routes.dart';
@@ -21,6 +22,7 @@ import 'package:inturn/features/auth/presentation/controller/login_bloc/login_wi
 import 'package:inturn/features/auth/presentation/controller/sign_in_with_platform_bloc/sign_in_with_platform_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/sign_in_with_platform_bloc/sign_in_with_platform_event.dart';
 import 'package:inturn/features/auth/presentation/controller/sign_in_with_platform_bloc/sign_in_with_platform_state.dart';
+import 'package:inturn/features/auth/presentation/widgets/sign_in_button.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_event.dart';
 
@@ -100,210 +102,121 @@ class _LoginScreenState extends State<LoginScreen> {
                 errorSnackBar(context, state.errorMessage);
               } else if (state is SignWithPlatFormLoadingState) {}
             },
-            child: Column(
-              children: [
-                SizedBox(
-                  height: AppSize.screenHeight! * .3,
-                  child: Stack(
-                    children: [
-                      Align(
-                          alignment: Alignment.topRight,
-                          child: Image.asset(AssetPath.loginBackground)),
-                      Align(
-                          alignment: Alignment.center,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CustomText(
-                                text: 'INTRN',
-                                fontSize: AppSize.defaultSize! * 3.5,
-                                color: AppColors.primaryColor,
-                                fontWeight: FontWeight.w700,
-                              )
-                                  .animate()
-                                  .fadeIn() // uses `Animate.defaultDuration`
-                                  .scale() // inherits duration from fadeIn
-                                  .move(delay: 300.ms, duration: 600.ms),
-                              // Image.asset(
-                              //   AssetPath.logo,
-                              //   scale: 2,
-                              // ),
-                              Text(
-                                StringManager.welcomeBack.tr(),
-                                style: TextStyle(
-                                  color: AppColors.blackColor,
-                                  fontSize: AppSize.defaultSize! * 1.8,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                              Text(
-                                StringManager.youHaveBeenMissed.tr(),
-                                style: TextStyle(
-                                  color: AppColors.blackColor,
-                                  fontSize: AppSize.defaultSize! * 1.2,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ],
-                          )),
-                      // Align(
-                      //     alignment: Alignment.centerLeft,
-                      //     child: TextButton(
-                      //         onPressed: () {
-                      //           if (context.locale == const Locale('en')) {
-                      //             context.setLocale(const Locale('ar'));
-                      //           } else {
-                      //             context.setLocale(const Locale('en'));
-                      //           }
-                      //           setState(() {});
-                      //         },
-                      //         child: Text(
-                      //           context.locale == const Locale('en')
-                      //               ? 'عربي'
-                      //               : 'English',
-                      //           style: TextStyle(
-                      //               fontSize: AppSize.defaultSize! * 1.2,
-                      //               fontWeight: FontWeight.w600),
-                      //         )))
-                    ],
+            child: Padding(
+              padding: EdgeInsets.all(AppSize.defaultSize! * 1.5),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: AppSize.defaultSize! * 8,
                   ),
-                ),
-                CustomTextField(
-                  formKey: _formKey,
-                  labelText: StringManager.email.tr(),
-                  controller: emailController,
-                  keyboardType: TextInputType.emailAddress,
-                ),
-                CustomTextField(
-                  labelText: StringManager.password.tr(),
-                  obscureText: isVisible,
-                  controller: passwordController,
-                  maxLines: 1,
-                  suffixIcon: InkWell(
-                    onTap: () {
-                      setState(() {
-                        isVisible = !isVisible;
-                      });
-                    },
-                    child: Icon(
-                      isVisible ? Icons.visibility_off : Icons.visibility,
-                      color: Colors.grey,
-                    ),
+                  SvgPicture.asset(AssetPath.logo)
+                      .animate()
+                      .fadeIn() // uses `Animate.defaultDuration`
+                      .scale() // inherits duration from fadeIn
+                      .move(delay: 300.ms, duration: 600.ms),
+                  SizedBox(
+                    height: AppSize.defaultSize! * 2,
                   ),
-                ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, Routes.forgetPassword);
-                    },
-                    child: Text(
-                      StringManager.forgetYourPassword.tr(),
-                      style: TextStyle(
-                        color: AppColors.forgetPasswordColor,
-                        fontSize: AppSize.defaultSize! * 1.2,
-                      ),
-                    ),
-                  ),
-                ),
-                MainButton(
-                  text: StringManager.login.tr(),
-                  onTap: () {
-                    if (validation()) {
-                      BlocProvider.of<LoginWithEmailAndPasswordBloc>(context)
-                          .add(LoginWithEmailAndPasswordEvent(
-                        email: emailController.text,
-                        password: passwordController.text,
-                      ));
-                    } else {
-                      errorSnackBar(
-                          context, StringManager.pleaseCompleteYourData.tr());
-                    }
-                  },
-                ),
-                SizedBox(
-                  height: AppSize.defaultSize! * 4,
-                ),
-                Text(
-                  StringManager.or.tr(),
-                  style: TextStyle(
+                  Text(
+                    StringManager.letBeginTheJourney.tr(),
+                    style: TextStyle(
                       color: AppColors.blackColor,
-                      fontSize: AppSize.defaultSize! * 1.2,
-                      fontWeight: FontWeight.w700),
-                ),
-                SizedBox(
-                  height: AppSize.defaultSize! * 4,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Image.asset(AssetPath.google),
-                    // SizedBox(
-                    //   width: AppSize.defaultSize! * 2,
-                    // ),
-                    Image.asset(
-                      AssetPath.facebook,
-                      width: AppSize.defaultSize! * 8,
-                      height: AppSize.defaultSize! * 8,
+                      fontSize: AppSize.defaultSize! * 1.8,
+                      fontWeight: FontWeight.w700,
                     ),
-                    // SizedBox(
-                    //   width: AppSize.defaultSize! * 2,
-                    // ),
-                    Image.asset(
-                      AssetPath.apple,
-                      width: AppSize.defaultSize! * 8,
-                      height: AppSize.defaultSize! * 8,
-                    ),
-                    // SizedBox(
-                    //   width: AppSize.defaultSize! * 2,
-                    // ),
-                    InkWell(
-                        onTap: () {
-                          BlocProvider.of<SignInWithPlatformBloc>(context)
-                              .add(SignGoogleEvent());
-                        },
-                        child: Image.asset(
-                          AssetPath.google,
-                          width: AppSize.defaultSize! * 8,
-                          height: AppSize.defaultSize! * 8,
-                        )),
-                  ],
-                ),
-                SizedBox(
-                  height: AppSize.screenHeight! * .1,
-                ),
-                Container(
-                  color: AppColors.containerColor,
-                  height: AppSize.defaultSize! * 4.8,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        StringManager.doNotHaveAccount.tr(),
-                        style: TextStyle(
-                            color: AppColors.greyColor,
-                            fontSize: AppSize.defaultSize! * 1.4,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            Routes.signUp,
-                          );
-                        },
-                        child: Text(
-                          StringManager.signUp.tr(),
-                          style: TextStyle(
-                              color: AppColors.primaryColor,
-                              fontSize: AppSize.defaultSize! * 1.5,
-                              fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                    ],
                   ),
-                ),
-              ],
+                  SizedBox(
+                    height: AppSize.defaultSize! * 3,
+                  ),
+                  CustomSignInButton(
+                    text: StringManager.continueWithGoogle.tr(),
+                    logo: SvgPicture.asset(AssetPath.google),
+                    onPressed: () {
+                      Navigator.pushNamed(context, Routes.personalInfo);
+                      // BlocProvider.of<SignInWithPlatformBloc>(context)
+                      //     .add(SignInWithGoogleEvent());
+                    },
+                  ),
+                  SizedBox(height: AppSize.defaultSize!),
+                  CustomSignInButton(
+                    text: StringManager.continueWithFacebook.tr(),
+                    logo: SvgPicture.asset(AssetPath.facebook),
+                    onPressed: () {     Navigator.pushNamed(context, Routes.personalInfo);
+                      // BlocProvider.of<SignInWithPlatformBloc>(context)
+                      //     .add(SignInWithFacebookEvent());
+                    },
+                  ),
+                  SizedBox(height: AppSize.defaultSize!),
+                  CustomSignInButton(
+                    text: StringManager.continueWithApple.tr(),
+                    logo: SvgPicture.asset(AssetPath.apple),
+                    onPressed: () {     Navigator.pushNamed(context, Routes.personalInfo);
+                      // BlocProvider.of<SignInWithPlatformBloc>(context)
+                      //     .add(SignInWithFacebookEvent());
+                    },
+                  ),
+                  SizedBox(height: AppSize.defaultSize! * 4),
+                  CustomTextField(
+                    formKey: _formKey,
+                    labelText: StringManager.email.tr(),
+                    controller: emailController,
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                  SizedBox(height: AppSize.defaultSize! * 1.3),
+                  CustomTextField(
+                    labelText: StringManager.password.tr(),
+                    obscureText: isVisible,
+                    controller: passwordController,
+                    maxLines: 1,
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isVisible = !isVisible;
+                        });
+                      },
+                      child: Icon(
+                        isVisible ? Icons.visibility_off : Icons.visibility,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, Routes.forgetPassword);
+                      },
+                      child: CustomText(
+                        text: StringManager.forgetYourPassword.tr(),
+                        color: AppColors.primaryColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: AppSize.defaultSize! * 1.4,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: AppSize.defaultSize! * 2,
+                  ),
+                  MainButton(
+                    text: StringManager.login.tr(),
+                    onTap: () {
+                      if (validation()) {
+                        BlocProvider.of<LoginWithEmailAndPasswordBloc>(context)
+                            .add(LoginWithEmailAndPasswordEvent(
+                          email: emailController.text,
+                          password: passwordController.text,
+                        ));
+                      } else {
+                        errorSnackBar(
+                            context, StringManager.pleaseCompleteYourData.tr());
+                      }
+                    },
+                  ),
+                  SizedBox(
+                    height: AppSize.defaultSize! * 4,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

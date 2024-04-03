@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:inturn/core/models/vacancey_model.dart';
 import 'package:inturn/core/widgets/vacancy_details.dart';
+import 'package:inturn/features/auth/presentation/add_info_flow/acdemic_info.dart';
+import 'package:inturn/features/auth/presentation/add_info_flow/personal_info.dart';
 import 'package:inturn/features/auth/presentation/forget%20password/change_password.dart';
 import 'package:inturn/features/auth/presentation/forget%20password/forget_password.dart';
 import 'package:inturn/features/auth/presentation/forget%20password/send_otp_code.dart';
@@ -20,6 +22,16 @@ class Routes {
   static const String forgetPassword = "/forgetPassword";
   static const String sendOTPCode = "/sendOTPCode";
   static const String changePassword = "/changePassword";
+  static const String personalInfo = "/personalInfo";
+  static const String academicInfo = "/academicInfo";
+  static const String experienceInfo = "/experienceInfo";
+  static const String fieldInfo = "/fieldInfo";
+  static const String locationInfo = "/locationInfo";
+  static const String skillsInfo = "/skillsInfo";
+  static const String skills = "/skills";
+
+////////////////////////////////
+
   static const String profile = "/profile";
   static const String myApplications = "/myApplications";
   static const String contactUs = "/contactUs";
@@ -47,6 +59,17 @@ class RouteGenerator {
             pageBuilder: (context, animation, secondaryAnimation) =>
                 const SignUpScreen(),
             transitionsBuilder: customAnimate);
+      case Routes.personalInfo:
+        return PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const PersonalInfo(),
+            transitionsBuilder: customAnimate);
+      case Routes.academicInfo:
+        return PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const AcademicInfo(),
+            transitionsBuilder: customAnimate);
+
       case Routes.forgetPassword:
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
@@ -82,7 +105,7 @@ class RouteGenerator {
             pageBuilder: (context, animation, secondaryAnimation) =>
                 const BlogComplete(),
             transitionsBuilder: customAnimate);
-        case Routes.cvBuilderScreen:
+      case Routes.cvBuilderScreen:
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
                 const CVBuilderScreen(),

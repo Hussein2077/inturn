@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/utils/app_size.dart';
+import 'package:inturn/core/widgets/cutom_text.dart';
 
 class MainButton extends StatelessWidget {
-  const MainButton(
-      {super.key,
-      this.onTap,
-      this.color,
-      this.textColor,
-      required this.text,
-      this.height,
-      this.width});
+  const MainButton({
+    super.key,
+    this.onTap,
+    this.color,
+    this.textColor,
+    required this.text,
+    this.height,
+    this.width,
+  });
 
   final void Function()? onTap;
   final Color? color;
@@ -21,23 +23,21 @@ class MainButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        height: height ?? AppSize.defaultSize! * 4,
-        width: width ?? AppSize.screenWidth! * .9,
-        decoration: BoxDecoration(
-          color: color ?? AppColors.primaryColor,
-          borderRadius: BorderRadius.circular(AppSize.defaultSize!),
-        ),
-        child: Center(
-          child: Text(
-            text,
-            style: TextStyle(
-              color: textColor ?? Colors.white,
-              fontSize: AppSize.defaultSize! * 1.5,
-            ),
+    return SizedBox(
+      height: height ?? AppSize.defaultSize! * 4.5,
+      width: width ?? AppSize.screenWidth! * .9,
+      child: ElevatedButton(
+        onPressed: onTap,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: color ?? AppColors.primaryColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppSize.defaultSize!),
           ),
+        ),
+        child: CustomText(
+          text: text,
+          color: textColor ?? AppColors.secondaryColor,
+          fontSize: AppSize.defaultSize! * 1.5,
         ),
       ),
     );

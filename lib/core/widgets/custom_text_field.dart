@@ -43,8 +43,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: widget.height ?? AppSize.defaultSize! * 6,
-      width: widget.width ?? AppSize.screenWidth! - (AppSize.defaultSize! * 4),
+      height: widget.height ?? AppSize.defaultSize! * 4.5,
+      width: widget.width ??double.maxFinite,
       child: Form(
         key: widget.formKey,
         child: TextFormField(
@@ -67,22 +67,26 @@ class _CustomTextFieldState extends State<CustomTextField> {
             suffixIcon: widget.suffixIcon,
             contentPadding: EdgeInsets.all(AppSize.defaultSize! * .8),
             labelStyle: TextStyle(
-              color: AppColors.primaryColor,
-              fontSize: AppSize.screenHeight! * .02,
+              color: AppColors.greyColor,
+              fontSize: AppSize.screenHeight! * .015,
             ),
             prefixIcon: widget.prefixIcon,
             enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(AppSize.defaultSize! * 1.5)),
               borderSide:
                   BorderSide(color: AppColors.borderColor.withOpacity(.4)),
             ),
             border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(AppSize.defaultSize! * 1.5)),
               borderSide:
                   BorderSide(color: AppColors.borderColor.withOpacity(.4)),
             ),
             focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(AppSize.defaultSize! * 1.5)),
                 borderSide:
                     BorderSide(color: AppColors.primaryColor.withOpacity(.4))),
             disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(AppSize.defaultSize! * 1.5)),
                 borderSide:
                     BorderSide(color: AppColors.borderColor.withOpacity(.4))),
           ),

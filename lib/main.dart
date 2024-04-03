@@ -82,9 +82,9 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => getIt<OptionsBloc>()
-            ..add(const GetMajorEvent())
-            ..add(const GetUniversityEvent())
-            ..add(const GetCitiesEvent()),
+            // ..add(const GetMajorEvent())
+            // ..add(const GetUniversityEvent())
+            // ..add(const GetCitiesEvent()),
         ),
       ],
       child: MaterialApp(

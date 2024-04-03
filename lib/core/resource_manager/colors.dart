@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const Color primaryColor = Color.fromRGBO(59, 35, 93, 1);
+  static const Color primaryColor = Color.fromRGBO(20, 38, 68, 1);
+  static const Color secondaryColor = Color.fromRGBO(227, 255, 102, 1);
+
+
   static const Color backGroundColor = Color(0xFFFFFFFF);
   static const Color loginBackGroundColor = Color(0xFFFDFDFD);
   static const Color tailingWidgetColor = Color(0xFFF0F2F9);
