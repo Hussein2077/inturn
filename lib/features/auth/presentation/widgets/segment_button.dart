@@ -3,57 +3,67 @@ import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/widgets/cutom_text.dart';
 
-class SingleChoice extends StatefulWidget {
-  final List<String> choices;
+class CustomSegmentedButton extends StatefulWidget {
+  final List<String> segments;
+  final Function(int) onValueChanged;
+  final int initialSelectedIndex;
 
-  const SingleChoice({
+  const CustomSegmentedButton({
     super.key,
-    required this.choices,
+    required this.segments,
+    required this.onValueChanged,
+    this.initialSelectedIndex = 0,
   });
 
   @override
-  State<SingleChoice> createState() => _SingleChoiceState();
+  CustomSegmentedButtonState createState() => CustomSegmentedButtonState();
 }
 
-class _SingleChoiceState extends State<SingleChoice> {
-  late String selectedChoice;
+class CustomSegmentedButtonState extends State<CustomSegmentedButton> {
+  int _selectedIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    selectedChoice = widget.choices.first;
+    _selectedIndex = widget.initialSelectedIndex;
   }
 
   @override
   Widget build(BuildContext context) {
-    return SegmentedButton<String>(
-      segments: widget.choices
-          .map((choice) => ButtonSegment<String>(
-        icon: const SizedBox(),
-        value: choice,
-        label: SizedBox(
-            width: AppSize.defaultSize!*6 ,
-            child: CustomText(text: choice,
-            fontWeight: FontWeight.w700,
-              color: AppColors.black,
-              fontSize: AppSize.defaultSize!*1.6,
-            )),
-        // You can add icons here if needed
-      ))
-          .toList(),
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(AppColors.secondaryColor),
-        padding: MaterialStateProperty.all(
-          EdgeInsets.all(AppSize.defaultSize! * 1.5),
-        )
+    return Wrap(
+      alignment: WrapAlignment.start,
+      direction: Axis.horizontal,
+      spacing: AppSize.defaultSize! * 1.5,
+      children: List.generate(
+        widget.segments.length,
+        (index) => GestureDetector(
+          onTap: () {
+            setState(() {
+              _selectedIndex = index;
+              widget.onValueChanged(_selectedIndex);
+            });
+          },
+          child: Container(
+            margin: EdgeInsets.all(AppSize.defaultSize! * 0.5),
+            height: AppSize.defaultSize! * 4.5,
+            width: AppSize.defaultSize! * 16,
+            decoration: BoxDecoration(
+              color: _selectedIndex == index
+                  ? AppColors.secondaryColor
+                  : Colors.white,
+              borderRadius: BorderRadius.circular(AppSize.defaultSize! * 1.5),
+              border: Border.all(color: AppColors.secondaryColor, width: 2),
+            ),
+            child: Center(
+              child: CustomText(
+                text: widget.segments[index],
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
       ),
-      showSelectedIcon: false,
-      selected: {selectedChoice},
-      onSelectionChanged: (Set<String> newSelection) {
-        setState(() {
-          selectedChoice = newSelection.first;
-        });
-      },
     );
   }
 }

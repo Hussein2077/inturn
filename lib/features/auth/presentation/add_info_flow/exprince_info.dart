@@ -27,6 +27,7 @@ class _ExperienceInfoState extends State<ExperienceInfo> {
       _currentSegment = newValue;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,8 +40,31 @@ class _ExperienceInfoState extends State<ExperienceInfo> {
               text: StringManager.studentOrGraduated.tr(),
               color: AppColors.thirdColor,
             ),
-                SingleChoice(choices: ['hussein','ali'],),
-                MainButton(
+            SizedBox(
+              height: AppSize.defaultSize! * 1.6,
+            ),
+            CustomSegmentedButton(
+              segments: ['Student', 'Graduated'],
+              onValueChanged: (index) => _onValueChanged(index),
+            ),
+            SizedBox(
+              height: AppSize.defaultSize! * 2.4,
+            ),
+            CustomText(
+              text: StringManager.jobLevel.tr(),
+              color: AppColors.thirdColor,
+            ),
+            SizedBox(
+              height: AppSize.defaultSize! * 1.6,
+            ),
+            CustomSegmentedButton(
+              segments: ['Internship', 'Entry Level'],
+              onValueChanged: (index) => _onValueChanged(index),
+            ),
+            SizedBox(
+              height: AppSize.defaultSize! * 4,
+            ),
+            MainButton(
               text: StringManager.next.tr(),
               onTap: () {
                 if (true) {
