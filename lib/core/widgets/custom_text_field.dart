@@ -14,9 +14,10 @@ class CustomTextField extends StatefulWidget {
   final bool readOnly;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
+  final Color? fillColor;
   final void Function()? onTap;
   final TextStyle? hintStyle;
-  final  GlobalKey<FormState>? formKey ;
+  final GlobalKey<FormState>? formKey;
 
   const CustomTextField({
     Key? key,
@@ -32,7 +33,9 @@ class CustomTextField extends StatefulWidget {
     this.hintStyle,
     this.width,
     this.height,
-    this.maxLines, this.formKey,
+    this.maxLines,
+    this.formKey,
+    this.fillColor,
   }) : super(key: key);
 
   @override
@@ -44,24 +47,23 @@ class _CustomTextFieldState extends State<CustomTextField> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: widget.height ?? AppSize.defaultSize! * 4.5,
-      width: widget.width ??double.maxFinite,
+      width: widget.width ?? double.maxFinite,
       child: Form(
         key: widget.formKey,
         child: TextFormField(
-
           onTap: widget.onTap,
           maxLines: widget.maxLines,
           readOnly: widget.readOnly,
           validator: (value) {
             if (value == null || value.isEmpty) {
-
               return 'Please complete this field';
             }
             return null;
           },
           decoration: InputDecoration(
             labelText: widget.labelText,
-
+            fillColor: widget.fillColor,
+            filled: widget.fillColor != null ? true : false,
             hintText: widget.hintText,
             hintStyle: widget.hintStyle,
             suffixIcon: widget.suffixIcon,
@@ -72,21 +74,25 @@ class _CustomTextFieldState extends State<CustomTextField> {
             ),
             prefixIcon: widget.prefixIcon,
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(AppSize.defaultSize! * 1.5)),
+              borderRadius:
+                  BorderRadius.all(Radius.circular(AppSize.defaultSize! * 1.5)),
               borderSide:
                   BorderSide(color: AppColors.borderColor.withOpacity(.4)),
             ),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(AppSize.defaultSize! * 1.5)),
+              borderRadius:
+                  BorderRadius.all(Radius.circular(AppSize.defaultSize! * 1.5)),
               borderSide:
                   BorderSide(color: AppColors.borderColor.withOpacity(.4)),
             ),
             focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(AppSize.defaultSize! * 1.5)),
+                borderRadius: BorderRadius.all(
+                    Radius.circular(AppSize.defaultSize! * 1.5)),
                 borderSide:
                     BorderSide(color: AppColors.primaryColor.withOpacity(.4))),
             disabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(AppSize.defaultSize! * 1.5)),
+                borderRadius: BorderRadius.all(
+                    Radius.circular(AppSize.defaultSize! * 1.5)),
                 borderSide:
                     BorderSide(color: AppColors.borderColor.withOpacity(.4))),
           ),

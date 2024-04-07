@@ -12,6 +12,8 @@ class MainButton extends StatelessWidget {
     required this.text,
     this.height,
     this.width,
+    this.padding,
+    this.fontSize,
   });
 
   final void Function()? onTap;
@@ -20,24 +22,29 @@ class MainButton extends StatelessWidget {
   final String text;
   final double? height;
   final double? width;
+  final double? padding;
+  final double? fontSize;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: height ?? AppSize.defaultSize! * 4.5,
-      width: width ?? AppSize.screenWidth! * .9,
-      child: ElevatedButton(
-        onPressed: onTap,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: color ?? AppColors.primaryColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppSize.defaultSize!),
+    return Padding(
+      padding:   EdgeInsets.all(padding??0),
+      child: SizedBox(
+        height: height ?? AppSize.defaultSize! * 4.5,
+        width: width ?? AppSize.screenWidth! * .9,
+        child: ElevatedButton(
+          onPressed: onTap,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: color ?? AppColors.primaryColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(AppSize.defaultSize!),
+            ),
           ),
-        ),
-        child: CustomText(
-          text: text,
-          color: textColor ?? AppColors.secondaryColor,
-          fontSize: AppSize.defaultSize! * 1.5,
+          child: CustomText(
+            text: text,
+            color: textColor ?? AppColors.secondaryColor,
+            fontSize: fontSize??AppSize.defaultSize! * 1.5,
+          ),
         ),
       ),
     );

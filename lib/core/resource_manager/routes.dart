@@ -3,14 +3,15 @@ import 'package:inturn/core/models/vacancey_model.dart';
 import 'package:inturn/core/widgets/vacancy_details.dart';
 import 'package:inturn/features/auth/presentation/add_info_flow/acdemic_info.dart';
 import 'package:inturn/features/auth/presentation/add_info_flow/exprince_info.dart';
+import 'package:inturn/features/auth/presentation/add_info_flow/fields_of_work.dart';
+import 'package:inturn/features/auth/presentation/add_info_flow/location_info.dart';
 import 'package:inturn/features/auth/presentation/add_info_flow/personal_info.dart';
+import 'package:inturn/features/auth/presentation/add_info_flow/skills.dart';
 import 'package:inturn/features/auth/presentation/forget%20password/change_password.dart';
 import 'package:inturn/features/auth/presentation/forget%20password/forget_password.dart';
 import 'package:inturn/features/auth/presentation/forget%20password/send_otp_code.dart';
 import 'package:inturn/features/auth/presentation/login_screen.dart';
 import 'package:inturn/features/auth/presentation/signup/sign_up.dart';
-import 'package:inturn/features/home/presentation/componants/blog_details/blog_complete.dart';
-import 'package:inturn/features/home/presentation/componants/cv%20builder/cv_builder.dart';
 import 'package:inturn/features/main_screen.dart';
 import 'package:inturn/features/profile/presentation/componants/contact_us/contact_us.dart';
 import 'package:inturn/features/profile/presentation/componants/my_applications.dart';
@@ -30,6 +31,7 @@ class Routes {
   static const String locationInfo = "/locationInfo";
   static const String skillsInfo = "/skillsInfo";
   static const String skills = "/skills";
+  static const String thanks = "/thanks";
 
 ////////////////////////////////
 
@@ -74,6 +76,18 @@ class RouteGenerator {
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
                 const ExperienceInfo(),
+            transitionsBuilder: customAnimate);  case Routes.locationInfo:
+        return PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const LocationInfo(),
+            transitionsBuilder: customAnimate); case Routes.fieldInfo:
+        return PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const FieldsInfo(),
+            transitionsBuilder: customAnimate); case Routes.skillsInfo:
+        return PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const SkillInfo(),
             transitionsBuilder: customAnimate);
 ////////////////////////////////////
       case Routes.forgetPassword:
@@ -105,16 +119,6 @@ class RouteGenerator {
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
                 const ContactUS(),
-            transitionsBuilder: customAnimate);
-      case Routes.blogComplete:
-        return PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) =>
-                const BlogComplete(),
-            transitionsBuilder: customAnimate);
-      case Routes.cvBuilderScreen:
-        return PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) =>
-                const CVBuilderScreen(),
             transitionsBuilder: customAnimate);
       case Routes.vacancyDetails:
         VacancyModel vacancyModel = settings.arguments as VacancyModel;

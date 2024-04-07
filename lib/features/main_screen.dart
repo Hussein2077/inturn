@@ -1,13 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/widgets/coming_soon.dart';
-import 'package:inturn/features/home/presentation/componants/blog_details/blog_details.dart';
-import 'package:inturn/features/home/presentation/componants/drawer/drawer.dart';
 import 'package:inturn/features/home/presentation/home_screen.dart';
 import 'package:inturn/features/internships/presentation/internship_screen.dart';
 import 'package:inturn/features/jobs/presentation/job_screen.dart';
@@ -27,20 +26,10 @@ class _MainScreenState extends State<MainScreen> {
 
   List<Widget> _buildScreens() {
     return [
-      HomeScreen(
-        onPressedJob: () {
-          MainScreen.mainIndex = 2;
-          Navigator.pushNamed(context, Routes.main);
-        },
-        onPressedIntern: () {
-          MainScreen.mainIndex = 1;
-          Navigator.pushNamed(context, Routes.main);
-        },
-      ),
-      InternshipScreen(),
-      JobsScreen(),
-      BlogDetails(),
-      ComingSoon(),
+      HomeScreen(),
+      SizedBox(),
+      SizedBox(),
+      SizedBox(),
 
     ];
   }
@@ -50,48 +39,47 @@ class _MainScreenState extends State<MainScreen> {
       PersistentBottomNavBarItem(
         icon: Icon(
           Icons.home_outlined,
-          size: AppSize.defaultSize!*3,
+          size: AppSize.defaultSize!*2.7,
         ),
         title: StringManager.home.tr(),
-        activeColorPrimary: AppColors.primaryColor,
-        inactiveColorPrimary: CupertinoColors.systemGrey,
-      ),
-      PersistentBottomNavBarItem(
-        icon:   Icon(
-          Icons.school_outlined,
-          size: AppSize.defaultSize!*3,
-        ),
-        title: StringManager.internships.tr(),
-        activeColorPrimary: AppColors.primaryColor,
-        inactiveColorPrimary: CupertinoColors.systemGrey,
-      ),
-      PersistentBottomNavBarItem(
-        icon:   Icon(
-          Icons.shopping_bag,
-          size: AppSize.defaultSize!*3,
-        ),
-        title: StringManager.jobs.tr(),
-        activeColorPrimary: AppColors.primaryColor,
-        inactiveColorPrimary: CupertinoColors.systemGrey,
+        textStyle:  TextStyle(fontSize: AppSize.defaultSize!*1.2),
+        activeColorPrimary: AppColors.secondaryColor,
+        inactiveColorPrimary: CupertinoColors.white,
       ),
       PersistentBottomNavBarItem(
         icon:   Icon(
           Icons.sticky_note_2_outlined,
-          size: AppSize.defaultSize!*3,
+          size: AppSize.defaultSize!*2.7,
         ),
-        title: StringManager.blog.tr(),
-        activeColorPrimary: AppColors.primaryColor,
-        inactiveColorPrimary: CupertinoColors.systemGrey,
+        title: StringManager.applications.tr(),
+        textStyle:  TextStyle(fontSize: AppSize.defaultSize!*1.2),
+
+        activeColorPrimary: AppColors.secondaryColor,
+        inactiveColorPrimary: CupertinoColors.white,
       ),
       PersistentBottomNavBarItem(
         icon:   Icon(
-          Icons.collections_bookmark_outlined,
-          size: AppSize.defaultSize!*3,
+          Icons.warehouse_outlined,
+          size: AppSize.defaultSize!*2.7,
         ),
-        title: StringManager.resources.tr(),
-        activeColorPrimary: AppColors.primaryColor,
-        inactiveColorPrimary: CupertinoColors.systemGrey,
+        title: StringManager.companies.tr(),
+        activeColorPrimary: AppColors.secondaryColor,
+        inactiveColorPrimary: CupertinoColors.white,
+        textStyle:  TextStyle(fontSize: AppSize.defaultSize!*1.2),
+
       ),
+      PersistentBottomNavBarItem(
+        icon:   Icon(
+          Icons.person_outline,
+          size: AppSize.defaultSize!*2.7,
+        ),
+        title: StringManager.profile.tr(),
+        textStyle:  TextStyle(fontSize: AppSize.defaultSize!*1.2),
+
+        activeColorPrimary: AppColors.secondaryColor,
+        inactiveColorPrimary: CupertinoColors.white,
+      ),
+
 
     ];
   }
@@ -106,7 +94,6 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     AppSize().init(context);
     return Scaffold(
-      drawer: const HomeDrawer(),
       drawerScrimColor: AppColors.greyColor,
       body: PersistentTabView(
         context,
@@ -115,7 +102,7 @@ class _MainScreenState extends State<MainScreen> {
         items: _navBarsItems(),
         confineInSafeArea: true,
 
-        backgroundColor: Colors.white,
+        backgroundColor:AppColors.homeColor,
         // Default is Colors.white.
         handleAndroidBackButtonPress: true,
         // Default is true.
@@ -127,7 +114,7 @@ class _MainScreenState extends State<MainScreen> {
         // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
         decoration: NavBarDecoration(
           borderRadius: BorderRadius.circular(AppSize.defaultSize!),
-          colorBehindNavBar: Colors.white,
+          colorBehindNavBar:AppColors.homeColor,
         ),
         popAllScreensOnTapOfSelectedTab: true,
         popActionScreens: PopActionScreensType.all,

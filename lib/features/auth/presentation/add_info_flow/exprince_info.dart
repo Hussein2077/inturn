@@ -68,7 +68,7 @@ class _ExperienceInfoState extends State<ExperienceInfo> {
               text: StringManager.next.tr(),
               onTap: () {
                 if (true) {
-                  Navigator.pushNamed(context, Routes.experienceInfo);
+                  Navigator.pushNamed(context, Routes.locationInfo);
                 } else {
                   errorSnackBar(
                       context, StringManager.pleaseCompleteYourData.tr());

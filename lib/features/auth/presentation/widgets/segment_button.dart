@@ -7,11 +7,12 @@ class CustomSegmentedButton extends StatefulWidget {
   final List<String> segments;
   final Function(int) onValueChanged;
   final int initialSelectedIndex;
-
+final double? width;
   const CustomSegmentedButton({
     super.key,
     required this.segments,
     required this.onValueChanged,
+    this.width,
     this.initialSelectedIndex = 0,
   });
 
@@ -46,7 +47,7 @@ class CustomSegmentedButtonState extends State<CustomSegmentedButton> {
           child: Container(
             margin: EdgeInsets.all(AppSize.defaultSize! * 0.5),
             height: AppSize.defaultSize! * 4.5,
-            width: AppSize.defaultSize! * 16,
+            width: widget.width??AppSize.defaultSize! * 16,
             decoration: BoxDecoration(
               color: _selectedIndex == index
                   ? AppColors.secondaryColor
