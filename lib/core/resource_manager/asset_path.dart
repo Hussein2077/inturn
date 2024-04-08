@@ -9,6 +9,7 @@ class AssetPath {
   static const String collapsed = '$pathImage/collapsed.svg';
   static const String backgroundInturn = '$pathImage/bg.png';
   static const String test = '$pathImage/test.jpeg';
+  static const String test2 = '$pathImage/image.png';
 //Images
   static const String logoLarge = '$pathImage/logo@2x.jpg';
   static const String illustration = '$pathImage/illustration.jpg';

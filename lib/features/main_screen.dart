@@ -7,14 +7,13 @@ import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/widgets/coming_soon.dart';
+import 'package:inturn/features/home/presentation/componants/applications.dart';
+import 'package:inturn/features/home/presentation/componants/companies.dart';
 import 'package:inturn/features/home/presentation/home_screen.dart';
-import 'package:inturn/features/internships/presentation/internship_screen.dart';
-import 'package:inturn/features/jobs/presentation/job_screen.dart';
-
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+  const MainScreen({super.key});
   static int mainIndex = 0;
 
   @override
@@ -27,8 +26,8 @@ class _MainScreenState extends State<MainScreen> {
   List<Widget> _buildScreens() {
     return [
       HomeScreen(),
-      SizedBox(),
-      SizedBox(),
+      ApplicationsScreen(),
+      CompaniesScreen(),
       SizedBox(),
 
     ];

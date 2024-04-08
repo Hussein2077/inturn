@@ -26,50 +26,59 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(children: [
-        TopContainer(),
-        SizedBox(
-          height: AppSize.defaultSize! * 3,
-        ),
-        CustomText(
-          text: StringManager.matchedJobs.tr(),
-          fontWeight: FontWeight.w700,
-          color: AppColors.primaryColor,
-          // textAlign: TextAlign.start,
-          fontSize: AppSize.defaultSize! * 1.6,
-        ),
-        SizedBox(
-          height: AppSize.defaultSize!,
-        ),
-        SizedBox(
-          width: AppSize.defaultSize! * 28,
-          child: CustomText(
-            text: StringManager.unmatchedVacancies.tr(),
-            color: AppColors.primaryColor,
-            fontWeight: FontWeight.w600,
-            fontSize: AppSize.defaultSize! * 1.4,
-            maxLines: 2,
+      body: SingleChildScrollView(
+        child: Column(children: [
+          TopContainer(),
+          SizedBox(
+            height: AppSize.defaultSize! * 3,
           ),
-        ),
-        SizedBox(
-          height: AppSize.defaultSize!,
-        ),
-        MainButton(
-          text: StringManager.changeWorkPreferences.tr(),
-          onTap: () {},
-          color: AppColors.lightGreyColor,
-          textColor: AppColors.primaryColor,
-        ),
-        Expanded(
-            child: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (item, index) {
-                  return Padding(
-                    padding: EdgeInsets.all(AppSize.defaultSize!),
-                    child: JobCart(),
-                  );
-                }))
-      ]),
+          CustomText(
+            text: StringManager.matchedJobs.tr(),
+            fontWeight: FontWeight.w700,
+            color: AppColors.primaryColor,
+            // textAlign: TextAlign.start,
+            fontSize: AppSize.defaultSize! * 1.6,
+          ),
+          SizedBox(
+            height: AppSize.defaultSize!,
+          ),
+          SizedBox(
+            width: AppSize.defaultSize! * 28,
+            child: CustomText(
+              text: StringManager.unmatchedVacancies.tr(),
+              color: AppColors.primaryColor,
+              fontWeight: FontWeight.w600,
+              fontSize: AppSize.defaultSize! * 1.4,
+              maxLines: 2,
+            ),
+          ),
+          SizedBox(
+            height: AppSize.defaultSize!,
+          ),
+          MainButton(
+            text: StringManager.changeWorkPreferences.tr(),
+            onTap: () {},
+            color: AppColors.lightGreyColor,
+            textColor: AppColors.primaryColor,
+          ),
+          ListView.builder(
+              itemCount: 10,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (item, index) {
+                return Padding(
+                  padding: EdgeInsets.all(AppSize.defaultSize! * 1.2),
+                  child: const JobCart().animate()
+                      .fadeIn() // uses `Animate.defaultDuration`
+                      .scale() // inherits duration from fadeIn
+                      .move(delay: 300.ms, duration: 600.ms),
+                );
+              }),
+          SizedBox(
+            height: AppSize.defaultSize!,
+          ),
+        ]),
+      ),
     );
   }
 }

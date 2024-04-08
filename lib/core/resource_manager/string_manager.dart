@@ -10,6 +10,7 @@ class StringManager{
   static const String internInformation = "We have more than 200 interns weekly from more than 100 company.";
   static const String searchForJobs = "Search for jobs...";
   static const String matchedJobs = "Matched Jobs";
+  static const String matched = "Matched";
   static const String unmatchedVacancies = "These vacancies don't match with your work preferences?";
   static const String changeWorkPreferences = "Change Work Preferences";
   static const String applications = "Applications";
@@ -135,6 +136,9 @@ class StringManager{
   static const String seeMore = "See More";
   static const String viewMore = "View More";
   static const String cvBuilder = "CV Builder";
+  static const String viewed = "Viewed";
+  static const String shortlist = "Shortlist";
+  static const String selection = "Selection";
 
 
 

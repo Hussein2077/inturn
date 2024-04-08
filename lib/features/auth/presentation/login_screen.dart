@@ -200,12 +200,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   MainButton(
                     text: StringManager.login.tr(),
                     onTap: () {
-                      if (validation()) {
-                        BlocProvider.of<LoginWithEmailAndPasswordBloc>(context)
-                            .add(LoginWithEmailAndPasswordEvent(
-                          email: emailController.text,
-                          password: passwordController.text,
-                        ));
+                      if (true) {
+                        // BlocProvider.of<LoginWithEmailAndPasswordBloc>(context)
+                        //     .add(LoginWithEmailAndPasswordEvent(
+                        //   email: emailController.text,
+                        //   password: passwordController.text,
+                        // ));
+                        Navigator.pushNamed(context, Routes.academicInfo);
+
                       } else {
                         errorSnackBar(
                             context, StringManager.pleaseCompleteYourData.tr());

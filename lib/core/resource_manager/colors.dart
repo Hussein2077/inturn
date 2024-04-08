@@ -7,7 +7,6 @@ class AppColors {
    static const Color homeColor = Color.fromRGBO(94, 133, 237, 1);
   static const Color lightGreyColor = Color.fromRGBO(220, 222, 227, 1);
   static const Color blackColor = Color.fromRGBO(68, 68, 68, 1);
-
 //////////////////////////////////////////////////////////////////////////////////
   static const Color backGroundColor = Color(0xFFFFFFFF);
   static const Color loginBackGroundColor = Color(0xFFFDFDFD);

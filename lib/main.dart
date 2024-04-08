@@ -14,11 +14,7 @@ import 'package:inturn/features/auth/presentation/controller/sign_in_with_platfo
 import 'package:inturn/features/auth/presentation/controller/sign_up_bloc/sign_up_with_email_and_password_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_events.dart';
-import 'package:inturn/features/internships/presentation/controller/get_internships/get_internships_bloc.dart';
-import 'package:inturn/features/internships/presentation/controller/intern_search_bloc/get_internships_search_bloc.dart';
-import 'package:inturn/features/internships/presentation/controller/intern_search_bloc/get_internships_search_event.dart';
-import 'package:inturn/features/jobs/presentation/controller/get_jobs/get_jobs_bloc.dart';
-import 'package:inturn/features/jobs/presentation/controller/get_jobs/get_jobs_event.dart';
+
 import 'package:inturn/features/profile/presentation/controller/get_my_applications/get_my_applications_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -66,19 +62,9 @@ class _MyAppState extends State<MyApp> {
           create: (context) => getIt<SignUpWithEmailAndPasswordBloc>(),
         ),
         BlocProvider(
-          create: (context) => getIt<GetJobsBloc>()..add(GetJobsEvent()),
-        ),
-        BlocProvider(
-          create: (context) => getIt<GetInternshipsBloc>(),
-        ),
-        BlocProvider(
           create: (context) => getIt<GetMyApplicationsBloc>(),
         ),  BlocProvider(
           create: (context) => getIt<SignInWithPlatformBloc>(),
-        ),
-        BlocProvider(
-          create: (context) => getIt<GetInternshipsBySearchBloc>()
-            ..add(GetInternshipsBySearchEvent()),
         ),
         BlocProvider(
           create: (context) => getIt<OptionsBloc>()

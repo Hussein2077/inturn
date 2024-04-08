@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:inturn/core/resource_manager/asset_path.dart';
 import 'package:inturn/core/utils/app_size.dart';
 
-AppBar appBar(BuildContext context, {required String text}) {
+AppBar appBar(BuildContext context, {required String text,bool leading =true}) {
   return AppBar(
     backgroundColor: Colors.white,
     elevation: 1,
     title: Text(text,  style: TextStyle(fontSize: AppSize.defaultSize!*2,fontWeight: FontWeight.w500),),
     centerTitle: true,
-    leading: IconButton(
+    leading:leading? IconButton(
       onPressed: () {
         Navigator.pop(context);
       },
       icon: const Icon(Icons.arrow_back_ios),
-    ),
+    ):null,
   );
 }
 
