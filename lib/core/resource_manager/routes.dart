@@ -7,11 +7,13 @@ import 'package:inturn/features/auth/presentation/add_info_flow/fields_of_work.d
 import 'package:inturn/features/auth/presentation/add_info_flow/location_info.dart';
 import 'package:inturn/features/auth/presentation/add_info_flow/personal_info.dart';
 import 'package:inturn/features/auth/presentation/add_info_flow/skills.dart';
+import 'package:inturn/features/auth/presentation/add_info_flow/thanks.dart';
 import 'package:inturn/features/auth/presentation/forget%20password/change_password.dart';
 import 'package:inturn/features/auth/presentation/forget%20password/forget_password.dart';
 import 'package:inturn/features/auth/presentation/forget%20password/send_otp_code.dart';
 import 'package:inturn/features/auth/presentation/login_screen.dart';
 import 'package:inturn/features/auth/presentation/signup/sign_up.dart';
+import 'package:inturn/features/home/presentation/componants/job_details.dart';
 import 'package:inturn/features/main_screen.dart';
 import 'package:inturn/features/profile/presentation/componants/contact_us/contact_us.dart';
 import 'package:inturn/features/profile/presentation/componants/my_applications.dart';
@@ -32,6 +34,7 @@ class Routes {
   static const String skillsInfo = "/skillsInfo";
   static const String skills = "/skills";
   static const String thanks = "/thanks";
+  static const String jobDetails = "/JobDetailsScreen";
 
 ////////////////////////////////
 
@@ -72,22 +75,35 @@ class RouteGenerator {
             pageBuilder: (context, animation, secondaryAnimation) =>
                 const AcademicInfo(),
             transitionsBuilder: customAnimate);
-        case Routes.experienceInfo:
+      case Routes.experienceInfo:
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
                 const ExperienceInfo(),
-            transitionsBuilder: customAnimate);  case Routes.locationInfo:
+            transitionsBuilder: customAnimate);
+      case Routes.locationInfo:
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
                 const LocationInfo(),
-            transitionsBuilder: customAnimate); case Routes.fieldInfo:
+            transitionsBuilder: customAnimate);
+      case Routes.fieldInfo:
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
                 const FieldsInfo(),
-            transitionsBuilder: customAnimate); case Routes.skillsInfo:
+            transitionsBuilder: customAnimate);
+      case Routes.skillsInfo:
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
                 const SkillInfo(),
+            transitionsBuilder: customAnimate);
+      case Routes.thanks:
+        return PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const ThanksScreen(),
+            transitionsBuilder: customAnimate);
+        case Routes.jobDetails:
+        return PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const JobDetailsScreen(),
             transitionsBuilder: customAnimate);
 ////////////////////////////////////
       case Routes.forgetPassword:

@@ -77,7 +77,6 @@ class CodegenLoader extends AssetLoader {
     StringManager.searchForSkills: 'البحث عن المهارات...',
     StringManager.selectSkills: 'اختر مهاراتك',
     StringManager.discoverInternships: 'اكتشاف التدريب',
-    StringManager.profileCompleted: 'تم إكمال ملفك الشخصي بنجاح',
     StringManager.letBeginTheJourney: "لنبدأ الرحلة",
     StringManager.continueWithGoogle: "المتابعة مع Google",
     StringManager.continueWithFacebook: "المتابعة مع Facebook",

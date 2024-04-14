@@ -7,9 +7,19 @@ class AssetPath {
   static const String google = '$pathImage/google.svg';
   static const String facebook = '$pathImage/facebook.svg';
   static const String collapsed = '$pathImage/collapsed.svg';
+  static const String done = '$pathImage/done.svg';
   static const String backgroundInturn = '$pathImage/bg.png';
   static const String test = '$pathImage/test.jpeg';
   static const String test2 = '$pathImage/image.png';
+  static const String test3 = '$pathImage/image2.png';
+  static const String employees = '$pathImage/employees.png';
+  static const String facebook2 = '$pathImage/facebook.png';
+  static const String instagram = '$pathImage/instagram.png';
+  static const String job = '$pathImage/job.png';
+  static const String linkedin = '$pathImage/linkedin.png';
+  static const String location = '$pathImage/location.png';
+  static const String twitter = '$pathImage/twitter.png';
+  static const String website = '$pathImage/website.png';
 //Images
   static const String logoLarge = '$pathImage/logo@2x.jpg';
   static const String illustration = '$pathImage/illustration.jpg';
@@ -18,7 +28,6 @@ class AssetPath {
   static const String slogan = '$pathImage/slogan.jpg';
   static const String blogImage = '$pathImage/burger-king-logo 1.png';
   static const String homeBackgroundLarge = '$pathImage/bg@2x.png';
-  static const String location = '$pathImage/locationPNG.png';
   static const String loginBackground = '$pathImage/background_login.png';
   static const String js = '$pathImage/JavaScript.png';
   static const String json = '$pathImage/json.png';

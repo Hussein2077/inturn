@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:inturn/core/utils/app_size.dart';
 class CustomText extends StatelessWidget {
   final String text;
   final String?  fontFamily;
   final Color? color;
   final Color? decorationColor;
   final double? fontSize;
+  final double? lineHeight;
   final TextAlign? textAlign;
   final int? maxLines;
   final double? height;
@@ -25,16 +27,18 @@ class CustomText extends StatelessWidget {
         this.textDecoration,
         this.maxLines,
         this.overflow,
-        this.shadows, this.decorationColor,});
+        this.shadows, this.decorationColor, this.lineHeight,});
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      text!,
+      text,
       style: TextStyle(
+        height: lineHeight,
         color: color ?? Colors.black,
         decoration: textDecoration,
-            fontSize: fontSize,
+
+            fontSize: fontSize??AppSize.defaultSize! * 1.4,
         shadows: shadows,
       decorationColor:decorationColor ,
       decorationThickness: 2,

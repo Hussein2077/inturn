@@ -63,7 +63,7 @@ class _SkillInfoState extends State<SkillInfo> {
               text: StringManager.next.tr(),
               onTap: () {
                 if (true) {
-                  Navigator.pushNamed(context, Routes.main);
+                  Navigator.pushNamed(context, Routes.thanks);
                 } else {
                   errorSnackBar(
                       context, StringManager.pleaseCompleteYourData.tr());

@@ -13,7 +13,7 @@ class MainButton extends StatelessWidget {
     this.height,
     this.width,
     this.padding,
-    this.fontSize,
+    this.fontSize, this.fontWeight,
   });
 
   final void Function()? onTap;
@@ -24,6 +24,7 @@ class MainButton extends StatelessWidget {
   final double? width;
   final double? padding;
   final double? fontSize;
+  final FontWeight? fontWeight;
 
   @override
   Widget build(BuildContext context) {
@@ -37,13 +38,14 @@ class MainButton extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             backgroundColor: color ?? AppColors.primaryColor,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(AppSize.defaultSize!),
+              borderRadius: BorderRadius.circular(AppSize.defaultSize!*2),
             ),
           ),
           child: CustomText(
             text: text,
             color: textColor ?? AppColors.secondaryColor,
             fontSize: fontSize??AppSize.defaultSize! * 1.5,
+            fontWeight:fontWeight ,
           ),
         ),
       ),

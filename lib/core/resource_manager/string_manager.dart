@@ -1,4 +1,4 @@
-class StringManager{
+class StringManager {
   //new
   static const String letBeginTheJourney = "Let's Begin The Journey";
   static const String continueWithGoogle = "Continue with Google";
@@ -6,12 +6,15 @@ class StringManager{
   static const String continueWithApple = "Continue with Apple";
   static const String uploadProfileImage = "Upload Profile Image";
   static const String next = "Next";
-  static const String searchForIntern = "Search for intern according to your skills.";
-  static const String internInformation = "We have more than 200 interns weekly from more than 100 company.";
+  static const String searchForIntern =
+      "Search for intern according to your skills.";
+  static const String internInformation =
+      "We have more than 200 interns weekly from more than 100 company.";
   static const String searchForJobs = "Search for jobs...";
   static const String matchedJobs = "Matched Jobs";
   static const String matched = "Matched";
-  static const String unmatchedVacancies = "These vacancies don't match with your work preferences?";
+  static const String unmatchedVacancies =
+      "These vacancies don't match with your work preferences?";
   static const String changeWorkPreferences = "Change Work Preferences";
   static const String applications = "Applications";
   static const String home = "Home";
@@ -31,7 +34,8 @@ class StringManager{
   static const String internship = "Internship";
   static const String enterMobileNumber = "Enter Your Mobile No.";
   static const String resendPassword = "Resend the code";
-  static const String resendVerificationCode = "You can resend the verification code after";
+  static const String resendVerificationCode =
+      "You can resend the verification code after";
   static const String verify = "Verify";
   static const String filterResults = "Filter Results";
   static const String city = "City";
@@ -42,7 +46,8 @@ class StringManager{
   static const String newPassword = "New Password";
   static const String confirmNewPassword = "Confirm New Password";
   static const String confirm = "Confirm";
-  static const String fillAcademicInformation = "Fill Your Academic Information";
+  static const String fillAcademicInformation =
+      "Fill Your Academic Information";
   static const String selectUniversity = "Select Your University";
   static const String selectFaculty = "Select Your Faculty";
   static const String education = "Education";
@@ -67,21 +72,25 @@ class StringManager{
   static const String searchForSkills = "Search For Skills...";
   static const String selectSkills = "Select Your Skills";
   static const String discoverInternships = "Discover Internships";
-  static const String profileCompleted = "Your Profile Is Completed Successfully";
+
+  static String profileCompleted(String name) =>
+      "Thanks $name Your Profile Is Completed Successfully";
 
 //////////////////////////////////////////////////////////////////////////////
   static const String userTokenKey = "User Token Key";
   static const String unexpectedError = "Unexpected Error";
   static const String loginSuccessfully = " Login Successfully";
-  static const String login= " Login";
+  static const String login = " Login";
   static const String youHaveBeenMissed = "You Have Been Missed For Long Time";
   static const String email = "Email";
   static const String password = "Password";
   static const String confirmPassword = "Confirm password";
   static const String forgetYourPassword = "Forget Your Password ?";
   static const String forgetPassword = "Forget Password";
-  static const String weWillSend = "We will send a code to your Mobile No. to verify your Mobile No. to set the new password";
-  static const String pleaseEnterYOurCode = "Please enter the code which sent to";
+  static const String weWillSend =
+      "We will send a code to your Mobile No. to verify your Mobile No. to set the new password";
+  static const String pleaseEnterYOurCode =
+      "Please enter the code which sent to";
   static const String or = "Or sign in with";
   static const String enterYourMobile = "Enter Your Mobile No.";
   static const String signUp = "Sign up";
@@ -89,7 +98,8 @@ class StringManager{
   static const String sendCode = "Send Code";
   static const String doNotHaveAccount = "Don't have an account?   ";
   static const String youAlready = "You Already have an account?   ";
-  static const String youCanResend = "You can resend the verification code after ";
+  static const String youCanResend =
+      "You can resend the verification code after ";
   static const String resendCode = "Resend the code";
   static const String firstName = "First Name";
   static const String secondName = "last Name";
@@ -103,6 +113,7 @@ class StringManager{
   static const String major = "Major";
   static const String jobs = "Jobs";
   static const String jobsDetails = "Job details";
+  static const String jobRequirements = "Job Requirements";
   static const String jobDescription = "Job Description";
   static const String viewJob = "View job";
   static const String internships = "Internships";
@@ -115,7 +126,8 @@ class StringManager{
   static const String resources = "Resources";
   static const String takeQuiz = "Take a Quiz";
   static const String whatAreYouLookingFor = "What are you looking for ?";
-  static const String youCanTakeQuiz = "you can take a quiz to specify \nwhich career is suitable for you.";
+  static const String youCanTakeQuiz =
+      "you can take a quiz to specify \nwhich career is suitable for you.";
   static const String selectArea = "Select Area";
   static const String selectSkill = "Select Skill";
   static const String search = "Search";
@@ -132,14 +144,14 @@ class StringManager{
   static const String tabToUploadCV = "Tap here to \nUpload your CV";
   static const String thereIsNo = "There is no items";
   static const String theMost = "The most ingenious recycled homes";
-  static const String anotherRecommendedArticles = "Another Recommended Articles";
+  static const String anotherRecommendedArticles =
+      "Another Recommended Articles";
   static const String seeMore = "See More";
   static const String viewMore = "View More";
   static const String cvBuilder = "CV Builder";
   static const String viewed = "Viewed";
   static const String shortlist = "Shortlist";
   static const String selection = "Selection";
-
-
-
+  static const String moreAboutTheCompany = "More About The Company";
+  static const String anotherSuggestedJobs = "Another Suggested Jobs";
 }
