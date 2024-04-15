@@ -10,6 +10,7 @@ import 'package:inturn/core/widgets/coming_soon.dart';
 import 'package:inturn/features/home/presentation/componants/applications.dart';
 import 'package:inturn/features/home/presentation/componants/companies.dart';
 import 'package:inturn/features/home/presentation/home_screen.dart';
+import 'package:inturn/features/profile/presentation/profile_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class MainScreen extends StatefulWidget {
@@ -25,10 +26,10 @@ class _MainScreenState extends State<MainScreen> {
 
   List<Widget> _buildScreens() {
     return [
-      HomeScreen(),
-      ApplicationsScreen(),
-      CompaniesScreen(),
-      SizedBox(),
+      const HomeScreen(),
+      const ApplicationsScreen(),
+      const CompaniesScreen(),
+      const ProfileScreen(),
 
     ];
   }

@@ -1,15 +1,18 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:inturn/core/resource_manager/asset_path.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/widgets/app_bar.dart';
-import 'package:inturn/core/widgets/column_with_text_field.dart';
+import 'package:inturn/core/widgets/custom_text_field.dart';
+import 'package:inturn/core/widgets/cutom_text.dart';
 import 'package:inturn/core/widgets/main_button.dart';
 import 'package:inturn/core/widgets/major_drop_down.dart';
 import 'package:inturn/core/widgets/university.dart';
-import 'package:inturn/features/profile/presentation/widgets/upload_cv.dart';
+import 'package:inturn/features/auth/presentation/widgets/segment_button.dart';
+import 'package:inturn/features/auth/presentation/widgets/upload_photo.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -19,195 +22,471 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+
+  late TextEditingController emailController;
   late TextEditingController firstNameController;
   late TextEditingController lastNameController;
-  late TextEditingController universityController;
-  late TextEditingController majorController;
-  DateTime selectedDate = DateTime.now();
-  String selectedValue = 'Option 1';
+  late TextEditingController skillsController;
+
+  int _currentSegment = 0;
+
+  void _onValueChanged(int newValue) {
+    setState(() {
+      _currentSegment = newValue;
+    });
+  }
 
   @override
   void initState() {
-    firstNameController = TextEditingController();
-    lastNameController = TextEditingController();
-    universityController = TextEditingController();
-    majorController = TextEditingController();
+    emailController = TextEditingController(text: "email@gmail.com");
+    firstNameController = TextEditingController(text: "ahmed");
+    lastNameController = TextEditingController(text: "sameh");
+    skillsController = TextEditingController(text: "Highly skilled software developer with 8 years of experience in designing, developing, and implementing software solutions. Proficient in multiple programming languages and technologies.");
     super.initState();
   }
 
   @override
   void dispose() {
+    emailController.dispose();
     firstNameController.dispose();
     lastNameController.dispose();
-    universityController.dispose();
-    majorController.dispose();
+    skillsController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(context, text: StringManager.profile.tr(),),
+      appBar: appBar(context, text: StringManager.profile.tr(), leading: false),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: AppSize.defaultSize! * 2),
+        padding: EdgeInsets.all(AppSize.defaultSize! * 1.5),
         child: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                CircleAvatar(
-                  radius: AppSize.defaultSize! * 3.5,
-                  backgroundColor: Colors.white,
-                  child: Image.asset(
-                    AssetPath.human,
-                    height: AppSize.defaultSize! * 6,
-                    width: AppSize.defaultSize! * 6,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              MainButton(
+                onTap: (){},
+                text: StringManager.changePassword.tr(),
+                textColor: Colors.black,
+                color: AppColors.lightGreyColor,
+                fontWeight: FontWeight.bold,
+              ),
+          
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: AppSize.defaultSize! * 2),
+                child: MainButton(
+                  onTap: (){},
+                  text: StringManager.downloadCV.tr(),
+                  textColor: Colors.black,
+                  color: AppColors.lightGreyColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              
+              Material(
+                borderRadius: BorderRadius.circular(AppSize.defaultSize! * 1.5),
+                elevation: 1,
+                child: Container(
+                  width: AppSize.screenWidth!,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(AppSize.defaultSize! * 1.5),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(AppSize.defaultSize! * 2),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomText(
+                          text: StringManager.personalInformation.tr(),
+                          fontSize: AppSize.defaultSize! * 1.6,
+                          color: AppColors.primaryColor,
+                          fontWeight: FontWeight.w700,
+                        ),
+                        SizedBox(
+                          height: AppSize.defaultSize! * 1,
+                        ),
+                        const Center(child: UploadProfileImagePage()),
+                        SizedBox(
+                          height: AppSize.defaultSize! * 1,
+                        ),
+                        Center(
+                          child: CustomText(
+                            text: StringManager.changeProfileImage.tr(),
+                            fontSize: AppSize.defaultSize! * 1.6,
+                            color: AppColors.primaryColor,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+          
+                        SizedBox(
+                          height: AppSize.defaultSize! * 2.5,
+                        ),
+          
+                        CustomTextField(
+                          controller: firstNameController,
+                        ),
+          
+                        SizedBox(
+                          height: AppSize.defaultSize! * 2,
+                        ),
+          
+                        CustomTextField(
+                          controller: lastNameController,
+                        ),
+          
+                        SizedBox(
+                          height: AppSize.defaultSize! * 2,
+                        ),
+          
+                        CustomTextField(
+                          controller: emailController,
+                        ),
+          
+                        SizedBox(
+                          height: AppSize.defaultSize! * 2,
+                        ),
+
+                        SizedBox(
+                          width: double.maxFinite,
+                          child: TextFormField(
+                            maxLines: 20,
+                            minLines: 1,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.all(AppSize.defaultSize! * .8),
+                              labelStyle: TextStyle(
+                                color: AppColors.greyColor,
+                                fontSize: AppSize.screenHeight! * .015,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(AppSize.defaultSize! * 1.5)),
+                                borderSide:
+                                BorderSide(color: AppColors.borderColor.withOpacity(.4)),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(AppSize.defaultSize! * 1.5)),
+                                borderSide:
+                                BorderSide(color: AppColors.borderColor.withOpacity(.4)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(AppSize.defaultSize! * 1.5)),
+                                  borderSide:
+                                  BorderSide(color: AppColors.primaryColor.withOpacity(.4))),
+                              disabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(AppSize.defaultSize! * 1.5)),
+                                  borderSide:
+                                  BorderSide(color: AppColors.borderColor.withOpacity(.4))),
+                            ),
+                            controller: skillsController,
+                          ),
+                        ),
+          
+                      ],
+                    ),
                   ),
                 ),
-                SizedBox(
-                  height: AppSize.defaultSize! * .5,
-                ),
-                Text(
-                  StringManager.changeProfilePicture.tr(),
-                  style: TextStyle(
-                    fontSize: AppSize.defaultSize! * 1.4,
+              ),
+
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: AppSize.defaultSize! * 2),
+                child: Material(
+                  borderRadius: BorderRadius.circular(AppSize.defaultSize! * 1.5),
+                  elevation: 1,
+                  child: Container(
+                    width: AppSize.screenWidth!,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(AppSize.defaultSize! * 1.5),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(AppSize.defaultSize! * 2),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomText(
+                            text: StringManager.academicInformation.tr(),
+                            fontSize: AppSize.defaultSize! * 1.6,
+                            color: AppColors.primaryColor,
+                            fontWeight: FontWeight.w700,
+                          ),
+                          SizedBox(
+                            height: AppSize.defaultSize! * 1,
+                          ),
+                          const UniversityDropDown(),
+                          SizedBox(
+                            height: AppSize.defaultSize! * 2,
+                          ),
+                          const MajorDropDown(),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-                Row(
-                  children: [
-                    ColumnWithTextField(
-                      text: StringManager.firstName.tr(),
-                      controller: firstNameController,
-                      width: AppSize.screenWidth! * .4,
+              ),
+
+              Material(
+                borderRadius: BorderRadius.circular(AppSize.defaultSize! * 1.5),
+                elevation: 1,
+                child: Container(
+                  width: AppSize.screenWidth!,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(AppSize.defaultSize! * 1.5),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(AppSize.defaultSize! * 2),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomText(
+                          text: StringManager.experiences.tr(),
+                          fontSize: AppSize.defaultSize! * 1.6,
+                          color: AppColors.primaryColor,
+                          fontWeight: FontWeight.w700,
+                        ),
+                        SizedBox(
+                          height: AppSize.defaultSize! * 1.6,
+                        ),
+                        CustomText(
+                          text: StringManager.studentOrGraduated.tr(),
+                          color: AppColors.thirdColor,
+                        ),
+                        SizedBox(
+                          height: AppSize.defaultSize! * 1.6,
+                        ),
+                        CustomSegmentedButton(
+                          width: AppSize.defaultSize! * 15,
+                          segments: const ['Student', 'Graduated'],
+                          onValueChanged: (index) => _onValueChanged(index),
+                        ),
+                        SizedBox(
+                          height: AppSize.defaultSize! * 2.4,
+                        ),
+                        CustomText(
+                          text: StringManager.jobLevel.tr(),
+                          color: AppColors.thirdColor,
+                        ),
+                        SizedBox(
+                          height: AppSize.defaultSize! * 1.6,
+                        ),
+                        CustomSegmentedButton(
+                          width: AppSize.defaultSize! * 15,
+                          segments: const ['Internship', 'Entry Level'],
+                          onValueChanged: (index) => _onValueChanged(index),
+                        ),
+                      ],
                     ),
-                    const Spacer(),
-                    ColumnWithTextField(
-                      text: StringManager.secondName.tr(),
-                      controller: lastNameController,
-                      width: AppSize.screenWidth! * .4,
+                  ),
+                ),
+              ),
+
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: AppSize.defaultSize! * 2),
+                child: Material(
+                  borderRadius: BorderRadius.circular(AppSize.defaultSize! * 1.5),
+                  elevation: 1,
+                  child: Container(
+                    width: AppSize.screenWidth!,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(AppSize.defaultSize! * 1.5),
                     ),
-                  ],
+                    child: Padding(
+                      padding: EdgeInsets.all(AppSize.defaultSize! * 2),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomText(
+                            text: StringManager.locationType.tr(),
+                            fontSize: AppSize.defaultSize! * 1.6,
+                            color: AppColors.primaryColor,
+                            fontWeight: FontWeight.w700,
+                          ),
+                          SizedBox(
+                            height: AppSize.defaultSize! * 1.6,
+                          ),
+                          const UniversityDropDown(),
+                          SizedBox(
+                            height: AppSize.defaultSize! * 2,
+                          ),
+                          const MajorDropDown(),
+                          SizedBox(
+                            height: AppSize.defaultSize! * 2.4,
+                          ),
+                          CustomText(
+                            text: StringManager.selectLocationType.tr(),
+                            color: AppColors.thirdColor,
+                          ),
+                          SizedBox(
+                            height: AppSize.defaultSize! * 1.6,
+                          ),
+                          CustomSegmentedButton(
+                            segments: const ['On Site', 'Remotly','Hybrid'],
+                            onValueChanged: (index) => _onValueChanged(index),
+                            width:  AppSize.defaultSize! * 9,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-                ColumnWithTextField(
-                  text: StringManager.dateOfBirth.tr(),
-                  readOnly: true,
-                  hintText: selectedDate.toString().substring(0, 10),
-                  suffixIcon: const Icon(Icons.calendar_month_outlined),
-                  onTap: () {
-                    _selectDate(context);
-                  },
+              ),
+
+              Material(
+                borderRadius: BorderRadius.circular(AppSize.defaultSize! * 1.5),
+                elevation: 1,
+                child: Container(
+                  width: AppSize.screenWidth!,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(AppSize.defaultSize! * 1.5),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(AppSize.defaultSize! * 2),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomText(
+                          text: StringManager.fieldsOfWork.tr(),
+                          fontSize: AppSize.defaultSize! * 1.6,
+                          color: AppColors.primaryColor,
+                          fontWeight: FontWeight.w700,
+                        ),
+                        SizedBox(
+                          height: AppSize.defaultSize! * 1.6,
+                        ),
+                        fieldsRow(text: 'Accounting/Finance Jobs'),
+                        SizedBox(
+                          height: AppSize.defaultSize! * 1.6,
+                        ),
+                        CustomSegmentedButton(
+                          segments: const [
+                            'Internal Audit',
+                            'Internal Audit',
+                            'Internal Audit'
+                          ],
+                          onValueChanged: (index) => _onValueChanged(index),
+                          width: AppSize.defaultSize! * 15,
+                        ),
+                        SizedBox(
+                          height: AppSize.defaultSize! * 4,
+                        ),
+                        fieldsRow(text: 'Accounting/Finance Jobs'),
+                        SizedBox(
+                          height: AppSize.defaultSize! * 1.6,
+                        ),
+                        CustomSegmentedButton(
+                          segments: const [
+                            'Internal Audit',
+                            'Internal Audit',
+                            'Internal Audit'
+                          ],
+                          onValueChanged: (index) => _onValueChanged(index),
+                          width: AppSize.defaultSize! * 15,
+                        ),
+                        SizedBox(
+                          height: AppSize.defaultSize! * 4,
+                        ),
+                        fieldsRow(text: 'Accounting/Finance Jobs'),
+                        SizedBox(
+                          height: AppSize.defaultSize! * 1.6,
+                        ),
+                        CustomSegmentedButton(
+                          segments: const [
+                            'Internal Audit',
+                            'Internal Audit',
+                            'Internal Audit'
+                          ],
+                          onValueChanged: (index) => _onValueChanged(index),
+                          width: AppSize.defaultSize! * 15,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                SizedBox(
-                  height: AppSize.defaultSize! * 3,
+              ),
+
+
+
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: AppSize.defaultSize! * 2),
+                child: Material(
+                  borderRadius: BorderRadius.circular(AppSize.defaultSize! * 1.5),
+                  elevation: 1,
+                  child: Container(
+                    width: AppSize.screenWidth!,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(AppSize.defaultSize! * 1.5),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(AppSize.defaultSize! * 2),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomText(
+                            text: StringManager.skills.tr(),
+                            fontSize: AppSize.defaultSize! * 1.6,
+                            color: AppColors.primaryColor,
+                            fontWeight: FontWeight.w700,
+                          ),
+                          SizedBox(
+                            height: AppSize.defaultSize! * 1.6,
+                          ),
+                          CustomTextField(
+                            hintText: StringManager.searchForSkills.tr(),
+                            hintStyle: TextStyle(fontSize: AppSize.defaultSize! * 1.4),
+                          ),
+                          SizedBox(
+                            height: AppSize.defaultSize! * 1.6,
+                          ),
+                          CustomText(
+                            text: StringManager.selectSkills.tr(),
+                            color: AppColors.thirdColor,
+                          ),
+                          SizedBox(
+                            height: AppSize.defaultSize! * 1.6,
+                          ),
+                          CustomSegmentedButton(
+                            segments: const ['Java', 'python','.net','react'],
+                            width:  AppSize.defaultSize! * 6,
+                            onValueChanged: (index) => _onValueChanged(index),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    dropDownSignUp(
-                        text: StringManager.educationLevel.tr(),
-                        hintText: StringManager.selectEdu.tr()),
-                    dropDownSignUp(
-                        text: StringManager.graduationYear.tr(),
-                        hintText: StringManager.selectGrad.tr()),
-                  ],
+              ),
+
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: AppSize.defaultSize! * 2),
+                child: MainButton(
+                    onTap: (){},
+                    text: StringManager.confirm.tr(),
                 ),
-                SizedBox(
-                  height: AppSize.defaultSize! * 3,
-                ),
-                const UniversityDropDown(),
-                SizedBox(
-                  height: AppSize.defaultSize! * 3,
-                ),
-                const MajorDropDown(),
-                SizedBox(
-                  height: AppSize.defaultSize! * 3,
-                ),
-                const UploadCV(),
-                SizedBox(
-                  height: AppSize.defaultSize! * 3,
-                ),
-                MainButton(text: StringManager.saveChanges.tr()),
-                SizedBox(
-                  height: AppSize.defaultSize! * 5,
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
     );
   }
 
-  _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: selectedDate, // Refer step 1
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2025),
-    );
-    if (picked != null && picked != selectedDate) {
-      setState(() {
-        selectedDate = picked;
-      });
-    }
-  }
-
-  Widget dropDownSignUp({required String text, required String hintText}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          text,
-          style: TextStyle(
-              fontSize: AppSize.defaultSize! * 1.4,
-              fontWeight: FontWeight.w700),
-        ),
-        SizedBox(
-          height: AppSize.defaultSize! * .3,
-        ),
-        Container(
-          width: AppSize.screenWidth! * .4,
-          decoration: BoxDecoration(
-              border: Border.all(color: AppColors.borderColor),
-              borderRadius: BorderRadius.circular(AppSize.defaultSize! * .5)),
-          child: Center(
-            child: DropdownButton<String>(
-              value: selectedValue,
-              underline: const SizedBox(),
-              onChanged: (String? newValue) {
-                setState(() {
-                  selectedValue = newValue!;
-                });
-              },
-              hint: Text(
-                hintText,
-                style: TextStyle(
-                  fontSize: AppSize.defaultSize!,
-                ),
-              ),
-              icon: Padding(
-                padding: EdgeInsets.only(left: AppSize.defaultSize! * 3),
-                child: Icon(
-                  Icons.keyboard_arrow_down_sharp,
-                  size: AppSize.defaultSize! * 3,
-                ),
-              ),
-              items: <String>['Option 1', 'Option 2', 'Option 3', 'Option 4']
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(
-                    value,
-                    style: TextStyle(
-                      fontSize: AppSize.defaultSize!,
-                    ),
-                  ),
-                );
-              }).toList(),
-            ),
-          ),
-        ),
-      ],
+  fieldsRow({required String text}) {
+    return Padding(
+      padding: EdgeInsets.all(AppSize.defaultSize!),
+      child: Row(children: [
+        CustomText(text: text, color: AppColors.thirdColor),
+        const Spacer(),
+        SvgPicture.asset(
+          AssetPath.collapsed,
+        )
+      ]),
     );
   }
 }
