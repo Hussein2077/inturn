@@ -49,12 +49,16 @@ class StringManager {
   static const String confirm = "Confirm";
   static const String fillAcademicInformation =
       "Fill Your Academic Information";
+  static const String academicInformation =
+      "Academic Information";
   static const String selectUniversity = "Select Your University";
   static const String selectFaculty = "Select Your Faculty";
   static const String education = "Education";
   static const String skills = "Skills";
   static const String downloadAsPDF = "Download as PDF";
   static const String experience = "Let Us Know About Your Experience";
+  static const String experiences = "Experience";
+
   static const String studentOrGraduated = "Your Are Student or Graduated";
   static const String jobLevel = "What's you Job Level";
   static const String student = "Student";
@@ -65,6 +69,7 @@ class StringManager {
   static const String selectCountry = "Select Your Country";
   static const String selectCity = "Select Your City";
   static const String selectLocationType = "Select Location Type";
+  static const String locationType = "Location Type";
   static const String onSite = "On Site";
   static const String remotely = "Remotely";
   static const String hybrid = "Hybrid";

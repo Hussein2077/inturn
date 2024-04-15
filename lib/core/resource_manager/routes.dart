@@ -15,8 +15,6 @@ import 'package:inturn/features/auth/presentation/login_screen.dart';
 import 'package:inturn/features/auth/presentation/signup/sign_up.dart';
 import 'package:inturn/features/home/presentation/componants/job_details.dart';
 import 'package:inturn/features/main_screen.dart';
-import 'package:inturn/features/profile/presentation/componants/contact_us/contact_us.dart';
-import 'package:inturn/features/profile/presentation/componants/my_applications.dart';
 import 'package:inturn/features/profile/presentation/profile_screen.dart';
 
 class Routes {
@@ -39,8 +37,6 @@ class Routes {
 ////////////////////////////////
 
   static const String profile = "/profile";
-  static const String myApplications = "/myApplications";
-  static const String contactUs = "/contactUs";
   static const String blogComplete = "/BlogComplete";
   static const String vacancyDetails = "/VacancyDetails";
   static const String cvBuilderScreen = "/CVBuilderScreen";
@@ -125,16 +121,6 @@ class RouteGenerator {
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
                 const ProfileScreen(),
-            transitionsBuilder: customAnimate);
-      case Routes.myApplications:
-        return PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) =>
-                const MyApplications(),
-            transitionsBuilder: customAnimate);
-      case Routes.contactUs:
-        return PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) =>
-                const ContactUS(),
             transitionsBuilder: customAnimate);
       case Routes.vacancyDetails:
         VacancyModel vacancyModel = settings.arguments as VacancyModel;
