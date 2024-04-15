@@ -19,6 +19,7 @@ class StringManager {
   static const String applications = "Applications";
   static const String home = "Home";
   static const String companies = "Companies";
+  static const String companyBio = "Company Bio";
   static const String profile = "Profile";
   static const String companyOverview = "Company overview";
   static const String changePassword = "Change Password";

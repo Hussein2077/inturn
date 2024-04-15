@@ -67,10 +67,9 @@ class JobCart extends StatelessWidget {
                         ),
                       ]),
                       Row(children: [
-                        Icon(
-                          Icons.location_on_outlined,
-                          size: AppSize.defaultSize! * 2,
-                          color: AppColors.greyColor,
+                        Image.asset(AssetPath.location,
+                        height: AppSize.defaultSize! * 2,
+                        width: AppSize.defaultSize! * 2,
                         ),
                         SizedBox(
                           width: AppSize.defaultSize! * .5,
