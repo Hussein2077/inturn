@@ -19,4 +19,5 @@ abstract class BaseRepository {
   Future<Either<AuthWithGoogleModel, Failure>> signWithGoogle();
   Future<Either<Map<String, dynamic>, Failure>> addPersonalInfo(AuthModel authModel);
   Future<Either<Map<String, dynamic>, Failure>> sendUniversityFacultyIds(String universityId, String facultyId);
+  Future<Either<Map<String, dynamic>, Failure>> sendExperienceLevel(String typeID, String jobLevelId);
 }

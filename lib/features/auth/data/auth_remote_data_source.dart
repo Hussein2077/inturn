@@ -7,6 +7,7 @@ import 'package:inturn/core/models/my_data_model.dart';
 import 'package:inturn/core/utils/api_helper.dart';
 import 'package:inturn/core/utils/constant_api.dart';
 import 'package:inturn/core/utils/methods.dart';
+import 'package:inturn/features/auth/domain/use_case/add_info_uc.dart';
 import 'package:inturn/features/auth/domain/use_case/login_with_email_and_password_use_case.dart';
 import 'package:inturn/features/auth/domain/use_case/sign_up_use_case.dart';
 
@@ -20,6 +21,8 @@ abstract class BaseRemotelyDataSource {
   Future<AuthWithGoogleModel> sigInWithGoogle();
   Future<Map<String, dynamic>> addPersonalInfo(AuthModel authModel);
   Future<Map<String, dynamic>> sendUniversityFacultyIds(String universityId, String facultyId);
+  Future<Map<String, dynamic>> sendExperienceLevel(String typeID, String jobLevelId);
+  // Future<Map<String, dynamic>> locationType(LocationTypeParams locationTypeParams);
 
 }
 
@@ -203,6 +206,16 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       'last_name': authModel.lastName,
       'email': authModel.email,
       'image': await MultipartFile.fromFile(authModel.image!.path.toString(), filename: 'image.jpg'),
+      'university_id': authModel.universityId,
+      'faculty_id': authModel.facultyId,
+      'role': 'user',
+
+      'job_level_id': authModel.jobLevelId,
+      'experience_level_id': authModel.experienceLevelId,
+      'university_name': authModel.universityName,
+      'faculty_name': authModel.facultyName,
+      'job_level_name': authModel.jobLevelName,
+      'experience_level_name': authModel.experienceLevelName,
     };
 
     try {
@@ -237,6 +250,26 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       throw DioHelper.handleDioError(
           dioError: e, endpointName: "sendUniversityFacultyIds");
     }
+  }
+
+  @override
+  Future<Map<String, dynamic>> sendExperienceLevel(String typeID, String jobLevelId)async {
+    final body = {
+      'typeID': typeID,
+      'jobLevelId': jobLevelId,
+    };
+
+    try {
+      final response = await Dio().post(
+        // ConstantApi.sendUniversityFacultyIds,
+        '',
+        data: body,
+      );
+      return response.data;
+    } on DioError catch (e) {
+      throw DioHelper.handleDioError(
+          dioError: e, endpointName: "sendExperienceLevel");
+    };
   }
 }
 

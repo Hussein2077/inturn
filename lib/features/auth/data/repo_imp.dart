@@ -92,5 +92,13 @@ class RepositoryImp extends BaseRepository {
     } on Exception catch (e) {
       return right(DioHelper.buildFailure(e));
     }
+  }  @override
+  Future<Either<Map<String, dynamic>, Failure>> sendExperienceLevel(String typeID, String jobLevelId) async {
+    try {
+      final result = await baseRemotelyDataSource.sendExperienceLevel(typeID, jobLevelId);
+      return Left(result);
+    } on Exception catch (e) {
+      return right(DioHelper.buildFailure(e));
+    }
   }
 }

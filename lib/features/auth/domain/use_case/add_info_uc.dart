@@ -32,6 +32,20 @@ class SendUniversityFacultyIdsUseCase
     return result;
   }
 }
+class SendExperienceLevelUseCase
+    extends BaseUseCase<Map<String, dynamic>, SendExperienceLevelParams> {
+  BaseRepository baseRepository;
+
+  SendExperienceLevelUseCase({required this.baseRepository});
+
+  @override
+  Future<Either<Map<String, dynamic>, Failure>> call(
+      SendExperienceLevelParams parameter) async {
+    final result = await baseRepository.sendExperienceLevel(
+        parameter.typeID, parameter.jobLevelId);
+    return result;
+  }
+}
 
 class SendUniversityFacultyIdsParams {
   final String universityId;
@@ -39,4 +53,20 @@ class SendUniversityFacultyIdsParams {
 
   SendUniversityFacultyIdsParams(
       {required this.universityId, required this.facultyId});
+}
+class SendExperienceLevelParams {
+  final String typeID;
+  final String jobLevelId;
+
+  SendExperienceLevelParams(
+      {required this.typeID, required this.jobLevelId});
+}class LocationTypeParams {
+  final String countryID;
+  final String cityID;
+  final String locationTypeID;
+
+
+
+  LocationTypeParams(
+      {required this.cityID, required this.countryID, required this.locationTypeID});
 }

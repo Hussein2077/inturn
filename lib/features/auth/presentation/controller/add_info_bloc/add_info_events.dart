@@ -17,4 +17,23 @@ class AddPersonalInfoButtonPressedEvent extends AddPersonalInfoEvent {
   @override
   List<Object> get props => [authModel];
 }
+class AddUniversityAndFacultiesEvent extends AddPersonalInfoEvent {
+  final String universityId;
+  final String facultyId;
+
+  const AddUniversityAndFacultiesEvent({required this.universityId, required this.facultyId});
+
+  @override
+  List<Object> get props => [universityId, facultyId];
+}
+
+class SendExperienceLevelEvent extends AddPersonalInfoEvent {
+  final String typeID;
+  final String jobLevelId;
+
+  const SendExperienceLevelEvent({required this.typeID, required this.jobLevelId});
+
+  @override
+  List<Object> get props => [typeID, jobLevelId];
+}
 

@@ -22,11 +22,40 @@ class LoginWithEmailAndPasswordUseCase
 
 class AuthModel {
   final String? email;
+  final int? userId;
   final String? firstName;
   final String? lastName;
   final File? image;
   final String? password;
+  final String? universityId;
+  final String? facultyId;
+  final String? countryID;
+  final String? cityID;
+  final String? locationTypeID;
 
-  AuthModel( {  this.email,   this.password,this.firstName, this.lastName, this.image,});
+/*
+    public string UserId { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public IFormFile ImageFile { get; set; }
+    public int UniversityId { get; set; }
+    public int FacultyId { get; set; }
+
+    public int JobLevelId { get; set; }
+    public int GraduationStatusId { get; set; }
+    public int JobLocationTypeId { get; set; }
+
+ */
+  AuthModel(
+      {this.email,
+      this.password,
+      this.firstName,
+      this.lastName,
+      this.image,
+        this.userId,
+      this.universityId,
+      this.facultyId,
+      this.countryID,
+      this.cityID,
+      this.locationTypeID});
 }
-
