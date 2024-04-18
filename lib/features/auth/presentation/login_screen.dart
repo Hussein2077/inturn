@@ -76,6 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: BlocListener<SignInWithPlatformBloc, SignInWithPlatformState>(
             listener: (context, state) async {
               if (state is SignWithGoogleSuccesMessageState) {
+                Navigator.pushNamed(context, Routes.personalInfo);
                 // Methods.instance.clearAuthData();
                 // BlocProvider.of<GetMyDataBloc>(context).add(GetMyDataEvent());
                 if (state.userData.apiUserData.phone == null) {
@@ -132,21 +133,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     text: StringManager.continueWithGoogle.tr(),
                     logo: SvgPicture.asset(AssetPath.google),
                     onPressed: () {
-                      Navigator.pushNamed(context, Routes.personalInfo);
-                      // BlocProvider.of<SignInWithPlatformBloc>(context)
-                      //     .add(SignInWithGoogleEvent());
+                      BlocProvider.of<SignInWithPlatformBloc>(context).add( SignGoogleEvent());
+
                     },
                   ),
-                  SizedBox(height: AppSize.defaultSize!),
-                  CustomSignInButton(
-                    text: StringManager.continueWithFacebook.tr(),
-                    logo: SvgPicture.asset(AssetPath.facebook),
-                    onPressed: () {     Navigator.pushNamed(context, Routes.personalInfo);
-                      // BlocProvider.of<SignInWithPlatformBloc>(context)
-                      //     .add(SignInWithFacebookEvent());
-                    },
-                  ),
-                  SizedBox(height: AppSize.defaultSize!),
+                  // CustomSignInButton(
+                  //   text: StringManager.continueWithFacebook.tr(),
+                  //   logo: SvgPicture.asset(AssetPath.facebook),
+                  //   onPressed: () {     Navigator.pushNamed(context, Routes.personalInfo);
+                  //     // BlocProvider.of<SignInWithPlatformBloc>(context)
+                  //     //     .add(SignInWithFacebookEvent());
+                  //   },
+                  // ),
+                  SizedBox(height: AppSize.defaultSize!*2),
                   CustomSignInButton(
                     text: StringManager.continueWithApple.tr(),
                     logo: SvgPicture.asset(AssetPath.apple),

@@ -17,7 +17,6 @@ import 'package:inturn/features/home/presentation/controller/get_cities_major_un
 
 import 'package:inturn/features/profile/presentation/controller/get_my_applications/get_my_applications_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 String? token;
 
 void main() async {
@@ -26,7 +25,7 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   token = await Methods.instance.returnUserToken();
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
+    // options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(EasyLocalization(
       fallbackLocale: const Locale('en'),

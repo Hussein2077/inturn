@@ -53,7 +53,15 @@ class RepositoryImp extends BaseRepository {
     }
   }
 
-
+  @override
+  Future<Either<Map<String, dynamic>, Failure>> addPersonalInfo(AuthModel authModel) async {
+    try {
+      final result = await baseRemotelyDataSource.addPersonalInfo(authModel);
+      return Left(result);
+    } on Exception catch (e) {
+      return right(DioHelper.buildFailure(e));
+    }
+  }
   @override
   Future<Either<Map<String, dynamic>, Failure>> sendCode(SignUpModel signUpModel)async{
     try {
@@ -76,5 +84,13 @@ class RepositoryImp extends BaseRepository {
     }
   }
 
-
+  @override
+  Future<Either<Map<String, dynamic>, Failure>> sendUniversityFacultyIds(String universityId, String facultyId) async {
+    try {
+      final result = await baseRemotelyDataSource.sendUniversityFacultyIds(universityId, facultyId);
+      return Left(result);
+    } on Exception catch (e) {
+      return right(DioHelper.buildFailure(e));
+    }
+  }
 }

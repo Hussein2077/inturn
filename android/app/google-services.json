@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "761178190932",
+    "project_id": "inturn-8ec4a",
+    "storage_bucket": "inturn-8ec4a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:761178190932:android:dc9fa194780844c79d69c1",
+        "android_client_info": {
+          "package_name": "com.example.inturn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "761178190932-b093aio4r9vgmfch98vi7fr4vcglb91b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJ3j7l29qm9ecWnnLGjiMSxhx5PkCnv8s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "761178190932-b093aio4r9vgmfch98vi7fr4vcglb91b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
