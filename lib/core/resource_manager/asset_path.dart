@@ -3,6 +3,7 @@ const String pathImage = "asset/images";
 class AssetPath {
   //new
   static const String logo = '$pathImage/logo.svg';
+  static const String logoPNG = '$pathImage/logo.png';
   static const String apple = '$pathImage/apple.svg';
   static const String google = '$pathImage/google.svg';
   static const String facebook = '$pathImage/facebook.svg';
@@ -21,6 +22,7 @@ class AssetPath {
   static const String location = '$pathImage/location.png';
   static const String twitter = '$pathImage/twitter.png';
   static const String website = '$pathImage/website.png';
+  static const String bgCv = '$pathImage/bg_cv.png';
 //Images
   static const String logoLarge = '$pathImage/logo@2x.jpg';
   static const String illustration = '$pathImage/illustration.jpg';

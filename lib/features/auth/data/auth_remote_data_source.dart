@@ -209,13 +209,12 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       'university_id': authModel.universityId,
       'faculty_id': authModel.facultyId,
       'role': 'user',
-
-      'job_level_id': authModel.jobLevelId,
-      'experience_level_id': authModel.experienceLevelId,
-      'university_name': authModel.universityName,
-      'faculty_name': authModel.facultyName,
-      'job_level_name': authModel.jobLevelName,
-      'experience_level_name': authModel.experienceLevelName,
+      // 'job_level_id': authModel.jobLevelId,
+      // 'experience_level_id': authModel.experienceLevelId,
+      // 'university_name': authModel.universityName,
+      // 'faculty_name': authModel.facultyName,
+      // 'job_level_name': authModel.jobLevelName,
+      // 'experience_level_name': authModel.experienceLevelName,
     };
 
     try {

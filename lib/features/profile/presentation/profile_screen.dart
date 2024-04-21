@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,10 +12,15 @@ import 'package:inturn/core/widgets/custom_text_field.dart';
 import 'package:inturn/core/widgets/cutom_text.dart';
 import 'package:inturn/core/widgets/main_button.dart';
 import 'package:inturn/core/widgets/major_drop_down.dart';
+import 'package:inturn/core/widgets/show_dialog.dart';
 import 'package:inturn/core/widgets/university.dart';
 import 'package:inturn/features/auth/presentation/widgets/segment_button.dart';
 import 'package:inturn/features/auth/presentation/widgets/upload_photo.dart';
-
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'dart:typed_data';
+import 'package:syncfusion_flutter_pdf/pdf.dart';
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
@@ -75,7 +82,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Padding(
                 padding: EdgeInsets.symmetric(vertical: AppSize.defaultSize! * 2),
                 child: MainButton(
-                  onTap: (){},
+                  onTap: (){
+                    showCV(context);
+                  },
                   text: StringManager.downloadCV.tr(),
                   textColor: Colors.black,
                   color: AppColors.lightGreyColor,
