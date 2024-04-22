@@ -65,21 +65,76 @@ class CVPage extends StatelessWidget {
         Rect.fromLTWH(
             0, 0, page.getClientSize().width, page.getClientSize().height));
     page.graphics.drawImage(PdfBitmap(await _readImageData(AssetPath.logoPNG)),
-        Rect.fromLTWH(0, 0, 120, 50));
-
+        Rect.fromLTWH(0, 0, 120, 40));
     page.graphics.drawString(
         'Hussein Yasser', PdfStandardFont(PdfFontFamily.helvetica, 30),
+        brush: PdfBrushes.black, bounds: const Rect.fromLTWH(0, 100, 400, 50));
+    page.graphics.drawString(
+        'Highly skilled software developer with 8 years of experience in designing, developing, and implementing software solutions. Proficient in multiple programming languages and technologies.',
+        PdfStandardFont(PdfFontFamily.helvetica, 20),
+        brush: PdfBrushes.gray,
+        bounds: const Rect.fromLTWH(0, 150, 400, 300));
+    page.graphics.drawString(
+        '+20 1145 7898 20', PdfStandardFont(PdfFontFamily.helvetica, 20),
         brush: PdfBrushes.black,
-        bounds: const Rect.fromLTWH(0, 100, 400, 50));
-    // PdfGrid grid = PdfGrid();
-    // grid.style = PdfGridStyle(
-    //     font: PdfStandardFont(PdfFontFamily.helvetica, 30),
-    //     cellPadding: PdfPaddings(left: 5, right: 2, top: 2, bottom: 2));
-
+        bounds: const Rect.fromLTWH(40, 290, 400, 300));
+    page.graphics.drawString(
+        'Mohamed@gmail.com', PdfStandardFont(PdfFontFamily.helvetica, 20),
+        brush: PdfBrushes.black,
+        bounds: const Rect.fromLTWH(40, 320, 400, 300));
+    page.graphics.drawString('15 Abbas Al Akkad, Madinet nasr , Cairo, Egypt',
+        PdfStandardFont(PdfFontFamily.helvetica, 20),
+        brush: PdfBrushes.black,
+        bounds: const Rect.fromLTWH(40, 350, 400, 300));
+    page.graphics.drawString(
+        'Education', PdfStandardFont(PdfFontFamily.helvetica, 25),
+        brush: PdfBrushes.black, bounds: const Rect.fromLTWH(0, 420, 400, 50));
+    page.graphics.drawString('American University in Cairo',
+        PdfStandardFont(PdfFontFamily.helvetica, 20),
+        brush: PdfBrushes.black, bounds: const Rect.fromLTWH(0, 450, 400, 50));
+    page.graphics.drawString(
+        'Computer Science', PdfStandardFont(PdfFontFamily.helvetica, 20),
+        brush: PdfBrushes.gray, bounds: const Rect.fromLTWH(0, 480, 400, 50));
+    // page.graphics.drawString(
+    //     'Skills', PdfStandardFont(PdfFontFamily.helvetica, 25),
+    //     brush: PdfBrushes.black, bounds: const Rect.fromLTWH(0, 520, 400, 50));
+    // Create a PDF ordered list.
+    final PdfOrderedList orderedList = PdfOrderedList(
+      items: PdfListItemCollection(
+        <String>['Skills'],
+      ),
+      textIndent: 20,
+      indent: 20,
+      font: PdfStandardFont(PdfFontFamily.helvetica, 25),
+      marker: PdfOrderedMarker(
+        style: PdfNumberStyle.none,
+      ),
+      markerHierarchy: false,
+      format: PdfStringFormat(lineSpacing: 10),
+    );
+    orderedList.brush = PdfBrushes.black;
+// Create a un ordered list and add it as a sublist.
+    orderedList.items[0].subList = PdfUnorderedList(
+        marker: PdfUnorderedMarker(
+            font: PdfStandardFont(PdfFontFamily.helvetica, 15),
+            style: PdfUnorderedMarkerStyle.disk),
+        items: PdfListItemCollection(<String>[
+          'ASP .NET',
+          'Object Oriented',
+          'MVC',
+          'SQL Server',
+        ]),
+        font: PdfStandardFont(PdfFontFamily.helvetica, 15),
+        textIndent: 10,
+        indent: 20);
+// Draw the list to the PDF page.
+    orderedList.draw(
+        page: page,
+        bounds: Rect.fromLTWH(
+            -35, 530, page.getClientSize().width, page.getClientSize().height));
     List<int> bytes = await document.save();
     document.dispose();
-
-    saveAndLaunchFile(bytes, 'Output.pdf');
+    saveAndLaunchFile(bytes, 'hussein_yasser.pdf');
   }
 
   Future<Uint8List> _readImageData(String name) async {
@@ -241,7 +296,7 @@ class CVPage extends StatelessWidget {
                   ),
                   CustomText(
                     text:
-                        '''- ASP\n.NET\n- Object Oriented\n- MVC\n- SQL Server''',
+                        '''- ASP.NET\n- Object Oriented\n- MVC\n- SQL Server''',
                     maxLines: 100,
                     fontSize: AppSize.defaultSize! * 1.2,
                     color: AppColors.greyColor,
