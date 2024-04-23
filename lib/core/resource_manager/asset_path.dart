@@ -23,6 +23,7 @@ class AssetPath {
   static const String twitter = '$pathImage/twitter.png';
   static const String website = '$pathImage/website.png';
   static const String bgCv = '$pathImage/bg_cv.png';
+  static const String cvContacts  = '$pathImage/cv_contacts.png';
 //Images
   static const String logoLarge = '$pathImage/logo@2x.jpg';
   static const String illustration = '$pathImage/illustration.jpg';

@@ -57,15 +57,13 @@ class CVPage extends StatelessWidget {
   Future<void> _createPDF() async {
     PdfDocument document = PdfDocument();
     final page = document.pages.add();
-    // page.graphics.drawString('Hussein Yasser CV',
-    //     PdfStandardFont(PdfFontFamily.helvetica, 30));
 
     page.graphics.drawImage(
         PdfBitmap(await _readImageData(AssetPath.bgCv)),
         Rect.fromLTWH(
             0, 0, page.getClientSize().width, page.getClientSize().height));
     page.graphics.drawImage(PdfBitmap(await _readImageData(AssetPath.logoPNG)),
-        Rect.fromLTWH(0, 0, 120, 40));
+        const Rect.fromLTWH(0, 0, 120, 40));
     page.graphics.drawString(
         'Hussein Yasser', PdfStandardFont(PdfFontFamily.helvetica, 30),
         brush: PdfBrushes.black, bounds: const Rect.fromLTWH(0, 100, 400, 50));
@@ -74,6 +72,10 @@ class CVPage extends StatelessWidget {
         PdfStandardFont(PdfFontFamily.helvetica, 20),
         brush: PdfBrushes.gray,
         bounds: const Rect.fromLTWH(0, 150, 400, 300));
+    page.graphics.drawImage(
+        PdfBitmap(await _readImageData(AssetPath.cvContacts)),
+        const Rect.fromLTWH(
+            0, 280, 30, 110));
     page.graphics.drawString(
         '+20 1145 7898 20', PdfStandardFont(PdfFontFamily.helvetica, 20),
         brush: PdfBrushes.black,
@@ -95,9 +97,6 @@ class CVPage extends StatelessWidget {
     page.graphics.drawString(
         'Computer Science', PdfStandardFont(PdfFontFamily.helvetica, 20),
         brush: PdfBrushes.gray, bounds: const Rect.fromLTWH(0, 480, 400, 50));
-    // page.graphics.drawString(
-    //     'Skills', PdfStandardFont(PdfFontFamily.helvetica, 25),
-    //     brush: PdfBrushes.black, bounds: const Rect.fromLTWH(0, 520, 400, 50));
     // Create a PDF ordered list.
     final PdfOrderedList orderedList = PdfOrderedList(
       items: PdfListItemCollection(
@@ -126,12 +125,15 @@ class CVPage extends StatelessWidget {
         ]),
         font: PdfStandardFont(PdfFontFamily.helvetica, 15),
         textIndent: 10,
+        format:   PdfStringFormat(lineSpacing: 10,lineAlignment: PdfVerticalAlignment.top),
         indent: 20);
 // Draw the list to the PDF page.
     orderedList.draw(
         page: page,
+format: PdfLayoutFormat(breakType: PdfLayoutBreakType.fitColumnsToPage ,  ),
         bounds: Rect.fromLTWH(
             -35, 530, page.getClientSize().width, page.getClientSize().height));
+
     List<int> bytes = await document.save();
     document.dispose();
     saveAndLaunchFile(bytes, 'hussein_yasser.pdf');
@@ -169,7 +171,9 @@ class CVPage extends StatelessWidget {
                     children: [
                       SvgPicture.asset(AssetPath.logo),
                       IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                           icon: Icon(
                             Icons.close,
                             color: AppColors.primaryColor,
