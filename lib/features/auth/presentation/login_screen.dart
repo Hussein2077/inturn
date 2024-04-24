@@ -10,6 +10,8 @@ import 'package:inturn/core/resource_manager/asset_path.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
+import 'package:inturn/core/service/navigator_services.dart';
+import 'package:inturn/core/service/service_locator.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/utils/methods.dart';
 import 'package:inturn/core/widgets/cutom_text.dart';
@@ -64,11 +66,16 @@ class _LoginScreenState extends State<LoginScreen> {
           listener: (context, state) {
             if (state is LoginWithEmailAndPasswordSuccessMessageState) {
               EasyLoading.dismiss();
-              Navigator.pushNamedAndRemoveUntil(
-                  context, Routes.main, (route) => false);
+              if (state.isCompleted) {
+                Navigator.pushNamedAndRemoveUntil(
+                    getIt<NavigationService>().navigatorKey.currentContext!, Routes.main, (route) => false);
+              } else {
+                Navigator.pushNamedAndRemoveUntil(
+                    getIt<NavigationService>().navigatorKey.currentContext!, Routes.personalInfo, (route) => false);
+              }
             } else if (state is LoginWithEmailAndPasswordErrorMessageState) {
               EasyLoading.dismiss();
-              errorSnackBar(context, StringManager.unexpectedError.tr());
+              errorSnackBar(context, state.errorMessage);
             } else if (state is LoginWithEmailAndPasswordLoadingState) {
               EasyLoading.show(status: 'loading...');
             }
@@ -76,30 +83,18 @@ class _LoginScreenState extends State<LoginScreen> {
           child: BlocListener<SignInWithPlatformBloc, SignInWithPlatformState>(
             listener: (context, state) async {
               if (state is SignWithGoogleSuccesMessageState) {
-                Navigator.pushNamed(context, Routes.personalInfo);
-                // Methods.instance.clearAuthData();
-                // BlocProvider.of<GetMyDataBloc>(context).add(GetMyDataEvent());
-                if (state.userData.apiUserData.phone == null) {
-                  // Navigator.pushNamedAndRemoveUntil(
-                  //   context,
-                  //   Routes.addInfo,
-                  //   arguments: ThirdPartyAuthModel(
-                  //     data: state.userData.userData,
-                  //     type: "google",
-                  //   ),
-                  //       (route) => false,
-                  // );
-                } else {
-                  // BlocProvider.of<AddInfoBloc>(context).add(
-                  //     AddInfoEvent(email: state.userData.userData.email.toString()));
+                if (state.isCompleted) {
                   Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    Routes.main,
-                    (route) => false,
-                  );
+                      getIt<NavigationService>().navigatorKey.currentContext!,
+                      Routes.main,
+                      (route) => false);
+                } else {
+                  Navigator.pushNamedAndRemoveUntil(
+                      getIt<NavigationService>().navigatorKey.currentContext!,
+                      Routes.personalInfo,
+                      (route) => false);
                 }
               } else if (state is SignWithGoogleErrorMessageState) {
-                log('${state.errorMessage}ssssssssss');
                 errorSnackBar(context, state.errorMessage);
               } else if (state is SignWithPlatFormLoadingState) {}
             },
@@ -119,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: AppSize.defaultSize! * 2,
                   ),
                   CustomText(
-                   text:  StringManager.letBeginTheJourney.tr(),
+                    text: StringManager.letBeginTheJourney.tr(),
                     color: AppColors.blackColor,
                     fontSize: AppSize.defaultSize! * 1.8,
                     fontWeight: FontWeight.w700,
@@ -131,8 +126,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     text: StringManager.continueWithGoogle.tr(),
                     logo: SvgPicture.asset(AssetPath.google),
                     onPressed: () {
-                      BlocProvider.of<SignInWithPlatformBloc>(context).add( SignGoogleEvent());
-
+                      BlocProvider.of<SignInWithPlatformBloc>(context)
+                          .add(SignGoogleEvent());
                     },
                   ),
                   // CustomSignInButton(
@@ -143,11 +138,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   //     //     .add(SignInWithFacebookEvent());
                   //   },
                   // ),
-                  SizedBox(height: AppSize.defaultSize!*2),
+                  SizedBox(height: AppSize.defaultSize! * 2),
                   CustomSignInButton(
                     text: StringManager.continueWithApple.tr(),
                     logo: SvgPicture.asset(AssetPath.apple),
-                    onPressed: () {     Navigator.pushNamed(context, Routes.personalInfo);
+                    onPressed: () {
+                      Navigator.pushNamed(context, Routes.personalInfo);
                       // BlocProvider.of<SignInWithPlatformBloc>(context)
                       //     .add(SignInWithFacebookEvent());
                     },
@@ -197,14 +193,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   MainButton(
                     text: StringManager.login.tr(),
                     onTap: () {
-                      if (true) {
-                        // BlocProvider.of<LoginWithEmailAndPasswordBloc>(context)
-                        //     .add(LoginWithEmailAndPasswordEvent(
-                        //   email: emailController.text,
-                        //   password: passwordController.text,
-                        // ));
-                        Navigator.pushNamed(context, Routes.academicInfo);
-
+                      if (validation()) {
+                        BlocProvider.of<LoginWithEmailAndPasswordBloc>(context)
+                            .add(LoginWithEmailAndPasswordEvent(
+                          email: emailController.text,
+                          password: passwordController.text,
+                        ));
+                        // Navigator.pushNamed(context, Routes.academicInfo);
                       } else {
                         errorSnackBar(
                             context, StringManager.pleaseCompleteYourData.tr());

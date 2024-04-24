@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inturn/core/resource_manager/asset_path.dart';
 import 'package:inturn/core/utils/app_size.dart';
 
-AppBar appBar(BuildContext context, {required String text,bool leading =true}) {
+AppBar appBar(BuildContext context, {required String text,bool leading =true,List<Widget>? actions}) {
   return AppBar(
     backgroundColor: Colors.white,
     elevation: 1,
@@ -14,6 +14,7 @@ AppBar appBar(BuildContext context, {required String text,bool leading =true}) {
       },
       icon: const Icon(Icons.arrow_back_ios),
     ):null,
+    actions: actions,
   );
 }
 

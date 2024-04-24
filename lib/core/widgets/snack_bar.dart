@@ -4,20 +4,21 @@ import 'package:inturn/core/utils/app_size.dart';
 void errorSnackBar(BuildContext context, String message) {
   final snackBar = SnackBar(
     content: Text(message),
+    duration:   Duration(seconds: 3),
     margin: EdgeInsets.only(
-        bottom: AppSize.defaultSize! ,
+        bottom: AppSize.defaultSize!*4 ,
         left: AppSize.screenWidth! * .1,
         right: AppSize.screenWidth! * .1),
     backgroundColor: Colors.red.withOpacity(.9),
     behavior: SnackBarBehavior.floating,
-    action: SnackBarAction(
-      label: 'UNDO',
-      disabledTextColor: Colors.white,
-      textColor: Colors.white,
-      onPressed: () {
-        // Few lines of code to undo the change.
-      },
-    ),
+    // action: SnackBarAction(
+    //   label: 'UNDO',
+    //   disabledTextColor: Colors.white,
+    //   textColor: Colors.white,
+    //   onPressed: () {
+    //     // Few lines of code to undo the change.
+    //   },
+    // ),
   );
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }

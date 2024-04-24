@@ -40,7 +40,7 @@ class _LocationInfoState extends State<LocationInfo> {
             SizedBox(
               height: AppSize.defaultSize! * 2,
             ),
-            MajorDropDown(),
+            FacultyDropDown(),
             SizedBox(
               height: AppSize.defaultSize! * 2.4,
             ),

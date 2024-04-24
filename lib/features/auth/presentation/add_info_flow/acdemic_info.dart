@@ -25,14 +25,14 @@ class AcademicInfo extends StatelessWidget {
             SizedBox(
               height: AppSize.defaultSize! * 2,
             ),
-            MajorDropDown(),
+            const FacultyDropDown(),
                 SizedBox(
                   height: AppSize.defaultSize! * 4,
                 ),
                 MainButton(
                   text: StringManager.next.tr(),
                   onTap: () {
-                    if (true) {
+                    if (UniversityDropDown.selectedValue!=null&&FacultyDropDown.selectedValue!=null) {
                       Navigator.pushNamed(context, Routes.experienceInfo);
                     } else {
                       errorSnackBar(

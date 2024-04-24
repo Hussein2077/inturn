@@ -11,18 +11,18 @@ import 'package:inturn/features/home/data/model/major_model.dart';
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_states.dart';
 
-class MajorDropDown extends StatefulWidget {
-  const MajorDropDown({
+class FacultyDropDown extends StatefulWidget {
+  const FacultyDropDown({
     super.key,
   });
 
   static MajorModel? selectedValue;
 
   @override
-  State<MajorDropDown> createState() => _MajorDropDownState();
+  State<FacultyDropDown> createState() => _FacultyDropDownState();
 }
 
-class _MajorDropDownState extends State<MajorDropDown> {
+class _FacultyDropDownState extends State<FacultyDropDown> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<OptionsBloc, GetOptionsStates>(
@@ -36,7 +36,7 @@ class _MajorDropDownState extends State<MajorDropDown> {
                     Border.all(color: AppColors.borderColor.withOpacity(.4)),
                 borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2)),
             child: DropdownButton2<MajorModel>(
-              value: MajorDropDown.selectedValue,
+              value: FacultyDropDown.selectedValue,
               buttonStyleData: ButtonStyleData(
                 width: AppSize.screenWidth! * .9,
                 decoration: BoxDecoration(
@@ -50,7 +50,7 @@ class _MajorDropDownState extends State<MajorDropDown> {
               underline: const SizedBox(),
               onChanged: (MajorModel? newValue) {
                 setState(() {
-                  MajorDropDown.selectedValue = newValue;
+                  FacultyDropDown.selectedValue = newValue;
                 });
               },
               hint: Padding(

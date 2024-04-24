@@ -23,7 +23,8 @@ class SignWithGoogleErrorMessageState extends SignInWithPlatformState{
 }
 class SignWithGoogleSuccesMessageState extends SignInWithPlatformState{
   final AuthWithGoogleModel userData ;
+  final bool isCompleted ;
 
-  const SignWithGoogleSuccesMessageState({   required this.userData});
+  const SignWithGoogleSuccesMessageState({   required this.userData , required this.isCompleted});
 
 }

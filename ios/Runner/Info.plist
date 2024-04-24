@@ -8,6 +8,12 @@
 	<string>Inturn</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>This app requires access to your photo library to allow you to select photos for uploading and profile customization.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>This app needs access to your camera to allow you to take and upload photos directly within the app.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>This app requires access to your microphone to record audio when capturing videos within the app.</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>

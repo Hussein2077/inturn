@@ -68,7 +68,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
           create: (context) => getIt<OptionsBloc>()
             // ..add(const GetMajorEvent())
-            // ..add(const GetUniversityEvent())
+            ..add(const GetUniversityEvent())
             // ..add(const GetCitiesEvent()),
         ),
       ],

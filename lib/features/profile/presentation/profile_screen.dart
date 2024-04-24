@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:inturn/core/resource_manager/asset_path.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
+import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
+import 'package:inturn/core/utils/methods.dart';
 import 'package:inturn/core/widgets/app_bar.dart';
 import 'package:inturn/core/widgets/custom_text_field.dart';
 import 'package:inturn/core/widgets/cutom_text.dart';
@@ -13,8 +15,10 @@ import 'package:inturn/core/widgets/main_button.dart';
 import 'package:inturn/core/widgets/major_drop_down.dart';
 import 'package:inturn/core/widgets/show_dialog.dart';
 import 'package:inturn/core/widgets/university.dart';
+import 'package:inturn/features/auth/presentation/login_screen.dart';
 import 'package:inturn/features/auth/presentation/widgets/segment_button.dart';
 import 'package:inturn/features/auth/presentation/widgets/upload_photo.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
@@ -58,7 +62,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(context, text: StringManager.profile.tr(), leading: false),
+      appBar: appBar(context, text: StringManager.profile.tr(), leading: false,actions: [
+        IconButton(onPressed: (){
+          Methods.instance.saveUserToken(authToken: null);
+          Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+              builder: (BuildContext context) {
+                return const LoginScreen();
+              },
+            ),
+                (_) => false,
+          );
+
+        } , icon: const Icon(Icons.logout))
+      ]),
       body: Padding(
         padding: EdgeInsets.all(AppSize.defaultSize! * 1.5),
         child: SingleChildScrollView(
@@ -223,7 +240,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           SizedBox(
                             height: AppSize.defaultSize! * 2,
                           ),
-                          const MajorDropDown(),
+                          const FacultyDropDown(),
                         ],
                       ),
                     ),
@@ -316,7 +333,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           SizedBox(
                             height: AppSize.defaultSize! * 2,
                           ),
-                          const MajorDropDown(),
+                          const FacultyDropDown(),
                           SizedBox(
                             height: AppSize.defaultSize! * 2.4,
                           ),

@@ -9,8 +9,10 @@ import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/widgets/custom_text_field.dart';
 import 'package:inturn/core/widgets/cutom_text.dart';
 import 'package:inturn/core/widgets/main_button.dart';
+import 'package:inturn/features/auth/presentation/add_info_flow/personal_info.dart';
 import 'package:inturn/features/home/presentation/widgets/job_cart.dart';
 import 'package:inturn/features/home/presentation/widgets/top_container.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, this.onPressedIntern, this.onPressedJob});
@@ -57,7 +59,15 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           MainButton(
             text: StringManager.changeWorkPreferences.tr(),
-            onTap: () {},
+            onTap: () {
+              PersistentNavBarNavigator.pushNewScreen(
+                context,
+                screen: const PersonalInfo(),
+                withNavBar: false,
+                // OPTIONAL VALUE. True by default.
+                pageTransitionAnimation: PageTransitionAnimation.fade,
+              );
+            },
             color: AppColors.lightGreyColor,
             textColor: AppColors.primaryColor,
           ),

@@ -35,14 +35,20 @@ class _UniversityDropDownState extends State<UniversityDropDown> {
             decoration: BoxDecoration(
                 border:
                 Border.all(color: AppColors.borderColor.withOpacity(.4)),
-                borderRadius: BorderRadius.circular(AppSize.defaultSize! * .5)),
+                borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2)),
             child: DropdownButton2<UniversityModel>(
               value: UniversityDropDown.selectedValue,
               buttonStyleData: ButtonStyleData(
                 width: AppSize.screenWidth! * .9,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2),
+                )
               ),
               dropdownStyleData: DropdownStyleData(
                   width: AppSize.screenWidth! * .9,
+                  decoration:   BoxDecoration(
+                    borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2),
+                  ),
                   // padding: EdgeInsets.symmetric(horizontal: 10),
                   maxHeight: AppSize.screenHeight! * .5),
               underline: const SizedBox(),
@@ -50,6 +56,7 @@ class _UniversityDropDownState extends State<UniversityDropDown> {
                 setState(() {
                   UniversityDropDown.selectedValue = newValue;
                 });
+
               },
               hint: Padding(
                 padding: EdgeInsets.only(left: AppSize.defaultSize!),
@@ -84,7 +91,7 @@ class _UniversityDropDownState extends State<UniversityDropDown> {
             decoration: BoxDecoration(
                 border:
                 Border.all(color: AppColors.borderColor.withOpacity(.4)),
-                borderRadius: BorderRadius.circular(AppSize.defaultSize! * 1.5)),
+                borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2)),
             child: DropdownButton2(
                 buttonStyleData: ButtonStyleData(
                   width: AppSize.screenWidth! * .9,

@@ -86,7 +86,7 @@ class StringManager {
   static const String userTokenKey = "User Token Key";
   static const String unexpectedError = "Unexpected Error";
   static const String loginSuccessfully = " Login Successfully";
-  static const String login = " Login";
+  static const String login = " Login or Sign up";
   static const String youHaveBeenMissed = "You Have Been Missed For Long Time";
   static const String email = "Email";
   static const String password = "Password";

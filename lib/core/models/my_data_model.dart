@@ -8,6 +8,7 @@ class MyDataModel {
   String? gradLevel;
   String? university;
   String? major;
+  bool? isCompleted ;
   static MyDataModel? _instance;
 
   void clearObject() {
@@ -24,6 +25,7 @@ class MyDataModel {
     this.dateOfBirth,
     this.university,
     this.phone,
+    this.isCompleted
   });
 
   setNewMyData({
@@ -36,6 +38,7 @@ class MyDataModel {
     String? gradLevel,
     String? university,
     String? major,
+    bool? isCompleted
   }) {
     this.phone = phone ?? this.phone;
     this.id = id ?? this.id;
@@ -46,6 +49,7 @@ class MyDataModel {
     this.gradLevel = gradLevel ?? this.gradLevel;
     this.university = university ?? this.university;
     this.major = major ?? this.major;
+    this.isCompleted = isCompleted ?? this.isCompleted;
   }
 
   factory MyDataModel.fromMap(Map<String, dynamic> map) {
@@ -60,6 +64,7 @@ class MyDataModel {
         gradLevel: map['gradLevel'] ?? '',
         university: map['university'] ?? '',
         major: map['major'] ?? '',
+        isCompleted: map['isCompleted'] ?? false,
       );
     } else {
       _instance?.setNewMyData(
@@ -71,6 +76,7 @@ class MyDataModel {
         gradLevel: map['gradLevel'] ?? '',
         university: map['university'] ?? '',
         major: map['major'] ?? '',
+        isCompleted: map['isCompleted'] ?? false,
       );
     }
 

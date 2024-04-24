@@ -22,7 +22,8 @@ class LoginWithEmailAndPasswordErrorMessageState extends LoginWithEmailAndPasswo
 
 class LoginWithEmailAndPasswordSuccessMessageState extends LoginWithEmailAndPasswordState{
   final String successMessage ;
+  final bool isCompleted ;
 
-  const LoginWithEmailAndPasswordSuccessMessageState({ required this.successMessage});
+  const LoginWithEmailAndPasswordSuccessMessageState( { required this.successMessage,required this.isCompleted,});
 
 }

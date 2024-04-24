@@ -16,8 +16,7 @@ class UniversityModel extends OptionsModel{
   factory UniversityModel.fromJson(Map<String, dynamic> json) {
     return UniversityModel(
       universityId: json['universityId'],
-      universityName: json['universityName'],
-
+      universityName: json['universityNameEn'],
       universityNameAr: json['universityNameAr'],
     );
   }

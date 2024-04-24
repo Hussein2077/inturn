@@ -75,7 +75,6 @@ class _MainScreenState extends State<MainScreen> {
         ),
         title: StringManager.profile.tr(),
         textStyle:  TextStyle(fontSize: AppSize.defaultSize!*1.2),
-
         activeColorPrimary: AppColors.secondaryColor,
         inactiveColorPrimary: CupertinoColors.white,
       ),

@@ -33,9 +33,10 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
     log('${authModel.email}vvvvv');
     log('${authModel.password}vvvvv');
     final body = {
-      ConstantApi.email: authModel.email,
-
-      ConstantApi.password: authModel.password,
+      'email': authModel.email,
+      "password":authModel.password,
+      "socialID": authModel.socialID,
+      "userRole": "User"
     };
 
     try {
@@ -174,11 +175,12 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
     } else {
       final body = {
         ConstantApi.email: userModel.email,
-        "googleID": userModel.id,
+        "socicaID": userModel.id,
+        "userRole": "User"
       };
       try {
         final response = await Dio().post(
-          ConstantApi.googleRegister,
+          ConstantApi.login,
           data: body,
           options: Options(
             headers: headers,
@@ -202,19 +204,10 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
   @override
   Future<Map<String, dynamic>> addPersonalInfo(AuthModel authModel) async {
     final body = {
-      'first_name': authModel.firstName,
-      'last_name': authModel.lastName,
       'email': authModel.email,
-      'image': await MultipartFile.fromFile(authModel.image!.path.toString(), filename: 'image.jpg'),
-      'university_id': authModel.universityId,
-      'faculty_id': authModel.facultyId,
-      'role': 'user',
-      // 'job_level_id': authModel.jobLevelId,
-      // 'experience_level_id': authModel.experienceLevelId,
-      // 'university_name': authModel.universityName,
-      // 'faculty_name': authModel.facultyName,
-      // 'job_level_name': authModel.jobLevelName,
-      // 'experience_level_name': authModel.experienceLevelName,
+      "password":authModel.password,
+      "socialID": authModel.socialID,
+      "userRole": "User"
     };
 
     try {

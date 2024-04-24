@@ -11,15 +11,37 @@ import 'package:inturn/core/widgets/main_button.dart';
 import 'package:inturn/core/widgets/snack_bar.dart';
 import 'package:inturn/features/auth/presentation/widgets/upload_photo.dart';
 
-class PersonalInfo extends StatelessWidget {
+class PersonalInfo extends StatefulWidget {
   const PersonalInfo({super.key});
+
+  @override
+  State<PersonalInfo> createState() => _PersonalInfoState();
+}
+
+class _PersonalInfoState extends State<PersonalInfo> {
+  late TextEditingController firstNameController;
+  late TextEditingController secondNameController;
+
+  @override
+  void initState() {
+    firstNameController = TextEditingController();
+    secondNameController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    firstNameController.dispose();
+    secondNameController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(context, text: StringManager.personalInformation.tr()),
       body: Padding(
-        padding:   EdgeInsets.all( AppSize.defaultSize! * 1.5),
+        padding: EdgeInsets.all(AppSize.defaultSize! * 1.5),
         child: Column(
             // mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -39,6 +61,7 @@ class PersonalInfo extends StatelessWidget {
               ),
               CustomTextField(
                 labelText: StringManager.firstName.tr(),
+                controller: firstNameController,
                 keyboardType: TextInputType.emailAddress,
               ),
               SizedBox(
@@ -46,22 +69,25 @@ class PersonalInfo extends StatelessWidget {
               ),
               CustomTextField(
                 labelText: StringManager.secondName.tr(),
+                controller: secondNameController,
                 keyboardType: TextInputType.emailAddress,
               ),
               SizedBox(
                 height: AppSize.defaultSize! * 2,
               ),
-              CustomTextField(
-                labelText: StringManager.email.tr(),
-                keyboardType: TextInputType.emailAddress,
-              ),
+              // CustomTextField(
+              //   labelText: StringManager.email.tr(),
+              //   keyboardType: TextInputType.emailAddress,
+              // ),
               SizedBox(
                 height: AppSize.defaultSize! * 2,
               ),
               MainButton(
                 text: StringManager.next.tr(),
                 onTap: () {
-                  if (true) {
+                  if (UploadProfileImagePage.imageFile != null &&
+                      firstNameController.text.isNotEmpty &&
+                      secondNameController.text.isNotEmpty) {
                     Navigator.pushNamed(context, Routes.academicInfo);
                   } else {
                     errorSnackBar(

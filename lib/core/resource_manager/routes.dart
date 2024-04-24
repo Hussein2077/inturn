@@ -62,9 +62,10 @@ class RouteGenerator {
                 const SignUpScreen(),
             transitionsBuilder: customAnimate);
       case Routes.personalInfo:
+
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
-                const PersonalInfo(),
+                  PersonalInfo(),
             transitionsBuilder: customAnimate);
       case Routes.academicInfo:
         return PageRouteBuilder(

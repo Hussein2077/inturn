@@ -175,7 +175,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 SizedBox(
                   height: AppSize.defaultSize! * 3,
                 ),
-                const MajorDropDown(),
+                const FacultyDropDown(),
                 ColumnWithTextField(
                   text: StringManager.password.tr(),
                   controller: passwordController,
@@ -218,7 +218,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         phone: phoneController.text,
                         password: passwordController.text,
                         major:
-                            MajorDropDown.selectedValue?.id.toString() ?? "0",
+                            FacultyDropDown.selectedValue?.id.toString() ?? "0",
                         universityID: UniversityDropDown
                                 .selectedValue?.universityId
                                 .toString() ??
