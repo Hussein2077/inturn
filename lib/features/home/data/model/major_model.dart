@@ -1,52 +1,57 @@
-import 'package:inturn/core/models/options_model.dart';
-import 'package:inturn/core/models/vacancey_model.dart';
+class MajorModel {
+  final String field;
+  final List<Position> positions;
 
-class MajorModel extends OptionsModel {
-  int? id;
-  String? name;
-  String? slug;
-  String? logo;
-  dynamic category;
-  int? categoryId;
-  bool? disable;
-  List<VacancyModel>? jobs;
-  int? popular;
+  MajorModel({required this.field, required this.positions});
 
-  MajorModel (
-      {this.id,
-      this.name,
-      this.slug,
-      this.logo,
-      this.category,
-      this.categoryId,
-      this.disable,
-      this.jobs,
-      this.popular});
-
-  MajorModel .fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    text = json['name'];
-    slug = json['slug'];
-    logo = json['logo'];
-    category = json['category'];
-    categoryId = json['categoryId'];
-    disable = json['disable'];
-    jobs = json['jobs'];
-    popular = json['popular'];
+  factory MajorModel.fromJson(Map<String, dynamic> json) {
+    return MajorModel(
+      field: json['Field'],
+      positions: List<Position>.from(
+        json['Position'].map((position) => Position.fromJson(position)),
+      ),
+    );
   }
-//
-// Map<String, dynamic> toJson() {
-//   final Map<String, dynamic> data = new Map<String, dynamic>();
-//   data['id'] = this.id;
-//   data['name'] = this.name;
-//   data['slug'] = this.slug;
-//   data['logo'] = this.logo;
-//   data['category'] = this.category;
-//   data['categoryId'] = this.categoryId;
-//   data['disable'] = this.disable;
-//   data['jobs'] = this.jobs;
-//   data['popular'] = this.popular;
-//   return data;
-// }
+}
+
+
+class Position {
+  final int majorId;
+  final String majorNameEn;
+  final String majorNameAr;
+  final String majorRank;
+  final int majorCategoryId;
+  final String creationDate;
+  final String lastModificationTime;
+  final String creatorUserId;
+  final int lastModificationUserId;
+  final int deleteStatusId;
+
+  Position({
+    required this.majorId,
+    required this.majorNameEn,
+    required this.majorNameAr,
+    required this.majorRank,
+    required this.majorCategoryId,
+    required this.creationDate,
+    required this.lastModificationTime,
+    required this.creatorUserId,
+    required this.lastModificationUserId,
+    required this.deleteStatusId,
+  });
+
+  factory Position.fromJson(Map<String, dynamic> json) {
+    return Position(
+      majorId: json['majorId'],
+      majorNameEn: json['majorNameEn'],
+      majorNameAr: json['majorNameAr'],
+      majorRank: json['majorRank'],
+      majorCategoryId: json['majorCategoryId'],
+      creationDate: json['creationDate'],
+      lastModificationTime: json['lastModificationTime'],
+      creatorUserId: json['creatorUserId'],
+      lastModificationUserId: json['lastModificationUserId'],
+      deleteStatusId: json['deleteStatusId'],
+    );
+  }
 }

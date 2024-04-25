@@ -21,7 +21,7 @@ class AcademicInfo extends StatelessWidget {
           padding: EdgeInsets.all(AppSize.defaultSize! * 1.5),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-            UniversityDropDown(),
+            const UniversityDropDown(),
             SizedBox(
               height: AppSize.defaultSize! * 2,
             ),

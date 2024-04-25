@@ -5,6 +5,7 @@ import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/widgets/app_bar.dart';
+import 'package:inturn/core/widgets/area_drop_down.dart';
 import 'package:inturn/core/widgets/cutom_text.dart';
 import 'package:inturn/core/widgets/main_button.dart';
 import 'package:inturn/core/widgets/major_drop_down.dart';
@@ -14,17 +15,16 @@ import 'package:inturn/features/auth/presentation/widgets/segment_button.dart';
 
 class LocationInfo extends StatefulWidget {
   const LocationInfo({super.key});
-
+static int locationSegment=0;
   @override
   State<LocationInfo> createState() => _LocationInfoState();
 }
 
 class _LocationInfoState extends State<LocationInfo> {
-  int _currentSegment = 0;
 
   void _onValueChanged(int newValue) {
     setState(() {
-      _currentSegment = newValue;
+      LocationInfo.locationSegment  = newValue;
     });
   }
 
@@ -36,11 +36,7 @@ class _LocationInfoState extends State<LocationInfo> {
           padding: EdgeInsets.all(AppSize.defaultSize! * 1.5),
           child:
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            UniversityDropDown(),
-            SizedBox(
-              height: AppSize.defaultSize! * 2,
-            ),
-            FacultyDropDown(),
+            const CitiesDropDown(),
             SizedBox(
               height: AppSize.defaultSize! * 2.4,
             ),
@@ -52,7 +48,7 @@ class _LocationInfoState extends State<LocationInfo> {
               height: AppSize.defaultSize! * 1.6,
             ),
             CustomSegmentedButton(
-              segments: ['On Site', 'Remotly','Hybrid'],
+              segments: const ['On Site', 'Remotly','Hybrid'],
               onValueChanged: (index) => _onValueChanged(index),
               width:  AppSize.defaultSize! * 10,
             ),
@@ -62,7 +58,7 @@ class _LocationInfoState extends State<LocationInfo> {
             MainButton(
               text: StringManager.next.tr(),
               onTap: () {
-                if (true) {
+                if (CitiesDropDown.selectedValue != null && CitiesDropDown.selectedValue2 != null) {
                   Navigator.pushNamed(context, Routes.fieldInfo);
                 } else {
                   errorSnackBar(

@@ -1,17 +1,17 @@
 import 'package:dartz/dartz.dart';
 import 'package:inturn/core/base_use_case/base_use_case.dart';
 import 'package:inturn/core/error/failure.dart';
-import 'package:inturn/features/home/data/model/major_model.dart';
+import 'package:inturn/features/home/data/model/faculty_model.dart';
 import 'package:inturn/features/home/domain/repo/jobs_base_repo.dart';
 
-class GetMajorUseCase extends BaseUseCase<List<MajorModel>, NoParameter> {
+class GetFacultyUseCase extends BaseUseCase<List<FacultyModel>, int> {
   final BaseRepositoryHome baseRepositoryHome;
 
-  GetMajorUseCase({required this.baseRepositoryHome});
+  GetFacultyUseCase({required this.baseRepositoryHome});
 
   @override
-  Future<Either<List<MajorModel>, Failure>> call(NoParameter parameter) async {
-    final result = await baseRepositoryHome.getMajor();
+  Future<Either<List<FacultyModel>, Failure>> call(int parameter) async {
+    final result = await baseRepositoryHome.getFaculty(parameter);
 
     return result;
   }

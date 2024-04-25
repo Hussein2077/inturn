@@ -6,13 +6,13 @@ import 'package:inturn/features/home/domain/use_case/get_top_jobs.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_event.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_state.dart';
 
-class GetTopFiveBloc extends Bloc<BaseGetTopFiveEvent, GetTopFiveState> {
+class GetMajorBloc extends Bloc<BaseGetTopFiveEvent, GetTopFiveState> {
   final GetTopFiveUseCase getTopFiveUseCase;
-  final GetBlogsUseCase getBlogsUseCase;
+  final GetMajorUseCase getMajorUseCase;
 
-  GetTopFiveBloc({
+  GetMajorBloc({
     required this.getTopFiveUseCase,
-    required this.getBlogsUseCase,
+    required this.getMajorUseCase,
   }) : super(GetTopFiveInitial()) {
     on<GetTopFiveEvent>((event, emit) async {
       emit(const GetTopFiveLoadingState());
@@ -22,12 +22,12 @@ class GetTopFiveBloc extends Bloc<BaseGetTopFiveEvent, GetTopFiveState> {
           (r) => emit(GetTopFiveErrorMessageState(
               errorMessage: DioHelper().getTypeOfFailure(r))));
     });
-    on<GetBlogsEvent>((event, emit) async {
-      emit(const GetBlogsLoadingState());
-      final result = await getBlogsUseCase.call(const NoParameter());
+    on<GetMajorEvent>((event, emit) async {
+      emit(const GetMajorLoadingState());
+      final result = await getMajorUseCase.call(const NoParameter());
       result.fold(
-          (l) => emit(GetBlogsSuccessMessageState(topFiveModel: l)),
-          (r) => emit(GetBlogsErrorMessageState(
+          (l) => emit(GetMajorSuccessMessageState(topFiveModel: l)),
+          (r) => emit(GetMajorErrorMessageState(
               errorMessage: DioHelper().getTypeOfFailure(r))));
     });
   }

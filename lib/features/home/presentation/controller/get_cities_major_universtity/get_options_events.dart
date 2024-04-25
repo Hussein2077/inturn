@@ -7,8 +7,9 @@ abstract class OptionsEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetMajorEvent extends OptionsEvent {
-  const GetMajorEvent();
+class GetFacultyEvent extends OptionsEvent {
+  final int id;
+  const GetFacultyEvent(this.id);
 }
 
 class GetUniversityEvent extends OptionsEvent {

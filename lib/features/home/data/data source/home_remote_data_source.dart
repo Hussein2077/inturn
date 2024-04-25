@@ -4,17 +4,17 @@ import 'package:dio/dio.dart';
 import 'package:inturn/core/models/vacancey_model.dart';
 import 'package:inturn/core/utils/api_helper.dart';
 import 'package:inturn/core/utils/constant_api.dart';
-import 'package:inturn/features/home/data/model/blog_model.dart';
-import 'package:inturn/features/home/data/model/cities_model.dart';
 import 'package:inturn/features/home/data/model/major_model.dart';
+import 'package:inturn/features/home/data/model/cities_model.dart';
+import 'package:inturn/features/home/data/model/faculty_model.dart';
 import 'package:inturn/features/home/data/model/university_model.dart';
 
 abstract class BaseRemotelyDataSourceHome{
   Future<List<VacancyModel>> getTopFive(int type);
-  Future<List<CitiesModel>> getCities();
-  Future<List<MajorModel>> getMajor();
+  Future<List<Country>> getCities();
+  Future<List<FacultyModel>> getFaculty(int id);
   Future<List<UniversityModel>> getUniversity();
-  Future<List<BlogModel>> getBlogs();
+  Future<List<MajorModel>> getMajor();
 }
 
 class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
@@ -33,13 +33,13 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
     }
   }
   @override
-  Future<List<CitiesModel>> getCities() async {
+  Future<List<Country>> getCities() async {
     try {
       final response = await Dio().get(
         ConstantApi.provinces,
       );
-      List<CitiesModel> jsonData = List<CitiesModel>.from(
-          (response.data as List).map((e) => CitiesModel.fromJson(e)));
+      List<Country> jsonData = List<Country>.from(
+          (response.data as List).map((e) => Country.fromJson(e)));
       return jsonData;
 
     } on DioException catch (e) {
@@ -47,17 +47,17 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
     }
   }
   @override
-  Future<List<MajorModel>> getMajor() async {
+  Future<List<FacultyModel>> getFaculty(int id) async {
     try {
       final response = await Dio().get(
-        ConstantApi.majors,
+        ConstantApi.faculty(id),
       );
-      List<MajorModel> jsonData = List<MajorModel>.from(
-          (response.data as List).map((e) => MajorModel.fromJson(e)));
+      List<FacultyModel> jsonData = List<FacultyModel>.from(
+          (response.data as List).map((e) => FacultyModel.fromJson(e)));
       return jsonData;
 
     } on DioException catch (e) {
-      throw DioHelper.handleDioError(dioError: e, endpointName: "getMajor");
+      throw DioHelper.handleDioError(dioError: e, endpointName: "getFaculty");
     }
   }
   @override
@@ -77,13 +77,13 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
     }
   }
   @override
-  Future<List<BlogModel>> getBlogs() async {
+  Future<List<MajorModel>> getMajor() async {
     try {
       final response = await Dio().get(
-        ConstantApi.blogs,
+        ConstantApi.getMajorsByCategory,
       );
-      List<BlogModel> jsonData = List<BlogModel>.from(
-          (response.data as List).map((e) => BlogModel.fromJson(e)));
+      List<MajorModel> jsonData = List<MajorModel>.from(
+          (response.data as List).map((e) => MajorModel.fromJson(e)));
       return jsonData;
 
     } on DioException catch (e) {

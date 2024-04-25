@@ -5,7 +5,9 @@ class ConstantApi {
 
   static const String login = "${baseUrl}Auth/Login";
   static const String universities = "${baseUrl}Universities/GetAllUniversity";
-
+  static   String faculty (int id)=> "${baseUrl}Faculties/GetFacultiesBy$id";
+  static const String provinces = "${baseUrl}Countries/GetAllCountriesIncluded";
+  static const String getMajorsByCategory = "${baseUrl}Majors/GetAllMajorsAsyncGroupedByCategory";
 
 //////////////////////////////////////////////////////////////////////
   static const String myData = "${baseUrl}my-data";
@@ -20,9 +22,6 @@ class ConstantApi {
   static const String sendCode = "${baseUrl}auth/sendPasswordResetEmail";
   static const String verifyCode = "${baseUrl}auth/verifyCode";
   static const String changePassword = "${baseUrl}auth/changePassword";
-  static const String majors = "${baseUrl}Majors";
-  static const String provinces = "${baseUrl}Provinces";
-  static const String blogs = "${baseUrl}blogs";
   static const String googleRegister = "https://api.inturn.app/GLogin";
   static const String email = "email";
   static const String password = "password";

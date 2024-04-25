@@ -7,7 +7,7 @@ import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/utils/enums.dart';
 import 'package:inturn/core/widgets/loading_widget.dart';
-import 'package:inturn/features/home/data/model/major_model.dart';
+import 'package:inturn/features/home/data/model/faculty_model.dart';
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_states.dart';
 
@@ -16,7 +16,7 @@ class FacultyDropDown extends StatefulWidget {
     super.key,
   });
 
-  static MajorModel? selectedValue;
+  static FacultyModel? selectedValue;
 
   @override
   State<FacultyDropDown> createState() => _FacultyDropDownState();
@@ -27,7 +27,7 @@ class _FacultyDropDownState extends State<FacultyDropDown> {
   Widget build(BuildContext context) {
     return BlocBuilder<OptionsBloc, GetOptionsStates>(
       builder: (context, state) {
-        if (state.getMajorRequest == RequestState.loaded) {
+        if (state.getFacultyRequest == RequestState.loaded) {
           return Container(
             // width: AppSize.screenWidth! * .9,
             height: AppSize.defaultSize! * 5,
@@ -35,7 +35,7 @@ class _FacultyDropDownState extends State<FacultyDropDown> {
                 border:
                     Border.all(color: AppColors.borderColor.withOpacity(.4)),
                 borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2)),
-            child: DropdownButton2<MajorModel>(
+            child: DropdownButton2<FacultyModel>(
               value: FacultyDropDown.selectedValue,
               buttonStyleData: ButtonStyleData(
                 width: AppSize.screenWidth! * .9,
@@ -48,7 +48,7 @@ class _FacultyDropDownState extends State<FacultyDropDown> {
                   // padding: EdgeInsets.symmetric(horizontal: 10),
                   maxHeight: AppSize.screenHeight! * .5),
               underline: const SizedBox(),
-              onChanged: (MajorModel? newValue) {
+              onChanged: (FacultyModel? newValue) {
                 setState(() {
                   FacultyDropDown.selectedValue = newValue;
                 });
@@ -56,14 +56,14 @@ class _FacultyDropDownState extends State<FacultyDropDown> {
               hint: Padding(
                 padding: EdgeInsets.only(left: AppSize.defaultSize!),
                 child: Text(
-                  StringManager.selectSkill.tr(),
+                  StringManager.selectFaculty.tr(),
                   style: TextStyle(
                     fontSize: AppSize.defaultSize!,
                   ),
                 ),
               ),
-              items: state.getMajor
-                  .map<DropdownMenuItem<MajorModel>>((MajorModel value) {
+              items: state.getFaculty
+                  .map<DropdownMenuItem<FacultyModel>>((FacultyModel value) {
                 return DropdownMenuItem(
                   value: value,
                   child: Padding(
@@ -79,14 +79,14 @@ class _FacultyDropDownState extends State<FacultyDropDown> {
               }).toList(),
             ),
           );
-        } else if (state.getMajorRequest == RequestState.loading) {
+        } else if (state.getFacultyRequest == RequestState.loading) {
           return Container(
             // width: AppSize.screenWidth! * .9,
             height: AppSize.defaultSize! * 4,
             decoration: BoxDecoration(
                 border:
                     Border.all(color: AppColors.borderColor.withOpacity(.4)),
-                borderRadius: BorderRadius.circular(AppSize.defaultSize! * 1.5)),
+                borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2)),
             child: DropdownButton2(
                 buttonStyleData: ButtonStyleData(
                   width: AppSize.screenWidth! * .9,
@@ -110,8 +110,8 @@ class _FacultyDropDownState extends State<FacultyDropDown> {
                 ),
                 items: []),
           );
-        } else if (state.getMajorRequest == RequestState.error) {
-          return ErrorWidget(state.getMajorMessage);
+        } else if (state.getFacultyRequest == RequestState.error) {
+          return ErrorWidget(state.getFacultyMessage);
         } else {
           return const SizedBox();
         }

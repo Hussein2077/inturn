@@ -7,7 +7,7 @@ class GetTopFiveEvent extends BaseGetTopFiveEvent {
 
   GetTopFiveEvent(this.type);
 }
-class GetBlogsEvent extends BaseGetTopFiveEvent {
+class GetMajorEvent extends BaseGetTopFiveEvent {
 
-  GetBlogsEvent();
+  GetMajorEvent();
 }

@@ -13,29 +13,29 @@ import 'package:inturn/features/home/presentation/controller/get_cities_major_un
 class OptionsBloc extends Bloc<OptionsEvent, GetOptionsStates> {
   final GetCitiesUseCase getCitiesUseCase;
 
-  final GetMajorUseCase getMajorUseCase;
+  final GetFacultyUseCase getFacultyUseCase;
 
   final GetUniversityUseCase getUniversityUseCase;
 
   OptionsBloc(
       {required this.getUniversityUseCase,
-      required this.getMajorUseCase,
+      required this.getFacultyUseCase,
       required this.getCitiesUseCase})
       : super(const GetOptionsStates()) {
-    on<GetMajorEvent>(getMajor);
+    on<GetFacultyEvent>(getFaculty);
     on<GetUniversityEvent>(getUniversity);
     on<GetCitiesEvent>(getCities);
   }
 
-  FutureOr<void> getMajor(
-      GetMajorEvent event, Emitter<GetOptionsStates> emit) async {
-    final result = await getMajorUseCase.call(const NoParameter());
+  FutureOr<void> getFaculty(
+      GetFacultyEvent event, Emitter<GetOptionsStates> emit) async {
+    final result = await getFacultyUseCase.call(event.id);
     result.fold(
         (l) => emit(
-            state.copyWith(getMajor: l, getMajorRequest: RequestState.loaded)),
+            state.copyWith(getFaculty: l, getFacultyRequest: RequestState.loaded)),
         (r) => emit(state.copyWith(
-            getMajorRequest: RequestState.error,
-            getMajorMessage: DioHelper().getTypeOfFailure(r))));
+            getFacultyRequest: RequestState.error,
+            getFacultyMessage: DioHelper().getTypeOfFailure(r))));
   }
 
   FutureOr<void> getUniversity(

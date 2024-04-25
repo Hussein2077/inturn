@@ -1,54 +1,63 @@
 import 'package:inturn/core/models/options_model.dart';
 import 'package:inturn/core/models/vacancey_model.dart';
 
-class CitiesModel extends OptionsModel {
-  int? id;
-  String? name;
-  String? nameAr;
-  String? slug;
-  dynamic category;
-  int? categoryId;
-  bool? disable;
-  List<VacancyModel>? jobs;
-  int? popular;
+class Country {
+  final int countryId;
+  final String countryNameEn;
+  final String countryNameAr;
+  List<CityModel>? cities;
 
-  CitiesModel(
-      {this.id,
-      this.name,
-      this.nameAr,
-      this.slug,
-      this.category,
-      this.categoryId,
-      this.disable,
-      this.jobs,
-      this.popular});
 
-  CitiesModel.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    id = json['id'];
-    text = json['name'];
-    name = json['name'];
-    nameAr = json['nameAr'];
-    slug = json['slug'];
-    category = json['category'];
-    categoryId = json['categoryId'];
-    disable = json['disable'];
-    jobs = json['jobs'];
-    popular = json['popular'];
-  }
+  Country({
+    required this.countryId,
+    required this.countryNameEn,
+    required this.countryNameAr,
+    this.cities,
+  });
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['nameAr'] = this.nameAr;
-    data['slug'] = this.slug;
-    data['category'] = this.category;
-    data['categoryId'] = this.categoryId;
-    data['disable'] = this.disable;
-    data['jobs'] = this.jobs;
-    data['popular'] = this.popular;
-    return data;
-  }
+  factory Country.fromJson(Map<String, dynamic> json) => Country(
+    countryId: json['countryId'],
+    countryNameEn: json['countryNameEn'],
+    countryNameAr: json['countryNameAr'],
+    cities: json['citys'] != null
+        ? List<CityModel>.from(json['citys'].map((x) => CityModel.fromJson(x)))
+        : null,
+  );
+
+  Map<String, dynamic> toJson() => {
+    'countryId': countryId,
+    'countryNameEn': countryNameEn,
+    'countryNameAr': countryNameAr,
+    'citys': cities?.map((x) => x.toJson()).toList(),
+  };
 }
+
+class CityModel {
+  final int cityId;
+  final int countryId;
+  final String cityNameEn;
+  final String cityNameAr;
+
+  CityModel({
+    required this.cityId,
+    required this.countryId,
+    required this.cityNameEn,
+    required this.cityNameAr,
+  });
+
+  factory CityModel.fromJson(Map<String, dynamic> json) => CityModel(
+    cityId: json['cityId'],
+    countryId: json['countryId'],
+    cityNameEn: json['cityNameEn'],
+    cityNameAr: json['cityNameAr'],
+  );
+
+  Map<String, dynamic> toJson() => {
+    'cityId': cityId,
+    'countryId': countryId,
+    'cityNameEn': cityNameEn,
+    'cityNameAr': cityNameAr,
+  };
+}
+
+

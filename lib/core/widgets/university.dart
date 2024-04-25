@@ -7,9 +7,10 @@ import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/utils/enums.dart';
 import 'package:inturn/core/widgets/loading_widget.dart';
-import 'package:inturn/features/home/data/model/major_model.dart';
+import 'package:inturn/features/home/data/model/faculty_model.dart';
 import 'package:inturn/features/home/data/model/university_model.dart';
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_bloc.dart';
+import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_events.dart';
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_states.dart';
 
 class UniversityDropDown extends StatefulWidget {
@@ -34,20 +35,21 @@ class _UniversityDropDownState extends State<UniversityDropDown> {
             height: AppSize.defaultSize! * 5,
             decoration: BoxDecoration(
                 border:
-                Border.all(color: AppColors.borderColor.withOpacity(.4)),
+                    Border.all(color: AppColors.borderColor.withOpacity(.4)),
                 borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2)),
             child: DropdownButton2<UniversityModel>(
               value: UniversityDropDown.selectedValue,
               buttonStyleData: ButtonStyleData(
-                width: AppSize.screenWidth! * .9,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2),
-                )
-              ),
+                  width: AppSize.screenWidth! * .9,
+                  decoration: BoxDecoration(
+                    borderRadius:
+                        BorderRadius.circular(AppSize.defaultSize! * 2),
+                  )),
               dropdownStyleData: DropdownStyleData(
                   width: AppSize.screenWidth! * .9,
-                  decoration:   BoxDecoration(
-                    borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2),
+                  decoration: BoxDecoration(
+                    borderRadius:
+                        BorderRadius.circular(AppSize.defaultSize! * 2),
                   ),
                   // padding: EdgeInsets.symmetric(horizontal: 10),
                   maxHeight: AppSize.screenHeight! * .5),
@@ -56,7 +58,8 @@ class _UniversityDropDownState extends State<UniversityDropDown> {
                 setState(() {
                   UniversityDropDown.selectedValue = newValue;
                 });
-
+                BlocProvider.of<OptionsBloc>(context).add(GetFacultyEvent(
+                    UniversityDropDown.selectedValue?.universityId ?? 0));
               },
               hint: Padding(
                 padding: EdgeInsets.only(left: AppSize.defaultSize!),
@@ -67,8 +70,8 @@ class _UniversityDropDownState extends State<UniversityDropDown> {
                   ),
                 ),
               ),
-              items: state.getUniversity
-                  .map<DropdownMenuItem<UniversityModel>>((UniversityModel value) {
+              items: state.getUniversity.map<DropdownMenuItem<UniversityModel>>(
+                  (UniversityModel value) {
                 return DropdownMenuItem(
                   value: value,
                   child: Padding(
@@ -87,18 +90,18 @@ class _UniversityDropDownState extends State<UniversityDropDown> {
         } else if (state.getUniversityRequest == RequestState.loading) {
           return Container(
             // width: AppSize.screenWidth! * .9,
-            height: AppSize.defaultSize! * 4,
+            height: AppSize.defaultSize! * 5,
             decoration: BoxDecoration(
                 border:
-                Border.all(color: AppColors.borderColor.withOpacity(.4)),
+                    Border.all(color: AppColors.borderColor.withOpacity(.4)),
                 borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2)),
             child: DropdownButton2(
                 buttonStyleData: ButtonStyleData(
-                  width: AppSize.screenWidth! * .9,
+                    width: AppSize.screenWidth! * .9,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2),
-                    )
-                ),
+                      borderRadius:
+                          BorderRadius.circular(AppSize.defaultSize! * 2),
+                    )),
                 dropdownStyleData: DropdownStyleData(
                     width: AppSize.screenWidth! * .9,
                     // padding: EdgeInsets.symmetric(horizontal: 10),

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:inturn/core/models/vacancey_model.dart';
-import 'package:inturn/features/home/data/model/blog_model.dart';
+import 'package:inturn/features/home/data/model/major_model.dart';
 import 'package:inturn/features/home/data/model/intern_model.dart';
 
 abstract class GetTopFiveState extends Equatable {
@@ -28,18 +28,18 @@ class GetTopFiveSuccessMessageState extends GetTopFiveState {
   const GetTopFiveSuccessMessageState({required this.topFiveModel});
 }
 
-class GetBlogsLoadingState extends GetTopFiveState {
-  const GetBlogsLoadingState();
+class GetMajorLoadingState extends GetTopFiveState {
+  const GetMajorLoadingState();
 }
 
-class GetBlogsErrorMessageState extends GetTopFiveState {
+class GetMajorErrorMessageState extends GetTopFiveState {
   final String errorMessage;
 
-  const GetBlogsErrorMessageState({required this.errorMessage});
+  const GetMajorErrorMessageState({required this.errorMessage});
 }
 
-class GetBlogsSuccessMessageState extends GetTopFiveState {
-  final List<BlogModel> topFiveModel;
+class GetMajorSuccessMessageState extends GetTopFiveState {
+  final List<MajorModel> topFiveModel;
 
-  const GetBlogsSuccessMessageState({required this.topFiveModel});
+  const GetMajorSuccessMessageState({required this.topFiveModel});
 }

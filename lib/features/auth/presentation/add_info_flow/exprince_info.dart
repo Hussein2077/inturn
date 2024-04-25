@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
@@ -7,24 +9,26 @@ import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/widgets/app_bar.dart';
 import 'package:inturn/core/widgets/cutom_text.dart';
 import 'package:inturn/core/widgets/main_button.dart';
-import 'package:inturn/core/widgets/major_drop_down.dart';
-import 'package:inturn/core/widgets/snack_bar.dart';
-import 'package:inturn/core/widgets/university.dart';
 import 'package:inturn/features/auth/presentation/widgets/segment_button.dart';
 
 class ExperienceInfo extends StatefulWidget {
   const ExperienceInfo({super.key});
-
+static int jobLevel=0;
+static int experience=0;
   @override
   State<ExperienceInfo> createState() => _ExperienceInfoState();
 }
 
 class _ExperienceInfoState extends State<ExperienceInfo> {
-  int _currentSegment = 0;
 
   void _onValueChanged(int newValue) {
     setState(() {
-      _currentSegment = newValue;
+      ExperienceInfo.experience = newValue;
+    });
+  }
+  void _jobLevelChanged(int newValue) {
+    setState(() {
+      ExperienceInfo.jobLevel = newValue;
     });
   }
 
@@ -44,7 +48,7 @@ class _ExperienceInfoState extends State<ExperienceInfo> {
               height: AppSize.defaultSize! * 1.6,
             ),
             CustomSegmentedButton(
-              segments: ['Student', 'Graduated'],
+              segments: const ['Student', 'Graduated'],
               onValueChanged: (index) => _onValueChanged(index),
             ),
             SizedBox(
@@ -58,7 +62,7 @@ class _ExperienceInfoState extends State<ExperienceInfo> {
               height: AppSize.defaultSize! * 1.6,
             ),
             CustomSegmentedButton(
-              segments: ['Internship', 'Entry Level'],
+              segments: const ['Internship', 'Entry Level'],
               onValueChanged: (index) => _onValueChanged(index),
             ),
             SizedBox(
@@ -67,13 +71,8 @@ class _ExperienceInfoState extends State<ExperienceInfo> {
             MainButton(
               text: StringManager.next.tr(),
               onTap: () {
-                if (true) {
                   Navigator.pushNamed(context, Routes.locationInfo);
-                } else {
-                  errorSnackBar(
-                      context, StringManager.pleaseCompleteYourData.tr());
                 }
-              },
             ),
           ]),
         ));
