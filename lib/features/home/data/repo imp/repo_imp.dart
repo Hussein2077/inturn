@@ -16,9 +16,9 @@ class HomeRepositoryImp extends BaseRepositoryHome {
   HomeRepositoryImp({required this.baseRemotelyDataSourceHome});
 
   @override
-  Future<Either<List<VacancyModel>, Failure>> getTopFive(int type) async {
+  Future<Either<List<VacancyModel>, Failure>> getMatchedJobs() async {
     try {
-      final result = await baseRemotelyDataSourceHome.getTopFive(type);
+      final result = await baseRemotelyDataSourceHome.getMatchedJobs();
       return Left(result);
     } on Exception catch (e) {
       return right(DioHelper.buildFailure(e));
@@ -60,6 +60,17 @@ class HomeRepositoryImp extends BaseRepositoryHome {
       final result = await baseRemotelyDataSourceHome.getMajor();
       return Left(result);
     } on Exception catch (e) {
+      return right(DioHelper.buildFailure(e));
+    }
+  }
+
+  @override
+  Future<Either<List<VacancyModel>, Failure>> getJobDetails(int id) async {
+    try {
+      final result = await baseRemotelyDataSourceHome.getJobDetails(id);
+      return Left(result);
+    }
+    on Exception catch (e) {
       return right(DioHelper.buildFailure(e));
     }
   }

@@ -47,7 +47,7 @@ class ServerLocator {
           getUniversityUseCase: getIt(),
         ));
 
-    getIt.registerLazySingleton(() => GetMajorBloc(getMajorUseCase : getIt(),getTopFiveUseCase: getIt()));
+    getIt.registerLazySingleton(() => HomeBloc(getMajorUseCase : getIt(),getMatchedJobsCase: getIt()));
 
 //use_case
     getIt.registerFactory(
@@ -62,7 +62,7 @@ class ServerLocator {
     getIt.registerFactory(
         () => GetUniversityUseCase(baseRepositoryHome: getIt()));
     getIt.registerFactory(() => GetMajorUseCase(baseRepositoryHome: getIt()));
-    getIt.registerFactory(() => GetTopFiveUseCase(baseRepositoryHome: getIt()));
+    getIt.registerFactory(() => GetMatchedJobsCase(baseRepositoryHome: getIt()));
     //remote data
     getIt.registerLazySingleton<BaseRemotelyDataSource>(
         () => AuthRemotelyDateSource());

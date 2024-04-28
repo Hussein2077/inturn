@@ -73,7 +73,7 @@ class _MyAppState extends State<MyApp> {
             ..add(const GetUniversityEvent())
             ..add(const GetCitiesEvent()),
         ),
-        BlocProvider(create: (context) => getIt<GetMajorBloc>()..add(GetMajorEvent())),
+        BlocProvider(create: (context) => getIt<HomeBloc>()..add(GetMajorEvent())),
       ],
       child: MaterialApp(
         locale: context.locale,

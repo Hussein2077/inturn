@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:inturn/core/models/vacancey_model.dart';
 import 'package:inturn/core/resource_manager/asset_path.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
@@ -11,19 +12,19 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class JobCart extends StatelessWidget {
-  const JobCart({super.key, this.linearCircle = true, this.skillRequired, this.height});
+  const JobCart({super.key, this.linearCircle = true, this.skillRequired, this.height, required this.vacancyModel});
 
   final bool linearCircle;
   final Widget? skillRequired;
   final double? height ;
-
+final VacancyModel vacancyModel;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         PersistentNavBarNavigator.pushNewScreen(
           context,
-          screen: const JobDetailsScreen(),
+          screen:   JobDetailsScreen(id: vacancyModel.id!,),
           withNavBar: false,
           // OPTIONAL VALUE. True by default.
           pageTransitionAnimation: PageTransitionAnimation.fade,

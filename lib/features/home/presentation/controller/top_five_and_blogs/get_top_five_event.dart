@@ -1,13 +1,12 @@
-abstract class BaseGetTopFiveEvent {}
+abstract class BaseGeMatchedVacancyEvent {}
 
-class InitEvent extends BaseGetTopFiveEvent {}
+class InitEvent extends BaseGeMatchedVacancyEvent {}
 
-class GetTopFiveEvent extends BaseGetTopFiveEvent {
-  final int type;
+class GeMatchedVacancyEvent extends BaseGeMatchedVacancyEvent {
 
-  GetTopFiveEvent(this.type);
+  GeMatchedVacancyEvent();
 }
-class GetMajorEvent extends BaseGetTopFiveEvent {
+class GetMajorEvent extends BaseGeMatchedVacancyEvent {
 
   GetMajorEvent();
 }

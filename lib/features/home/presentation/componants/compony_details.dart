@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:inturn/core/models/vacancey_model.dart';
 import 'package:inturn/core/resource_manager/asset_path.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
@@ -228,7 +229,7 @@ class CompanyDetails extends StatelessWidget {
                   itemBuilder: (item, index) {
                     return Padding(
                       padding: EdgeInsets.symmetric(vertical:AppSize.defaultSize! ),
-                      child: const JobCart().animate()
+                      child:   JobCart(vacancyModel: VacancyModel(),).animate()
                           .fadeIn() // uses `Animate.defaultDuration`
                           .scale() // inherits duration from fadeIn
                           .move(delay: 300.ms, duration: 600.ms),

@@ -8,7 +8,8 @@ import 'package:inturn/features/home/data/model/faculty_model.dart';
 import 'package:inturn/features/home/data/model/university_model.dart';
 
 abstract class BaseRepositoryHome {
-  Future<Either<List<VacancyModel>, Failure>> getTopFive(int type);
+  Future<Either<List<VacancyModel>, Failure>> getMatchedJobs();
+  Future<Either<List<VacancyModel>, Failure>> getJobDetails(int id);
   Future<Either<List<Country>, Failure>> getCities();
   Future<Either<List<FacultyModel>, Failure>> getFaculty(int id);
   Future<Either<List<UniversityModel>, Failure>> getUniversity();

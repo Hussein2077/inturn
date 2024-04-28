@@ -56,12 +56,12 @@ class _FieldsInfoState extends State<FieldsInfo> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            BlocBuilder<GetMajorBloc, GetTopFiveState >(
+            BlocBuilder<HomeBloc, HomeState >(
               builder: (context, state) {
                 if (state is GetMajorLoadingState) {
                   return const Center(child: LoadingWidget());
-                } 
-           else     if (state is GetMajorSuccessMessageState) {
+                }
+           else if (state is GetMajorSuccessMessageState) {
                   return ListView.builder(
                       itemCount: state.topFiveModel.length,
                       shrinkWrap: true,

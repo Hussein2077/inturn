@@ -8,12 +8,12 @@ class ConstantApi {
   static   String faculty (int id)=> "${baseUrl}Faculties/GetFacultiesBy$id";
   static const String provinces = "${baseUrl}Countries/GetAllCountriesIncluded";
   static const String getMajorsByCategory = "${baseUrl}Majors/GetAllMajorsAsyncGroupedByCategory";
-
+  static   String vacancyDetails(int id) => "${baseUrl}vacancyDetails$id";
+  static const String getVacancy = "${baseUrl}Vacancies";
 //////////////////////////////////////////////////////////////////////
   static const String myData = "${baseUrl}my-data";
   static const String getJobs = "${baseUrl}Jobs/GetVacancy";
   static const String apply = "${baseUrl}Apply";
-
   static const String getGetInternships = "${baseUrl}Jobs/GetInternships";
   static const String getGetInternshipsBySearch = "${baseUrl}Jobs/GetInternships";
   static const String myApplications = "${baseUrl}Apply/Myapplications";

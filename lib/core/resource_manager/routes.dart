@@ -32,7 +32,7 @@ class Routes {
   static const String skillsInfo = "/skillsInfo";
   static const String skills = "/skills";
   static const String thanks = "/thanks";
-  static const String jobDetails = "/JobDetailsScreen";
+  // static const String jobDetails = "/JobDetailsScreen";
 
 ////////////////////////////////
 
@@ -97,11 +97,11 @@ class RouteGenerator {
             pageBuilder: (context, animation, secondaryAnimation) =>
                 const ThanksScreen(),
             transitionsBuilder: customAnimate);
-        case Routes.jobDetails:
-        return PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) =>
-                const JobDetailsScreen(),
-            transitionsBuilder: customAnimate);
+        // case Routes.jobDetails:
+        // return PageRouteBuilder(
+        //     pageBuilder: (context, animation, secondaryAnimation) =>
+        //         const JobDetailsScreen(),
+        //     transitionsBuilder: customAnimate);
 ////////////////////////////////////
       case Routes.forgetPassword:
         return PageRouteBuilder(

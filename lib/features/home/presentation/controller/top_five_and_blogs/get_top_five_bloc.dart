@@ -6,20 +6,20 @@ import 'package:inturn/features/home/domain/use_case/get_top_jobs.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_event.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_state.dart';
 
-class GetMajorBloc extends Bloc<BaseGetTopFiveEvent, GetTopFiveState> {
-  final GetTopFiveUseCase getTopFiveUseCase;
+class HomeBloc extends Bloc<BaseGeMatchedVacancyEvent, HomeState> {
+  final GetMatchedJobsCase getMatchedJobsCase;
   final GetMajorUseCase getMajorUseCase;
 
-  GetMajorBloc({
-    required this.getTopFiveUseCase,
+  HomeBloc({
+    required this.getMatchedJobsCase,
     required this.getMajorUseCase,
-  }) : super(GetTopFiveInitial()) {
-    on<GetTopFiveEvent>((event, emit) async {
-      emit(const GetTopFiveLoadingState());
-      final result = await getTopFiveUseCase.call(event.type);
+  }) : super(GetMatchedVacancyInitial()) {
+    on<GeMatchedVacancyEvent >((event, emit) async {
+      emit(const GetMatchedVacancyLoadingState());
+      final result = await getMatchedJobsCase.call(const NoParameter());
       result.fold(
-          (l) => emit(GetTopFiveSuccessMessageState(topFiveModel: l)),
-          (r) => emit(GetTopFiveErrorMessageState(
+          (l) => emit(GetMatchedVacancySuccessMessageState(vacancyModel: l)),
+          (r) => emit(GetMatchedVacancyErrorMessageState(
               errorMessage: DioHelper().getTypeOfFailure(r))));
     });
     on<GetMajorEvent>((event, emit) async {

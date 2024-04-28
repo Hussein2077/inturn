@@ -10,7 +10,8 @@ import 'package:inturn/features/home/data/model/faculty_model.dart';
 import 'package:inturn/features/home/data/model/university_model.dart';
 
 abstract class BaseRemotelyDataSourceHome{
-  Future<List<VacancyModel>> getTopFive(int type);
+  Future<List<VacancyModel>> getMatchedJobs();
+  Future<List<VacancyModel>> getJobDetails(int id);
   Future<List<Country>> getCities();
   Future<List<FacultyModel>> getFaculty(int id);
   Future<List<UniversityModel>> getUniversity();
@@ -19,17 +20,32 @@ abstract class BaseRemotelyDataSourceHome{
 
 class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
   @override
-  Future<List<VacancyModel>> getTopFive(int type) async {
+  Future<List<VacancyModel>> getMatchedJobs() async {
     try {
       final response = await Dio().get(
-        ConstantApi.myData,
+        ConstantApi.getVacancy,
       );
       List<VacancyModel> jsonData = List<VacancyModel>.from(
           (response.data as List).map((e) => VacancyModel.fromJson(e)));
       return jsonData;
 
     } on DioException catch (e) {
-      throw DioHelper.handleDioError(dioError: e, endpointName: "get Internships");
+      throw DioHelper.handleDioError(dioError: e, endpointName: "getMatchedJobs");
+    }
+  }
+  @override
+  Future<List<VacancyModel>> getJobDetails(int id) async {
+
+    try {
+      final response = await Dio().get(
+          ConstantApi.vacancyDetails(id),
+
+      );
+      List<VacancyModel> jsonData = List<VacancyModel>.from(
+          (response.data as List).map((e) => VacancyModel.fromJson(e)));
+      return jsonData;
+    } on DioException catch (e) {
+      throw DioHelper.handleDioError(dioError: e, endpointName: "getJobDetails");
     }
   }
   @override
@@ -84,10 +100,11 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
       );
       List<MajorModel> jsonData = List<MajorModel>.from(
           (response.data as List).map((e) => MajorModel.fromJson(e)));
+      log('${jsonData}ssssssssssssssssss');
       return jsonData;
 
     } on DioException catch (e) {
-      throw DioHelper.handleDioError(dioError: e, endpointName: "getUniversity");
+      throw DioHelper.handleDioError(dioError: e, endpointName: "getMajor");
     }
   }
 }
