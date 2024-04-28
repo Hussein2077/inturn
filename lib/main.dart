@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,11 +12,11 @@ import 'package:inturn/features/auth/presentation/controller/sign_in_with_platfo
 import 'package:inturn/features/auth/presentation/controller/sign_up_bloc/sign_up_with_email_and_password_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_events.dart';
+import 'package:inturn/features/home/presentation/controller/get_my_applications/get_my_applications_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_event.dart';
-
-import 'package:inturn/features/profile/presentation/controller/get_my_applications/get_my_applications_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
+
 String? token;
 
 void main() async {
@@ -27,8 +25,8 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   token = await Methods.instance.returnUserToken();
   await Firebase.initializeApp(
-    // options: DefaultFirebaseOptions.currentPlatform,
-  );
+      // options: DefaultFirebaseOptions.currentPlatform,
+      );
   runApp(EasyLocalization(
       fallbackLocale: const Locale('en'),
       supportedLocales: const [
@@ -64,7 +62,8 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => getIt<GetMyApplicationsBloc>(),
-        ),  BlocProvider(
+        ),
+        BlocProvider(
           create: (context) => getIt<SignInWithPlatformBloc>(),
         ),
         BlocProvider(
@@ -73,7 +72,11 @@ class _MyAppState extends State<MyApp> {
             ..add(const GetUniversityEvent())
             ..add(const GetCitiesEvent()),
         ),
-        BlocProvider(create: (context) => getIt<HomeBloc>()..add(GetMajorEvent())),
+        BlocProvider(
+            create: (context) => getIt<HomeBloc>()..add(GetMajorEvent())),
+        BlocProvider(
+          create: (context) => getIt<GetMyApplicationsBloc>(),
+        ),
       ],
       child: MaterialApp(
         locale: context.locale,
@@ -83,7 +86,8 @@ class _MyAppState extends State<MyApp> {
         onGenerateRoute: RouteGenerator.getRoute,
         navigatorKey: getIt<NavigationService>().navigatorKey,
         builder: EasyLoading.init(),
-        initialRoute: token == null||token=='noToken' ? Routes.login : Routes.main,
+        initialRoute:
+            token == null || token == 'noToken' ? Routes.login : Routes.main,
         theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,

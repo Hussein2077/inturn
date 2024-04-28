@@ -3,6 +3,7 @@ import 'package:inturn/core/error/failure.dart';
 import 'package:inturn/core/models/vacancey_model.dart';
 import 'package:inturn/core/utils/api_helper.dart';
 import 'package:inturn/features/home/data/data%20source/home_remote_data_source.dart';
+import 'package:inturn/features/home/data/model/compony_model.dart';
 import 'package:inturn/features/home/data/model/major_model.dart';
 import 'package:inturn/features/home/data/model/cities_model.dart';
 import 'package:inturn/features/home/data/model/intern_model.dart';
@@ -71,6 +72,23 @@ class HomeRepositoryImp extends BaseRepositoryHome {
       return Left(result);
     }
     on Exception catch (e) {
+      return right(DioHelper.buildFailure(e));
+    }
+  }
+  @override
+  Future<Either<List<VacancyModel>, Failure>> getMyApplications(String type) async {
+    try {
+      final result = await baseRemotelyDataSourceHome.getMyApplications(type);
+      return Left(result);
+    } on Exception catch (e) {
+      return right(DioHelper.buildFailure(e));
+    }
+  }  @override
+  Future<Either<List<CompanyModel>, Failure>> getCompanies() async {
+    try {
+      final result = await baseRemotelyDataSourceHome.getCompanies();
+      return Left(result);
+    } on Exception catch (e) {
       return right(DioHelper.buildFailure(e));
     }
   }

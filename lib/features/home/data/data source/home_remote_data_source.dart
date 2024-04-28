@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:inturn/core/models/vacancey_model.dart';
 import 'package:inturn/core/utils/api_helper.dart';
 import 'package:inturn/core/utils/constant_api.dart';
+import 'package:inturn/features/home/data/model/compony_model.dart';
 import 'package:inturn/features/home/data/model/major_model.dart';
 import 'package:inturn/features/home/data/model/cities_model.dart';
 import 'package:inturn/features/home/data/model/faculty_model.dart';
@@ -16,6 +17,9 @@ abstract class BaseRemotelyDataSourceHome{
   Future<List<FacultyModel>> getFaculty(int id);
   Future<List<UniversityModel>> getUniversity();
   Future<List<MajorModel>> getMajor();
+  Future<List<VacancyModel>> getMyApplications(String type);
+  Future<List<CompanyModel>> getCompanies();
+
 }
 
 class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
@@ -105,6 +109,33 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
 
     } on DioException catch (e) {
       throw DioHelper.handleDioError(dioError: e, endpointName: "getMajor");
+    }
+  }
+  @override
+  Future<List<VacancyModel>> getMyApplications(String type) async {
+    try {
+      final response = await Dio().get(
+        ConstantApi.myApplications,
+      );
+      List<VacancyModel> jsonData = List<VacancyModel>.from(
+          (response.data as List)
+              .map((e) => VacancyModel.fromJson(e)));
+      return jsonData;
+    } on DioException catch (e) {
+      throw DioHelper.handleDioError(dioError: e, endpointName: "getMyApplications");
+    }
+  } @override
+  Future<List<CompanyModel>> getCompanies() async {
+    try {
+      final response = await Dio().get(
+        ConstantApi.myApplications,
+      );
+      List<CompanyModel> jsonData = List<CompanyModel>.from(
+          (response.data as List)
+              .map((e) => CompanyModel.fromJson(e)));
+      return jsonData;
+    } on DioException catch (e) {
+      throw DioHelper.handleDioError(dioError: e, endpointName: "getMyApplications");
     }
   }
 }
