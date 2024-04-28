@@ -60,7 +60,7 @@ class _FieldsInfoState extends State<FieldsInfo> {
               builder: (context, state) {
                 if (state is GetMajorLoadingState) {
                   return const Center(child: LoadingWidget());
-                }
+                } 
            else     if (state is GetMajorSuccessMessageState) {
                   return ListView.builder(
                       itemCount: state.topFiveModel.length,
