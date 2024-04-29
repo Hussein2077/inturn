@@ -4,11 +4,14 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:inturn/core/resource_manager/asset_path.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
+import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/widgets/custom_text_field.dart';
 import 'package:inturn/core/widgets/cutom_text.dart';
 import 'package:inturn/core/widgets/main_button.dart';
+import 'package:inturn/features/home/presentation/componants/search_screen.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class TopContainer extends StatefulWidget {
   const TopContainer({super.key});
@@ -66,6 +69,16 @@ class _TopContainerState extends State<TopContainer> {
           height: AppSize.defaultSize!,
         ),
         CustomTextField(
+          readOnly: true,
+          onTap: (){
+            PersistentNavBarNavigator.pushNewScreen(
+              context,
+              screen: const SearchScreen(),
+              withNavBar: false,
+              // OPTIONAL VALUE. True by default.
+              pageTransitionAnimation: PageTransitionAnimation.fade,
+            );
+          },
           hintText: StringManager.searchForJobs.tr(),
           fillColor: Colors.white,
           width: AppSize.screenWidth! * .9,
@@ -76,7 +89,15 @@ class _TopContainerState extends State<TopContainer> {
               text: StringManager.search.tr(),
               width: AppSize.defaultSize! * 10,
               padding: AppSize.defaultSize! * .5,
-              onTap: () {}),
+              onTap: () {
+                PersistentNavBarNavigator.pushNewScreen(
+                  context,
+                  screen: const SearchScreen(),
+                  withNavBar: false,
+                  // OPTIONAL VALUE. True by default.
+                  pageTransitionAnimation: PageTransitionAnimation.fade,
+                );
+              }),
         )
       ]),
     );

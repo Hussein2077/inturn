@@ -160,4 +160,6 @@ class StringManager {
   static const String selection = "Selection";
   static const String moreAboutTheCompany = "More About The Company";
   static const String anotherSuggestedJobs = "Another Suggested Jobs";
+  static const String all = "All";
+  static const String freshGraduate = "Fresh Graduate";
 }

@@ -84,6 +84,8 @@ class CodegenLoader extends AssetLoader {
     StringManager.continueWithGoogle: "المتابعة مع Google",
     StringManager.continueWithFacebook: "المتابعة مع Facebook",
     StringManager.continueWithApple: "المتابعة مع Apple",
+    StringManager.all: "الكل",
+    StringManager.freshGraduate: "خريج جديد",
   };
 
 }
