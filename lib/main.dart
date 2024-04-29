@@ -19,6 +19,7 @@ import 'package:inturn/features/home/presentation/controller/get_my_applications
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_event.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:inturn/features/profile/presentation/controller/edit_profile/edit_profile_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_bloc.dart';
 import 'package:inturn/firebase_options.dart';
 
@@ -99,6 +100,9 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => getIt<GetCompaniesBloc>()..add(GetCompaniesEvent()),
+        ),
+        BlocProvider(
+          create: (context) => getIt<EditProfileBloc>(),
         ),
       ],
       child: MaterialApp(
