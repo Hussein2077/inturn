@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inturn/core/models/vacancey_model.dart';
+import 'package:inturn/core/widgets/loading_widget.dart';
 import 'package:inturn/core/widgets/vacancy_details.dart';
 import 'package:inturn/features/auth/presentation/add_info_flow/acdemic_info.dart';
 import 'package:inturn/features/auth/presentation/add_info_flow/exprince_info.dart';
@@ -15,6 +17,9 @@ import 'package:inturn/features/auth/presentation/login_screen.dart';
 import 'package:inturn/features/auth/presentation/signup/sign_up.dart';
 import 'package:inturn/features/home/presentation/componants/job_details.dart';
 import 'package:inturn/features/main_screen.dart';
+import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_bloc.dart';
+import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_event.dart';
+import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_state.dart';
 import 'package:inturn/features/profile/presentation/profile_screen.dart';
 
 class Routes {
@@ -32,6 +37,7 @@ class Routes {
   static const String skillsInfo = "/skillsInfo";
   static const String skills = "/skills";
   static const String thanks = "/thanks";
+
   // static const String jobDetails = "/JobDetailsScreen";
 
 ////////////////////////////////
@@ -46,9 +52,32 @@ class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.main:
+        int userId = settings.arguments as int;
+
         return PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) =>
-                const MainScreen(),
+            settings: settings,
+            pageBuilder: (context, animation, secondaryAnimation) {
+              BlocProvider.of<GetMyDataBloc>(context)
+                  .add(GetMyDataEvent(userId));
+              return BlocBuilder<GetMyDataBloc, GetMyDataState>(
+                  builder: (context, state) {
+                if (state is GetMyDataLoadingState) {
+                  return const Center(child: LoadingWidget());
+                }
+                if (state is GetMyDataSuccessMessageState) {
+                  if (state.myDataModel.isCompleted!) {
+                    return const MainScreen();
+                  } else {
+                    return _getScreenFromCompletion(
+                        state.myDataModel.complition ?? 0);
+                  }
+                }
+                if (state is GetMyDataErrorMessageState) {
+                  return const LoginScreen();
+                }
+                return const MainScreen();
+              });
+            },
             transitionsBuilder: customAnimate);
       case Routes.login:
         return PageRouteBuilder(
@@ -62,10 +91,9 @@ class RouteGenerator {
                 const SignUpScreen(),
             transitionsBuilder: customAnimate);
       case Routes.personalInfo:
-
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
-                  PersonalInfo(),
+                PersonalInfo(),
             transitionsBuilder: customAnimate);
       case Routes.academicInfo:
         return PageRouteBuilder(
@@ -97,11 +125,11 @@ class RouteGenerator {
             pageBuilder: (context, animation, secondaryAnimation) =>
                 const ThanksScreen(),
             transitionsBuilder: customAnimate);
-        // case Routes.jobDetails:
-        // return PageRouteBuilder(
-        //     pageBuilder: (context, animation, secondaryAnimation) =>
-        //         const JobDetailsScreen(),
-        //     transitionsBuilder: customAnimate);
+      // case Routes.jobDetails:
+      // return PageRouteBuilder(
+      //     pageBuilder: (context, animation, secondaryAnimation) =>
+      //         const JobDetailsScreen(),
+      //     transitionsBuilder: customAnimate);
 ////////////////////////////////////
       case Routes.forgetPassword:
         return PageRouteBuilder(
@@ -153,4 +181,23 @@ Widget customAnimate(BuildContext context, Animation<double> animation,
     opacity: animation,
     child: child,
   );
+}
+
+Widget _getScreenFromCompletion(int completion) {
+  switch (completion) {
+    case 0:
+      return const PersonalInfo();
+    case 30:
+      return const AcademicInfo();
+    case 45:
+      return const ExperienceInfo();
+    case 60:
+      return const LocationInfo();
+    case 75:
+      return const FieldsInfo();
+    case 90:
+      return const SkillInfo();
+    default:
+      return const MainScreen();
+  }
 }

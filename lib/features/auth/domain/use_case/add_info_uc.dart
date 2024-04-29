@@ -70,3 +70,10 @@ class SendExperienceLevelParams {
   LocationTypeParams(
       {required this.cityID, required this.countryID, required this.locationTypeID});
 }
+class PersonalInfoParams {
+  final String userID;
+
+  PersonalInfoParams({required this.userID});
+
+
+}

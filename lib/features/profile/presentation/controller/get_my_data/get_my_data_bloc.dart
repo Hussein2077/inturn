@@ -8,8 +8,7 @@ class GetMyDataBloc extends Bloc<BaseGetMyDataEvent, GetMyDataState> {
   GetMyDataUseCase getMyDataUseCase;
 
   GetMyDataBloc({required this.getMyDataUseCase}) : super(GetMyDataInitial()) {
-    on<GetMyDataEvent>((event, emit
-        ) async {
+    on<GetMyDataEvent>((event, emit) async {
       emit(const GetMyDataLoadingState());
       final result = await getMyDataUseCase.getMyData();
       result.fold(
