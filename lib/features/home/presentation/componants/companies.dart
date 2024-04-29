@@ -16,21 +16,20 @@ class CompaniesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          appBar(context, text: StringManager.companies.tr(), leading: false),
+      appBar: appBar(context, text: StringManager.companies.tr(), leading: false),
       body: Column(children: [
         BlocBuilder<GetCompaniesBloc, GetCompaniesState>(
           builder: (context, state) {
             if (state is GetCompaniesSuccessMessageState) {
               return Expanded(
                 child: ListView.builder(
-                    itemCount: 10,
+                    itemCount: state.jobModel.length,
                     shrinkWrap: true,
                     physics: const BouncingScrollPhysics(),
                     itemBuilder: (item, index) {
                       return Padding(
                         padding: EdgeInsets.all(AppSize.defaultSize! * 1.2),
-                        child: const CompanyCart()
+                        child: CompanyCart(data: state.jobModel[index])
                             .animate()
                             .fadeIn() // uses `Animate.defaultDuration`
                             .scale() // inherits duration from fadeIn

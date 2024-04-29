@@ -10,6 +10,8 @@ import 'package:inturn/core/utils/methods.dart';
 import 'package:inturn/features/auth/presentation/controller/login_bloc/login_with_email_and_password_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/sign_in_with_platform_bloc/sign_in_with_platform_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/sign_up_bloc/sign_up_with_email_and_password_bloc.dart';
+import 'package:inturn/features/home/presentation/controller/company_bloc/get_companies_bloc.dart';
+import 'package:inturn/features/home/presentation/controller/company_bloc/get_companies_event.dart';
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_events.dart';
 import 'package:inturn/features/home/presentation/controller/get_my_applications/get_my_applications_bloc.dart';
@@ -76,6 +78,9 @@ class _MyAppState extends State<MyApp> {
             create: (context) => getIt<HomeBloc>()..add(GetMajorEvent())),
         BlocProvider(
           create: (context) => getIt<GetMyApplicationsBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<GetCompaniesBloc>()..add(GetCompaniesEvent()),
         ),
       ],
       child: MaterialApp(

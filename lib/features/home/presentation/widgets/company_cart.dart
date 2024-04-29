@@ -4,16 +4,19 @@ import 'package:inturn/core/resource_manager/asset_path.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
+import 'package:inturn/core/widgets/cached_network_image.dart';
 import 'package:inturn/core/widgets/cutom_text.dart';
 import 'package:inturn/core/widgets/main_button.dart';
+import 'package:inturn/features/home/data/model/company_model.dart';
 import 'package:inturn/features/home/presentation/componants/compony_details.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class CompanyCart extends StatelessWidget {
-  const CompanyCart({super.key, this.width, this.description = false});
+  const CompanyCart({super.key, this.width, this.description = false, required this.data});
 
   final double? width;
   final bool description;
+  final CompanyModel data;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +24,7 @@ class CompanyCart extends StatelessWidget {
       onTap: () {
         PersistentNavBarNavigator.pushNewScreen(
           context,
-          screen: const CompanyDetails(),
+          screen: CompanyDetails(data: data,),
           withNavBar: false,
           // OPTIONAL VALUE. True by default.
           pageTransitionAnimation: PageTransitionAnimation.fade,
@@ -49,14 +52,10 @@ class CompanyCart extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CustomText(
-                      text: 'HRS Group',
+                      text: data.companyName??"",
                       fontWeight: FontWeight.w500,
                       color: AppColors.thirdColor,
                       fontSize: AppSize.defaultSize! * 1.4),
-                  CustomText(
-                      text: 'Software Development',
-                      color: AppColors.greyColor,
-                      fontSize: AppSize.defaultSize! * 1.2),
                   SizedBox(
                     height: AppSize.defaultSize! * 1.5,
                   ),

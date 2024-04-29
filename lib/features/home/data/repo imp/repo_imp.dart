@@ -3,7 +3,7 @@ import 'package:inturn/core/error/failure.dart';
 import 'package:inturn/core/models/vacancey_model.dart';
 import 'package:inturn/core/utils/api_helper.dart';
 import 'package:inturn/features/home/data/data%20source/home_remote_data_source.dart';
-import 'package:inturn/features/home/data/model/compony_model.dart';
+import 'package:inturn/features/home/data/model/company_model.dart';
 import 'package:inturn/features/home/data/model/major_model.dart';
 import 'package:inturn/features/home/data/model/cities_model.dart';
 import 'package:inturn/features/home/data/model/intern_model.dart';

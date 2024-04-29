@@ -4,7 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:inturn/core/base_use_case/base_use_case.dart';
 import 'package:inturn/core/error/failure.dart';
 import 'package:inturn/core/models/vacancey_model.dart';
-import 'package:inturn/features/home/data/model/compony_model.dart';
+import 'package:inturn/features/home/data/model/company_model.dart';
 import 'package:inturn/features/home/domain/repo/jobs_base_repo.dart';
 import 'package:inturn/features/profile/domain/repo/profile_base_repo.dart';
 

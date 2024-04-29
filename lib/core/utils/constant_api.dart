@@ -12,6 +12,7 @@ class ConstantApi {
   static const String getVacancy = "${baseUrl}Vacancies";
   static const String myApplications = "${baseUrl}Apply/Myapplications";
   static const String myData = "${baseUrl}Auth/complete";
+  static const String getCompanies = "${baseUrl}Companies/GetAllCompanies";
 
 //////////////////////////////////////////////////////////////////////
   static const String getJobs = "${baseUrl}Jobs/GetVacancy";

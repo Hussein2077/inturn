@@ -10,6 +10,7 @@ import 'package:inturn/core/widgets/app_bar.dart';
 import 'package:inturn/core/widgets/cutom_text.dart';
 import 'package:inturn/core/widgets/loading_widget.dart';
 import 'package:inturn/core/widgets/matrial_widget.dart';
+import 'package:inturn/features/home/data/model/company_model.dart';
 import 'package:inturn/features/home/presentation/controller/vacancy_details_bloc/bloc.dart';
 import 'package:inturn/features/home/presentation/controller/vacancy_details_bloc/event.dart';
 import 'package:inturn/features/home/presentation/controller/vacancy_details_bloc/state.dart';
@@ -127,6 +128,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                     CompanyCart(
                       width: AppSize.screenWidth,
                       description: true,
+                      data: CompanyModel(),
                     ),
                     SizedBox(
                       height: AppSize.defaultSize! * 2,

@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:inturn/core/error/failure.dart';
 import 'package:inturn/core/models/vacancey_model.dart';
-import 'package:inturn/features/home/data/model/compony_model.dart';
+import 'package:inturn/features/home/data/model/company_model.dart';
 import 'package:inturn/features/home/data/model/major_model.dart';
 import 'package:inturn/features/home/data/model/cities_model.dart';
 import 'package:inturn/features/home/data/model/intern_model.dart';

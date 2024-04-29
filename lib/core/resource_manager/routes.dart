@@ -55,31 +55,32 @@ class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.main:
-        int userId = settings.arguments as int;
+        // int userId = settings.arguments as int;
 
         return PageRouteBuilder(
             settings: settings,
             pageBuilder: (context, animation, secondaryAnimation) {
-              BlocProvider.of<GetMyDataBloc>(context)
-                  .add(GetMyDataEvent(userId));
-              return BlocBuilder<GetMyDataBloc, GetMyDataState>(
-                  builder: (context, state) {
-                if (state is GetMyDataLoadingState) {
-                  return const Center(child: LoadingWidget());
-                }
-                if (state is GetMyDataSuccessMessageState) {
-                  if (state.myDataModel.isCompleted!) {
-                    return const MainScreen();
-                  } else {
-                    return _getScreenFromCompletion(
-                        state.myDataModel.complition ?? 0);
-                  }
-                }
-                if (state is GetMyDataErrorMessageState) {
-                  return const LoginScreen();
-                }
-                return const MainScreen();
-              });
+              return MainScreen();
+              // BlocProvider.of<GetMyDataBloc>(context)
+              //     .add(GetMyDataEvent(userId));
+              // return BlocBuilder<GetMyDataBloc, GetMyDataState>(
+              //     builder: (context, state) {
+              //   if (state is GetMyDataLoadingState) {
+              //     return const Center(child: LoadingWidget());
+              //   }
+              //   if (state is GetMyDataSuccessMessageState) {
+              //     if (state.myDataModel.isCompleted!) {
+              //       return const MainScreen();
+              //     } else {
+              //       return _getScreenFromCompletion(
+              //           state.myDataModel.complition ?? 0);
+              //     }
+              //   }
+              //   if (state is GetMyDataErrorMessageState) {
+              //     return const LoginScreen();
+              //   }
+              //   return const MainScreen();
+              // });
             },
             transitionsBuilder: customAnimate);
       case Routes.login:
