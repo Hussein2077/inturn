@@ -12,9 +12,9 @@ class ProfileRepositoryImp extends BaseRepositoryProfile {
   ProfileRepositoryImp({required this.baseRemotelyDataSourceProfile});
 
   @override
-  Future<Either<MyDataModel, Failure>> getMyData() async {
+  Future<Either<MyDataModel, Failure>> getMyData( String id) async {
     try {
-      final result = await baseRemotelyDataSourceProfile.getMyData();
+      final result = await baseRemotelyDataSourceProfile.getMyData(id);
       return Left(result);
     } on Exception catch (e) {
       return right(DioHelper.buildFailure(e));

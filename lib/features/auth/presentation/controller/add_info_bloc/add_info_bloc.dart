@@ -26,16 +26,20 @@ class AddPersonalInfoBloc
     emit(
       AddPersonalInfoLoadingState(),
     );
-    final result = await addPersonalInfoUseCase.call(event.authModel);
+    final result = await addPersonalInfoUseCase.call(PersonalInfoParams(
+        image: event.image,
+        firstName: event.firstName,
+        lastName: event.lastName));
     result.fold(
       (l) => emit(
         AddPersonalInfoSuccessState(
-          message: StringManager.loginSuccessfully.tr(),
+          message: l['message'].toString(),
         ),
       ),
       (r) => emit(
         AddPersonalInfoErrorState(
           errorMessage: DioHelper().getTypeOfFailure(r),
+
         ),
       ),
     );
@@ -82,5 +86,4 @@ class AddPersonalInfoBloc
       ),
     );
   }
-
 }

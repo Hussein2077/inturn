@@ -10,6 +10,7 @@ import 'package:inturn/core/utils/methods.dart';
 import 'package:inturn/features/auth/domain/use_case/add_info_uc.dart';
 import 'package:inturn/features/auth/domain/use_case/login_with_email_and_password_use_case.dart';
 import 'package:inturn/features/auth/domain/use_case/sign_up_use_case.dart';
+import 'package:inturn/main.dart';
 
 abstract class BaseRemotelyDataSource {
   Future<Map<String, dynamic>> loginWithEmailAndPassword(AuthModel authModel);
@@ -19,7 +20,8 @@ abstract class BaseRemotelyDataSource {
   Future<Map<String, dynamic>> verifyCode(SignUpModel signUpModel);
   Future<Map<String, dynamic>> changePassword(SignUpModel signUpModel);
   Future<AuthWithGoogleModel> sigInWithGoogle();
-  Future<Map<String, dynamic>> addPersonalInfo(AuthModel authModel);
+  //add info
+  Future<Map<String , dynamic>> addPersonalInfo(PersonalInfoParams params);
   Future<Map<String, dynamic>> sendUniversityFacultyIds(String universityId, String facultyId);
   Future<Map<String, dynamic>> sendExperienceLevel(String typeID, String jobLevelId);
   // Future<Map<String, dynamic>> locationType(LocationTypeParams locationTypeParams);
@@ -30,13 +32,11 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
   @override
   Future<Map<String, dynamic>> loginWithEmailAndPassword(
       AuthModel authModel) async {
-    log('${authModel.email}vvvvv');
-    log('${authModel.password}vvvvv');
     final body = {
       'email': authModel.email,
       "password":authModel.password,
       "socialID": authModel.socialID,
-      "userRole": "User"
+      "userRole": "User",
     };
 
     try {
@@ -46,10 +46,10 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       );
       Map<String, dynamic> jsonData = response.data;
       Methods.instance.saveUserToken(authToken: jsonData['token']);
-      log('${jsonData}sssssssss');
+      Methods.instance.saveUserId(userId:jsonData['userId']  );
 
       return jsonData;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw DioHelper.handleDioError(
           dioError: e, endpointName: "loginWithEmailAndPassword");
     }
@@ -78,7 +78,8 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       );
       Map<String, dynamic> jsonData = response.data;
       Methods.instance.saveUserToken(authToken: jsonData['token']);
-      log('${jsonData['token']}hhhhhhhhhhhh${jsonData}');
+      Methods.instance.saveUserId(userId: jsonData['userID']);
+
       if (jsonData['token'] == null) {
         DioException? e;
         throw DioHelper.handleDioError(
@@ -86,7 +87,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       } else {
         return jsonData;
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw DioHelper.handleDioError(
           dioError: e, endpointName: "signUpWithEmailAndPassword");
     }
@@ -107,7 +108,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       Map<String, dynamic> jsonData = response.data;
 
       return jsonData;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw DioHelper.handleDioError(
           dioError: e, endpointName: "changePassword");
     }
@@ -128,7 +129,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       Map<String, dynamic> jsonData = response.data;
 
       return jsonData;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw DioHelper.handleDioError(
           dioError: e, endpointName: "changePassword");
     }
@@ -150,7 +151,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       Map<String, dynamic> jsonData = response.data;
 
       return jsonData;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw DioHelper.handleDioError(dioError: e, endpointName: "verifyCode");
     }
   }
@@ -176,7 +177,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       final body = {
         ConstantApi.email: userModel.email,
         "socicaID": userModel.id,
-        "userRole": "User"
+        "userRole": "User",
       };
       try {
         final response = await Dio().post(
@@ -195,31 +196,33 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
         log('${resultData}resultData');
         log('${AuthWithGoogleModel}resultData');
         return AuthWithGoogleModel(apiUserData: userData, userData: userModel);
-      } on DioError catch (e) {
+      } on DioException catch (e) {
         throw DioHelper.handleDioError(
             dioError: e, endpointName: "sigInWithGoogle");
       }
     }
   }
   @override
-  Future<Map<String, dynamic>> addPersonalInfo(AuthModel authModel) async {
+  Future<Map<String , dynamic>> addPersonalInfo(PersonalInfoParams params) async {
     final body = {
-      'email': authModel.email,
-      "password":authModel.password,
-      "socialID": authModel.socialID,
-      "userRole": "User"
+      'userId':MyApp.userId
     };
+
+    FormData formData = FormData.fromMap({
+      'UserId':MyApp.userId,
+
+    });
 
     try {
       final response = await Dio().post(
-        // ConstantApi.addPersonalInfo,
-        ConstantApi.login,
-        data: FormData.fromMap(body),
+        ConstantApi.addPersonalInfo(),
+        data: formData,
       );
-      Map<String, dynamic> jsonData = response.data;
+      log('${response.data}response.data');
+      Map<String , dynamic> jsonData = response.data as Map<String , dynamic>;
       // Additional processing if needed
       return jsonData;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw DioHelper.handleDioError(
           dioError: e, endpointName: "addPersonalInfo");
     }
@@ -238,7 +241,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
         data: body,
       );
       return response.data;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw DioHelper.handleDioError(
           dioError: e, endpointName: "sendUniversityFacultyIds");
     }
@@ -258,10 +261,10 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
         data: body,
       );
       return response.data;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw DioHelper.handleDioError(
           dioError: e, endpointName: "sendExperienceLevel");
-    };
+    }
   }
 }
 
