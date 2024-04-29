@@ -62,36 +62,52 @@ class _FieldsInfoState extends State<FieldsInfo> {
                   return const Center(child: LoadingWidget());
                 }
            else if (state is GetMajorSuccessMessageState) {
-                  return ListView.builder(
-                      itemCount: state.topFiveModel.length,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return CustomAccordion(
-                          title: state.topFiveModel[index].field  ,
-                          showContent: true,
-                          headerBackgroundColor: Colors.transparent,
-                          titleStyle: TextStyle(
-                            color: AppColors.thirdColor,
-                            fontSize: AppSize.defaultSize! * 1.4,
-                            fontWeight: FontWeight.w400,
-                          ),
-                          toggleIconOpen: openIcon,
-                          toggleIconClose: closeIcon,
-                          headerIconColor: AppColors.primaryColor,
-                          accordionElevation: 0,
-                          widgetItems: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              MultiSegmentedButton(
-                                segments:state.topFiveModel[index].positions.map((position) => position.majorNameEn).toList(),
-                                onValueChanged: (index) => _onValueChanged( index),
-                                width: AppSize.defaultSize! * 16,
+                  return Column(
+                    children: [
+                      ListView.builder(
+                          itemCount: state.topFiveModel.length,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return CustomAccordion(
+                              title: state.topFiveModel[index].field  ,
+                              showContent: true,
+                              headerBackgroundColor: Colors.transparent,
+                              titleStyle: TextStyle(
+                                color: AppColors.thirdColor,
+                                fontSize: AppSize.defaultSize! * 1.4,
+                                fontWeight: FontWeight.w400,
                               ),
-                            ],
-                          ),
-                        );
-                      });
+                              toggleIconOpen: openIcon,
+                              toggleIconClose: closeIcon,
+                              headerIconColor: AppColors.primaryColor,
+                              accordionElevation: 0,
+                              widgetItems: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  MultiSegmentedButton(
+                                    segments:state.topFiveModel[index].positions.map((position) => position.majorNameEn).toList(),
+                                    onValueChanged: (index) => _onValueChanged( index),
+                                    width: AppSize.defaultSize! * 16,
+                                  ),
+                                ],
+                              ),
+                            );
+                          }),
+
+                      MainButton(
+                        text: StringManager.next.tr(),
+                        onTap: () {
+                          if (true) {
+                            Navigator.pushNamed(context, Routes.skillsInfo);
+                          } else {
+                            errorSnackBar(
+                                context, StringManager.pleaseCompleteYourData.tr());
+                          }
+                        },
+                      ),
+                    ],
+                  );
                 }
 
                 return const SizedBox();

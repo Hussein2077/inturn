@@ -12,8 +12,10 @@ import 'package:inturn/features/home/data/model/faculty_model.dart';
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_states.dart';
 class CitiesDropDown extends StatefulWidget {
+  final bool? showCountry;
   const CitiesDropDown({
     super.key,
+    this.showCountry,
   });
 static  Country? selectedValue;
 static  CityModel? selectedValue2 ;
@@ -31,6 +33,7 @@ class _CitiesDropDownState extends State<CitiesDropDown> {
         if (state.getCitiesRequest == RequestState.loaded) {
           return Column(
             children: [
+              if(widget.showCountry?? true)
               Container(
                 // width: AppSize.screenWidth! * .9,
                 height: AppSize.defaultSize! * 5,
@@ -81,7 +84,8 @@ class _CitiesDropDownState extends State<CitiesDropDown> {
                   }).toList(),
                 ),
               ),
-              SizedBox(
+              if(widget.showCountry?? true)
+                SizedBox(
                 height: AppSize.defaultSize! * 2,
               ),
               Container(

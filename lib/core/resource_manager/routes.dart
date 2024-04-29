@@ -15,7 +15,9 @@ import 'package:inturn/features/auth/presentation/forget%20password/forget_passw
 import 'package:inturn/features/auth/presentation/forget%20password/send_otp_code.dart';
 import 'package:inturn/features/auth/presentation/login_screen.dart';
 import 'package:inturn/features/auth/presentation/signup/sign_up.dart';
+import 'package:inturn/features/home/presentation/componants/filters_screen.dart';
 import 'package:inturn/features/home/presentation/componants/job_details.dart';
+import 'package:inturn/features/home/presentation/componants/search_screen.dart';
 import 'package:inturn/features/main_screen.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_event.dart';
@@ -37,7 +39,8 @@ class Routes {
   static const String skillsInfo = "/skillsInfo";
   static const String skills = "/skills";
   static const String thanks = "/thanks";
-
+  static const String searchScreen = "/SearchScreen";
+  static const String filtersScreen = "/FiltersScreen";
   // static const String jobDetails = "/JobDetailsScreen";
 
 ////////////////////////////////
@@ -91,6 +94,7 @@ class RouteGenerator {
                 const SignUpScreen(),
             transitionsBuilder: customAnimate);
       case Routes.personalInfo:
+
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
                 PersonalInfo(),
@@ -125,11 +129,11 @@ class RouteGenerator {
             pageBuilder: (context, animation, secondaryAnimation) =>
                 const ThanksScreen(),
             transitionsBuilder: customAnimate);
-      // case Routes.jobDetails:
-      // return PageRouteBuilder(
-      //     pageBuilder: (context, animation, secondaryAnimation) =>
-      //         const JobDetailsScreen(),
-      //     transitionsBuilder: customAnimate);
+        // case Routes.jobDetails:
+        // return PageRouteBuilder(
+        //     pageBuilder: (context, animation, secondaryAnimation) =>
+        //         const JobDetailsScreen(),
+        //     transitionsBuilder: customAnimate);
 ////////////////////////////////////
       case Routes.forgetPassword:
         return PageRouteBuilder(
@@ -160,6 +164,18 @@ class RouteGenerator {
                 VacancyDetails(
                   vacancyModel: vacancyModel,
                 ),
+            transitionsBuilder: customAnimate);
+
+      case Routes.searchScreen:
+        return PageRouteBuilder(
+            settings: settings,
+            pageBuilder: (context, animation, secondaryAnimation) => SearchScreen(),
+            transitionsBuilder: customAnimate);
+
+      case Routes.filtersScreen:
+        return PageRouteBuilder(
+            settings: settings,
+            pageBuilder: (context, animation, secondaryAnimation) => FiltersScreen(),
             transitionsBuilder: customAnimate);
     }
     return unDefinedRoute();

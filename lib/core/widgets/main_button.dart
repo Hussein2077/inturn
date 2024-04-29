@@ -13,7 +13,8 @@ class MainButton extends StatelessWidget {
     this.height,
     this.width,
     this.padding,
-    this.fontSize, this.fontWeight,
+    this.fontSize,
+    this.fontWeight,
   });
 
   final void Function()? onTap;
