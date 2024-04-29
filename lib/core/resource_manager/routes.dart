@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inturn/core/models/vacancey_model.dart';
+import 'package:inturn/core/utils/methods.dart';
 import 'package:inturn/core/widgets/loading_widget.dart';
 import 'package:inturn/core/widgets/vacancy_details.dart';
 import 'package:inturn/features/auth/presentation/add_info_flow/acdemic_info.dart';
@@ -23,6 +24,7 @@ import 'package:inturn/features/profile/presentation/controller/get_my_data/get_
 import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_event.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_state.dart';
 import 'package:inturn/features/profile/presentation/profile_screen.dart';
+import 'package:inturn/main.dart';
 
 class Routes {
   static const String login = "/login";
@@ -41,6 +43,7 @@ class Routes {
   static const String thanks = "/thanks";
   static const String searchScreen = "/SearchScreen";
   static const String filtersScreen = "/FiltersScreen";
+
   // static const String jobDetails = "/JobDetailsScreen";
 
 ////////////////////////////////
@@ -55,32 +58,32 @@ class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.main:
-        // int userId = settings.arguments as int;
+
 
         return PageRouteBuilder(
             settings: settings,
             pageBuilder: (context, animation, secondaryAnimation) {
-              return MainScreen();
-              // BlocProvider.of<GetMyDataBloc>(context)
-              //     .add(GetMyDataEvent(userId));
-              // return BlocBuilder<GetMyDataBloc, GetMyDataState>(
-              //     builder: (context, state) {
-              //   if (state is GetMyDataLoadingState) {
-              //     return const Center(child: LoadingWidget());
-              //   }
-              //   if (state is GetMyDataSuccessMessageState) {
-              //     if (state.myDataModel.isCompleted!) {
-              //       return const MainScreen();
-              //     } else {
-              //       return _getScreenFromCompletion(
-              //           state.myDataModel.complition ?? 0);
-              //     }
-              //   }
-              //   if (state is GetMyDataErrorMessageState) {
-              //     return const LoginScreen();
-              //   }
-              //   return const MainScreen();
-              // });
+              // return const MainScreen();
+              BlocProvider.of<GetMyDataBloc>(context)
+                  .add(GetMyDataEvent(MyApp.userId));
+              return BlocBuilder<GetMyDataBloc, GetMyDataState>(
+                  builder: (context, state) {
+                if (state is GetMyDataLoadingState) {
+                  return const Center(child: LoadingWidget());
+                }
+                if (state is GetMyDataSuccessMessageState) {
+                  if (state.myDataModel.isCompleted!) {
+                    return const MainScreen();
+                  } else {
+                    return getScreenFromCompletion(
+                        state.myDataModel.complition ?? 0);
+                  }
+                }
+                if (state is GetMyDataErrorMessageState) {
+                  return const LoginScreen();
+                }
+                return const MainScreen();
+              });
             },
             transitionsBuilder: customAnimate);
       case Routes.login:
@@ -95,7 +98,6 @@ class RouteGenerator {
                 const SignUpScreen(),
             transitionsBuilder: customAnimate);
       case Routes.personalInfo:
-
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
                 PersonalInfo(),
@@ -130,11 +132,11 @@ class RouteGenerator {
             pageBuilder: (context, animation, secondaryAnimation) =>
                 const ThanksScreen(),
             transitionsBuilder: customAnimate);
-        // case Routes.jobDetails:
-        // return PageRouteBuilder(
-        //     pageBuilder: (context, animation, secondaryAnimation) =>
-        //         const JobDetailsScreen(),
-        //     transitionsBuilder: customAnimate);
+      // case Routes.jobDetails:
+      // return PageRouteBuilder(
+      //     pageBuilder: (context, animation, secondaryAnimation) =>
+      //         const JobDetailsScreen(),
+      //     transitionsBuilder: customAnimate);
 ////////////////////////////////////
       case Routes.forgetPassword:
         return PageRouteBuilder(
@@ -170,13 +172,15 @@ class RouteGenerator {
       case Routes.searchScreen:
         return PageRouteBuilder(
             settings: settings,
-            pageBuilder: (context, animation, secondaryAnimation) => SearchScreen(),
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                SearchScreen(),
             transitionsBuilder: customAnimate);
 
       case Routes.filtersScreen:
         return PageRouteBuilder(
             settings: settings,
-            pageBuilder: (context, animation, secondaryAnimation) => FiltersScreen(),
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                FiltersScreen(),
             transitionsBuilder: customAnimate);
     }
     return unDefinedRoute();
@@ -200,7 +204,7 @@ Widget customAnimate(BuildContext context, Animation<double> animation,
   );
 }
 
-Widget _getScreenFromCompletion(int completion) {
+Widget getScreenFromCompletion(int completion) {
   switch (completion) {
     case 0:
       return const PersonalInfo();

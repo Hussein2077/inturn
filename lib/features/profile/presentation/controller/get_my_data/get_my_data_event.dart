@@ -3,6 +3,6 @@ abstract class BaseGetMyDataEvent {}
 class InitEvent extends BaseGetMyDataEvent {}
 
 class GetMyDataEvent extends BaseGetMyDataEvent {
- final int userID;
+ final String userID;
   GetMyDataEvent(this.userID);
 }

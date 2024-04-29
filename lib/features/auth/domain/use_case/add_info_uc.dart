@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:inturn/core/base_use_case/base_use_case.dart';
 import 'package:inturn/core/error/failure.dart';
@@ -5,14 +7,12 @@ import 'package:inturn/features/auth/domain/repo/base_repo.dart';
 import 'package:inturn/features/auth/domain/use_case/login_with_email_and_password_use_case.dart';
 
 class AddPersonalInfoUseCase
-    extends BaseUseCase<Map<String, dynamic>, AuthModel> {
+    extends BaseUseCase<Map<String , dynamic>, PersonalInfoParams> {
   BaseRepository baseRepository;
-
   AddPersonalInfoUseCase({required this.baseRepository});
-
   @override
-  Future<Either<Map<String, dynamic>, Failure>> call(
-      AuthModel parameter) async {
+  Future<Either<Map<String , dynamic>, Failure>> call(
+      PersonalInfoParams parameter) async {
     final result = await baseRepository.addPersonalInfo(parameter);
     return result;
   }
@@ -71,9 +71,9 @@ class SendExperienceLevelParams {
       {required this.cityID, required this.countryID, required this.locationTypeID});
 }
 class PersonalInfoParams {
-  final String userID;
+final File image;
+final String firstName;
+final String lastName;
 
-  PersonalInfoParams({required this.userID});
-
-
+PersonalInfoParams({required this.image,required this.firstName,required this.lastName});
 }

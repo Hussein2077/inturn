@@ -11,9 +11,11 @@ class ConstantApi {
   static   String vacancyDetails(int id) => "${baseUrl}vacancyDetails$id";
   static const String getVacancy = "${baseUrl}Vacancies";
   static const String myApplications = "${baseUrl}Apply/Myapplications";
-  static const String myData = "${baseUrl}Auth/complete";
-  static const String getCompanies = "${baseUrl}Companies/GetAllCompanies";
+  static   String myData(String id) => "${baseUrl}Auth/UserData?userId=$id";
+//add personal info
+  static   String addPersonalInfo(
 
+      ) => "${baseUrl}UserProfiles/AddFormUserInfo";
 //////////////////////////////////////////////////////////////////////
   static const String getJobs = "${baseUrl}Jobs/GetVacancy";
   static const String apply = "${baseUrl}Apply";

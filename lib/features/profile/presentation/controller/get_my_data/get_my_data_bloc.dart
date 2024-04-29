@@ -10,7 +10,7 @@ class GetMyDataBloc extends Bloc<BaseGetMyDataEvent, GetMyDataState> {
   GetMyDataBloc({required this.getMyDataUseCase}) : super(GetMyDataInitial()) {
     on<GetMyDataEvent>((event, emit) async {
       emit(const GetMyDataLoadingState());
-      final result = await getMyDataUseCase.getMyData();
+      final result = await getMyDataUseCase.call(event.userID);
       result.fold(
           (l) => emit(GetMyDataSuccessMessageState(myDataModel: l)),
           (r) => emit(GetMyDataErrorMessageState(

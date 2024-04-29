@@ -7,6 +7,7 @@ import 'package:inturn/core/service/navigator_services.dart';
 import 'package:inturn/core/service/service_locator.dart';
 import 'package:inturn/core/translations/translations.dart';
 import 'package:inturn/core/utils/methods.dart';
+import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_info_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/login_bloc/login_with_email_and_password_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/sign_in_with_platform_bloc/sign_in_with_platform_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/sign_up_bloc/sign_up_with_email_and_password_bloc.dart';
@@ -18,6 +19,8 @@ import 'package:inturn/features/home/presentation/controller/get_my_applications
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_event.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_bloc.dart';
+import 'package:inturn/firebase_options.dart';
 
 String? token;
 
@@ -27,7 +30,8 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   token = await Methods.instance.returnUserToken();
   await Firebase.initializeApp(
-      // options: DefaultFirebaseOptions.currentPlatform,
+      options: DefaultFirebaseOptions.currentPlatform,
+
       );
   runApp(EasyLocalization(
       fallbackLocale: const Locale('en'),
@@ -45,12 +49,21 @@ void main() async {
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
-
+static String userId = '0';
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+
+    Future.delayed(Duration.zero, () async {
+      MyApp.  userId = await Methods.instance.returnUserId();
+      print('user id ${MyApp.userId}');
+    });
+    super.initState();
+  }
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -78,6 +91,11 @@ class _MyAppState extends State<MyApp> {
             create: (context) => getIt<HomeBloc>()..add(GetMajorEvent())),
         BlocProvider(
           create: (context) => getIt<GetMyApplicationsBloc>(),
+        ),  BlocProvider(
+          create: (context) => getIt<GetMyDataBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<AddPersonalInfoBloc>(),
         ),
         BlocProvider(
           create: (context) => getIt<GetCompaniesBloc>()..add(GetCompaniesEvent()),

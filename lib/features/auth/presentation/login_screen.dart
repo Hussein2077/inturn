@@ -66,13 +66,9 @@ class _LoginScreenState extends State<LoginScreen> {
           listener: (context, state) {
             if (state is LoginWithEmailAndPasswordSuccessMessageState) {
               EasyLoading.dismiss();
-              if (state.isCompleted) {
-                Navigator.pushNamedAndRemoveUntil(
-                    getIt<NavigationService>().navigatorKey.currentContext!, Routes.main, (route) => false);
-              } else {
-                Navigator.pushNamedAndRemoveUntil(
-                    getIt<NavigationService>().navigatorKey.currentContext!, Routes.personalInfo, (route) => false);
-              }
+              Methods.instance.navigateToAddInfo(
+                  isComplete: state.isCompleted,
+                  completion: state.completion);
             } else if (state is LoginWithEmailAndPasswordErrorMessageState) {
               EasyLoading.dismiss();
               errorSnackBar(context, state.errorMessage);
@@ -83,17 +79,9 @@ class _LoginScreenState extends State<LoginScreen> {
           child: BlocListener<SignInWithPlatformBloc, SignInWithPlatformState>(
             listener: (context, state) async {
               if (state is SignWithGoogleSuccesMessageState) {
-                if (state.isCompleted) {
-                  Navigator.pushNamedAndRemoveUntil(
-                      getIt<NavigationService>().navigatorKey.currentContext!,
-                      Routes.main,
-                      (route) => false);
-                } else {
-                  Navigator.pushNamedAndRemoveUntil(
-                      getIt<NavigationService>().navigatorKey.currentContext!,
-                      Routes.personalInfo,
-                      (route) => false);
-                }
+                Methods.instance.navigateToAddInfo(
+                    isComplete: state.isCompleted,
+                    completion: state.complition);
               } else if (state is SignWithGoogleErrorMessageState) {
                 errorSnackBar(context, state.errorMessage);
               } else if (state is SignWithPlatFormLoadingState) {}

@@ -1,5 +1,7 @@
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
@@ -9,6 +11,9 @@ import 'package:inturn/core/widgets/custom_text_field.dart';
 import 'package:inturn/core/widgets/cutom_text.dart';
 import 'package:inturn/core/widgets/main_button.dart';
 import 'package:inturn/core/widgets/snack_bar.dart';
+import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_info_bloc.dart';
+import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_info_events.dart';
+import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_info_states.dart';
 import 'package:inturn/features/auth/presentation/widgets/upload_photo.dart';
 
 class PersonalInfo extends StatefulWidget {
@@ -42,60 +47,75 @@ class _PersonalInfoState extends State<PersonalInfo> {
       appBar: appBar(context, text: StringManager.personalInformation.tr()),
       body: Padding(
         padding: EdgeInsets.all(AppSize.defaultSize! * 1.5),
-        child: Column(
+        child: BlocListener<AddPersonalInfoBloc, AddPersonalInfoState >(
+          listener: (context, state) {
+            if (state is AddPersonalInfoSuccessState) {
+              Navigator.pushNamed(context, Routes.academicInfo);
+            }
+            else if (state is AddPersonalInfoErrorState) {
+              errorSnackBar(context, state.errorMessage);
+            }
+          },
+          child: Column(
             // mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const UploadProfileImagePage(),
-              SizedBox(
-                height: AppSize.defaultSize! * 2,
-              ),
-              CustomText(
-                text: StringManager.uploadProfileImage.tr(),
-                fontSize: AppSize.defaultSize! * 1.6,
-                color: AppColors.primaryColor,
-                fontWeight: FontWeight.w700,
-              ),
-              SizedBox(
-                height: AppSize.defaultSize! * 2,
-              ),
-              CustomTextField(
-                labelText: StringManager.firstName.tr(),
-                controller: firstNameController,
-                keyboardType: TextInputType.emailAddress,
-              ),
-              SizedBox(
-                height: AppSize.defaultSize! * 2,
-              ),
-              CustomTextField(
-                labelText: StringManager.secondName.tr(),
-                controller: secondNameController,
-                keyboardType: TextInputType.emailAddress,
-              ),
-              SizedBox(
-                height: AppSize.defaultSize! * 2,
-              ),
-              // CustomTextField(
-              //   labelText: StringManager.email.tr(),
-              //   keyboardType: TextInputType.emailAddress,
-              // ),
-              SizedBox(
-                height: AppSize.defaultSize! * 2,
-              ),
-              MainButton(
-                text: StringManager.next.tr(),
-                onTap: () {
-                  if (UploadProfileImagePage.imageFile != null &&
-                      firstNameController.text.isNotEmpty &&
-                      secondNameController.text.isNotEmpty) {
-                    Navigator.pushNamed(context, Routes.academicInfo);
-                  } else {
-                    errorSnackBar(
-                        context, StringManager.pleaseCompleteYourData.tr());
-                  }
-                },
-              ),
-            ]),
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const UploadProfileImagePage(),
+                SizedBox(
+                  height: AppSize.defaultSize! * 2,
+                ),
+                CustomText(
+                  text: StringManager.uploadProfileImage.tr(),
+                  fontSize: AppSize.defaultSize! * 1.6,
+                  color: AppColors.primaryColor,
+                  fontWeight: FontWeight.w700,
+                ),
+                SizedBox(
+                  height: AppSize.defaultSize! * 2,
+                ),
+                CustomTextField(
+                  labelText: StringManager.firstName.tr(),
+                  controller: firstNameController,
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                SizedBox(
+                  height: AppSize.defaultSize! * 2,
+                ),
+                CustomTextField(
+                  labelText: StringManager.secondName.tr(),
+                  controller: secondNameController,
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                SizedBox(
+                  height: AppSize.defaultSize! * 2,
+                ),
+                // CustomTextField(
+                //   labelText: StringManager.email.tr(),
+                //   keyboardType: TextInputType.emailAddress,
+                // ),
+                SizedBox(
+                  height: AppSize.defaultSize! * 2,
+                ),
+                MainButton(
+                  text: StringManager.next.tr(),
+                  onTap: () {
+                    if (UploadProfileImagePage.imageFile != null &&
+                        firstNameController.text.isNotEmpty &&
+                        secondNameController.text.isNotEmpty) {
+                      BlocProvider.of<AddPersonalInfoBloc>(context).add(
+                          AddPersonalInfoButtonPressedEvent(
+                            image: UploadProfileImagePage.imageFile!,
+                            firstName: firstNameController.text,
+                            lastName: secondNameController.text,
+                          ));
+                    } else {
+                      errorSnackBar(
+                          context, StringManager.pleaseCompleteYourData.tr());
+                    }
+                  },
+                ),
+              ]),
+        ),
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:inturn/core/models/my_data_model.dart';
 import 'package:inturn/core/utils/api_helper.dart';
 import 'package:inturn/features/auth/data/auth_remote_data_source.dart';
 import 'package:inturn/features/auth/domain/repo/base_repo.dart';
+import 'package:inturn/features/auth/domain/use_case/add_info_uc.dart';
 import 'package:inturn/features/auth/domain/use_case/login_with_email_and_password_use_case.dart';
 import 'package:inturn/features/auth/domain/use_case/sign_up_use_case.dart';
 
@@ -54,9 +55,9 @@ class RepositoryImp extends BaseRepository {
   }
 
   @override
-  Future<Either<Map<String, dynamic>, Failure>> addPersonalInfo(AuthModel authModel) async {
+  Future<Either<Map<String , dynamic>, Failure>> addPersonalInfo(PersonalInfoParams params) async {
     try {
-      final result = await baseRemotelyDataSource.addPersonalInfo(authModel);
+      final result = await baseRemotelyDataSource.addPersonalInfo(params);
       return Left(result);
     } on Exception catch (e) {
       return right(DioHelper.buildFailure(e));
