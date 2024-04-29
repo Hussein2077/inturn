@@ -48,6 +48,7 @@ void main() async {
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 static String userId = '0';
+static int userProfileId = 0;
   @override
   State<MyApp> createState() => _MyAppState();
 }
@@ -58,7 +59,9 @@ class _MyAppState extends State<MyApp> {
 
     Future.delayed(Duration.zero, () async {
       MyApp.  userId = await Methods.instance.returnUserId();
+      MyApp.userProfileId = await Methods.instance.returnProfileId();
       print('user id ${MyApp.userId}');
+      print('user profile id ${MyApp.userProfileId}');
     });
     super.initState();
   }

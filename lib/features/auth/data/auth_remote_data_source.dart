@@ -47,7 +47,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       Map<String, dynamic> jsonData = response.data;
       Methods.instance.saveUserToken(authToken: jsonData['token']);
       Methods.instance.saveUserId(userId:jsonData['userId']  );
-
+log('${jsonData['userId']}jsonDatajsonDatajsonData');
       return jsonData;
     } on DioException catch (e) {
       throw DioHelper.handleDioError(
@@ -207,10 +207,12 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
     final body = {
       'userId':MyApp.userId
     };
+    log('${MyApp.userId}MyApp.userId');
 
     FormData formData = FormData.fromMap({
       'UserId':MyApp.userId,
-
+      'FirstName':params.firstName,
+      'LastName':params.lastName,
     });
 
     try {
@@ -218,8 +220,12 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
         ConstantApi.addPersonalInfo(),
         data: formData,
       );
-      log('${response.data}response.data');
+
+
+
       Map<String , dynamic> jsonData = response.data as Map<String , dynamic>;
+      Methods.instance.saveUserId(userId: jsonData['userProfileId']);
+
       // Additional processing if needed
       return jsonData;
     } on DioException catch (e) {
@@ -230,14 +236,15 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
   @override
   Future<Map<String, dynamic>> sendUniversityFacultyIds(String universityId, String facultyId) async {
     final body = {
+      'userId':MyApp.userId,
+      'userProfileId':MyApp.userProfileId,
       'UniversityID': universityId,
       'FacultyID': facultyId,
     };
 
     try {
       final response = await Dio().post(
-        // ConstantApi.sendUniversityFacultyIds,
-        '',
+        ConstantApi.sendUniversityFacultyIds(MyApp.userId, MyApp.userProfileId),
         data: body,
       );
       return response.data;

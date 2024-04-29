@@ -22,13 +22,22 @@ class Methods {
       preferences.setString(StringManager.userTokenKey, authToken ?? "noToken");
     }
 
-  }Future<void> saveUserId({String? userId}) async {
+  }Future<void> saveUserId({int? userId}) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     log('$userId hussssssssssssssssmmm');
     if (userId != null) {
-      preferences.setString(StringManager.userIDKey, userId);
+      preferences.setInt(StringManager.userIDKey, userId);
     } else {
-      preferences.setString(StringManager.userIDKey, userId ?? '0');
+      preferences.setInt(StringManager.userIDKey, userId ?? 0);
+    }
+
+  }Future<void> saveProfileId({String? profileId}) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    log('$profileId hussssssssssssssssmmm');
+    if (profileId != null) {
+      preferences.setString(StringManager.profileIDKey, profileId);
+    } else {
+      preferences.setString(StringManager.profileIDKey, profileId ?? '0');
     }
 
   }
@@ -42,6 +51,11 @@ class Methods {
     SharedPreferences preferences = await SharedPreferences.getInstance();
      String tokenPref =
         preferences.getString(StringManager.userIDKey) ?? '0';
+    return tokenPref;
+  }  Future<int> returnProfileId () async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+     int tokenPref =
+        preferences.getInt(StringManager.profileIDKey) ?? 0;
     return tokenPref;
   }
   navigateToAddInfo({required bool isComplete, required int completion }) {
