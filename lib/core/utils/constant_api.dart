@@ -18,9 +18,6 @@ class ConstantApi {
   static const String getCompanies = "${baseUrl}Companies/GetAllCompanies";
   static   String editProfileData(String id) => "${baseUrl}UserProfiles/EditUserProfileBy${id}";
 
-
-  static String myData(String id) => "${baseUrl}Auth/UserData?userId=$id";
-
   static String sendUniversityFacultyIds(String id, int userprofileId) =>
       "${baseUrl}UserProfiles/EditFormEducation?userId=$id&userProfileId=$userprofileId";
 
