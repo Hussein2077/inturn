@@ -204,15 +204,11 @@ log('${jsonData['userId']}jsonDatajsonDatajsonData');
   }
   @override
   Future<Map<String , dynamic>> addPersonalInfo(PersonalInfoParams params) async {
-    final body = {
-      'userId':MyApp.userId
-    };
-    log('${MyApp.userId}MyApp.userId');
-
     FormData formData = FormData.fromMap({
       'UserId':MyApp.userId,
       'FirstName':params.firstName,
       'LastName':params.lastName,
+
     });
 
     try {
