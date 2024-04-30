@@ -22,13 +22,13 @@ class Methods {
       preferences.setString(StringManager.userTokenKey, authToken ?? "noToken");
     }
 
-  }Future<void> saveUserId({int? userId}) async {
+  }Future<void> saveUserId({String? userId}) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     log('$userId hussssssssssssssssmmm');
     if (userId != null) {
-      preferences.setInt(StringManager.userIDKey, userId);
+      preferences.setString(StringManager.userIDKey, userId);
     } else {
-      preferences.setInt(StringManager.userIDKey, userId ?? 0);
+      preferences.setString(StringManager.userIDKey, userId ?? '0');
     }
 
   }Future<void> saveProfileId({String? profileId}) async {
