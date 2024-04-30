@@ -31,13 +31,13 @@ class Methods {
       preferences.setString(StringManager.userIDKey, userId ?? '0');
     }
 
-  }Future<void> saveProfileId({String? profileId}) async {
+  }Future<void> saveProfileId({int? profileId}) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     log('$profileId hussssssssssssssssmmm');
     if (profileId != null) {
-      preferences.setString(StringManager.profileIDKey, profileId);
+      preferences.setInt(StringManager.profileIDKey, profileId);
     } else {
-      preferences.setString(StringManager.profileIDKey, profileId ?? '0');
+      preferences.setInt(StringManager.profileIDKey, profileId ?? 0);
     }
 
   }

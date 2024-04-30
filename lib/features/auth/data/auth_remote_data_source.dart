@@ -11,21 +11,31 @@ import 'package:inturn/features/auth/domain/use_case/add_info_uc.dart';
 import 'package:inturn/features/auth/domain/use_case/login_with_email_and_password_use_case.dart';
 import 'package:inturn/features/auth/domain/use_case/sign_up_use_case.dart';
 import 'package:inturn/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class BaseRemotelyDataSource {
   Future<Map<String, dynamic>> loginWithEmailAndPassword(AuthModel authModel);
+
   Future<Map<String, dynamic>> signUpWithEmailAndPassword(
       SignUpModel signUpModel);
-  Future<Map<String, dynamic>> sendCode(SignUpModel signUpModel);
-  Future<Map<String, dynamic>> verifyCode(SignUpModel signUpModel);
-  Future<Map<String, dynamic>> changePassword(SignUpModel signUpModel);
-  Future<AuthWithGoogleModel> sigInWithGoogle();
-  //add info
-  Future<Map<String , dynamic>> addPersonalInfo(PersonalInfoParams params);
-  Future<Map<String, dynamic>> sendUniversityFacultyIds(String universityId, String facultyId);
-  Future<Map<String, dynamic>> sendExperienceLevel(String typeID, String jobLevelId);
-  // Future<Map<String, dynamic>> locationType(LocationTypeParams locationTypeParams);
 
+  Future<Map<String, dynamic>> sendCode(SignUpModel signUpModel);
+
+  Future<Map<String, dynamic>> verifyCode(SignUpModel signUpModel);
+
+  Future<Map<String, dynamic>> changePassword(SignUpModel signUpModel);
+
+  Future<AuthWithGoogleModel> sigInWithGoogle();
+
+  //add info
+  Future<Map<String, dynamic>> addPersonalInfo(PersonalInfoParams params);
+
+  Future<Map<String, dynamic>> sendUniversityFacultyIds(
+      String universityId, String facultyId);
+
+  Future<Map<String, dynamic>> sendExperienceLevel(
+      String typeID, String jobLevelId);
+// Future<Map<String, dynamic>> locationType(LocationTypeParams locationTypeParams);
 }
 
 class AuthRemotelyDateSource extends BaseRemotelyDataSource {
@@ -34,7 +44,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       AuthModel authModel) async {
     final body = {
       'email': authModel.email,
-      "password":authModel.password,
+      "password": authModel.password,
       "socialID": authModel.socialID,
       "userRole": "User",
     };
@@ -45,9 +55,12 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
         data: body,
       );
       Map<String, dynamic> jsonData = response.data;
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      preferences.clear();
       Methods.instance.saveUserToken(authToken: jsonData['token']);
-      Methods.instance.saveUserId(userId:jsonData['userId']  );
-log('${jsonData['userId']}jsonDatajsonDatajsonData');
+      Methods.instance.saveUserId(userId: jsonData['userId']);
+      MyApp. userId= jsonData['userId'];
+      log('${jsonData['userId']}jsonDatajsonDatajsonData');
       return jsonData;
     } on DioException catch (e) {
       throw DioHelper.handleDioError(
@@ -164,12 +177,11 @@ log('${jsonData['userId']}jsonDatajsonDatajsonData');
     // // ignore: unused_element
     // Future logout() => _googleSignIn.disconnect();
     final userModel = await login();
-    log('${ userModel?.id}_googleSignIn');
-    log('${ userModel?.email}_googleSignIn');
+    log('${userModel?.id}_googleSignIn');
+    log('${userModel?.email}_googleSignIn');
     // final devicedata =
     // await DioHelper().initPlatformState(); // to get information device
     Map<String, String> headers = await DioHelper().header();
-
 
     if (userModel == null) {
       throw SiginGoogleException();
@@ -202,13 +214,14 @@ log('${jsonData['userId']}jsonDatajsonDatajsonData');
       }
     }
   }
-  @override
-  Future<Map<String , dynamic>> addPersonalInfo(PersonalInfoParams params) async {
-    FormData formData = FormData.fromMap({
-      'UserId':MyApp.userId,
-      'FirstName':params.firstName,
-      'LastName':params.lastName,
 
+  @override
+  Future<Map<String, dynamic>> addPersonalInfo(
+      PersonalInfoParams params) async {
+    FormData formData = FormData.fromMap({
+      'UserId': MyApp.userId,
+      'FirstName': params.firstName,
+      'LastName': params.lastName,
     });
 
     try {
@@ -217,11 +230,10 @@ log('${jsonData['userId']}jsonDatajsonDatajsonData');
         data: formData,
       );
 
-
-
-      Map<String , dynamic> jsonData = response.data as Map<String , dynamic>;
-      Methods.instance.saveUserId(userId: jsonData['userProfileId']);
-
+      Map<String, dynamic> jsonData = response.data as Map<String, dynamic>;
+      log('${jsonData['userProfileId']} zazaaza');
+      Methods.instance.saveProfileId(profileId: jsonData['userProfileId']);
+      MyApp.userProfileId= jsonData['userProfileId'];
       // Additional processing if needed
       return jsonData;
     } on DioException catch (e) {
@@ -229,11 +241,14 @@ log('${jsonData['userId']}jsonDatajsonDatajsonData');
           dioError: e, endpointName: "addPersonalInfo");
     }
   }
+
   @override
-  Future<Map<String, dynamic>> sendUniversityFacultyIds(String universityId, String facultyId) async {
+  Future<Map<String, dynamic>> sendUniversityFacultyIds(
+      String universityId, String facultyId) async {
+    log('${universityId} hushush${facultyId} ${MyApp.userId}sf ${MyApp.userProfileId}');
     final body = {
-      'userId':MyApp.userId,
-      'userProfileId':MyApp.userProfileId,
+      'userId': MyApp.userId,
+      'userProfileId': MyApp.userProfileId,
       'UniversityID': universityId,
       'FacultyID': facultyId,
     };
@@ -243,7 +258,8 @@ log('${jsonData['userId']}jsonDatajsonDatajsonData');
         ConstantApi.sendUniversityFacultyIds(MyApp.userId, MyApp.userProfileId),
         data: body,
       );
-      return response.data;
+      Map<String, dynamic> jsonData = response.data as Map<String, dynamic>;
+      return jsonData;
     } on DioException catch (e) {
       throw DioHelper.handleDioError(
           dioError: e, endpointName: "sendUniversityFacultyIds");
@@ -251,7 +267,8 @@ log('${jsonData['userId']}jsonDatajsonDatajsonData');
   }
 
   @override
-  Future<Map<String, dynamic>> sendExperienceLevel(String typeID, String jobLevelId)async {
+  Future<Map<String, dynamic>> sendExperienceLevel(
+      String typeID, String jobLevelId) async {
     final body = {
       'typeID': typeID,
       'jobLevelId': jobLevelId,
