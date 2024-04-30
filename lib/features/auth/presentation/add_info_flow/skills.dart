@@ -28,6 +28,12 @@ class SkillInfo extends StatefulWidget {
 }
 
 class _SkillInfoState extends State<SkillInfo> {
+  late TextEditingController controller = TextEditingController();
+  @override
+  initState() {
+    super.initState();
+    controller=TextEditingController();
+  }
     List<String> skillList = [];
   int _currentSegment = 0;
 
@@ -58,9 +64,23 @@ class _SkillInfoState extends State<SkillInfo> {
                        else if (state.getSkillsRequest == RequestState.loaded) {
                          log('${state.getSkills[1].skillNameEn}state.getSkills');
                                return SearchField<SkillModel>(
-                            // controller: controller,
+                            controller: controller,
+                                 onSuggestionTap:   ( v) {
+                                   print('${v.item?.skillNameEn??""}skillList');
+
+
+                                     skillList.add(v.item?.skillNameEn??"");
+                                     setState(() {
+
+                                     });
+
+                                 },
+                                 onSaved:   ( v) {
+                                 },
+                                onTap:  ( ) {
+
+                                },
                                  onSubmit: ( v){
-                                   skillList.add(v);
                                  },
                             suggestions: state.getSkills
                                 .map(
@@ -82,7 +102,7 @@ class _SkillInfoState extends State<SkillInfo> {
                                    fontSize: AppSize.defaultSize! * 1.2,
                                    color: Colors.black.withOpacity(0.8),
                                  ),
-                                autofocus: true,
+                                // autofocus: true,
                           );
                         }
                        else return const SizedBox();
