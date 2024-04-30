@@ -53,6 +53,7 @@ class ServerLocator {
           getCitiesUseCase: getIt(),
           getFacultyUseCase: getIt(),
           getUniversityUseCase: getIt(),
+          getSkillUseCase: getIt(),
         ));
 
     getIt.registerLazySingleton(
@@ -62,8 +63,8 @@ class ServerLocator {
     getIt.registerLazySingleton(() => AddPersonalInfoBloc(
         addPersonalInfoUseCase: getIt(),
         sendExperienceLevelUseCase: getIt(),
-        sendUniversityFacultyIdsUseCase: getIt()));
 
+        sendUniversityFacultyIdsUseCase: getIt(), sendLocationTypeUseCase: getIt(), sendMajorIDUseCase: getIt()));
     getIt.registerLazySingleton(
             () => EditProfileBloc(editPersonalInfoUseCase: getIt()));
 
@@ -94,6 +95,12 @@ class ServerLocator {
         () => SendExperienceLevelUseCase(baseRepository: getIt()));
     getIt.registerFactory(
         () => SendUniversityFacultyIdsUseCase(baseRepository: getIt()));
+    getIt.registerFactory(
+        () => SendLocationTypeUseCase(baseRepository: getIt()));
+    getIt.registerFactory(
+        () => SendMajorIDUseCase(baseRepository: getIt()));
+    getIt.registerFactory(
+        () => GetSkillsUseCase(baseRepositoryHome: getIt()));
 
     //remote data
     getIt.registerLazySingleton<BaseRemotelyDataSource>(

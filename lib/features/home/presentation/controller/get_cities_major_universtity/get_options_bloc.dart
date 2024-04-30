@@ -16,15 +16,18 @@ class OptionsBloc extends Bloc<OptionsEvent, GetOptionsStates> {
   final GetFacultyUseCase getFacultyUseCase;
 
   final GetUniversityUseCase getUniversityUseCase;
+  final GetSkillsUseCase getSkillUseCase;
 
   OptionsBloc(
       {required this.getUniversityUseCase,
       required this.getFacultyUseCase,
+      required this.getSkillUseCase,
       required this.getCitiesUseCase})
       : super(const GetOptionsStates()) {
     on<GetFacultyEvent>(getFaculty);
     on<GetUniversityEvent>(getUniversity);
     on<GetCitiesEvent>(getCities);
+    on<GetSkillsEvent>(getSkills);
   }
 
   FutureOr<void> getFaculty(
@@ -58,5 +61,14 @@ class OptionsBloc extends Bloc<OptionsEvent, GetOptionsStates> {
         (r) => emit(state.copyWith(
             getCitiesRequest: RequestState.error,
             getCitiesMessage: DioHelper().getTypeOfFailure(r))));
+  }  FutureOr<void> getSkills(
+      GetSkillsEvent event, Emitter<GetOptionsStates> emit) async {
+    final result = await getSkillUseCase.call(const NoParameter());
+    result.fold(
+        (l) => emit(state.copyWith(
+            getSkills: l, getSkillsRequest: RequestState.loaded)),
+        (r) => emit(state.copyWith(
+            getSkillsRequest: RequestState.error,
+            getSkillsMessage: DioHelper().getTypeOfFailure(r))));
   }
 }

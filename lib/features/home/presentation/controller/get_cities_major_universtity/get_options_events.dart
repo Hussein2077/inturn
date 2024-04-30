@@ -18,4 +18,6 @@ class GetUniversityEvent extends OptionsEvent {
 
 class GetCitiesEvent extends OptionsEvent {
   const GetCitiesEvent();
+}class GetSkillsEvent extends OptionsEvent {
+  const GetSkillsEvent();
 }

@@ -8,6 +8,7 @@ import 'package:inturn/features/home/data/model/company_model.dart';
 import 'package:inturn/features/home/data/model/major_model.dart';
 import 'package:inturn/features/home/data/model/cities_model.dart';
 import 'package:inturn/features/home/data/model/faculty_model.dart';
+import 'package:inturn/features/home/data/model/skill_model.dart';
 import 'package:inturn/features/home/data/model/university_model.dart';
 
 abstract class BaseRemotelyDataSourceHome{
@@ -17,6 +18,7 @@ abstract class BaseRemotelyDataSourceHome{
   Future<List<FacultyModel>> getFaculty(int id);
   Future<List<UniversityModel>> getUniversity();
   Future<List<MajorModel>> getMajor();
+  Future<List<SkillModel>> getSkill();
   Future<List<VacancyModel>> getMyApplications(String type);
   Future<List<CompanyModel>> getCompanies();
 
@@ -109,6 +111,20 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
 
     } on DioException catch (e) {
       throw DioHelper.handleDioError(dioError: e, endpointName: "getMajor");
+    }
+  } @override
+  Future<List<SkillModel>> getSkill() async {
+    try {
+      final response = await Dio().get(
+        ConstantApi.getSkill,
+      );
+      List<SkillModel> jsonData = List<SkillModel>.from(
+          (response.data as List).map((e) => SkillModel.fromJson(e)));
+      log('${jsonData[0]}ssssssssssssssssss');
+      return jsonData;
+
+    } on DioException catch (e) {
+      throw DioHelper.handleDioError(dioError: e, endpointName: "getSkill");
     }
   }
 

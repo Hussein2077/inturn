@@ -68,7 +68,45 @@ class AddExperienceLevelErrorState  extends AddPersonalInfoState {
   @override
   List<Object> get props => [errorMessage];
 }
+// location
 
 
+class AddLocationTypeLoadingState extends AddPersonalInfoState {}
 
+class AddLocationTypeSuccessState  extends AddPersonalInfoState {
+  final String message;
 
+  const AddLocationTypeSuccessState ({required this.message});
+
+  @override
+  List<Object> get props => [message];
+}
+
+class AddLocationTypeErrorState  extends AddPersonalInfoState {
+  final String errorMessage;
+
+  const AddLocationTypeErrorState ({required this.errorMessage});
+
+  @override
+  List<Object> get props => [errorMessage];
+}
+// major
+class AddMajorIdLoadingState extends AddPersonalInfoState {}
+
+class AddMajorIdSuccessState  extends AddPersonalInfoState {
+  final String message;
+
+  const AddMajorIdSuccessState ({required this.message});
+
+  @override
+  List<Object> get props => [message];
+}
+
+class AddMajorIdErrorState  extends AddPersonalInfoState {
+  final String errorMessage;
+
+  const AddMajorIdErrorState ({required this.errorMessage});
+
+  @override
+  List<Object> get props => [errorMessage];
+}

@@ -60,7 +60,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
 
-    Future.delayed(Duration.zero, () async {
+    Future.delayed(const Duration(milliseconds: 100), () async {
       MyApp.  userId = await Methods.instance.returnUserId();
       MyApp.userProfileId = await Methods.instance.returnProfileId();
       print('user id ${MyApp.userId}');
@@ -89,7 +89,9 @@ class _MyAppState extends State<MyApp> {
           create: (context) => getIt<OptionsBloc>()
             // ..add(const GetMajorEvent())
             ..add(const GetUniversityEvent())
-            ..add(const GetCitiesEvent()),
+            ..add(const GetCitiesEvent())
+            ..add(const GetSkillsEvent())
+          ,
         ),
         BlocProvider(
             create: (context) => getIt<HomeBloc>()..add(GetMajorEvent())),

@@ -1,15 +1,18 @@
 import 'dart:developer';
 
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:inturn/core/error/exception.dart';
 import 'package:inturn/core/models/my_data_model.dart';
+import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/api_helper.dart';
 import 'package:inturn/core/utils/constant_api.dart';
 import 'package:inturn/core/utils/methods.dart';
 import 'package:inturn/features/auth/domain/use_case/add_info_uc.dart';
 import 'package:inturn/features/auth/domain/use_case/login_with_email_and_password_use_case.dart';
 import 'package:inturn/features/auth/domain/use_case/sign_up_use_case.dart';
+import 'package:inturn/features/auth/presentation/add_info_flow/location_info.dart';
 import 'package:inturn/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -30,12 +33,13 @@ abstract class BaseRemotelyDataSource {
   //add info
   Future<Map<String, dynamic>> addPersonalInfo(PersonalInfoParams params);
 
-  Future<Map<String, dynamic>> sendUniversityFacultyIds(
+  Future<dynamic> sendUniversityFacultyIds(
       String universityId, String facultyId);
 
-  Future<Map<String, dynamic>> sendExperienceLevel(
+  Future<dynamic> sendExperienceLevel(
       String typeID, String jobLevelId);
-// Future<Map<String, dynamic>> locationType(LocationTypeParams locationTypeParams);
+Future<dynamic> locationType(LocationTypeParams locationTypeParams);
+Future<dynamic> majorOfFields(List<int> majorIds);
 }
 
 class AuthRemotelyDateSource extends BaseRemotelyDataSource {
@@ -56,11 +60,14 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       );
       Map<String, dynamic> jsonData = response.data;
       SharedPreferences preferences = await SharedPreferences.getInstance();
-      preferences.clear();
+      preferences.remove(StringManager.userIDKey);
+      preferences.remove(StringManager.profileIDKey);
       Methods.instance.saveUserToken(authToken: jsonData['token']);
       Methods.instance.saveUserId(userId: jsonData['userId']);
-      MyApp. userId= jsonData['userId'];
-      log('${jsonData['userId']}jsonDatajsonDatajsonData');
+      // log('${ MyApp. userId}jsonDatajsonDatajsonData');
+      // MyApp. userId= jsonData['userId'];
+      // log('${jsonData['userId']}jsonDatajsonDatajsonData');
+      // log('${ MyApp. userId}after');
       return jsonData;
     } on DioException catch (e) {
       throw DioHelper.handleDioError(
@@ -203,9 +210,12 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
         Map<String, dynamic> resultData = response.data;
 
         MyDataModel userData = MyDataModel.fromMap(resultData);
-
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        preferences.remove(StringManager.userIDKey);
+        preferences.remove(StringManager.profileIDKey);
         Methods.instance.saveUserToken(authToken: resultData['token']);
-        log('${resultData}resultData');
+        Methods.instance.saveUserId(userId: resultData['userID']);
+        log('${resultData['userID']}resultData');
         log('${AuthWithGoogleModel}resultData');
         return AuthWithGoogleModel(apiUserData: userData, userData: userModel);
       } on DioException catch (e) {
@@ -218,6 +228,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
   @override
   Future<Map<String, dynamic>> addPersonalInfo(
       PersonalInfoParams params) async {
+    log('${MyApp.userId} zazaaza');
     FormData formData = FormData.fromMap({
       'UserId': MyApp.userId,
       'FirstName': params.firstName,
@@ -243,9 +254,8 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
   }
 
   @override
-  Future<Map<String, dynamic>> sendUniversityFacultyIds(
+  Future<dynamic> sendUniversityFacultyIds(
       String universityId, String facultyId) async {
-    log('${universityId} hushush${facultyId} ${MyApp.userId}sf ${MyApp.userProfileId}');
     final body = {
       'userId': MyApp.userId,
       'userProfileId': MyApp.userProfileId,
@@ -258,8 +268,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
         ConstantApi.sendUniversityFacultyIds(MyApp.userId, MyApp.userProfileId),
         data: body,
       );
-      Map<String, dynamic> jsonData = response.data as Map<String, dynamic>;
-      return jsonData;
+      return response.data;
     } on DioException catch (e) {
       throw DioHelper.handleDioError(
           dioError: e, endpointName: "sendUniversityFacultyIds");
@@ -267,23 +276,72 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
   }
 
   @override
-  Future<Map<String, dynamic>> sendExperienceLevel(
+  Future<dynamic> sendExperienceLevel(
       String typeID, String jobLevelId) async {
+
     final body = {
-      'typeID': typeID,
+      'graduationStatusId': typeID,
       'jobLevelId': jobLevelId,
+      'userId': MyApp.userId,
+      'userProfileId': MyApp.userProfileId,
     };
 
     try {
       final response = await Dio().post(
-        // ConstantApi.sendUniversityFacultyIds,
-        '',
+        ConstantApi.sendUniversityFacultyIds(  MyApp.userId, MyApp.userProfileId),
         data: body,
       );
       return response.data;
     } on DioException catch (e) {
       throw DioHelper.handleDioError(
           dioError: e, endpointName: "sendExperienceLevel");
+    }
+  }
+  @override
+  Future<dynamic> locationType(
+      LocationTypeParams locationTypeParams) async {
+    log('${locationTypeParams.cityID}');
+    log('${locationTypeParams.countryID}');
+    log('${ locationTypeParams.locationTypeID} locationTypeParams.locationTypeID');
+    final body = {
+      'jobLocationTypeId': locationTypeParams.locationTypeID,
+      'userId': MyApp.userId,
+      'userProfileId': MyApp.userProfileId,
+      'cityId': locationTypeParams.cityID,
+      'countryId': locationTypeParams.countryID,
+    };
+
+    try {
+      final response = await Dio().post(
+        ConstantApi.sendLocationTypeIds( MyApp.userId , MyApp.userProfileId ),
+
+        data: body,
+      );
+      return response.data;
+    } on DioException catch (e) {
+      throw DioHelper.handleDioError(
+          dioError: e, endpointName: "locationType");
+    }
+  }
+  @override
+  Future<dynamic> majorOfFields(List<int> majorIds) async {
+log('${majorIds} majorIds');
+    final body = {
+      'majorIds': majorIds,
+      'userId': MyApp.userId,
+      'userProfileId': MyApp.userProfileId,
+    };
+
+    try {
+      final response = await Dio().post(
+        ConstantApi.sendMajorIds( MyApp.userId , MyApp.userProfileId ),
+
+        data: body,
+      );
+      return response.data;
+    } on DioException catch (e) {
+      throw DioHelper.handleDioError(
+          dioError: e, endpointName: "locationType");
     }
   }
 }

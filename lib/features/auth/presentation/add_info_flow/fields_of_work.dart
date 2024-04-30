@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:custom_accordion/custom_accordion.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,21 +17,25 @@ import 'package:inturn/core/widgets/cutom_text.dart';
 import 'package:inturn/core/widgets/loading_widget.dart';
 import 'package:inturn/core/widgets/main_button.dart';
 import 'package:inturn/core/widgets/snack_bar.dart';
+import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_info_bloc.dart';
+import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_info_events.dart';
+import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_info_states.dart';
 import 'package:inturn/features/auth/presentation/widgets/multi_segment.dart';
 import 'package:inturn/features/auth/presentation/widgets/segment_button.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_bloc.dart';
+import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_event.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_state.dart';
 
 class FieldsInfo extends StatefulWidget {
   const FieldsInfo({super.key});
-
+static   List<int> id = [];
   @override
   State<FieldsInfo> createState() => _FieldsInfoState();
 }
 
 class _FieldsInfoState extends State<FieldsInfo> {
 
-  List <int>  _currentSegment = [-1];
+  List <int>  _currentSegment = [];
 
   void _onValueChanged( List <int> newValue) {
     setState(() {
@@ -47,7 +53,11 @@ class _FieldsInfoState extends State<FieldsInfo> {
   Widget openIcon = SvgPicture.asset(
     AssetPath.collapsed,
   );
-
+@override
+  void initState() {
+    BlocProvider.of<HomeBloc>(context).add(GetMajorEvent());
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +66,16 @@ class _FieldsInfoState extends State<FieldsInfo> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            BlocBuilder<HomeBloc, HomeState >(
+            BlocListener<AddPersonalInfoBloc, AddPersonalInfoState >(
+  listener: (context, state) {
+    if (state is AddMajorIdSuccessState) {
+      Navigator.pushNamed(context, Routes.skillsInfo);
+    }
+    else if (state is AddMajorIdErrorState) {
+      errorSnackBar(context, StringManager.unexpectedError);
+    }
+  },
+  child: BlocBuilder<HomeBloc, HomeState >(
               builder: (context, state) {
                 if (state is GetMajorLoadingState) {
                   return const Center(child: LoadingWidget());
@@ -86,9 +105,11 @@ class _FieldsInfoState extends State<FieldsInfo> {
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
                                   MultiSegmentedButton(
-                                    segments:state.topFiveModel[index].positions.map((position) => position.majorNameEn).toList(),
+                                    initialIndex: index,
+                                    segments:state.topFiveModel,
+                                    ids: state.topFiveModel[index].positions.map((position) => position.majorId).toList(),
+                                    // segments:state.topFiveModel[index].positions.map((position) => position.majorId).toList(),
                                     onValueChanged: (index) => _onValueChanged( index),
-                                    width: AppSize.defaultSize! * 16,
                                   ),
                                 ],
                               ),
@@ -98,8 +119,8 @@ class _FieldsInfoState extends State<FieldsInfo> {
                       MainButton(
                         text: StringManager.next.tr(),
                         onTap: () {
-                          if (true) {
-                            Navigator.pushNamed(context, Routes.skillsInfo);
+                          if (_currentSegment.isNotEmpty) {
+                            BlocProvider.of<AddPersonalInfoBloc>(context).add(SendMajorIdEvent(majorIds: FieldsInfo.id));
                           } else {
                             errorSnackBar(
                                 context, StringManager.pleaseCompleteYourData.tr());
@@ -114,6 +135,7 @@ class _FieldsInfoState extends State<FieldsInfo> {
 
               },
             ),
+),
 
 
           ],

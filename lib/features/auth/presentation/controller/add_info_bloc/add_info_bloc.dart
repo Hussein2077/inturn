@@ -11,15 +11,22 @@ class AddPersonalInfoBloc
   final AddPersonalInfoUseCase addPersonalInfoUseCase;
   final SendUniversityFacultyIdsUseCase sendUniversityFacultyIdsUseCase;
   final SendExperienceLevelUseCase sendExperienceLevelUseCase;
+  final SendLocationTypeUseCase sendLocationTypeUseCase;
+  final SendMajorIDUseCase sendMajorIDUseCase;
+
 
   AddPersonalInfoBloc(
       {required this.addPersonalInfoUseCase,
       required this.sendUniversityFacultyIdsUseCase,
+      required this.sendLocationTypeUseCase,
+      required this.sendMajorIDUseCase,
       required this.sendExperienceLevelUseCase})
       : super(AddPersonalInfoInitial()) {
     on<AddPersonalInfoButtonPressedEvent>(addPersonalInfo);
     on<AddUniversityAndFacultiesEvent>(addUniversityAndFaculties);
     on<SendExperienceLevelEvent>(sendExperienceLevel);
+    on<SendLocationEvent>(sendLocationTypeLevel);
+    on<SendMajorIdEvent>(sendMajorIdLevel);
   }
 
   addPersonalInfo(event, emit) async {
@@ -81,6 +88,49 @@ class AddPersonalInfoBloc
       ),
       (r) => emit(
         AddExperienceLevelErrorState(
+          errorMessage: DioHelper().getTypeOfFailure(r),
+        ),
+      ),
+    );
+  }
+  sendLocationTypeLevel(event, emit) async {
+    emit(
+      AddLocationTypeLoadingState(),
+    );
+    final result = await sendLocationTypeUseCase.call(
+        LocationTypeParams(
+           cityID: event.cityID,
+           countryID: event.countryID,
+          locationTypeID: event.locationTypeID,
+           ));
+    result.fold(
+      (l) => emit(
+        AddLocationTypeSuccessState(
+          message: StringManager.loginSuccessfully.tr(),
+        ),
+      ),
+      (r) => emit(
+        AddLocationTypeErrorState(
+          errorMessage: DioHelper().getTypeOfFailure(r),
+        ),
+      ),
+    );
+  }
+  sendMajorIdLevel(event, emit) async {
+    emit(
+      AddMajorIdLoadingState(),
+    );
+    final result = await sendMajorIDUseCase.call(
+      event.majorIds
+        );
+    result.fold(
+      (l) => emit(
+        AddMajorIdSuccessState(
+          message: StringManager.loginSuccessfully.tr(),
+        ),
+      ),
+      (r) => emit(
+        AddMajorIdErrorState(
           errorMessage: DioHelper().getTypeOfFailure(r),
         ),
       ),

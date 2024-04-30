@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:inturn/core/utils/enums.dart';
 import 'package:inturn/features/home/data/model/cities_model.dart';
 import 'package:inturn/features/home/data/model/faculty_model.dart';
+import 'package:inturn/features/home/data/model/skill_model.dart';
 import 'package:inturn/features/home/data/model/university_model.dart';
 
 class GetOptionsStates extends Equatable {
@@ -12,9 +13,11 @@ class GetOptionsStates extends Equatable {
   final RequestState getUniversityRequest;
   final String getUniversityMessage;
   final List<Country> getCities;
-  final List<CityModel> getCities2;
   final RequestState getCitiesRequest;
   final String getCitiesMessage;
+  final List<SkillModel> getSkills;
+  final RequestState getSkillsRequest;
+  final String getSkillsMessage;
 
   const GetOptionsStates(
       {this.getFaculty = const [],
@@ -24,9 +27,11 @@ class GetOptionsStates extends Equatable {
       this.getUniversityRequest = RequestState.loading,
       this.getUniversityMessage = "",
       this.getCities = const [],
-      this.getCities2 = const [],
       this.getCitiesRequest = RequestState.loading,
-      this.getCitiesMessage = ""});
+      this.getCitiesMessage = "",
+      this.getSkills = const [],
+      this.getSkillsRequest = RequestState.loading,
+      this.getSkillsMessage = ""});
 
   GetOptionsStates copyWith({
     List<FacultyModel>? getFaculty,
@@ -39,6 +44,9 @@ class GetOptionsStates extends Equatable {
     List<CityModel>? getCities2,
     RequestState? getCitiesRequest,
     String? getCitiesMessage,
+    List<SkillModel>? getSkills,
+    RequestState? getSkillsRequest,
+    String? getSkillsMessage,
   }) {
     return GetOptionsStates(
         getFaculty: getFaculty ?? this.getFaculty,
@@ -48,10 +56,13 @@ class GetOptionsStates extends Equatable {
         getUniversityRequest: getUniversityRequest ?? this.getUniversityRequest,
         getUniversityMessage: getUniversityMessage ?? this.getUniversityMessage,
         getCities: getCities ?? this.getCities,
-        getCities2: getCities2 ?? this.getCities2,
-        getCitiesRequest: getCitiesRequest ?? this.getCitiesRequest,
-        getCitiesMessage: getCitiesMessage ?? this.getUniversityMessage);
+         getCitiesRequest: getCitiesRequest ?? this.getCitiesRequest,
+        getCitiesMessage: getCitiesMessage ?? this.getUniversityMessage,
+        getSkills: getSkills ?? this.getSkills,
+        getSkillsRequest: getSkillsRequest ?? this.getSkillsRequest,
+        getSkillsMessage: getSkillsMessage ?? this.getSkillsMessage
 
+    );
   }
 
   @override
@@ -65,6 +76,8 @@ class GetOptionsStates extends Equatable {
         getCities,
         getCitiesRequest,
         getCitiesMessage,
-        getCities2,
+        getSkills,
+        getSkillsRequest,
+        getSkillsMessage
       ];
 }

@@ -2,16 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/widgets/cutom_text.dart';
+import 'package:inturn/features/auth/presentation/add_info_flow/fields_of_work.dart';
+import 'package:inturn/features/home/data/model/major_model.dart';
 
 class MultiSegmentedButton extends StatefulWidget {
-  final List<String> segments;
+  final List<MajorModel> segments;
+  final List<int>? ids;
   final Function(List<int>) onValueChanged;
   final List<int> initialSelectedIndices;
   final double? width;
-
+  final int initialIndex;
+static int selectedIndex = 0;
   const MultiSegmentedButton({
     Key? key,
     required this.segments,
+    required this.initialIndex,
+      this.ids,
     required this.onValueChanged,
     this.width,
     this.initialSelectedIndices = const [],
@@ -36,13 +42,17 @@ class MultiSegmentedButtonState extends State<MultiSegmentedButton> {
       direction: Axis.horizontal,
       spacing: AppSize.defaultSize! * 1.5,
       children: List.generate(
-        widget.segments.length,
+        widget.segments[widget.initialIndex].positions.length,
             (index) => GestureDetector(
           onTap: () {
             setState(() {
+
+              MultiSegmentedButton.selectedIndex=index;
               if (_selectedIndices.contains(index)) {
+                FieldsInfo.id.remove(widget.ids![index]);
                 _selectedIndices.remove(index);
               } else {
+                FieldsInfo.id.add(widget.ids![index]);
                 _selectedIndices.add(index);
               }
               widget.onValueChanged(_selectedIndices);
@@ -64,7 +74,7 @@ class MultiSegmentedButtonState extends State<MultiSegmentedButton> {
             ),
             child: Center(
               child: CustomText(
-                text: widget.segments[index],
+                text: widget.segments[widget.initialIndex].positions[index].majorNameEn,
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),

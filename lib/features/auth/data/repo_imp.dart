@@ -86,7 +86,7 @@ class RepositoryImp extends BaseRepository {
   }
 
   @override
-  Future<Either<Map<String, dynamic>, Failure>> sendUniversityFacultyIds(String universityId, String facultyId) async {
+  Future<Either<dynamic, Failure>> sendUniversityFacultyIds(String universityId, String facultyId) async {
     try {
       final result = await baseRemotelyDataSource.sendUniversityFacultyIds(universityId, facultyId);
       return Left(result);
@@ -94,9 +94,25 @@ class RepositoryImp extends BaseRepository {
       return right(DioHelper.buildFailure(e));
     }
   }  @override
-  Future<Either<Map<String, dynamic>, Failure>> sendExperienceLevel(String typeID, String jobLevelId) async {
+  Future<Either<dynamic, Failure>> sendExperienceLevel(String typeID, String jobLevelId) async {
     try {
       final result = await baseRemotelyDataSource.sendExperienceLevel(typeID, jobLevelId);
+      return Left(result);
+    } on Exception catch (e) {
+      return right(DioHelper.buildFailure(e));
+    }
+  } @override
+  Future<Either<dynamic, Failure>> locationType(LocationTypeParams locationTypeParams) async {
+    try {
+      final result = await baseRemotelyDataSource.locationType(locationTypeParams);
+      return Left(result);
+    } on Exception catch (e) {
+      return right(DioHelper.buildFailure(e));
+    }
+  }@override
+  Future<Either<dynamic, Failure>> majorOfFields(List<int> majorIds) async {
+    try {
+      final result = await baseRemotelyDataSource.majorOfFields(majorIds);
       return Left(result);
     } on Exception catch (e) {
       return right(DioHelper.buildFailure(e));

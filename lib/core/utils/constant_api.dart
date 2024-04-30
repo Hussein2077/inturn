@@ -19,10 +19,15 @@ class ConstantApi {
   static   String editProfileData(String id) => "${baseUrl}UserProfiles/EditUserProfileBy${id}";
 
   static String sendUniversityFacultyIds(String id, int userprofileId) =>
-      "${baseUrl}UserProfiles/EditFormEducation?userId=$id&userProfileId=$userprofileId";
+      "${baseUrl}UserProfiles/EditFormExperience?userId=$id&userProfileId=$userprofileId";
+  static String sendLocationTypeIds(String id, int userprofileId) =>
+      "${baseUrl}UserProfiles/EditFormLocation?userId=$id&userProfileId=$userprofileId";
+  static String sendMajorIds(String id, int userprofileId) =>
+      "${baseUrl}UserProfiles/EditFormMajors?userId=$id&userProfileId=$userprofileId";
 
 //add personal info
   static String addPersonalInfo() => "${baseUrl}UserProfiles/AddFormUserInfo";
+  static const String getSkill = "${baseUrl}Skills/GetAllSkills";
 
 //////////////////////////////////////////////////////////////////////
   static const String getJobs = "${baseUrl}Jobs/GetVacancy";

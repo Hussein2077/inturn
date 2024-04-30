@@ -8,6 +8,7 @@ import 'package:inturn/features/home/data/model/major_model.dart';
 import 'package:inturn/features/home/data/model/cities_model.dart';
 import 'package:inturn/features/home/data/model/intern_model.dart';
 import 'package:inturn/features/home/data/model/faculty_model.dart';
+import 'package:inturn/features/home/data/model/skill_model.dart';
 import 'package:inturn/features/home/data/model/university_model.dart';
 import 'package:inturn/features/home/domain/repo/jobs_base_repo.dart';
 
@@ -59,6 +60,14 @@ class HomeRepositoryImp extends BaseRepositoryHome {
   Future<Either<List<MajorModel>, Failure>> getMajor() async {
     try {
       final result = await baseRemotelyDataSourceHome.getMajor();
+      return Left(result);
+    } on Exception catch (e) {
+      return right(DioHelper.buildFailure(e));
+    }
+  }  @override
+  Future<Either<List<SkillModel>, Failure>> getSkill() async {
+    try {
+      final result = await baseRemotelyDataSourceHome.getSkill();
       return Left(result);
     } on Exception catch (e) {
       return right(DioHelper.buildFailure(e));
