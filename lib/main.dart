@@ -11,12 +11,15 @@ import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_i
 import 'package:inturn/features/auth/presentation/controller/login_bloc/login_with_email_and_password_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/sign_in_with_platform_bloc/sign_in_with_platform_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/sign_up_bloc/sign_up_with_email_and_password_bloc.dart';
+import 'package:inturn/features/home/presentation/controller/company_bloc/get_companies_bloc.dart';
+import 'package:inturn/features/home/presentation/controller/company_bloc/get_companies_event.dart';
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_events.dart';
 import 'package:inturn/features/home/presentation/controller/get_my_applications/get_my_applications_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_event.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:inturn/features/profile/presentation/controller/edit_profile/edit_profile_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_bloc.dart';
 import 'package:inturn/firebase_options.dart';
 
@@ -97,6 +100,12 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => getIt<AddPersonalInfoBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<GetCompaniesBloc>()..add(GetCompaniesEvent()),
+        ),
+        BlocProvider(
+          create: (context) => getIt<EditProfileBloc>(),
         ),
       ],
       child: MaterialApp(

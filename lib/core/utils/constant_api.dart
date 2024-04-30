@@ -14,6 +14,10 @@ class ConstantApi {
   static String vacancyDetails(int id) => "${baseUrl}vacancyDetails$id";
   static const String getVacancy = "${baseUrl}Vacancies";
   static const String myApplications = "${baseUrl}Apply/Myapplications";
+  static   String myData(String id) => "${baseUrl}Auth/UserData?userId=$id";
+  static const String getCompanies = "${baseUrl}Companies/GetAllCompanies";
+  static   String editProfileData(String id) => "${baseUrl}UserProfiles/EditUserProfileBy${id}";
+
 
   static String myData(String id) => "${baseUrl}Auth/UserData?userId=$id";
 

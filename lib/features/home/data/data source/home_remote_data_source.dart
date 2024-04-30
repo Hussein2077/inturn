@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:inturn/core/models/vacancey_model.dart';
 import 'package:inturn/core/utils/api_helper.dart';
 import 'package:inturn/core/utils/constant_api.dart';
-import 'package:inturn/features/home/data/model/compony_model.dart';
+import 'package:inturn/features/home/data/model/company_model.dart';
 import 'package:inturn/features/home/data/model/major_model.dart';
 import 'package:inturn/features/home/data/model/cities_model.dart';
 import 'package:inturn/features/home/data/model/faculty_model.dart';
@@ -111,6 +111,7 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
       throw DioHelper.handleDioError(dioError: e, endpointName: "getMajor");
     }
   }
+
   @override
   Future<List<VacancyModel>> getMyApplications(String type) async {
     try {
@@ -124,11 +125,13 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
     } on DioException catch (e) {
       throw DioHelper.handleDioError(dioError: e, endpointName: "getMyApplications");
     }
-  } @override
+  }
+
+  @override
   Future<List<CompanyModel>> getCompanies() async {
     try {
       final response = await Dio().get(
-        ConstantApi.myApplications,
+        ConstantApi.getCompanies,
       );
       List<CompanyModel> jsonData = List<CompanyModel>.from(
           (response.data as List)

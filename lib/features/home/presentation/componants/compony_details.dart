@@ -11,10 +11,13 @@ import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/widgets/app_bar.dart';
 import 'package:inturn/core/widgets/cutom_text.dart';
+import 'package:inturn/features/home/data/model/company_model.dart';
 import 'package:inturn/features/home/presentation/widgets/job_cart.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CompanyDetails extends StatelessWidget {
-  const CompanyDetails({super.key});
+  final CompanyModel data;
+  const CompanyDetails({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -58,14 +61,10 @@ class CompanyDetails extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               CustomText(
-                                  text: 'HRS Group',
+                                  text: data.companyName??"",
                                   fontWeight: FontWeight.w700,
                                   color: AppColors.black,
                                   fontSize: AppSize.defaultSize! * 1.6),
-                              CustomText(
-                                  text: 'Software Development',
-                                  color: AppColors.greyColor,
-                                  fontSize: AppSize.defaultSize! * 1.2),
                               SizedBox(
                                 height: AppSize.defaultSize! * .3,
                               ),
@@ -106,11 +105,21 @@ class CompanyDetails extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  socialMediaButton(asset: AssetPath.website),
-                  socialMediaButton(asset: AssetPath.facebook2),
-                  socialMediaButton(asset: AssetPath.instagram),
-                  socialMediaButton(asset: AssetPath.twitter),
-                  socialMediaButton(asset: AssetPath.linkedin),
+                  socialMediaButton(asset: AssetPath.website, onTap: ()async{
+                    await launchUrl(Uri.parse(data.webSite??""));
+                  }),
+                  socialMediaButton(asset: AssetPath.facebook2, onTap: ()async{
+                    await launchUrl(Uri.parse(data.facebookLink??""));
+                  }),
+                  socialMediaButton(asset: AssetPath.instagram, onTap: ()async{
+                    await launchUrl(Uri.parse(data.instagramLink??""));
+                  }),
+                  socialMediaButton(asset: AssetPath.twitter, onTap: ()async{
+                    await launchUrl(Uri.parse(data.xLink??""));
+                  }),
+                  socialMediaButton(asset: AssetPath.linkedin, onTap: ()async{
+                    await launchUrl(Uri.parse(data.linkedInLink??""));
+                  }),
                 ],
               ),
               SizedBox(
@@ -144,7 +153,7 @@ class CompanyDetails extends StatelessWidget {
                                 size: AppSize.defaultSize! * 2,
                               ),
                               CustomText(
-                                text: ' 2004',
+                                text: data.foundationYear??"",
                                 color: AppColors.thirdColor,
                                 fontSize: AppSize.defaultSize! * 1.4,
                               ),
@@ -157,7 +166,7 @@ class CompanyDetails extends StatelessWidget {
                                 scale: 2,
                               ),
                               CustomText(
-                                text: ' 51-150',
+                                text: data.countOfEmployees??"",
                                 color: AppColors.thirdColor,
                                 fontSize: AppSize.defaultSize! * 1.4,
                               ),
@@ -203,8 +212,7 @@ class CompanyDetails extends StatelessWidget {
                         height: AppSize.defaultSize! * 1.5,
                       ),
                       CustomText(
-                        text:
-                            '''HRS is reinventing the way businesses and governments work, stay and pay in today’s dynamic global marketplace. HRS’ advanced platform technology is extending its reach beyond hospitality to meetings, office space management, payment efficiency and crisis recovery. Beyond cost savings in the global post-pandemic economy, HRS clients gain from an unrivaled focus on essential aspects including safety, security and satisfaction. HRS is also recognized for its award-winning Green Stay Initiative, technology that helps corporate hotel programs achieve their NetZero targets, and its groundbreaking Crew & Passengers Solution, which leverages automation to elevate experiences for air and rail operations. Founded in 1972, HRS works with 35 percent of the global Fortune 500, as well as the world’s leading hotel chains, regional hospitality groups and payment providers.''',
+                        text: data.bio??"",
                         lineHeight: AppSize.defaultSize! * .2,
                         maxLines: 100,
                         fontSize: AppSize.defaultSize! * 1.2,
@@ -242,8 +250,9 @@ class CompanyDetails extends StatelessWidget {
     );
   }
 
-  socialMediaButton({required String asset}) {
+  socialMediaButton({required String asset, required Function() onTap}) {
     return InkWell(
+      onTap: onTap,
       child: Container(
         height: AppSize.defaultSize! * 4,
         width: AppSize.defaultSize! * 6,

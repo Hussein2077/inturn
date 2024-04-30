@@ -14,11 +14,13 @@ import 'package:inturn/features/auth/presentation/controller/sign_up_bloc/sign_u
 import 'package:inturn/features/home/data/data%20source/home_remote_data_source.dart';
 import 'package:inturn/features/home/data/repo%20imp/repo_imp.dart';
 import 'package:inturn/features/home/domain/repo/jobs_base_repo.dart';
+import 'package:inturn/features/home/domain/use_case/companies_uc.dart';
 import 'package:inturn/features/home/domain/use_case/get_blogs_uc.dart';
 import 'package:inturn/features/home/domain/use_case/get_cities.dart';
 import 'package:inturn/features/home/domain/use_case/get_major_uc.dart';
 import 'package:inturn/features/home/domain/use_case/get_top_jobs.dart';
 import 'package:inturn/features/home/domain/use_case/get_university_uc.dart';
+import 'package:inturn/features/home/presentation/controller/company_bloc/get_companies_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/get_my_applications/get_my_applications_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_bloc.dart';
@@ -26,7 +28,9 @@ import 'package:inturn/features/profile/data/data%20source/profile_remote_data_s
 import 'package:inturn/features/profile/data/repo%20imp/repo_imp.dart';
 import 'package:inturn/features/profile/domain/repo/profile_base_repo.dart';
 import 'package:inturn/features/home/domain/use_case/my_applications_us.dart';
+import 'package:inturn/features/profile/domain/use_case/edit_profile_uc.dart';
 import 'package:inturn/features/profile/domain/use_case/get_my_data_uc.dart';
+import 'package:inturn/features/profile/presentation/controller/edit_profile/edit_profile_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_bloc.dart';
 
 final getIt = GetIt.instance;
@@ -52,13 +56,22 @@ class ServerLocator {
         ));
 
     getIt.registerLazySingleton(
+            () => GetCompaniesBloc(getCompaniesUseCase: getIt()));
+    getIt.registerLazySingleton(
         () => HomeBloc(getMajorUseCase: getIt(), getMatchedJobsCase: getIt()));
     getIt.registerLazySingleton(() => AddPersonalInfoBloc(
         addPersonalInfoUseCase: getIt(),
         sendExperienceLevelUseCase: getIt(),
         sendUniversityFacultyIdsUseCase: getIt()));
 
+    getIt.registerLazySingleton(
+            () => EditProfileBloc(editPersonalInfoUseCase: getIt()));
+
 //use_case
+    getIt.registerFactory(
+            () => EditPersonalInfoUseCase(baseRepositoryProfile: getIt()));
+    getIt.registerFactory(
+            () => GetCompaniesUseCase(baseRepositoryHome: getIt()));
     getIt.registerFactory(
         () => LoginWithEmailAndPasswordUseCase(baseRepository: getIt()));
     getIt.registerFactory(() => SignInWithGoogleUC(baseRepository: getIt()));

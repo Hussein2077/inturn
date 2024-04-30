@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:inturn/features/home/data/model/compony_model.dart';
+import 'package:inturn/features/home/data/model/company_model.dart';
 
 abstract class GetCompaniesState extends Equatable {
   const GetCompaniesState();
