@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:inturn/core/models/my_data_model.dart';
+import 'package:inturn/core/models/profile_data_model.dart';
 import 'package:inturn/core/utils/api_helper.dart';
 import 'package:inturn/core/utils/constant_api.dart';
 import 'package:inturn/core/models/vacancey_model.dart';
@@ -12,6 +13,7 @@ abstract class BaseRemotelyDataSourceProfile {
 
   Future<String> editProfileData(EditPersonalInfoParams parameter);
 
+  Future<ProfileDataModel> getMyProfileData(String id);
 }
 
 class ProfileRemotelyDateSource extends BaseRemotelyDataSourceProfile {
@@ -58,6 +60,20 @@ class ProfileRemotelyDateSource extends BaseRemotelyDataSourceProfile {
       return response.data;
     } on DioException catch (e) {
       throw DioHelper.handleDioError(dioError: e, endpointName: "get my data");
+    }
+  }
+
+  @override
+  Future<ProfileDataModel> getMyProfileData(String id) async {
+    try {
+      final response = await Dio().get(
+        ConstantApi.getMyData(id),
+      );
+
+      ProfileDataModel jsonData = ProfileDataModel.fromJson(response.data);
+      return jsonData;
+    } on DioException catch (e) {
+      throw DioHelper.handleDioError(dioError: e, endpointName: "getMyProfileData");
     }
   }
 

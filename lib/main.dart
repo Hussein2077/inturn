@@ -21,6 +21,7 @@ import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/
 import 'package:firebase_core/firebase_core.dart';
 import 'package:inturn/features/profile/presentation/controller/edit_profile/edit_profile_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_bloc.dart';
+import 'package:inturn/features/profile/presentation/controller/get_my_profile_data/get_my_profile_data_bloc.dart';
 import 'package:inturn/firebase_options.dart';
 
 String? token;
@@ -61,7 +62,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
 
     Future.delayed(Duration.zero, () async {
-      MyApp.  userId = await Methods.instance.returnUserId();
+      MyApp.userId = await Methods.instance.returnUserId();
       MyApp.userProfileId = await Methods.instance.returnProfileId();
       print('user id ${MyApp.userId}');
       print('user profile id ${MyApp.userProfileId}');
@@ -106,6 +107,9 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => getIt<EditProfileBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<GetMyProfileDataBloc>(),
         ),
       ],
       child: MaterialApp(

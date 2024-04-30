@@ -51,7 +51,7 @@ class MultiSegmentedButtonState extends State<MultiSegmentedButton> {
           child: Container(
             margin: EdgeInsets.all(AppSize.defaultSize! * 0.5),
             height: AppSize.defaultSize! * 4.5,
-            width: widget.width ?? AppSize.defaultSize! * 16,
+            // width: widget.width ?? AppSize.defaultSize! * 16,
             decoration: BoxDecoration(
               color: _selectedIndices.contains(index)
                   ? AppColors.secondaryColor
@@ -62,7 +62,8 @@ class MultiSegmentedButtonState extends State<MultiSegmentedButton> {
                 width: 2,
               ),
             ),
-            child: Center(
+            child: Padding(
+              padding: EdgeInsets.all(AppSize.defaultSize!),
               child: CustomText(
                 text: widget.segments[index],
                 color: Colors.black,
