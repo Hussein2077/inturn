@@ -63,9 +63,10 @@ class RouteGenerator {
         return PageRouteBuilder(
             settings: settings,
             pageBuilder: (context, animation, secondaryAnimation) {
-              // return const MainScreen();
+              return const MainScreen();
               BlocProvider.of<GetMyDataBloc>(context)
                   .add(GetMyDataEvent(MyApp.userId));
+
               return BlocBuilder<GetMyDataBloc, GetMyDataState>(
                   builder: (context, state) {
                 if (state is GetMyDataLoadingState) {

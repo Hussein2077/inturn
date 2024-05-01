@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -31,11 +33,9 @@ class _UniversityDropDownState extends State<UniversityDropDown> {
       builder: (context, state) {
         if (state.getUniversityRequest == RequestState.loaded) {
           return Container(
-            // width: AppSize.screenWidth! * .9,
             height: AppSize.defaultSize! * 5,
             decoration: BoxDecoration(
-                border:
-                    Border.all(color: AppColors.borderColor.withOpacity(.4)),
+                border: Border.all(color: AppColors.borderColor.withOpacity(.4)),
                 borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2)),
             child: DropdownButton2<UniversityModel>(
               value: UniversityDropDown.selectedValue,
@@ -89,7 +89,6 @@ class _UniversityDropDownState extends State<UniversityDropDown> {
           );
         } else if (state.getUniversityRequest == RequestState.loading) {
           return Container(
-            // width: AppSize.screenWidth! * .9,
             height: AppSize.defaultSize! * 5,
             decoration: BoxDecoration(
                 border:

@@ -5,9 +5,7 @@ class UniversityModel extends OptionsModel{
   final String? universityName;
   final String? universityNameAr;
 
-  UniversityModel(
-
-      {
+  UniversityModel({
     required this.universityId,
     required this.universityName,
     required this.universityNameAr,
@@ -21,6 +19,11 @@ class UniversityModel extends OptionsModel{
     );
   }
 
-
-
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['universityId'] = universityId;
+    map['universityNameEn'] = universityName;
+    map['universityNameAr'] = universityNameAr;
+    return map;
+  }
 }

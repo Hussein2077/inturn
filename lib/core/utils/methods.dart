@@ -5,6 +5,7 @@ import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/service/navigator_services.dart';
 import 'package:inturn/core/service/service_locator.dart';
+import 'package:inturn/features/home/data/model/major_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Methods {
@@ -106,5 +107,18 @@ class Methods {
     }
   }
 
+  List<int> findCommonItems(List<Position> list1, List<Position> list2) {
+    List<int> commonItems = [];
+
+    for (var item1 in list1) {
+      for(var item2 in list2) {
+        if (item1.majorId == item2.majorId) {
+          commonItems.add(list1.indexOf(item1));
+        }
+      }
+    }
+
+    return commonItems;
+  }
 
 }

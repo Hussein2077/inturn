@@ -16,7 +16,7 @@ class ConstantApi {
   static const String myApplications = "${baseUrl}Apply/Myapplications";
   static   String myData(String id) => "${baseUrl}Auth/UserData?userId=$id";
   static const String getCompanies = "${baseUrl}Companies/GetAllCompanies";
-  static   String editProfileData(String id) => "${baseUrl}UserProfiles/EditUserProfileBy${id}";
+  static   String editProfileData(String id) => "${baseUrl}UserProfiles/EditUserProfileBy$id";
 
   static String sendUniversityFacultyIds(String id, int userprofileId) =>
       "${baseUrl}UserProfiles/EditFormExperience?userId=$id&userProfileId=$userprofileId";
@@ -27,6 +27,7 @@ class ConstantApi {
 
 //add personal info
   static String addPersonalInfo() => "${baseUrl}UserProfiles/AddFormUserInfo";
+  static String getMyData(String id) => "${baseUrl}UserProfiles/GetUserProfileBy${id}Included";
   static const String getSkill = "${baseUrl}Skills/GetAllSkills";
 
 //////////////////////////////////////////////////////////////////////

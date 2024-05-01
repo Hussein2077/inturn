@@ -79,8 +79,7 @@ class _FieldsInfoState extends State<FieldsInfo> {
               builder: (context, state) {
                 if (state is GetMajorLoadingState) {
                   return const Center(child: LoadingWidget());
-                }
-           else if (state is GetMajorSuccessMessageState) {
+                } else if (state is GetMajorSuccessMessageState) {
                   return Column(
                     children: [
                       ListView.builder(
@@ -131,7 +130,17 @@ class _FieldsInfoState extends State<FieldsInfo> {
                   );
                 }
 
-                return const SizedBox();
+                return MainButton(
+                  text: StringManager.next.tr(),
+                  onTap: () {
+                    if (true) {
+                      Navigator.pushNamed(context, Routes.skillsInfo);
+                    } else {
+                      errorSnackBar(
+                          context, StringManager.pleaseCompleteYourData.tr());
+                    }
+                  },
+                );
 
               },
             ),

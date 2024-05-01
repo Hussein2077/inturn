@@ -54,4 +54,19 @@ class Position {
       deleteStatusId: json['deleteStatusId'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['majorId'] = majorId;
+    map['majorNameEn'] = majorNameEn;
+    map['majorNameAr'] = majorNameAr;
+    map['majorRank'] = majorRank;
+    map['majorCategoryId'] = majorCategoryId;
+    map['creationDate'] = creationDate;
+    map['lastModificationTime'] = lastModificationTime;
+    map['creatorUserId'] = creatorUserId;
+    map['lastModificationUserId'] = lastModificationUserId;
+    map['deleteStatusId'] = deleteStatusId;
+    return map;
+  }
 }
