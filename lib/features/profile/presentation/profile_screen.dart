@@ -419,8 +419,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           children: [
                                             MultiSegmentedButton(
                                               initialSelectedIndices: selected,
-                                              segments: state.topFiveModel[index].positions.map((position) => position.majorNameEn).toList(),
-                                              onValueChanged: (index) => _onValueChanged(index),
+                                              segments: state.topFiveModel ,
+                                              onValueChanged: (index) => _onValueChanged(index), initialIndex: 0,
                                             ),
                                           ],
                                         ),
