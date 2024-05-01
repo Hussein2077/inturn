@@ -110,3 +110,4 @@ class AddMajorIdErrorState  extends AddPersonalInfoState {
   @override
   List<Object> get props => [errorMessage];
 }
+// skills

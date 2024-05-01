@@ -8,6 +8,7 @@ import 'package:inturn/core/service/service_locator.dart';
 import 'package:inturn/core/translations/translations.dart';
 import 'package:inturn/core/utils/methods.dart';
 import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_info_bloc.dart';
+import 'package:inturn/features/auth/presentation/controller/add_skill/bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/login_bloc/login_with_email_and_password_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/sign_in_with_platform_bloc/sign_in_with_platform_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/sign_up_bloc/sign_up_with_email_and_password_bloc.dart';
@@ -61,7 +62,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
 
-   
+
     Future.delayed(const Duration(milliseconds: 100), () async {
       MyApp.  userId = await Methods.instance.returnUserId();
       MyApp.userProfileId = await Methods.instance.returnProfileId();
@@ -113,6 +114,8 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => getIt<GetMyProfileDataBloc>(),
+        ),  BlocProvider(
+          create: (context) => getIt<AddSkillsBloc>(),
         ),
       ],
       child: MaterialApp(

@@ -14,14 +14,14 @@ class MultiSegmentedButton extends StatefulWidget {
   final int initialIndex;
 static int selectedIndex = 0;
   const MultiSegmentedButton({
-    Key? key,
+    super.key,
     required this.segments,
     required this.initialIndex,
       this.ids,
     required this.onValueChanged,
     this.width,
     this.initialSelectedIndices = const [],
-  }) : super(key: key);
+  });
 
   @override
   MultiSegmentedButtonState createState() => MultiSegmentedButtonState();

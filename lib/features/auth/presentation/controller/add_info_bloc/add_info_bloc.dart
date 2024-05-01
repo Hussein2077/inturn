@@ -13,13 +13,14 @@ class AddPersonalInfoBloc
   final SendExperienceLevelUseCase sendExperienceLevelUseCase;
   final SendLocationTypeUseCase sendLocationTypeUseCase;
   final SendMajorIDUseCase sendMajorIDUseCase;
-
+  final SendSkillsIDUseCase sendSkillsIDUseCase;
 
   AddPersonalInfoBloc(
       {required this.addPersonalInfoUseCase,
       required this.sendUniversityFacultyIdsUseCase,
       required this.sendLocationTypeUseCase,
       required this.sendMajorIDUseCase,
+      required this.sendSkillsIDUseCase,
       required this.sendExperienceLevelUseCase})
       : super(AddPersonalInfoInitial()) {
     on<AddPersonalInfoButtonPressedEvent>(addPersonalInfo);
@@ -46,7 +47,6 @@ class AddPersonalInfoBloc
       (r) => emit(
         AddPersonalInfoErrorState(
           errorMessage: DioHelper().getTypeOfFailure(r),
-
         ),
       ),
     );
@@ -93,16 +93,16 @@ class AddPersonalInfoBloc
       ),
     );
   }
+
   sendLocationTypeLevel(event, emit) async {
     emit(
       AddLocationTypeLoadingState(),
     );
-    final result = await sendLocationTypeUseCase.call(
-        LocationTypeParams(
-           cityID: event.cityID,
-           countryID: event.countryID,
-          locationTypeID: event.locationTypeID,
-           ));
+    final result = await sendLocationTypeUseCase.call(LocationTypeParams(
+      cityID: event.cityID,
+      countryID: event.countryID,
+      locationTypeID: event.locationTypeID,
+    ));
     result.fold(
       (l) => emit(
         AddLocationTypeSuccessState(
@@ -116,13 +116,12 @@ class AddPersonalInfoBloc
       ),
     );
   }
+
   sendMajorIdLevel(event, emit) async {
     emit(
       AddMajorIdLoadingState(),
     );
-    final result = await sendMajorIDUseCase.call(
-      event.majorIds
-        );
+    final result = await sendMajorIDUseCase.call(event.majorIds);
     result.fold(
       (l) => emit(
         AddMajorIdSuccessState(
@@ -136,4 +135,5 @@ class AddPersonalInfoBloc
       ),
     );
   }
+
 }

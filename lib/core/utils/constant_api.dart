@@ -24,6 +24,8 @@ class ConstantApi {
       "${baseUrl}UserProfiles/EditFormLocation?userId=$id&userProfileId=$userprofileId";
   static String sendMajorIds(String id, int userprofileId) =>
       "${baseUrl}UserProfiles/EditFormMajors?userId=$id&userProfileId=$userprofileId";
+  static String sendSkills(String id, int userprofileId) =>
+      "${baseUrl}UserProfiles/EditFormSkills?userId=$id&userProfileId=$userprofileId";
 
 //add personal info
   static String addPersonalInfo() => "${baseUrl}UserProfiles/AddFormUserInfo";

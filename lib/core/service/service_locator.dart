@@ -8,6 +8,7 @@ import 'package:inturn/features/auth/domain/use_case/google_sign.dart';
 import 'package:inturn/features/auth/domain/use_case/login_with_email_and_password_use_case.dart';
 import 'package:inturn/features/auth/domain/use_case/sign_up_use_case.dart';
 import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_info_bloc.dart';
+import 'package:inturn/features/auth/presentation/controller/add_skill/bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/login_bloc/login_with_email_and_password_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/sign_in_with_platform_bloc/sign_in_with_platform_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/sign_up_bloc/sign_up_with_email_and_password_bloc.dart';
@@ -59,27 +60,31 @@ class ServerLocator {
         ));
 
     getIt.registerLazySingleton(
-            () => GetCompaniesBloc(getCompaniesUseCase: getIt()));
+        () => GetCompaniesBloc(getCompaniesUseCase: getIt()));
     getIt.registerLazySingleton(
         () => HomeBloc(getMajorUseCase: getIt(), getMatchedJobsCase: getIt()));
     getIt.registerLazySingleton(() => AddPersonalInfoBloc(
         addPersonalInfoUseCase: getIt(),
         sendExperienceLevelUseCase: getIt(),
-
-        sendUniversityFacultyIdsUseCase: getIt(), sendLocationTypeUseCase: getIt(), sendMajorIDUseCase: getIt()));
+        sendSkillsIDUseCase: getIt(),
+        sendUniversityFacultyIdsUseCase: getIt(),
+        sendLocationTypeUseCase: getIt(),
+        sendMajorIDUseCase: getIt()));
     getIt.registerLazySingleton(
-            () => EditProfileBloc(editPersonalInfoUseCase: getIt()));
+        () => EditProfileBloc(editPersonalInfoUseCase: getIt()));
 
     getIt.registerLazySingleton(
-            () => GetMyProfileDataBloc(getMyProfileDataUseCase: getIt()));
+        () => GetMyProfileDataBloc(getMyProfileDataUseCase: getIt()));
+    getIt.registerLazySingleton(
+        () => AddSkillsBloc(sendSkillsIDUseCase: getIt()));
 
 //use_case
     getIt.registerFactory(
-            () => GetMyProfileDataUseCase(baseRepositoryProfile: getIt()));
+        () => GetMyProfileDataUseCase(baseRepositoryProfile: getIt()));
     getIt.registerFactory(
-            () => EditPersonalInfoUseCase(baseRepositoryProfile: getIt()));
+        () => EditPersonalInfoUseCase(baseRepositoryProfile: getIt()));
     getIt.registerFactory(
-            () => GetCompaniesUseCase(baseRepositoryHome: getIt()));
+        () => GetCompaniesUseCase(baseRepositoryHome: getIt()));
     getIt.registerFactory(
         () => LoginWithEmailAndPasswordUseCase(baseRepository: getIt()));
     getIt.registerFactory(() => SignInWithGoogleUC(baseRepository: getIt()));
@@ -104,10 +109,9 @@ class ServerLocator {
         () => SendUniversityFacultyIdsUseCase(baseRepository: getIt()));
     getIt.registerFactory(
         () => SendLocationTypeUseCase(baseRepository: getIt()));
-    getIt.registerFactory(
-        () => SendMajorIDUseCase(baseRepository: getIt()));
-    getIt.registerFactory(
-        () => GetSkillsUseCase(baseRepositoryHome: getIt()));
+    getIt.registerFactory(() => SendMajorIDUseCase(baseRepository: getIt()));
+    getIt.registerFactory(() => GetSkillsUseCase(baseRepositoryHome: getIt()));
+    getIt.registerFactory(() => SendSkillsIDUseCase(baseRepository: getIt()));
 
     //remote data
     getIt.registerLazySingleton<BaseRemotelyDataSource>(

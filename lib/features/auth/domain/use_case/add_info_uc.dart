@@ -71,6 +71,16 @@ class SendMajorIDUseCase extends BaseUseCase<dynamic, List<int>> {
     final result = await baseRepository.majorOfFields( parameter);
     return result;
   }
+}class SendSkillsIDUseCase extends BaseUseCase<dynamic, List<int>> {
+  BaseRepository baseRepository;
+
+  SendSkillsIDUseCase({required this.baseRepository});
+
+  @override
+  Future<Either<dynamic, Failure>> call(  List<int> parameter) async {
+    final result = await baseRepository.sendSkills( parameter);
+    return result;
+  }
 }
 
 class SendUniversityFacultyIdsParams {

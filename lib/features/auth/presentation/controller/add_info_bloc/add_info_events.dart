@@ -55,3 +55,4 @@ final List <int> majorIds;
   List<Object> get props => [majorIds];
 }
 
+

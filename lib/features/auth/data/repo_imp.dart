@@ -117,5 +117,13 @@ class RepositoryImp extends BaseRepository {
     } on Exception catch (e) {
       return right(DioHelper.buildFailure(e));
     }
+  }@override
+  Future<Either<dynamic, Failure>> sendSkills(List<int> skillsIds) async {
+    try {
+      final result = await baseRemotelyDataSource.sendSkills(skillsIds );
+      return Left(result);
+    } on Exception catch (e) {
+      return right(DioHelper.buildFailure(e));
+    }
   }
 }
