@@ -17,9 +17,8 @@ abstract class BaseRemotelyDataSourceProfile {
 }
 
 class ProfileRemotelyDateSource extends BaseRemotelyDataSourceProfile {
-
   @override
-  Future<MyDataModel> getMyData(  String id) async {
+  Future<MyDataModel> getMyData(String id) async {
     try {
       final response = await Dio().post(
         ConstantApi.myData(id),
@@ -34,7 +33,6 @@ class ProfileRemotelyDateSource extends BaseRemotelyDataSourceProfile {
 
   @override
   Future<String> editProfileData(EditPersonalInfoParams parameter) async {
-
     FormData formData = FormData.fromMap({
       'UserId': parameter.id,
       'FirstName': parameter.firstName,
@@ -57,7 +55,7 @@ class ProfileRemotelyDateSource extends BaseRemotelyDataSourceProfile {
         data: formData,
       );
 
-      return response.data;
+      return "seccess";
     } on DioException catch (e) {
       throw DioHelper.handleDioError(dioError: e, endpointName: "get my data");
     }
@@ -73,8 +71,8 @@ class ProfileRemotelyDateSource extends BaseRemotelyDataSourceProfile {
       ProfileDataModel jsonData = ProfileDataModel.fromJson(response.data);
       return jsonData;
     } on DioException catch (e) {
-      throw DioHelper.handleDioError(dioError: e, endpointName: "getMyProfileData");
+      throw DioHelper.handleDioError(
+          dioError: e, endpointName: "getMyProfileData");
     }
   }
-
 }

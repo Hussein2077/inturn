@@ -1,29 +1,31 @@
+import 'package:inturn/features/home/data/model/faculty_model.dart';
 import 'package:inturn/features/home/data/model/major_model.dart';
 import 'package:inturn/features/home/data/model/university_model.dart';
 
 class ProfileDataModel {
   ProfileDataModel({
-      this.userProfileId, 
-      this.jobLevelId, 
-      this.graduationStatusId, 
-      this.jobLocationTypeId, 
-      this.universityId, 
-      this.facultyId, 
-      this.userId, 
-      this.firstName, 
-      this.lastName, 
-      this.description, 
-      this.profileImage, 
-      this.user, 
-      this.university, 
-      this.faculty, 
-      this.countryId, 
-      this.cityId, 
-      this.creationDate, 
-      this.lastModificationTime, 
-      this.creatorUserId, 
-      this.lastModificationUserId, 
-      this.deleteStatusId,});
+    this.userProfileId,
+    this.jobLevelId,
+    this.graduationStatusId,
+    this.jobLocationTypeId,
+    this.universityId,
+    this.facultyId,
+    this.userId,
+    this.firstName,
+    this.lastName,
+    this.description,
+    this.profileImage,
+    this.user,
+    this.university,
+    this.faculty,
+    this.countryId,
+    this.cityId,
+    this.creationDate,
+    this.lastModificationTime,
+    this.creatorUserId,
+    this.lastModificationUserId,
+    this.deleteStatusId,
+  });
 
   ProfileDataModel.fromJson(dynamic json) {
     userProfileId = json['userProfileId'];
@@ -38,8 +40,11 @@ class ProfileDataModel {
     description = json['description'];
     profileImage = json['profileImage'];
     user = json['user'] != null ? User.fromJson(json['user']) : null;
-    university = json['university'] != null ? UniversityModel.fromJson(json['university']) : null;
-    faculty = json['faculty'] != null ? Faculty.fromJson(json['faculty']) : null;
+    university = json['university'] != null
+        ? UniversityModel.fromJson(json['university'])
+        : null;
+    faculty =
+        json['faculty'] != null ? FacultyModel.fromJson(json['faculty']) : null;
     countryId = json['countryId'];
     cityId = json['cityId'];
     creationDate = json['creationDate'];
@@ -61,7 +66,7 @@ class ProfileDataModel {
   dynamic profileImage;
   User? user;
   UniversityModel? university;
-  Faculty? faculty;
+  FacultyModel? faculty;
   dynamic countryId;
   dynamic cityId;
   String? creationDate;
@@ -101,83 +106,34 @@ class ProfileDataModel {
     map['deleteStatusId'] = deleteStatusId;
     return map;
   }
-
-}
-
-class Faculty {
-  Faculty({
-      this.facultyId, 
-      this.facultyNameEn, 
-      this.facultyNameAr, 
-      this.universityId, 
-      this.creationDate, 
-      this.lastModificationTime, 
-      this.creatorUserId, 
-      this.lastModificationUserId, 
-      this.deleteStatusId,});
-
-  Faculty.fromJson(dynamic json) {
-    facultyId = json['facultyId'];
-    facultyNameEn = json['facultyNameEn'];
-    facultyNameAr = json['facultyNameAr'];
-    universityId = json['universityId'];
-    creationDate = json['creationDate'];
-    lastModificationTime = json['lastModificationTime'];
-    creatorUserId = json['creatorUserId'];
-    lastModificationUserId = json['lastModificationUserId'];
-    deleteStatusId = json['deleteStatusId'];
-  }
-  int? facultyId;
-  String? facultyNameEn;
-  String? facultyNameAr;
-  int? universityId;
-  String? creationDate;
-  String? lastModificationTime;
-  String? creatorUserId;
-  int? lastModificationUserId;
-  int? deleteStatusId;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['facultyId'] = facultyId;
-    map['facultyNameEn'] = facultyNameEn;
-    map['facultyNameAr'] = facultyNameAr;
-    map['universityId'] = universityId;
-    map['creationDate'] = creationDate;
-    map['lastModificationTime'] = lastModificationTime;
-    map['creatorUserId'] = creatorUserId;
-    map['lastModificationUserId'] = lastModificationUserId;
-    map['deleteStatusId'] = deleteStatusId;
-    return map;
-  }
-
 }
 
 class User {
   User({
-      this.socicaID, 
-      this.isCompleted, 
-      this.complition, 
-      this.refreshTokens, 
-      this.skills, 
-      this.majors, 
-      this.applications, 
-      this.companies, 
-      this.id, 
-      this.userName, 
-      this.normalizedUserName, 
-      this.email, 
-      this.normalizedEmail, 
-      this.emailConfirmed, 
-      this.passwordHash, 
-      this.securityStamp, 
-      this.concurrencyStamp, 
-      this.phoneNumber, 
-      this.phoneNumberConfirmed, 
-      this.twoFactorEnabled, 
-      this.lockoutEnd, 
-      this.lockoutEnabled, 
-      this.accessFailedCount,});
+    this.socicaID,
+    this.isCompleted,
+    this.complition,
+    this.refreshTokens,
+    this.skills,
+    this.majors,
+    this.applications,
+    this.companies,
+    this.id,
+    this.userName,
+    this.normalizedUserName,
+    this.email,
+    this.normalizedEmail,
+    this.emailConfirmed,
+    this.passwordHash,
+    this.securityStamp,
+    this.concurrencyStamp,
+    this.phoneNumber,
+    this.phoneNumberConfirmed,
+    this.twoFactorEnabled,
+    this.lockoutEnd,
+    this.lockoutEnabled,
+    this.accessFailedCount,
+  });
 
   User.fromJson(dynamic json) {
     socicaID = json['socicaID'];
@@ -276,20 +232,20 @@ class User {
     map['accessFailedCount'] = accessFailedCount;
     return map;
   }
-
 }
 
 class Skills {
   Skills({
-      this.skillId, 
-      this.skillNameEn, 
-      this.skillNameAr, 
-      this.vacancySkill, 
-      this.creationDate, 
-      this.lastModificationTime, 
-      this.creatorUserId, 
-      this.lastModificationUserId, 
-      this.deleteStatusId,});
+    this.skillId,
+    this.skillNameEn,
+    this.skillNameAr,
+    this.vacancySkill,
+    this.creationDate,
+    this.lastModificationTime,
+    this.creatorUserId,
+    this.lastModificationUserId,
+    this.deleteStatusId,
+  });
 
   Skills.fromJson(dynamic json) {
     skillId = json['skillId'];
@@ -325,17 +281,17 @@ class Skills {
     map['deleteStatusId'] = deleteStatusId;
     return map;
   }
-
 }
 
 class RefreshTokens {
   RefreshTokens({
-      this.token, 
-      this.expiresOn, 
-      this.isExpired, 
-      this.createdOn, 
-      this.revokedOn, 
-      this.isActive,});
+    this.token,
+    this.expiresOn,
+    this.isExpired,
+    this.createdOn,
+    this.revokedOn,
+    this.isActive,
+  });
 
   RefreshTokens.fromJson(dynamic json) {
     token = json['token'];
@@ -362,5 +318,4 @@ class RefreshTokens {
     map['isActive'] = isActive;
     return map;
   }
-
 }
