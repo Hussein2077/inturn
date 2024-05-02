@@ -10,6 +10,7 @@ abstract class GetMyDataState extends Equatable {
 }
 
 class GetMyDataInitial extends GetMyDataState {}
+
 class GetMyDataLoadingState extends GetMyDataState{
   const GetMyDataLoadingState();
 }
@@ -20,10 +21,25 @@ class GetMyDataErrorMessageState extends GetMyDataState{
 
 
 }
-
 class GetMyDataSuccessMessageState extends GetMyDataState{
   final MyDataModel myDataModel ;
 
   const GetMyDataSuccessMessageState({ required this.myDataModel});
+
+}
+class CompleteProfileLoadingState extends GetMyDataState{
+  const CompleteProfileLoadingState();
+}
+class CompleteProfileErrorMessageState extends GetMyDataState{
+  final String errorMessage ;
+
+  const CompleteProfileErrorMessageState({required this.errorMessage});
+
+
+}
+class CompleteProfileSuccessMessageState extends GetMyDataState{
+  final MyDataModel myDataModel ;
+
+  const CompleteProfileSuccessMessageState({ required this.myDataModel});
 
 }

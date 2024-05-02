@@ -63,7 +63,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
 
 
-    Future.delayed(const Duration(milliseconds: 100), () async {
+    Future.delayed(Duration.zero, () async {
       MyApp.  userId = await Methods.instance.returnUserId();
       MyApp.userProfileId = await Methods.instance.returnProfileId();
       print('user id ${MyApp.userId}');

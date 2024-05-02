@@ -24,10 +24,14 @@ import 'package:inturn/features/auth/presentation/widgets/multi_select2.dart';
 import 'package:inturn/features/home/data/model/skill_model.dart';
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_states.dart';
+import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_bloc.dart';
+import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_event.dart';
+import 'package:inturn/main.dart';
 import 'package:searchfield/searchfield.dart';
 
 class SkillInfo extends StatefulWidget {
   const SkillInfo({super.key});
+static   List<SkillModel> skillIds = [];
 
   @override
   State<SkillInfo> createState() => _SkillInfoState();
@@ -38,11 +42,15 @@ class _SkillInfoState extends State<SkillInfo> {
 
   @override
   initState() {
-    super.initState();
-    controller = TextEditingController();
-  }
 
-  List<SkillModel> skillIds = [];
+    controller = TextEditingController();
+    super.initState();
+  }
+@override
+  dispose() {
+  controller.dispose();
+  super.dispose();
+}
   List<int> _currentSegment = [];
 
   void _onValueChanged(List<int> newValue) {
@@ -62,7 +70,9 @@ class _SkillInfoState extends State<SkillInfo> {
           listener: (context, state) {
             if (state is AddSkillsSuccessState) {
               Navigator.pushNamed(context, Routes.thanks);
-            } else if (state is AddSkillsErrorState) {
+              BlocProvider.of<GetMyDataBloc>(context).add( CompleteProfileEvent(MyApp.userId));
+            }
+            else if (state is AddSkillsErrorState) {
               errorSnackBar(context, state.errorMessage);
             }
           },
@@ -77,6 +87,11 @@ class _SkillInfoState extends State<SkillInfo> {
                         children: [
                           BlocBuilder<OptionsBloc, GetOptionsStates>(
                             builder: (context, state) {
+                              log('sijvgwogbowgowrgb');
+                              if(!SkillInfo.skillIds.contains(state.getSkills[0])) {
+
+                                SkillInfo.skillIds.add(state.getSkills[0]);
+                              }
                               if (state.getSkillsRequest ==
                                   RequestState.loading) {
                                 return const LoadingWidget();
@@ -84,23 +99,19 @@ class _SkillInfoState extends State<SkillInfo> {
                                   RequestState.loaded) {
                                 return SearchField<SkillModel>(
                                   controller: controller,
+                                  itemHeight:   AppSize.defaultSize! * 5,
                                   onSuggestionTap: (v) {
-                                    if (!skillIds.contains(v.item!)) {
-                                      skillIds.add(v.item!);
+                                    if (!SkillInfo.skillIds.contains(v.item!)) {
+                                      SkillInfo.skillIds.add(v.item!);
                                     }
                                     addToSkill.value++;
                                     controller.clear();
-                                    _currentSegment=skillIds
-                                        .map((e) => skillIds.indexOf(e))
-                                        .toList();
-                                    print(
-                                        '${skillIds.map((e) => (e.skillId ?? 0)).toList()}skillLssssist');
-                                    print(
-                                        '${skillIds
-                                            .map((e) => skillIds.indexOf(e))
-                                            .toList()}skillLssssistssssssssssssss');
 
+                                    _currentSegment=SkillInfo.skillIds
+                                        .map((e) => SkillInfo.skillIds.indexOf(e))
+                                        .toList();
                                   },
+
                                   suggestions: state.getSkills
                                       .map(
                                         (e) => SearchFieldListItem<SkillModel>(
@@ -114,12 +125,14 @@ class _SkillInfoState extends State<SkillInfo> {
                                             child: CustomText(
                                                 text: e.skillNameEn ?? ""),
                                           ),
+
                                         ),
                                       )
                                       .toList(),
                                   hint: StringManager.searchForSkills.tr(),
                                   searchStyle: TextStyle(
                                     fontSize: AppSize.defaultSize! * 1.2,
+                                    decoration: TextDecoration.none,
                                     color: Colors.black.withOpacity(0.8),
                                   ),
                                   // autofocus: true,
@@ -148,13 +161,17 @@ class _SkillInfoState extends State<SkillInfo> {
                               valueListenable: addToSkill,
                               builder: (context_, value, child) {
                                 return CustomSegmentedButton2(
-                                  segments: skillIds
+                                  onTapClose: (i) {
+                                    SkillInfo.skillIds.removeAt(i);
+                                    addToSkill.value++;
+                                  },
+                                  segments: SkillInfo.skillIds
                                       .map((e) => e.skillNameEn ?? "")
                                       .toList(),
                                   onValueChanged: (index) =>
                                       _onValueChanged(index),
-                                  initialSelectedIndexes: skillIds
-                                      .map((e) => skillIds.indexOf(e))
+                                  initialSelectedIndexes: SkillInfo.skillIds
+                                      .map((e) => SkillInfo.skillIds.indexOf(e))
                                       .toList(),
                                 );
                               }),
@@ -164,6 +181,18 @@ class _SkillInfoState extends State<SkillInfo> {
                           MainButton(
                             text: StringManager.next.tr(),
                             onTap: () {
+                              if (SkillInfo.skillIds.isNotEmpty) {
+                              BlocProvider.of<AddSkillsBloc>(context)
+                                  .add(
+                                SendSkillsIdEvent(
+                                    skills: SkillInfo.skillIds
+                                        .map((e) => (e.skillId ?? 0))
+                                        .toList()),
+                              );
+                            } else {
+                              errorSnackBar(context,
+                                  StringManager.pleaseCompleteYourData.tr());
+                            }
                               // if (_currentSegment.isNotEmpty) {
                               //   // Map the indexes in _currentSegment to their corresponding skill IDs
                               //   List<int> selectedSkillIds = _currentSegment
@@ -185,18 +214,6 @@ class _SkillInfoState extends State<SkillInfo> {
                               //   errorSnackBar(context, StringManager.pleaseCompleteYourData.tr());
                               // }
 
-                              if (skillIds.isNotEmpty) {
-                                BlocProvider.of<AddSkillsBloc>(context)
-                                    .add(
-                                  SendSkillsIdEvent(
-                                      skills: skillIds
-                                          .map((e) => (e.skillId ?? 0))
-                                          .toList()),
-                                );
-                              } else {
-                                errorSnackBar(context,
-                                    StringManager.pleaseCompleteYourData.tr());
-                              }
                             },
                           ),
                         ]),

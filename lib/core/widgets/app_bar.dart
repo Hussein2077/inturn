@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:inturn/core/resource_manager/asset_path.dart';
 import 'package:inturn/core/utils/app_size.dart';
+import 'package:inturn/core/utils/methods.dart';
+import 'package:inturn/features/auth/presentation/login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-AppBar appBar(BuildContext context, {required String text,bool leading =true,List<Widget>? actions}) {
+AppBar appBar(BuildContext context, {required String text,bool leading =true,bool actions=false}) {
   return AppBar(
     backgroundColor: Colors.white,
     elevation: 1,
@@ -14,7 +17,23 @@ AppBar appBar(BuildContext context, {required String text,bool leading =true,Lis
       },
       icon: const Icon(Icons.arrow_back_ios),
     ):null,
-    actions: actions,
+    actions: actions?    [
+      IconButton(
+      onPressed: () async {
+    Methods.instance.saveUserToken(authToken: null);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return const LoginScreen();
+        },
+      ),
+          (_) => false,
+    );
+  },
+  icon: const Icon(Icons.logout))
+  ]:null,
   );
 }
 

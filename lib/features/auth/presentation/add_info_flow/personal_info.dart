@@ -44,7 +44,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(context, text: StringManager.personalInformation.tr()),
+      appBar: appBar(context, text: StringManager.personalInformation.tr(),actions: true),
       body: Padding(
         padding: EdgeInsets.all(AppSize.defaultSize! * 1.5),
         child: BlocListener<AddPersonalInfoBloc, AddPersonalInfoState >(

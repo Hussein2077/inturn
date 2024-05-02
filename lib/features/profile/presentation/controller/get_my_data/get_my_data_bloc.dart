@@ -6,8 +6,9 @@ import 'package:inturn/features/profile/presentation/controller/get_my_data/get_
 
 class GetMyDataBloc extends Bloc<BaseGetMyDataEvent, GetMyDataState> {
   GetMyDataUseCase getMyDataUseCase;
+  CompleteProfileUseCase completeProfileUseCase;
 
-  GetMyDataBloc({required this.getMyDataUseCase}) : super(GetMyDataInitial()) {
+  GetMyDataBloc({required this.getMyDataUseCase, required this.completeProfileUseCase}) : super(GetMyDataInitial()) {
     on<GetMyDataEvent>((event, emit) async {
       emit(const GetMyDataLoadingState());
       final result = await getMyDataUseCase.call(event.userID);
@@ -16,5 +17,14 @@ class GetMyDataBloc extends Bloc<BaseGetMyDataEvent, GetMyDataState> {
           (r) => emit(GetMyDataErrorMessageState(
               errorMessage: DioHelper().getTypeOfFailure(r))));
     });
+    on<CompleteProfileEvent>((event, emit) async {
+      emit(const CompleteProfileLoadingState());
+      final result = await completeProfileUseCase.call(event.userID);
+      result.fold(
+          (l) => emit(CompleteProfileSuccessMessageState(myDataModel: l)),
+          (r) => emit(CompleteProfileErrorMessageState(
+              errorMessage: DioHelper().getTypeOfFailure(r))));
+    });
+
   }
 }

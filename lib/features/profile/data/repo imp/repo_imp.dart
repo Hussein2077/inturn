@@ -22,6 +22,15 @@ class ProfileRepositoryImp extends BaseRepositoryProfile {
       return right(DioHelper.buildFailure(e));
     }
   }
+  @override
+  Future<Either<MyDataModel, Failure>>  completeProfile( String id) async {
+    try {
+      final result = await baseRemotelyDataSourceProfile.getMyData(id);
+      return Left(result);
+    } on Exception catch (e) {
+      return right(DioHelper.buildFailure(e));
+    }
+  }
 
   @override
   Future<Either<String, Failure>> editProfileData(EditPersonalInfoParams parameter) async {

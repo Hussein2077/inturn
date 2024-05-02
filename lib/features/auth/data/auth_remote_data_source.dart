@@ -232,7 +232,9 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
   @override
   Future<Map<String, dynamic>> addPersonalInfo(
       PersonalInfoParams params) async {
-    log('${MyApp.userId} zazaaza');
+    MyApp.  userId = await Methods.instance.returnUserId();
+    MyApp.userProfileId = await Methods.instance.returnProfileId();
+    log('${MyApp.userId} husseinsh');
     File file = params.image;
     String fileName = file.path.split('/').last;
     FormData formData = FormData.fromMap({

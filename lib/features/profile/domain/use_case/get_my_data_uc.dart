@@ -16,3 +16,15 @@ class GetMyDataUseCase  extends BaseUseCase<MyDataModel, String> {
     return result;
   }
 }
+class CompleteProfileUseCase  extends BaseUseCase<MyDataModel, String> {
+  final BaseRepositoryProfile baseRepositoryProfile;
+
+  CompleteProfileUseCase({required this.baseRepositoryProfile});
+
+  @override
+  Future<Either<MyDataModel, Failure>> call(String parameter) async {
+    final result = await baseRepositoryProfile.completeProfile( parameter);
+
+    return result;
+  }
+}

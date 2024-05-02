@@ -6,3 +6,7 @@ class GetMyDataEvent extends BaseGetMyDataEvent {
  final String userID;
   GetMyDataEvent(this.userID);
 }
+class CompleteProfileEvent extends BaseGetMyDataEvent {
+ final String userID;
+ CompleteProfileEvent(this.userID);
+}

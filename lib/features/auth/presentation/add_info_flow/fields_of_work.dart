@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:inturn/core/resource_manager/asset_path.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
@@ -68,12 +69,14 @@ class _FieldsInfoState extends State<FieldsInfo> {
           children: [
             BlocListener<AddPersonalInfoBloc, AddPersonalInfoState >(
   listener: (context, state) {
-    if (state is AddMajorIdSuccessState) {
+    if (state is AddMajorIdSuccessState) {  EasyLoading.dismiss();
       Navigator.pushNamed(context, Routes.skillsInfo);
     }
-    else if (state is AddMajorIdErrorState) {
+    else if (state is AddMajorIdErrorState) {  EasyLoading.dismiss();
       errorSnackBar(context, StringManager.unexpectedError);
     }
+    else if (state is AddMajorIdLoadingState) {
+      EasyLoading.show(status: 'loading...');    }
   },
   child: BlocBuilder<HomeBloc, HomeState >(
               builder: (context, state) {

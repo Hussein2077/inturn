@@ -49,7 +49,7 @@ class ServerLocator {
     getIt.registerLazySingleton(() => SignUpWithEmailAndPasswordBloc(
           signUpWithEmailAndPasswordUseCase: getIt(),
         ));
-    getIt.registerLazySingleton(() => GetMyDataBloc(getMyDataUseCase: getIt()));
+    getIt.registerLazySingleton(() => GetMyDataBloc(getMyDataUseCase: getIt(),completeProfileUseCase:   getIt()));
     getIt.registerLazySingleton(
         () => GetMyApplicationsBloc(getMyApplicationsUseCase: getIt()));
     getIt.registerLazySingleton(() => OptionsBloc(
@@ -112,6 +112,7 @@ class ServerLocator {
     getIt.registerFactory(() => SendMajorIDUseCase(baseRepository: getIt()));
     getIt.registerFactory(() => GetSkillsUseCase(baseRepositoryHome: getIt()));
     getIt.registerFactory(() => SendSkillsIDUseCase(baseRepository: getIt()));
+    getIt.registerFactory(() => CompleteProfileUseCase(baseRepositoryProfile: getIt()));
 
     //remote data
     getIt.registerLazySingleton<BaseRemotelyDataSource>(

@@ -10,6 +10,7 @@ import 'package:inturn/features/profile/domain/use_case/edit_profile_uc.dart';
 
 abstract class BaseRemotelyDataSourceProfile {
   Future<MyDataModel> getMyData(String id);
+  Future<MyDataModel> completeProfile(String id);
 
   Future<String> editProfileData(EditPersonalInfoParams parameter);
 
@@ -29,6 +30,19 @@ class ProfileRemotelyDateSource extends BaseRemotelyDataSourceProfile {
       return jsonData;
     } on DioException catch (e) {
       throw DioHelper.handleDioError(dioError: e, endpointName: "get my data");
+    }
+  }
+  @override
+  Future<MyDataModel>  completeProfile(  String id) async {
+    try {
+      final response = await Dio().post(
+        ConstantApi.complete(id),
+      );
+
+      MyDataModel jsonData = MyDataModel.fromMap(response.data);
+      return jsonData;
+    } on DioException catch (e) {
+      throw DioHelper.handleDioError(dioError: e, endpointName: "completeProfile");
     }
   }
 
