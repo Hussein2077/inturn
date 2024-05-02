@@ -35,7 +35,8 @@ class _UniversityDropDownState extends State<UniversityDropDown> {
           return Container(
             height: AppSize.defaultSize! * 5,
             decoration: BoxDecoration(
-                border: Border.all(color: AppColors.borderColor.withOpacity(.4)),
+                border:
+                    Border.all(color: AppColors.borderColor.withOpacity(.4)),
                 borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2)),
             child: DropdownButton2<UniversityModel>(
               value: UniversityDropDown.selectedValue,
