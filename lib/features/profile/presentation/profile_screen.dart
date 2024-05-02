@@ -152,21 +152,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               appBar: appBar(context,
                   text: StringManager.profile.tr(),
                   leading: false,
-                  actions: [
-                    IconButton(
-                        onPressed: () {
-                          Methods.instance.saveUserToken(authToken: null);
-                          Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                              builder: (BuildContext context) {
-                                return const LoginScreen();
-                              },
-                            ),
-                            (_) => false,
-                          );
-                        },
-                        icon: const Icon(Icons.logout))
-                  ]),
+                  actions: true),
               body: Padding(
                 padding: EdgeInsets.all(AppSize.defaultSize! * 1.5),
                 child: SingleChildScrollView(
@@ -609,6 +595,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       valueListenable: addToSkill,
                                       builder: (context_, value, child) {
                                         return CustomSegmentedButton2(
+                                          onTapClose: (i){},
                                           segments: skillIds
                                               .map((e) => e.skillNameEn ?? "")
                                               .toList(),

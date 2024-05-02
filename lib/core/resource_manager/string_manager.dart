@@ -77,7 +77,7 @@ class StringManager {
   static const String yourSkills = "What's Your Skills?";
   static const String searchForSkills = "Search For Skills...";
   static const String selectSkills = "Select Your Skills";
-  static const String discoverInternships = "Discover Internships";
+  static const String discoverInternships = "Discover Opportunities";
 
   static String profileCompleted(String name) =>
       "Thanks $name Your Profile Is Completed Successfully";
