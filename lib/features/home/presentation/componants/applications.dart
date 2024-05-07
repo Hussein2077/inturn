@@ -8,6 +8,7 @@ import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/widgets/app_bar.dart';
 import 'package:inturn/core/widgets/loading_widget.dart';
+import 'package:inturn/features/home/data/model/matched_model.dart';
 import 'package:inturn/features/home/presentation/controller/get_my_applications/get_my_applications_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/get_my_applications/get_my_applications_state.dart';
 import 'package:inturn/features/home/presentation/widgets/job_cart.dart';
@@ -34,7 +35,7 @@ class ApplicationsScreen extends StatelessWidget {
                         padding: EdgeInsets.all(AppSize.defaultSize! * 1.2),
                         child: JobCart(
                           linearCircle: false,
-                          vacancyModel: VacancyModel(),
+                          vacancyModel: VacancyModel()as MatchedVacancyWrapper,
                         )
                             .animate()
                             .fadeIn() // uses `Animate.defaultDuration`

@@ -5,34 +5,55 @@ import 'package:inturn/core/resource_manager/asset_path.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
+import 'package:inturn/core/widgets/cached_network_image.dart';
 import 'package:inturn/core/widgets/cutom_text.dart';
 import 'package:inturn/core/widgets/main_button.dart';
+import 'package:inturn/features/home/data/model/matched_model.dart';
 import 'package:inturn/features/home/presentation/componants/job_details.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
-class JobCart extends StatelessWidget {
-  const JobCart({super.key, this.linearCircle = true, this.skillRequired, this.height, required this.vacancyModel});
+class JobCart extends StatefulWidget {
+  const JobCart(
+      {super.key,
+      this.linearCircle = true,
+      this.skillRequired,
+      this.height,
+      required this.vacancyModel});
 
   final bool linearCircle;
   final Widget? skillRequired;
-  final double? height ;
-final VacancyModel vacancyModel;
+  final double? height;
+
+  final MatchedVacancyWrapper vacancyModel;
+
+  @override
+  State<JobCart> createState() => _JobCartState();
+}
+
+class _JobCartState extends State<JobCart> {
+  double percent = 0.0;
+  @override
+  void initState() {
+    percent = double.parse(widget.vacancyModel.matchmakingPercentage.substring(0,4))/100;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         PersistentNavBarNavigator.pushNewScreen(
           context,
-          screen:   JobDetailsScreen(id: vacancyModel.id!,),
+          screen: JobDetailsScreen(
+            matchedVacancyWrapper: widget.vacancyModel,
+          ),
           withNavBar: false,
-          // OPTIONAL VALUE. True by default.
           pageTransitionAnimation: PageTransitionAnimation.fade,
         );
       },
       child: SizedBox(
         width: AppSize.screenWidth,
-        height: height,
+        height: widget.height,
         child: Material(
           elevation: 10,
           color: Colors.white,
@@ -45,22 +66,27 @@ final VacancyModel vacancyModel;
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomText(
-                        text: 'Senior UI UX Designer',
+                        text: widget.vacancyModel.matchedVacancy.title,
                         fontWeight: FontWeight.w700,
                         color: AppColors.primaryColor,
                         // textAlign: TextAlign.start,
                         fontSize: AppSize.defaultSize! * 1.6,
                       ),
                       Row(children: [
-                        CircleAvatar(
-                          radius: AppSize.defaultSize! * 1.5,
-                          child: Image.asset(AssetPath.test),
+                        CachedNetworkCustom(
+                          height: AppSize.defaultSize! * 3,
+                          width: AppSize.defaultSize! * 3,
+                          url: widget.vacancyModel
+                                  .matchedVacancy.company?.profileLogo! ??
+                              "",
                         ),
                         SizedBox(
                           width: AppSize.defaultSize! * .5,
                         ),
                         CustomText(
-                          text: 'HRS Group',
+                          text: widget.vacancyModel
+                                  .matchedVacancy.company?.companyName ??
+                              "",
                           fontWeight: FontWeight.w500,
                           color: AppColors.primaryColor,
                           // textAlign: TextAlign.start,
@@ -68,15 +94,16 @@ final VacancyModel vacancyModel;
                         ),
                       ]),
                       Row(children: [
-                        Image.asset(AssetPath.location,
-                        height: AppSize.defaultSize! * 2,
-                        width: AppSize.defaultSize! * 2,
+                        Image.asset(
+                          AssetPath.location,
+                          height: AppSize.defaultSize! * 2,
+                          width: AppSize.defaultSize! * 2,
                         ),
                         SizedBox(
                           width: AppSize.defaultSize! * .5,
                         ),
                         CustomText(
-                          text: 'Cairo, Egypt',
+                          text: widget.vacancyModel.matchedVacancy.cityName! ?? "",
                           color: AppColors.greyColor,
                           // textAlign: TextAlign.start,
                           fontSize: AppSize.defaultSize! * 1.4,
@@ -85,7 +112,9 @@ final VacancyModel vacancyModel;
                           width: AppSize.defaultSize! * 2,
                         ),
                         MainButton(
-                          text: StringManager.internship.tr(),
+                          text: widget.vacancyModel.matchedVacancy.vacancyLevelId == 1
+                              ? StringManager.internship.tr()
+                              : StringManager.fullTime.tr(),
                           onTap: () {},
                           color: AppColors.homeColor,
                           textColor: Colors.white,
@@ -97,11 +126,10 @@ final VacancyModel vacancyModel;
                       SizedBox(
                         height: AppSize.defaultSize!,
                       ),
-                      skillRequired??const SizedBox(),
+                      widget.skillRequired ?? const SizedBox(),
                       CustomText(
                         text:
-                            '''Experienced (Non-Manager) · 3-4 Yrs of Exp · ui · UI Design · UX Design · Design · UX · adobe · Adobe XD · Xd · Creative/Design/Art · IT/Software Development
-                      ''',
+                            widget.vacancyModel.matchedVacancy.responsibilities ?? "",
                         maxLines: 10,
                         textAlign: TextAlign.start,
                         color: AppColors.blackColor,
@@ -109,22 +137,22 @@ final VacancyModel vacancyModel;
                       ),
                     ]),
               ),
-              linearCircle
+              widget.linearCircle
                   ? LinearPercentIndicator(
                       // width: AppSize.screenWidth!*.88,
                       animation: true,
                       lineHeight: AppSize.defaultSize! * 2.5,
                       animationDuration: 2000,
-                      percent: 0.9,
+                      percent:percent,
                       padding: EdgeInsets.zero,
                       barRadius: Radius.circular(AppSize.defaultSize! * 2),
                       center: CustomText(
-                        text: "90.0% ${StringManager.matched.tr()}",
+                        text: "${widget.vacancyModel.matchmakingPercentage} ${StringManager.matched.tr()}",
                         fontSize: AppSize.defaultSize! * 1.3,
                         color: Colors.white,
                       ),
                       linearStrokeCap: LinearStrokeCap.butt,
-                      progressColor: Colors.green,
+                      progressColor:percent>=.5? Colors.green:(percent<.5&&percent>0)?Colors.yellow:Colors.red,
                     )
                   : Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -182,7 +210,7 @@ final VacancyModel vacancyModel;
                         ),
                       ],
                     ),
-              if (!linearCircle)
+              if (!widget.linearCircle)
                 SizedBox(
                   height: AppSize.defaultSize! * 1.2,
                 ),

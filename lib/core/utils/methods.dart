@@ -17,6 +17,7 @@ class Methods {
   factory  Methods() => instance ;
   Future<void> saveUserToken({String? authToken}) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
+    log('$authToken hussssssssssssssssmmm');
     if (authToken != null) {
       preferences.setString(StringManager.userTokenKey, authToken);
     } else {
@@ -44,8 +45,10 @@ class Methods {
   }
   Future<String> returnUserToken() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
+
     String tokenPref =
         preferences.getString(StringManager.userTokenKey) ?? "noToken";
+    log('$tokenPref dhjeyjeyjeyjye');
     return tokenPref;
   }
   Future<String> returnUserId() async {

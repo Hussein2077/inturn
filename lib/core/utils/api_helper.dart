@@ -27,7 +27,7 @@ class DioHelper {
     }
 
     Map<String, String> headers = {
-      "Authorization": token,
+      "Authorizations": 'Bearer $token',
       'content-type': 'application/json; charset=utf-8',
       'date': 'Sun,18 Feb 2024 17:04:08 GMT',
       'server': 'Microsoft-IIS/10.0',

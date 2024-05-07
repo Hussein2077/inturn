@@ -8,6 +8,7 @@ import 'package:inturn/features/home/data/model/major_model.dart';
 import 'package:inturn/features/home/data/model/cities_model.dart';
 import 'package:inturn/features/home/data/model/intern_model.dart';
 import 'package:inturn/features/home/data/model/faculty_model.dart';
+import 'package:inturn/features/home/data/model/matched_model.dart';
 import 'package:inturn/features/home/data/model/skill_model.dart';
 import 'package:inturn/features/home/data/model/university_model.dart';
 import 'package:inturn/features/home/domain/repo/jobs_base_repo.dart';
@@ -18,7 +19,7 @@ class HomeRepositoryImp extends BaseRepositoryHome {
   HomeRepositoryImp({required this.baseRemotelyDataSourceHome});
 
   @override
-  Future<Either<List<VacancyModel>, Failure>> getMatchedJobs() async {
+  Future<Either<List<MatchedVacancyWrapper>, Failure>> getMatchedJobs() async {
     try {
       final result = await baseRemotelyDataSourceHome.getMatchedJobs();
       return Left(result);
@@ -96,6 +97,16 @@ class HomeRepositoryImp extends BaseRepositoryHome {
   Future<Either<List<CompanyModel>, Failure>> getCompanies() async {
     try {
       final result = await baseRemotelyDataSourceHome.getCompanies();
+      return Left(result);
+    } on Exception catch (e) {
+      return right(DioHelper.buildFailure(e));
+    }
+  }
+  @override
+
+  Future<Either<dynamic, Failure>> apply(VacancyApply vacancyApply) async {
+    try {
+      final result = await baseRemotelyDataSourceHome.apply(vacancyApply);
       return Left(result);
     } on Exception catch (e) {
       return right(DioHelper.buildFailure(e));

@@ -8,11 +8,13 @@ import 'package:inturn/features/home/data/model/company_model.dart';
 import 'package:inturn/features/home/data/model/major_model.dart';
 import 'package:inturn/features/home/data/model/cities_model.dart';
 import 'package:inturn/features/home/data/model/faculty_model.dart';
+import 'package:inturn/features/home/data/model/matched_model.dart';
 import 'package:inturn/features/home/data/model/skill_model.dart';
 import 'package:inturn/features/home/data/model/university_model.dart';
+import 'package:inturn/main.dart';
 
 abstract class BaseRemotelyDataSourceHome{
-  Future<List<VacancyModel>> getMatchedJobs();
+  Future<List<MatchedVacancyWrapper>> getMatchedJobs();
   Future<List<VacancyModel>> getJobDetails(int id);
   Future<List<Country>> getCities();
   Future<List<FacultyModel>> getFaculty(int id);
@@ -21,18 +23,19 @@ abstract class BaseRemotelyDataSourceHome{
   Future<List<SkillModel>> getSkill();
   Future<List<VacancyModel>> getMyApplications(String type);
   Future<List<CompanyModel>> getCompanies();
+  Future<dynamic> apply(VacancyApply vacancyApply);
 
 }
 
 class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
   @override
-  Future<List<VacancyModel>> getMatchedJobs() async {
+  Future<List<MatchedVacancyWrapper>> getMatchedJobs() async {
     try {
       final response = await Dio().get(
-        ConstantApi.getVacancy,
+        ConstantApi.getVacancy(MyApp.userId),
       );
-      List<VacancyModel> jsonData = List<VacancyModel>.from(
-          (response.data as List).map((e) => VacancyModel.fromJson(e)));
+      List<MatchedVacancyWrapper> jsonData = List<MatchedVacancyWrapper>.from(
+          (response.data as List).map((e) => MatchedVacancyWrapper.fromJson(e)));
       return jsonData;
 
     } on DioException catch (e) {
@@ -155,6 +158,25 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
       return jsonData;
     } on DioException catch (e) {
       throw DioHelper.handleDioError(dioError: e, endpointName: "getMyApplications");
+    }
+  }
+  @override
+  Future apply(VacancyApply vacancyApply) async{
+    log ('${vacancyApply.userID}ehehhet ${vacancyApply.vacancyID}');
+    final body = {
+      // 'vacancyId ': vacancyApply.vacancyID,
+      // 'userId ': vacancyApply.userID,
+    };
+    try {
+
+      final response =  await Dio().post(
+          ConstantApi.apply (vacancyApply.userID, vacancyApply.vacancyID),
+          data: body
+      );
+      dynamic jsonData = response.data;
+      return jsonData;
+    } on DioException catch (e) {
+      throw DioHelper.handleDioError(dioError: e, endpointName: "apply");
     }
   }
 }

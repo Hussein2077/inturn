@@ -1,3 +1,5 @@
+import 'package:inturn/main.dart';
+
 class ConstantApi {
   static const String baseUrl = 'http://128.140.69.196/Intrn/api/';
 
@@ -12,34 +14,46 @@ class ConstantApi {
       "${baseUrl}Majors/GetAllMajorsAsyncGroupedByCategory";
 
   static String vacancyDetails(int id) => "${baseUrl}vacancyDetails$id";
-  static const String getVacancy = "${baseUrl}Vacancies";
+
+  static String getVacancy(String id) =>
+      "${baseUrl}UserProfiles/SuggestedJobsForUser/$id";
   static const String myApplications = "${baseUrl}Apply/Myapplications";
-  static   String myData(String id) => "${baseUrl}Auth/UserData?userId=$id";
-  static   String complete(String id) => "${baseUrl}Auth/complete?userId=$id";
+
+  static String myData(String id) => "${baseUrl}Auth/UserData?userId=$id";
+
+  static String complete(String id) => "${baseUrl}Auth/complete?userId=$id";
   static const String getCompanies = "${baseUrl}Companies/GetAllCompanies";
-  static   String editProfileData(String id) => "${baseUrl}UserProfiles/EditUserProfileBy$id";
+
+  static String editProfileData(String id) =>
+      "${baseUrl}UserProfiles/EditUserProfileBy$id";
 
   static String sendUniversityFacultyIds(String id, int userprofileId) =>
       "${baseUrl}UserProfiles/EditFormExperience?userId=$id&userProfileId=$userprofileId";
+
   static String sendLocationTypeIds(String id, int userprofileId) =>
       "${baseUrl}UserProfiles/EditFormLocation?userId=$id&userProfileId=$userprofileId";
+
   static String sendMajorIds(String id, int userprofileId) =>
       "${baseUrl}UserProfiles/EditFormMajors?userId=$id&userProfileId=$userprofileId";
+
   static String sendSkills(String id, int userprofileId) =>
       "${baseUrl}UserProfiles/EditFormSkills?userId=$id&userProfileId=$userprofileId";
 
 //add personal info
   static String addPersonalInfo() => "${baseUrl}UserProfiles/AddFormUserInfo";
-  static String getMyData(String id) => "${baseUrl}UserProfiles/GetUserProfileBy${id}Included";
+
+  static String getMyData(String id) =>
+      "${baseUrl}UserProfiles/GetUserProfileBy${id}Included";
   static const String getSkill = "${baseUrl}Skills/GetAllSkills";
+
+  static String apply(String userId, int vacancyId) =>
+      "${baseUrl}applications/apply?userId=${MyApp.userId}&vacancyId=$vacancyId";
 
 //////////////////////////////////////////////////////////////////////
   static const String getJobs = "${baseUrl}Jobs/GetVacancy";
-  static const String apply = "${baseUrl}Apply";
   static const String getGetInternships = "${baseUrl}Jobs/GetInternships";
   static const String getGetInternshipsBySearch =
       "${baseUrl}Jobs/GetInternships";
-
   static const String signUp = "https://api.inturn.app/Register";
   static const String sendCode = "${baseUrl}auth/sendPasswordResetEmail";
   static const String verifyCode = "${baseUrl}auth/verifyCode";

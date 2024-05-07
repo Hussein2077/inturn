@@ -15,16 +15,20 @@ import 'package:inturn/features/auth/presentation/controller/sign_up_bloc/sign_u
 import 'package:inturn/features/home/data/data%20source/home_remote_data_source.dart';
 import 'package:inturn/features/home/data/repo%20imp/repo_imp.dart';
 import 'package:inturn/features/home/domain/repo/jobs_base_repo.dart';
+import 'package:inturn/features/home/domain/use_case/apply_use_case.dart';
 import 'package:inturn/features/home/domain/use_case/companies_uc.dart';
 import 'package:inturn/features/home/domain/use_case/get_blogs_uc.dart';
 import 'package:inturn/features/home/domain/use_case/get_cities.dart';
 import 'package:inturn/features/home/domain/use_case/get_major_uc.dart';
 import 'package:inturn/features/home/domain/use_case/get_top_jobs.dart';
 import 'package:inturn/features/home/domain/use_case/get_university_uc.dart';
+import 'package:inturn/features/home/domain/use_case/vacancy_details_uc.dart';
+import 'package:inturn/features/home/presentation/controller/apply_bloc/get_jobs_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/company_bloc/get_companies_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/get_my_applications/get_my_applications_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_bloc.dart';
+import 'package:inturn/features/home/presentation/controller/vacancy_details_bloc/bloc.dart';
 import 'package:inturn/features/profile/data/data%20source/profile_remote_data_source.dart';
 import 'package:inturn/features/profile/data/repo%20imp/repo_imp.dart';
 import 'package:inturn/features/profile/domain/repo/profile_base_repo.dart';
@@ -77,6 +81,10 @@ class ServerLocator {
         () => GetMyProfileDataBloc(getMyProfileDataUseCase: getIt()));
     getIt.registerLazySingleton(
         () => AddSkillsBloc(sendSkillsIDUseCase: getIt()));
+    getIt.registerLazySingleton(
+        () => VacancyBloc(getVacancyDetailsUseCase : getIt()));
+    getIt.registerLazySingleton(
+        () => ApplyBloc(applyUseCase: getIt()));
 
 //use_case
     getIt.registerFactory(
@@ -113,6 +121,8 @@ class ServerLocator {
     getIt.registerFactory(() => GetSkillsUseCase(baseRepositoryHome: getIt()));
     getIt.registerFactory(() => SendSkillsIDUseCase(baseRepository: getIt()));
     getIt.registerFactory(() => CompleteProfileUseCase(baseRepositoryProfile: getIt()));
+    getIt.registerFactory(() => GetVacancyDetailsUseCase(baseRepositoryHome: getIt()));
+    getIt.registerFactory(() => ApplyUseCase( baseRepositoryJobs: getIt()));
 
     //remote data
     getIt.registerLazySingleton<BaseRemotelyDataSource>(

@@ -1,64 +1,51 @@
+import 'package:inturn/features/home/data/model/company_model.dart';
+
 class VacancyModel {
-  int? id;
-  String? name;
-  String? image;
-  String? description;
-  String? experience;
-  int? minSalary;
-  int? maxSalary;
-  String? createDate;
-  String? provinceName;
-  int? provinceId;
-  String? avatarUrl;
-  String? websiteURL;
-  String? major;
-  String? titleEN;
-  String? titleAr;
-  String? companyName;
-  String? type;
+  final int? vacancyId;
+  final int? vacancyLevelId;
+  final String? title;
+  final String? responsibilities;
+  final String? requirements;
+  final DateTime? deadline;
+  final int? companyId;
+  final CompanyModel? company;
+  final int? majorId;
+  final int? countryId;
+  final String? cityName;
 
   VacancyModel({
-    this.id,
-    this.name,
-    this.description,
-    this.experience,
-    this.minSalary,
-    this.maxSalary,
-    this.createDate,
-    this.provinceName,
-    this.provinceId,
-    this.avatarUrl,
-    this.websiteURL,
-    this.major,
-    this.titleEN,
-    this.titleAr,
-    this.companyName,
-    this.image,
-    this.type,
+     this.vacancyId,
+     this.vacancyLevelId,
+     this.title,
+     this.responsibilities,
+     this.requirements,
+    this.deadline,
+      this.companyId,
+    this.company,
+    this.majorId,
+    this.countryId,
+    this.cityName,
   });
 
   factory VacancyModel.fromJson(Map<String, dynamic> json) {
     return VacancyModel(
-      id: json['id'] ?? 0,
-      name: json['name'] ?? "",
-      image: json['avatarUrl'] ?? "",
-      type: json['type'] ?? "Full Time",
-      description: json['description'] ?? "",
-      experience: json['experience'] ?? "",
-      minSalary: json['minSalary']??1000,
-      maxSalary: json['maxSalary']??5000,
-      createDate: json['createDate']??"",
-      provinceName: json['provinceName'] ?? "",
-      provinceId: json['provinceId']??0,
-      avatarUrl: json['avatarUrl'] ?? "",
-      websiteURL: json['websiteURL'] ?? "",
-      major: json['major'] ?? "",
-      titleEN: json['titleEN'] ?? "",
-      titleAr: json['titleAr'] ?? "",
-      companyName: json['companyName'] ?? "",
+      vacancyId: json['vacancyId'] ?? 0,
+      vacancyLevelId: json['vacancyLevelId'] ?? 0,
+      title: json['title'] ?? 'Unknown title',
+      responsibilities: json['responsbilities'] ?? 'No responsibilities listed',
+      requirements: json['requirements'] ?? 'No requirements listed',
+      deadline: json['deadline'] != null ? DateTime.parse(json['deadline']) : null,
+      companyId: json['companyId'] ?? 0,
+      company: json['company'] != null ? CompanyModel.fromJson(json['company']) : null,
+      majorId: json['majorId'] as int?,
+      countryId: json['countryId'] as int?,
+      cityName:
+      // json['cityId']  ??
+          'Unknown city',
     );
   }
 }
+
 class VacancySearch {
   final String? text;
   final String? skill;
@@ -72,7 +59,7 @@ class VacancySearch {
     required this.type,
   });
 }class VacancyApply{
-  final String vacancyID;
+  final int vacancyID;
   final String userID;
 
 

@@ -80,7 +80,7 @@ class StringManager {
   static const String discoverInternships = "Discover Opportunities";
 
   static String profileCompleted(String name) =>
-      "Thanks $name Your Profile Is Completed Successfully";
+      "Thanks, ${name}Your Profile Is Completed Successfully";
 
 //////////////////////////////////////////////////////////////////////////////
   static const String userTokenKey = "User Token Key";
@@ -120,6 +120,7 @@ class StringManager {
   static const String university = "University";
   static const String major = "Major";
   static const String jobs = "Jobs";
+  static const String fullTime = "Full Time";
   static const String jobsDetails = "Job details";
   static const String jobRequirements = "Job Requirements";
   static const String jobDescription = "Job Description";

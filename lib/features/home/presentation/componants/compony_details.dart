@@ -10,8 +10,10 @@ import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/widgets/app_bar.dart';
+import 'package:inturn/core/widgets/cached_network_image.dart';
 import 'package:inturn/core/widgets/cutom_text.dart';
 import 'package:inturn/features/home/data/model/company_model.dart';
+import 'package:inturn/features/home/data/model/matched_model.dart';
 import 'package:inturn/features/home/presentation/widgets/job_cart.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -35,8 +37,8 @@ class CompanyDetails extends StatelessWidget {
                 height: AppSize.defaultSize! * 17,
                 child: Stack(
                   children: [
-                    Image.asset(
-                      AssetPath.test3,
+                    CachedNetworkCustom(
+                      url: data.coverLogo??"",
                       width: AppSize.screenWidth,
                       height: AppSize.defaultSize! * 10,
                     ),
@@ -48,11 +50,9 @@ class CompanyDetails extends StatelessWidget {
                         children: [
                           CircleAvatar(
                               radius: AppSize.defaultSize! * 4.8,
-                              child: Image.asset(
-                                AssetPath.test4,
-                                height: AppSize.defaultSize! * 10,
-                                width: AppSize.defaultSize! * 10,
-                              )),
+                              child:  CachedNetworkCustom(
+                                url: data.profileLogo??"",
+                              ),),
                           SizedBox(
                             width: AppSize.defaultSize! * 2,
                           ),
@@ -79,7 +79,7 @@ class CompanyDetails extends StatelessWidget {
                                     width: AppSize.defaultSize! * .5,
                                   ),
                                   CustomText(
-                                    text: 'Cairo, Egypt',
+                                    text: data.cityName??"",
                                     color: AppColors.greyColor,
                                     // textAlign: TextAlign.start,
                                     fontSize: AppSize.defaultSize! * 1.4,
@@ -230,19 +230,19 @@ class CompanyDetails extends StatelessWidget {
                 fontWeight: FontWeight.w700,
                 fontSize: 1.6 * AppSize.defaultSize!,
               ),
-              ListView.builder(
-                  itemCount: 10,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (item, index) {
-                    return Padding(
-                      padding: EdgeInsets.symmetric(vertical:AppSize.defaultSize! ),
-                      child:   JobCart(vacancyModel: VacancyModel(),).animate()
-                          .fadeIn() // uses `Animate.defaultDuration`
-                          .scale() // inherits duration from fadeIn
-                          .move(delay: 300.ms, duration: 600.ms),
-                    );
-                  }),
+              // ListView.builder(
+              //     itemCount: 10,
+              //     shrinkWrap: true,
+              //     physics: const NeverScrollableScrollPhysics(),
+              //     itemBuilder: (item, index) {
+              //       return Padding(
+              //         padding: EdgeInsets.symmetric(vertical:AppSize.defaultSize! ),
+              //         child:   JobCart(vacancyModel:   MatchedVacancyWrapper(),).animate()
+              //             .fadeIn() // uses `Animate.defaultDuration`
+              //             .scale() // inherits duration from fadeIn
+              //             .move(delay: 300.ms, duration: 600.ms),
+              //       );
+              //     }),
             ],
           ),
         ),

@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inturn/core/models/vacancey_model.dart';
 import 'package:inturn/core/utils/methods.dart';
 import 'package:inturn/core/widgets/loading_widget.dart';
-import 'package:inturn/core/widgets/vacancy_details.dart';
 import 'package:inturn/features/auth/presentation/add_info_flow/acdemic_info.dart';
 import 'package:inturn/features/auth/presentation/add_info_flow/exprince_info.dart';
 import 'package:inturn/features/auth/presentation/add_info_flow/fields_of_work.dart';
@@ -50,7 +49,6 @@ class Routes {
 
   static const String profile = "/profile";
   static const String blogComplete = "/BlogComplete";
-  static const String vacancyDetails = "/VacancyDetails";
   static const String cvBuilderScreen = "/CVBuilderScreen";
 }
 
@@ -158,16 +156,6 @@ class RouteGenerator {
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
                 const ProfileScreen(),
-            transitionsBuilder: customAnimate);
-      case Routes.vacancyDetails:
-        VacancyModel vacancyModel = settings.arguments as VacancyModel;
-
-        return PageRouteBuilder(
-            settings: settings,
-            pageBuilder: (context, animation, secondaryAnimation) =>
-                VacancyDetails(
-                  vacancyModel: vacancyModel,
-                ),
             transitionsBuilder: customAnimate);
 
       case Routes.searchScreen:

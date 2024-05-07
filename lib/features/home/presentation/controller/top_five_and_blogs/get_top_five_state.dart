@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:inturn/core/models/vacancey_model.dart';
 import 'package:inturn/features/home/data/model/major_model.dart';
 import 'package:inturn/features/home/data/model/intern_model.dart';
+import 'package:inturn/features/home/data/model/matched_model.dart';
 
 abstract class HomeState extends Equatable {
   const HomeState();
@@ -23,7 +24,7 @@ class GetMatchedVacancyErrorMessageState extends HomeState {
 }
 
 class GetMatchedVacancySuccessMessageState extends HomeState {
-  final List<VacancyModel> vacancyModel;
+  final List<MatchedVacancyWrapper> vacancyModel;
 
   const GetMatchedVacancySuccessMessageState({required this.vacancyModel});
 }

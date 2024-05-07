@@ -12,6 +12,7 @@ import 'package:inturn/features/auth/presentation/controller/add_skill/bloc.dart
 import 'package:inturn/features/auth/presentation/controller/login_bloc/login_with_email_and_password_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/sign_in_with_platform_bloc/sign_in_with_platform_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/sign_up_bloc/sign_up_with_email_and_password_bloc.dart';
+import 'package:inturn/features/home/presentation/controller/apply_bloc/get_jobs_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/company_bloc/get_companies_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/company_bloc/get_companies_event.dart';
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_bloc.dart';
@@ -20,6 +21,7 @@ import 'package:inturn/features/home/presentation/controller/get_my_applications
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_event.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:inturn/features/home/presentation/controller/vacancy_details_bloc/bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/edit_profile/edit_profile_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_profile_data/get_my_profile_data_bloc.dart';
@@ -116,6 +118,10 @@ class _MyAppState extends State<MyApp> {
           create: (context) => getIt<GetMyProfileDataBloc>(),
         ),  BlocProvider(
           create: (context) => getIt<AddSkillsBloc>(),
+        ), BlocProvider(
+          create: (context) => getIt<VacancyBloc>(),
+        ),BlocProvider(
+          create: (context) => getIt<ApplyBloc>(),
         ),
       ],
       child: MaterialApp(

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -17,6 +19,7 @@ import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_state.dart';
 import 'package:inturn/features/home/presentation/widgets/job_cart.dart';
 import 'package:inturn/features/home/presentation/widgets/top_container.dart';
+import 'package:inturn/features/main_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -70,9 +73,10 @@ class _HomeScreenState extends State<HomeScreen> {
           MainButton(
             text: StringManager.changeWorkPreferences.tr(),
             onTap: () {
+              MainScreen.mainIndex = 3;
               PersistentNavBarNavigator.pushNewScreen(
                 context,
-                screen: const PersonalInfo(),
+                screen: const MainScreen(),
                 withNavBar: false,
                 // OPTIONAL VALUE. True by default.
                 pageTransitionAnimation: PageTransitionAnimation.fade,
@@ -87,11 +91,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 return const LoadingWidget() ;
               }
               else if(state is GetMatchedVacancySuccessMessageState){
+
                 return ListView.builder(
-                    itemCount: 10,
+                    itemCount: state.vacancyModel.length,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (item, index) {
+
                       return Padding(
                         padding: EdgeInsets.all(AppSize.defaultSize! * 1.2),
                         child:   JobCart(vacancyModel: state.vacancyModel[index],).animate()

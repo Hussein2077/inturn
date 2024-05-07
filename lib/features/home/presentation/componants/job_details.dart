@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:inturn/core/models/vacancey_model.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
@@ -9,18 +10,24 @@ import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/widgets/app_bar.dart';
 import 'package:inturn/core/widgets/cutom_text.dart';
 import 'package:inturn/core/widgets/loading_widget.dart';
+import 'package:inturn/core/widgets/main_button.dart';
 import 'package:inturn/core/widgets/matrial_widget.dart';
 import 'package:inturn/features/home/data/model/company_model.dart';
+import 'package:inturn/features/home/data/model/matched_model.dart';
+import 'package:inturn/features/home/presentation/controller/apply_bloc/get_jobs_bloc.dart';
+import 'package:inturn/features/home/presentation/controller/apply_bloc/get_jobs_event.dart';
+import 'package:inturn/features/home/presentation/controller/apply_bloc/get_jobs_state.dart';
 import 'package:inturn/features/home/presentation/controller/vacancy_details_bloc/bloc.dart';
 import 'package:inturn/features/home/presentation/controller/vacancy_details_bloc/event.dart';
 import 'package:inturn/features/home/presentation/controller/vacancy_details_bloc/state.dart';
 import 'package:inturn/features/home/presentation/widgets/company_cart.dart';
 import 'package:inturn/features/home/presentation/widgets/job_cart.dart';
+import 'package:inturn/main.dart';
 
 class JobDetailsScreen extends StatefulWidget {
-  const JobDetailsScreen({super.key, required this.id});
+  const JobDetailsScreen({super.key, required this.matchedVacancyWrapper});
 
-  final int id;
+  final MatchedVacancyWrapper matchedVacancyWrapper;
 
   @override
   State<JobDetailsScreen> createState() => _JobDetailsScreenState();
@@ -29,8 +36,8 @@ class JobDetailsScreen extends StatefulWidget {
 class _JobDetailsScreenState extends State<JobDetailsScreen> {
   @override
   void initState() {
-    BlocProvider.of<VacancyBloc>(context)
-        .add(GetVacancyDetailsEvent(widget.id));
+    // BlocProvider.of<VacancyBloc>(context)
+    //     .add(GetVacancyDetailsEvent(widget.id));
     super.initState();
   }
 
@@ -38,143 +45,279 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(context, text: StringManager.jobsDetails.tr()),
-      body: Padding(
+      body: BlocListener<ApplyBloc, ApplyState>(
+  listener: (context, state) {
+    if (state is ApplyLoadingState) {
+        EasyLoading.show();
+    }
+    if (state is ApplySuccessMessageState) {
+        EasyLoading.dismiss();
+        EasyLoading.showSuccess(state.successMessage);
+    }
+    if (state is ApplyErrorMessageState) {
+        EasyLoading.dismiss();
+        EasyLoading.showError(state.errorMessage);
+    }
+  },
+  child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(
-          child: BlocBuilder<VacancyBloc, GetVacancyDetailsState>(
-            builder: (context, state) {
-              if (state is GetVacancyDetailsLoadingState) {
-                return const LoadingWidget();
-              } else if (state is GetVacancyDetailsErrorMessageState) {
-                return ErrorWidget(state.errorMessage);
-              } else if (state is GetVacancyDetailsSuccessMessageState) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    JobCart(
-                      skillRequired: skillRequired(
-                        segments: [
-                          '.Net',
-                          'SQL',
-                          'Flutter',
-                          'Dart',
-                          'Git',
-                          'Linux',
-                          'Linux',
-                          'Linux',
-                        ],
-                      ),
-                      vacancyModel: VacancyModel(),
-                    ),
-                    SizedBox(
-                      height: AppSize.defaultSize! * 2,
-                    ),
-                    MaterialWidget(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CustomText(
-                            text: StringManager.responsibilities.tr(),
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.black,
-                          ),
-                          SizedBox(
-                            height: AppSize.defaultSize! * 1.5,
-                          ),
-                          CustomText(
-                            text:
-                                '''• Collaborate with cross-functional teams to analyze requirements and design innovative software solutions. \n• Develop and maintain high-quality, efficient, and scalable code using .NET Core. \n• Design and implement database structures, queries, and stored procedures in SQL Server and Oracle. \n• Develop responsive and dynamic user interfaces using Angular +10 for a seamless end-to-end user experience. \n• Participate in code reviews to ensure code quality and adherence to coding standards. \n• Work closely with product owners and stakeholders to understand business requirements and translate them into technical specifications.\n• Troubleshoot, debug, and resolve software defects and issues.\n• Stay current with industry trends and advancements in .NET Core,, Angular, and related technologies
-                      ''',
-                            lineHeight: AppSize.defaultSize! * .2,
-                            maxLines: 100,
-                            fontSize: AppSize.defaultSize! * 1.2,
-                            color: AppColors.primaryColor,
-                            textAlign: TextAlign.start,
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: AppSize.defaultSize! * 2,
-                    ),
-                    MaterialWidget(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CustomText(
-                            text: StringManager.jobRequirements.tr(),
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.black,
-                          ),
-                          SizedBox(
-                            height: AppSize.defaultSize! * 1.5,
-                          ),
-                          CustomText(
-                            text:
-                                '''• Collaborate with cross-functional teams to analyze requirements and design innovative software solutions. \n• Develop and maintain high-quality, efficient, and scalable code using .NET Core. \n• Design and implement database structures, queries, and stored procedures in SQL Server and Oracle. \n• Develop responsive and dynamic user interfaces using Angular +10 for a seamless end-to-end user experience. \n• Participate in code reviews to ensure code quality and adherence to coding standards. \n• Work closely with product owners and stakeholders to understand business requirements and translate them into technical specifications.\n• Troubleshoot, debug, and resolve software defects and issues.\n• Stay current with industry trends and advancements in .NET Core,, Angular, and related technologies
-                      ''',
-                            lineHeight: AppSize.defaultSize! * .2,
-                            maxLines: 100,
-                            fontSize: AppSize.defaultSize! * 1.2,
-                            color: AppColors.primaryColor,
-                            textAlign: TextAlign.start,
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: AppSize.defaultSize! * 2,
-                    ),
-                    CompanyCart(
-                      width: AppSize.screenWidth,
-                      description: true,
-                      data: CompanyModel(),
-                    ),
-                    SizedBox(
-                      height: AppSize.defaultSize! * 2,
-                    ),
-                    CustomText(
-                      text: StringManager.anotherSuggestedJobs.tr(),
-                      fontWeight: FontWeight.w700,
-                      fontSize: 1.6 * AppSize.defaultSize!,
-                    ),
-                    SizedBox(
-                      height: AppSize.defaultSize! * 2,
-                    ),
-                    ListView.builder(
-                        itemCount: 10,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (item, index) {
-                          return Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: AppSize.defaultSize!),
-                            child: JobCart(
-                              vacancyModel: VacancyModel(),
-                            )
-                                .animate()
-                                .fadeIn() // uses `Animate.defaultDuration`
-                                .scale() // inherits duration from fadeIn
-                                .move(delay: 300.ms, duration: 600.ms),
-                          );
-                        }),
-                    SizedBox(
-                      height: AppSize.defaultSize!,
-                    ),
-                  ],
-                );
-              }
-
-              return const SizedBox();
-            },
-          ),
-        ),
+            child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            JobCart(
+              skillRequired: skillRequired(
+                segments: (widget.matchedVacancyWrapper.matchedVacancy
+                            .vacancySkills ??
+                        [])
+                    .map((e) => e.skill)
+                    .toList(),
+              ),
+              vacancyModel: widget.matchedVacancyWrapper,
+            ),
+            SizedBox(
+              height: AppSize.defaultSize! * 2,
+            ),
+            MaterialWidget(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomText(
+                    text: StringManager.responsibilities.tr(),
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.black,
+                  ),
+                  SizedBox(
+                    height: AppSize.defaultSize! * 1.5,
+                  ),
+                  CustomText(
+                    text: widget
+                        .matchedVacancyWrapper.matchedVacancy.responsibilities,
+                    lineHeight: AppSize.defaultSize! * .2,
+                    maxLines: 100,
+                    fontSize: AppSize.defaultSize! * 1.2,
+                    color: AppColors.primaryColor,
+                    textAlign: TextAlign.start,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: AppSize.defaultSize! * 2,
+            ),
+            MaterialWidget(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomText(
+                    text: StringManager.jobRequirements.tr(),
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.black,
+                  ),
+                  SizedBox(
+                    height: AppSize.defaultSize! * 1.5,
+                  ),
+                  CustomText(
+                    text: widget
+                        .matchedVacancyWrapper.matchedVacancy.requirements,
+                    lineHeight: AppSize.defaultSize! * .2,
+                    maxLines: 100,
+                    fontSize: AppSize.defaultSize! * 1.2,
+                    color: AppColors.primaryColor,
+                    textAlign: TextAlign.start,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: AppSize.defaultSize! * 2,
+            ),
+            Center(
+                child: MainButton(
+                    text: StringManager.applyNow.tr(),
+                    onTap: () {
+                      BlocProvider.of<ApplyBloc>(context).add(ApplyEvent(
+                        userID: MyApp.userId,
+                        vacancyID: widget
+                            .matchedVacancyWrapper.matchedVacancy.vacancyId,
+                      ));
+                    })),
+            SizedBox(
+              height: AppSize.defaultSize! * 2,
+            ),
+            CompanyCart(
+              width: AppSize.screenWidth,
+              description: true,
+              data: widget.matchedVacancyWrapper.matchedVacancy.company,
+            ),
+            SizedBox(
+              height: AppSize.defaultSize! * 2,
+            ),
+            CustomText(
+              text: StringManager.anotherSuggestedJobs.tr(),
+              fontWeight: FontWeight.w700,
+              fontSize: 1.6 * AppSize.defaultSize!,
+            ),
+            SizedBox(
+              height: AppSize.defaultSize! * 2,
+            ),
+            ListView.builder(
+                itemCount: 10,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (item, index) {
+                  return Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: AppSize.defaultSize!),
+                    child: JobCart(
+                      vacancyModel: widget.matchedVacancyWrapper,
+                    )
+                        .animate()
+                        .fadeIn() // uses `Animate.defaultDuration`
+                        .scale() // inherits duration from fadeIn
+                        .move(delay: 300.ms, duration: 600.ms),
+                  );
+                }),
+            SizedBox(
+              height: AppSize.defaultSize!,
+            ),
+          ],
+        )
+            // BlocBuilder<VacancyBloc, GetVacancyDetailsState>(
+            //   builder: (context, state) {
+            //     if (state is GetVacancyDetailsLoadingState) {
+            //       return const LoadingWidget();
+            //     } else if (state is GetVacancyDetailsErrorMessageState) {
+            //       return ErrorWidget(state.errorMessage);
+            //     } else if (state is GetVacancyDetailsSuccessMessageState) {
+            //       return Column(
+            //         crossAxisAlignment: CrossAxisAlignment.start,
+            //         children: [
+            //           JobCart(
+            //             skillRequired: skillRequired(
+            //               segments: [
+            //                 '.Net',
+            //                 'SQL',
+            //                 'Flutter',
+            //                 'Dart',
+            //                 'Git',
+            //                 'Linux',
+            //                 'Linux',
+            //                 'Linux',
+            //               ],
+            //             ),
+            //             vacancyModel: VacancyModel()as MatchedVacancyWrapper,
+            //           ),
+            //           SizedBox(
+            //             height: AppSize.defaultSize! * 2,
+            //           ),
+            //           MaterialWidget(
+            //             child: Column(
+            //               crossAxisAlignment: CrossAxisAlignment.start,
+            //               children: [
+            //                 CustomText(
+            //                   text: StringManager.responsibilities.tr(),
+            //                   fontWeight: FontWeight.w700,
+            //                   color: AppColors.black,
+            //                 ),
+            //                 SizedBox(
+            //                   height: AppSize.defaultSize! * 1.5,
+            //                 ),
+            //                 CustomText(
+            //                   text:
+            //                       '''• Collaborate with cross-functional teams to analyze requirements and design innovative software solutions. \n• Develop and maintain high-quality, efficient, and scalable code using .NET Core. \n• Design and implement database structures, queries, and stored procedures in SQL Server and Oracle. \n• Develop responsive and dynamic user interfaces using Angular +10 for a seamless end-to-end user experience. \n• Participate in code reviews to ensure code quality and adherence to coding standards. \n• Work closely with product owners and stakeholders to understand business requirements and translate them into technical specifications.\n• Troubleshoot, debug, and resolve software defects and issues.\n• Stay current with industry trends and advancements in .NET Core,, Angular, and related technologies
+            //             ''',
+            //                   lineHeight: AppSize.defaultSize! * .2,
+            //                   maxLines: 100,
+            //                   fontSize: AppSize.defaultSize! * 1.2,
+            //                   color: AppColors.primaryColor,
+            //                   textAlign: TextAlign.start,
+            //                 ),
+            //               ],
+            //             ),
+            //           ),
+            //           SizedBox(
+            //             height: AppSize.defaultSize! * 2,
+            //           ),
+            //           MaterialWidget(
+            //             child: Column(
+            //               crossAxisAlignment: CrossAxisAlignment.start,
+            //               children: [
+            //                 CustomText(
+            //                   text: StringManager.jobRequirements.tr(),
+            //                   fontWeight: FontWeight.w700,
+            //                   color: AppColors.black,
+            //                 ),
+            //                 SizedBox(
+            //                   height: AppSize.defaultSize! * 1.5,
+            //                 ),
+            //                 CustomText(
+            //                   text:
+            //                       '''• Collaborate with cross-functional teams to analyze requirements and design innovative software solutions. \n• Develop and maintain high-quality, efficient, and scalable code using .NET Core. \n• Design and implement database structures, queries, and stored procedures in SQL Server and Oracle. \n• Develop responsive and dynamic user interfaces using Angular +10 for a seamless end-to-end user experience. \n• Participate in code reviews to ensure code quality and adherence to coding standards. \n• Work closely with product owners and stakeholders to understand business requirements and translate them into technical specifications.\n• Troubleshoot, debug, and resolve software defects and issues.\n• Stay current with industry trends and advancements in .NET Core,, Angular, and related technologies
+            //             ''',
+            //                   lineHeight: AppSize.defaultSize! * .2,
+            //                   maxLines: 100,
+            //                   fontSize: AppSize.defaultSize! * 1.2,
+            //                   color: AppColors.primaryColor,
+            //                   textAlign: TextAlign.start,
+            //                 ),
+            //               ],
+            //             ),
+            //           ),
+            //           SizedBox(
+            //             height: AppSize.defaultSize! * 2,
+            //           ),
+            //           CompanyCart(
+            //             width: AppSize.screenWidth,
+            //             description: true,
+            //             data: CompanyModel(),
+            //           ),
+            //           SizedBox(
+            //             height: AppSize.defaultSize! * 2,
+            //           ),
+            //           CustomText(
+            //             text: StringManager.anotherSuggestedJobs.tr(),
+            //             fontWeight: FontWeight.w700,
+            //             fontSize: 1.6 * AppSize.defaultSize!,
+            //           ),
+            //           SizedBox(
+            //             height: AppSize.defaultSize! * 2,
+            //           ),
+            //           ListView.builder(
+            //               itemCount: 10,
+            //               shrinkWrap: true,
+            //               physics: const NeverScrollableScrollPhysics(),
+            //               itemBuilder: (item, index) {
+            //                 return Padding(
+            //                   padding: EdgeInsets.symmetric(
+            //                       vertical: AppSize.defaultSize!),
+            //                   child: JobCart(
+            //                     vacancyModel: VacancyModel()as MatchedVacancyWrapper,
+            //                   )
+            //                       .animate()
+            //                       .fadeIn() // uses `Animate.defaultDuration`
+            //                       .scale() // inherits duration from fadeIn
+            //                       .move(delay: 300.ms, duration: 600.ms),
+            //                 );
+            //               }),
+            //           SizedBox(
+            //             height: AppSize.defaultSize!,
+            //           ),
+            //         ],
+            //       );
+            //     }
+            //
+            //     return const SizedBox();
+            //   },
+            // ),
+            ),
       ),
+),
     );
   }
 
   Widget skillRequired({
-    required List<String> segments,
+    required List<String?> segments,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -201,7 +344,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
               child: Padding(
                 padding: EdgeInsets.all(AppSize.defaultSize! * .8),
                 child: CustomText(
-                  text: segments[index],
+                  text: segments[index] ?? "",
                   color: Colors.black,
                 ),
               ),

@@ -16,7 +16,7 @@ class CompanyCart extends StatelessWidget {
 
   final double? width;
   final bool description;
-  final CompanyModel data;
+  final CompanyModel? data;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class CompanyCart extends StatelessWidget {
       onTap: () {
         PersistentNavBarNavigator.pushNewScreen(
           context,
-          screen: CompanyDetails(data: data,),
+          screen: CompanyDetails(data: data!,),
           withNavBar: false,
           // OPTIONAL VALUE. True by default.
           pageTransitionAnimation: PageTransitionAnimation.fade,
@@ -52,7 +52,7 @@ class CompanyCart extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CustomText(
-                      text: data.companyName??"",
+                      text: data?.companyName??"",
                       fontWeight: FontWeight.w500,
                       color: AppColors.thirdColor,
                       fontSize: AppSize.defaultSize! * 1.4),

@@ -33,7 +33,7 @@ class ThanksScreen extends StatelessWidget {
               child: Align(
                 alignment: Alignment.center,
                 child: CustomText(
-                  text: StringManager.profileCompleted('Ahmed'),
+                  text: StringManager.profileCompleted(''),
                   color: Colors.white,
                   fontSize: AppSize.defaultSize! * 2.5,
                   fontWeight: FontWeight.w900,
