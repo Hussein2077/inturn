@@ -16,6 +16,7 @@ class CustomTextField extends StatefulWidget {
   final Widget? suffixIcon;
   final Color? fillColor;
   final void Function()? onTap;
+  final void Function(String)? onChanged;
   final TextStyle? hintStyle;
   final GlobalKey<FormState>? formKey;
 
@@ -36,6 +37,7 @@ class CustomTextField extends StatefulWidget {
     this.maxLines,
     this.formKey,
     this.fillColor,
+    this.onChanged,
   }) : super(key: key);
 
   @override
@@ -52,6 +54,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         key: widget.formKey,
         child: TextFormField(
           onTap: widget.onTap,
+          onChanged: widget.onChanged ,
           maxLines: widget.maxLines,
           readOnly: widget.readOnly,
           validator: (value) {

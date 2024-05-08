@@ -13,16 +13,23 @@ import 'package:inturn/features/home/presentation/controller/get_cities_major_un
 
 class FacultyDropDown extends StatefulWidget {
   const FacultyDropDown({
-    super.key,
+    super.key, this.facultyId,
   });
 
   static FacultyModel? selectedValue;
-
+  final int? facultyId;
   @override
   State<FacultyDropDown> createState() => _FacultyDropDownState();
 }
 
 class _FacultyDropDownState extends State<FacultyDropDown> {
+  @override
+  void initState() {
+    if(widget.facultyId!=null){
+      FacultyDropDown.selectedValue = FacultyModel(id: widget.facultyId!);
+    }
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<OptionsBloc, GetOptionsStates>(

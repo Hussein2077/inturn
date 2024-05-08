@@ -71,9 +71,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   completion: state.completion);
             } else if (state is LoginWithEmailAndPasswordErrorMessageState) {
               EasyLoading.dismiss();
-              errorSnackBar(context, state.errorMessage);
+              EasyLoading.showError(state.errorMessage);
+              EasyLoading.showError(state.errorMessage);
             } else if (state is LoginWithEmailAndPasswordLoadingState) {
               EasyLoading.show(status: 'loading...');
+              
             }
           },
           child: BlocListener<SignInWithPlatformBloc, SignInWithPlatformState>(
@@ -83,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     isComplete: state.isCompleted,
                     completion: state.complition);
               } else if (state is SignWithGoogleErrorMessageState) {
-                errorSnackBar(context, state.errorMessage);
+                EasyLoading.showError(state.errorMessage);
               } else if (state is SignWithPlatFormLoadingState) {}
             },
             child: Padding(

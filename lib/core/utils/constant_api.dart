@@ -1,3 +1,4 @@
+import 'package:inturn/core/models/vacancey_model.dart';
 import 'package:inturn/main.dart';
 
 class ConstantApi {
@@ -39,6 +40,9 @@ class ConstantApi {
   static String sendSkills(String id, int userprofileId) =>
       "${baseUrl}UserProfiles/EditFormSkills?userId=$id&userProfileId=$userprofileId";
 
+  static String getGetInternshipsBySearch(VacancySearch vacancySearch) =>
+      "${baseUrl}Vacancies/SearchVacancies?title=${vacancySearch.title}&companyId=${vacancySearch.companyId}&cityId=${vacancySearch.cityId}&countryId=${vacancySearch.countryId}&vacancyLevelId=${vacancySearch.vacancyLevelId}&userId=${MyApp.userId}";
+
 //add personal info
   static String addPersonalInfo() => "${baseUrl}UserProfiles/AddFormUserInfo";
 
@@ -52,8 +56,7 @@ class ConstantApi {
 //////////////////////////////////////////////////////////////////////
   static const String getJobs = "${baseUrl}Jobs/GetVacancy";
   static const String getGetInternships = "${baseUrl}Jobs/GetInternships";
-  static const String getGetInternshipsBySearch =
-      "${baseUrl}Jobs/GetInternships";
+
   static const String signUp = "https://api.inturn.app/Register";
   static const String sendCode = "${baseUrl}auth/sendPasswordResetEmail";
   static const String verifyCode = "${baseUrl}auth/verifyCode";

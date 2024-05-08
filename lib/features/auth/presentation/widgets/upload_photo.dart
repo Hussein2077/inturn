@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:inturn/core/utils/app_size.dart';
+import 'package:inturn/core/widgets/cached_network_image.dart';
 
 class UploadProfileImagePage extends StatefulWidget {
-  const UploadProfileImagePage({super.key});
+  const UploadProfileImagePage({super.key, this.imagePath});
 static File? imageFile;
+final String? imagePath;
   @override
   UploadProfileImagePageState createState() => UploadProfileImagePageState();
 }
@@ -47,17 +49,21 @@ class UploadProfileImagePageState extends State<UploadProfileImagePage> {
           borderRadius: BorderRadius.circular( AppSize.defaultSize! * 7.5),
 
         ),
-        child: UploadProfileImagePage.imageFile != null
+        child: (UploadProfileImagePage.imageFile != null)
             ? ClipRRect(
           borderRadius: BorderRadius.circular( AppSize.defaultSize! * 7.5),
-          child: Image.file(
+          child:widget.imagePath!=null?
+              CachedNetworkCustom(url: widget.imagePath!)
+              :
+          Image.file(
             UploadProfileImagePage.imageFile!,
             width:   AppSize.defaultSize! * 10,
             height:  AppSize.defaultSize! * 10,
             fit: BoxFit.cover,
           ),
         )
-            : Icon(
+            :widget.imagePath!=null?
+        CachedNetworkCustom(url: widget.imagePath!): Icon(
           Icons.person,
           size:  AppSize.defaultSize! * 6,
           color: Colors.grey[400],

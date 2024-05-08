@@ -31,11 +31,7 @@ class MatchedVacancy {
   final int? majorId;
   final CompanyModel? company;
   final String? cityName;
-  final DateTime? creationDate;
-  final DateTime? lastModificationTime;
-  final int? creatorUserId;
-  final int lastModificationUserId;
-  final int deleteStatusId;
+
 
   MatchedVacancy({
     required this.vacancyId,
@@ -49,11 +45,7 @@ class MatchedVacancy {
     this.majorId,
     this.company,
     this.cityName,
-    this.creationDate,
-    this.lastModificationTime,
-    this.creatorUserId,
-    required this.lastModificationUserId,
-    required this.deleteStatusId,
+
   });
 
   factory MatchedVacancy.fromJson(Map<String, dynamic> json) {
@@ -77,15 +69,7 @@ class MatchedVacancy {
       cityName:
           // json['cityId']  ??
           'Unknown city',
-      creationDate: json['creationDate'] != null
-          ? DateTime.parse(json['creationDate'])
-          : null,
-      lastModificationTime: json['lastModificationTime'] != null
-          ? DateTime.parse(json['lastModificationTime'])
-          : null,
-      creatorUserId: json['creatorUserId'] as int?,
-      lastModificationUserId: json['lastModificationUserId'] ?? 0,
-      deleteStatusId: json['deleteStatusId'] ?? 0,
+
     );
   }
 }

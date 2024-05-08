@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:inturn/core/models/vacancey_model.dart';
 import 'package:inturn/core/resource_manager/asset_path.dart';
@@ -12,15 +13,30 @@ import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/widgets/app_bar.dart';
 import 'package:inturn/core/widgets/cached_network_image.dart';
 import 'package:inturn/core/widgets/cutom_text.dart';
+import 'package:inturn/core/widgets/loading_widget.dart';
 import 'package:inturn/features/home/data/model/company_model.dart';
 import 'package:inturn/features/home/data/model/matched_model.dart';
+import 'package:inturn/features/home/presentation/controller/intern_search_bloc/get_internships_search_bloc.dart';
+import 'package:inturn/features/home/presentation/controller/intern_search_bloc/get_internships_search_event.dart';
+import 'package:inturn/features/home/presentation/controller/intern_search_bloc/get_internships_search_state.dart';
 import 'package:inturn/features/home/presentation/widgets/job_cart.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class CompanyDetails extends StatelessWidget {
+class CompanyDetails extends StatefulWidget {
   final CompanyModel data;
   const CompanyDetails({super.key, required this.data});
 
+  @override
+  State<CompanyDetails> createState() => _CompanyDetailsState();
+}
+
+class _CompanyDetailsState extends State<CompanyDetails> {
+  @override
+  void initState() {
+    BlocProvider.of<GetInternshipsBySearchBloc>(context)
+        .add(GetInternshipsBySearchEvent(companyId: widget.data.companyId));
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +54,7 @@ class CompanyDetails extends StatelessWidget {
                 child: Stack(
                   children: [
                     CachedNetworkCustom(
-                      url: data.coverLogo??"",
+                      url: widget.data.coverLogo??"",
                       width: AppSize.screenWidth,
                       height: AppSize.defaultSize! * 10,
                     ),
@@ -51,7 +67,7 @@ class CompanyDetails extends StatelessWidget {
                           CircleAvatar(
                               radius: AppSize.defaultSize! * 4.8,
                               child:  CachedNetworkCustom(
-                                url: data.profileLogo??"",
+                                url: widget.data.profileLogo??"",
                               ),),
                           SizedBox(
                             width: AppSize.defaultSize! * 2,
@@ -61,7 +77,7 @@ class CompanyDetails extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               CustomText(
-                                  text: data.companyName??"",
+                                  text: widget.data.companyName??"",
                                   fontWeight: FontWeight.w700,
                                   color: AppColors.black,
                                   fontSize: AppSize.defaultSize! * 1.6),
@@ -79,7 +95,7 @@ class CompanyDetails extends StatelessWidget {
                                     width: AppSize.defaultSize! * .5,
                                   ),
                                   CustomText(
-                                    text: data.cityName??"",
+                                    text: widget.data.cityName??"",
                                     color: AppColors.greyColor,
                                     // textAlign: TextAlign.start,
                                     fontSize: AppSize.defaultSize! * 1.4,
@@ -94,7 +110,7 @@ class CompanyDetails extends StatelessWidget {
                         ],
                       ),
                     ),
-          
+
                     // SvgPicture.asset(AssetPath.test, height: AppSize.defaultSize!*10,),
                   ],
                 ),
@@ -106,19 +122,19 @@ class CompanyDetails extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   socialMediaButton(asset: AssetPath.website, onTap: ()async{
-                    await launchUrl(Uri.parse(data.webSite??""));
+                    await launchUrl(Uri.parse(widget.data.webSite??""));
                   }),
                   socialMediaButton(asset: AssetPath.facebook2, onTap: ()async{
-                    await launchUrl(Uri.parse(data.facebookLink??""));
+                    await launchUrl(Uri.parse(widget.data.facebookLink??""));
                   }),
                   socialMediaButton(asset: AssetPath.instagram, onTap: ()async{
-                    await launchUrl(Uri.parse(data.instagramLink??""));
+                    await launchUrl(Uri.parse(widget.data.instagramLink??""));
                   }),
                   socialMediaButton(asset: AssetPath.twitter, onTap: ()async{
-                    await launchUrl(Uri.parse(data.xLink??""));
+                    await launchUrl(Uri.parse(widget.data.xLink??""));
                   }),
                   socialMediaButton(asset: AssetPath.linkedin, onTap: ()async{
-                    await launchUrl(Uri.parse(data.linkedInLink??""));
+                    await launchUrl(Uri.parse(widget.data.linkedInLink??""));
                   }),
                 ],
               ),
@@ -153,7 +169,7 @@ class CompanyDetails extends StatelessWidget {
                                 size: AppSize.defaultSize! * 2,
                               ),
                               CustomText(
-                                text: data.foundationYear??"",
+                                text: widget.data.foundationYear??"",
                                 color: AppColors.thirdColor,
                                 fontSize: AppSize.defaultSize! * 1.4,
                               ),
@@ -166,7 +182,7 @@ class CompanyDetails extends StatelessWidget {
                                 scale: 2,
                               ),
                               CustomText(
-                                text: data.countOfEmployees??"",
+                                text: widget.data.countOfEmployees??"",
                                 color: AppColors.thirdColor,
                                 fontSize: AppSize.defaultSize! * 1.4,
                               ),
@@ -212,7 +228,7 @@ class CompanyDetails extends StatelessWidget {
                         height: AppSize.defaultSize! * 1.5,
                       ),
                       CustomText(
-                        text: data.bio??"",
+                        text: widget.data.bio??"",
                         lineHeight: AppSize.defaultSize! * .2,
                         maxLines: 100,
                         fontSize: AppSize.defaultSize! * 1.2,
@@ -230,19 +246,50 @@ class CompanyDetails extends StatelessWidget {
                 fontWeight: FontWeight.w700,
                 fontSize: 1.6 * AppSize.defaultSize!,
               ),
-              // ListView.builder(
-              //     itemCount: 10,
-              //     shrinkWrap: true,
-              //     physics: const NeverScrollableScrollPhysics(),
-              //     itemBuilder: (item, index) {
-              //       return Padding(
-              //         padding: EdgeInsets.symmetric(vertical:AppSize.defaultSize! ),
-              //         child:   JobCart(vacancyModel:   MatchedVacancyWrapper(),).animate()
-              //             .fadeIn() // uses `Animate.defaultDuration`
-              //             .scale() // inherits duration from fadeIn
-              //             .move(delay: 300.ms, duration: 600.ms),
-              //       );
-              //     }),
+              BlocBuilder<GetInternshipsBySearchBloc,
+                  GetInternshipsBySearchState>(
+                builder: (context, state) {
+                  if (state is GetInternshipsBySearchLoadingState) {
+                    return const LoadingWidget();
+                  } else if (state is GetInternshipsBySearchSuccessMessageState) {
+                    return ListView.builder(
+                        itemCount: state.vacancyModel.length,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (item, index) {
+                          return Padding(
+                            padding: EdgeInsets.all(AppSize.defaultSize! * 1.2),
+                            child: JobCart(
+                              vacancyModel: MatchedVacancyWrapper(
+                                matchedVacancy: MatchedVacancy(
+                                  vacancyId: state.vacancyModel[index].vacancyId!,
+                                  title: state.vacancyModel[index].title!,
+                                  companyId: state.vacancyModel[index].companyId!,
+                                  company: state.vacancyModel[index].company!,
+                                  cityName: state.vacancyModel[index].cityName!,
+                                  vacancyLevelId:
+                                  state.vacancyModel[index].vacancyLevelId!,
+                                  requirements:
+                                  state.vacancyModel[index].requirements!,
+                                  responsibilities:
+                                  state.vacancyModel[index].responsibilities!,
+                                ),
+                                matchmakingPercentage: '',
+                              ),
+                            )
+                                .animate()
+                                .fadeIn() // uses `Animate.defaultDuration`
+                                .scale() // inherits duration from fadeIn
+                                .move(delay: 300.ms, duration: 600.ms),
+                          );
+                        });
+                  } else if (state is GetInternshipsBySearchErrorMessageState) {
+                    return ErrorWidget(state.errorMessage);
+                  } else {
+                    return const SizedBox();
+                  }
+                },
+              ),
             ],
           ),
         ),

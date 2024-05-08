@@ -28,6 +28,8 @@ abstract class BaseRepositoryHome {
   Future<Either<List<VacancyModel>, Failure>> getMyApplications(String type);
 
   Future<Either<List<CompanyModel>, Failure>> getCompanies();
+  Future<Either<List<VacancyModel>, Failure>> getInternshipsBySearch(VacancySearch vacancySearch);
+
 
   Future<Either<dynamic, Failure>> apply(VacancyApply vacancyApply);
 }

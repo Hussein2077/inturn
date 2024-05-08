@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
@@ -33,6 +35,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
 
   @override
   Widget build(BuildContext context) {
+    log('${FiltersScreen.workPlace}huss ${FiltersScreen.careerLevel}');
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: appBar(context, text: StringManager.filterResults.tr()),

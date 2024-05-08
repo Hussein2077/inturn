@@ -24,6 +24,7 @@ abstract class BaseRemotelyDataSourceHome{
   Future<List<VacancyModel>> getMyApplications(String type);
   Future<List<CompanyModel>> getCompanies();
   Future<dynamic> apply(VacancyApply vacancyApply);
+  Future<List<VacancyModel>> getInternshipsBySearch(VacancySearch vacancySearch);
 
 }
 
@@ -179,4 +180,29 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
       throw DioHelper.handleDioError(dioError: e, endpointName: "apply");
     }
   }
+  @override
+  Future<List<VacancyModel>> getInternshipsBySearch(
+      VacancySearch vacancySearch) async {
+
+    final body = {
+      'cityId': vacancySearch.cityId,
+      'countryId': vacancySearch.countryId,
+      'vacancyLevelId': vacancySearch.vacancyLevelId,
+      'companyId': vacancySearch.companyId,
+      'title': vacancySearch.title,
+      'userId': vacancySearch.userId
+    };
+    try {
+      final response = await Dio().get(ConstantApi.getGetInternshipsBySearch(vacancySearch),
+          data: body,
+          );
+      List<VacancyModel> jsonData = List<VacancyModel>.from(
+          (response.data as List).map((e) => VacancyModel.fromJson(e)));
+      return jsonData;
+    } on DioException catch (e) {
+      throw DioHelper.handleDioError(
+          dioError: e, endpointName: "get Internships by search");
+    }
+  }
+
 }

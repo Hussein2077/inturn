@@ -6,9 +6,9 @@ class UniversityModel extends OptionsModel{
   final String? universityNameAr;
 
   UniversityModel({
-    required this.universityId,
-    required this.universityName,
-    required this.universityNameAr,
+      this.universityId,
+      this.universityName,
+      this.universityNameAr,
   });
 
   factory UniversityModel.fromJson(Map<String, dynamic> json) {

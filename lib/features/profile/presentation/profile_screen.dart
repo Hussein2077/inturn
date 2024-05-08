@@ -8,6 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:inturn/core/models/profile_data_model.dart';
 import 'package:inturn/core/resource_manager/asset_path.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
+import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/utils/enums.dart';
@@ -29,6 +30,7 @@ import 'package:inturn/features/home/data/model/skill_model.dart';
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_states.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_bloc.dart';
+import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_event.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_state.dart';
 import 'package:inturn/features/profile/domain/use_case/edit_profile_uc.dart';
 import 'package:inturn/features/profile/presentation/controller/edit_profile/edit_profile_bloc.dart';
@@ -101,6 +103,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     BlocProvider.of<GetMyProfileDataBloc>(context)
         .add(GetMyProfileDataEvent(MyApp.userProfileId.toString()));
+    BlocProvider.of<HomeBloc>(context).add(GetMajorEvent());
 
     emailController = TextEditingController();
     firstNameController = TextEditingController();
@@ -142,6 +145,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: BlocBuilder<GetMyProfileDataBloc, GetMyProfileDataState>(
         builder: (context, state) {
           if (state is GetMyProfileDataSuccessMessageState) {
+
             profileDataModel = state.profileDataModel;
             // UniversityDropDown.selectedValue = profileDataModel!.university;
             // FacultyDropDown.selectedValue = profileDataModel!.faculty;
@@ -160,7 +164,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       MainButton(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.changePassword);
+                        },
                         text: StringManager.changePassword.tr(),
                         textColor: Colors.black,
                         color: AppColors.lightGreyColor,
@@ -171,7 +177,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             vertical: AppSize.defaultSize! * 2),
                         child: MainButton(
                           onTap: () {
-                            showCV(context);
+                            showCV(context, state.profileDataModel);
                           },
                           text: StringManager.downloadCV.tr(),
                           textColor: Colors.black,
@@ -204,7 +210,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 SizedBox(
                                   height: AppSize.defaultSize! * 1,
                                 ),
-                                const Center(child: UploadProfileImagePage()),
+                                Center(
+                                    child: UploadProfileImagePage(
+                                  imagePath:
+                                      state.profileDataModel.profileImage,
+                                )),
                                 SizedBox(
                                   height: AppSize.defaultSize! * 1,
                                 ),
@@ -268,11 +278,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   SizedBox(
                                     height: AppSize.defaultSize! * 1,
                                   ),
-                                  const UniversityDropDown(),
+                                  UniversityDropDown(
+                                    universityId: state.profileDataModel
+                                        .university?.universityId,
+                                  ),
                                   SizedBox(
                                     height: AppSize.defaultSize! * 2,
                                   ),
-                                  const FacultyDropDown(),
+                                  FacultyDropDown(
+                                    facultyId:
+                                        state.profileDataModel.faculty?.id,
+                                  ),
                                 ],
                               ),
                             ),
@@ -435,31 +451,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   height: AppSize.defaultSize! * 1.6,
                                 ),
                                 BlocBuilder<HomeBloc, HomeState>(
-                                  builder: (context, state) {
-                                    if (state is GetMajorLoadingState) {
+                                  builder: (context, state1) {
+                                    log('${ state.profileDataModel.user?.majors} state.profileDataModel.user?.majors');
+                                var s=    state.profileDataModel.user?.majors??[];
+                                    if (state1 is GetMajorLoadingState) {
                                       return const Center(
                                           child: LoadingWidget());
-                                    } else if (state
+                                    } else if (state1
                                         is GetMajorSuccessMessageState) {
                                       return ListView.builder(
-                                          itemCount: state.topFiveModel.length,
+                                          itemCount: state1.topFiveModel.length,
                                           shrinkWrap: true,
                                           physics:
                                               const NeverScrollableScrollPhysics(),
                                           itemBuilder: (context, index) {
                                             List<int> selected = [];
                                             for (int i = 0;
-                                                i < state.topFiveModel.length;
+                                                i < state1.topFiveModel.length;
                                                 i++) {
                                               selected = Methods.instance
                                                   .findCommonItems(
-                                                      state.topFiveModel[i]
+                                                      state1.topFiveModel[i]
                                                           .positions,
                                                       profileDataModel!
-                                                          .user!.majors!);
+                                                          .user!.majors??[]);
                                             }
                                             return CustomAccordion(
-                                              title: state
+                                              title: state1
                                                   .topFiveModel[index].field,
                                               showContent: true,
                                               headerBackgroundColor:
@@ -483,7 +501,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                     initialSelectedIndices:
                                                         selected,
                                                     segments:
-                                                        state.topFiveModel,
+                                                        state1.topFiveModel,
                                                     onValueChanged: (index) =>
                                                         _onValueChanged(index),
                                                     initialIndex: 0,
@@ -595,7 +613,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       valueListenable: addToSkill,
                                       builder: (context_, value, child) {
                                         return CustomSegmentedButton2(
-                                          onTapClose: (i){},
+                                          onTapClose: (i) {},
                                           segments: skillIds
                                               .map((e) => e.skillNameEn ?? "")
                                               .toList(),

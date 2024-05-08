@@ -47,16 +47,19 @@ class VacancyModel {
 }
 
 class VacancySearch {
-  final String? text;
-  final String? skill;
-  final String? area;
-  final int type;
-
+  final String? title;
+  final int? companyId;
+  final int? cityId;
+  final int? countryId;
+  final int? vacancyLevelId;
+  final String? userId;
   VacancySearch({
-    this.text,
-    this.skill,
-    this.area,
-    required this.type,
+    this.title,
+    this.companyId,
+    this.cityId,
+    this.countryId,
+    this.vacancyLevelId,
+    this.userId,
   });
 }class VacancyApply{
   final int vacancyID;

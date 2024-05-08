@@ -112,4 +112,13 @@ class HomeRepositoryImp extends BaseRepositoryHome {
       return right(DioHelper.buildFailure(e));
     }
   }
+  @override
+  Future<Either<List<VacancyModel>, Failure>> getInternshipsBySearch(VacancySearch vacancySearch) async {
+    try {
+      final result = await baseRemotelyDataSourceHome.getInternshipsBySearch(vacancySearch);
+      return Left(result);
+    } on Exception catch (e) {
+      return right(DioHelper.buildFailure(e));
+    }
+  }
 }

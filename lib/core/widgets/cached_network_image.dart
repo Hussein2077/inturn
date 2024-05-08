@@ -13,7 +13,7 @@ final double? width;
     return CachedNetworkImage(
       height: height??AppSize.defaultSize!*4.2,
       width: width??AppSize.defaultSize!*4.2,
-      imageUrl:'https://www.mintformations.co.uk/blog/wp-content/uploads/2020/05/shutterstock_583717939.jpg',
+      imageUrl: url,
       imageBuilder: (context, imageProvider) => Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(AppSize.defaultSize!),

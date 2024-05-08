@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
@@ -73,7 +74,7 @@ class _SkillInfoState extends State<SkillInfo> {
               BlocProvider.of<GetMyDataBloc>(context).add( CompleteProfileEvent(MyApp.userId));
             }
             else if (state is AddSkillsErrorState) {
-              errorSnackBar(context, state.errorMessage);
+              EasyLoading.showError(state.errorMessage);
             }
           },
           child: BlocBuilder<OptionsBloc, GetOptionsStates>(
