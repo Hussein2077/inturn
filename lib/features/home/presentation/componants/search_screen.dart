@@ -68,7 +68,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       title: searchController.text,
                       vacancyLevelId: FiltersScreen.careerLevel,
                       cityId: CitiesDropDown.selectedValue2?.cityId,
-                      countryId: CitiesDropDown.selectedValue?.countryId,
+                      countryId: CitiesDropDown.selectedValue?.countryId??1,
                     ));
                   },
                 ),
@@ -147,15 +147,15 @@ class _SearchScreenState extends State<SearchScreen> {
                               matchedVacancy: MatchedVacancy(
                                 vacancyId: state.vacancyModel[index].vacancyId!,
                                 title: state.vacancyModel[index].title!,
-                                companyId: state.vacancyModel[index].companyId!,
-                                company: state.vacancyModel[index].company!,
-                                cityName: state.vacancyModel[index].cityName!,
+                                companyId: state.vacancyModel[index].companyId,
+                                company: state.vacancyModel[index].company,
+                                cityName: state.vacancyModel[index].cityName,
                                 vacancyLevelId:
-                                    state.vacancyModel[index].vacancyLevelId!,
+                                    state.vacancyModel[index].vacancyLevelId,
                                 requirements:
-                                    state.vacancyModel[index].requirements!,
+                                    state.vacancyModel[index].requirements,
                                 responsibilities:
-                                    state.vacancyModel[index].responsibilities!,
+                                    state.vacancyModel[index].responsibilities,
                               ),
                               matchmakingPercentage: '',
                             ),

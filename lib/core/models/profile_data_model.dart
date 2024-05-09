@@ -1,5 +1,6 @@
 import 'package:inturn/features/home/data/model/faculty_model.dart';
 import 'package:inturn/features/home/data/model/major_model.dart';
+import 'package:inturn/features/home/data/model/skill_model.dart';
 import 'package:inturn/features/home/data/model/university_model.dart';
 
 class ProfileDataModel {
@@ -240,45 +241,27 @@ class Skills {
     this.skillNameEn,
     this.skillNameAr,
     this.vacancySkill,
-    this.creationDate,
-    this.lastModificationTime,
-    this.creatorUserId,
-    this.lastModificationUserId,
-    this.deleteStatusId,
   });
 
   Skills.fromJson(dynamic json) {
     skillId = json['skillId'];
     skillNameEn = json['skillNameEn'];
     skillNameAr = json['skillNameAr'];
-    vacancySkill = json['vacancySkill'];
-    creationDate = json['creationDate'];
-    lastModificationTime = json['lastModificationTime'];
-    creatorUserId = json['creatorUserId'];
-    lastModificationUserId = json['lastModificationUserId'];
-    deleteStatusId = json['deleteStatusId'];
+    vacancySkill = json['skill']  == null ? null : SkillModel.fromJson(json['vacancySkill']);
   }
   int? skillId;
   String? skillNameEn;
   String? skillNameAr;
-  dynamic vacancySkill;
-  String? creationDate;
-  String? lastModificationTime;
-  String? creatorUserId;
-  int? lastModificationUserId;
-  int? deleteStatusId;
+  SkillModel? vacancySkill;
+
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['skillId'] = skillId;
     map['skillNameEn'] = skillNameEn;
     map['skillNameAr'] = skillNameAr;
-    map['vacancySkill'] = vacancySkill;
-    map['creationDate'] = creationDate;
-    map['lastModificationTime'] = lastModificationTime;
-    map['creatorUserId'] = creatorUserId;
-    map['lastModificationUserId'] = lastModificationUserId;
-    map['deleteStatusId'] = deleteStatusId;
+    map['skill'] = vacancySkill;
+
     return map;
   }
 }

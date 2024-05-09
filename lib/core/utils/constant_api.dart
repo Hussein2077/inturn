@@ -40,8 +40,8 @@ class ConstantApi {
   static String sendSkills(String id, int userprofileId) =>
       "${baseUrl}UserProfiles/EditFormSkills?userId=$id&userProfileId=$userprofileId";
 
-  static String getGetInternshipsBySearch(VacancySearch vacancySearch) =>
-      "${baseUrl}Vacancies/SearchVacancies?title=${vacancySearch.title}&companyId=${vacancySearch.companyId}&cityId=${vacancySearch.cityId}&countryId=${vacancySearch.countryId}&vacancyLevelId=${vacancySearch.vacancyLevelId}&userId=${MyApp.userId}";
+  static const String getGetInternshipsBySearch =
+      'http://128.140.69.196/Intrn/api/Vacancies/SearchVacancies';
 
 //add personal info
   static String addPersonalInfo() => "${baseUrl}UserProfiles/AddFormUserInfo";

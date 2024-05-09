@@ -35,7 +35,7 @@ class _JobCartState extends State<JobCart> {
   double percent = 0.0;
   @override
   void initState() {
-    percent = double.parse(widget.vacancyModel.matchmakingPercentage.substring(0,4))/100;
+    // percent = double.parse((widget.vacancyModel.matchmakingPercentage).substring(0,4))/100;
     super.initState();
   }
   @override
@@ -66,7 +66,7 @@ class _JobCartState extends State<JobCart> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomText(
-                        text: widget.vacancyModel.matchedVacancy.title,
+                        text: widget.vacancyModel.matchedVacancy.title??"",
                         fontWeight: FontWeight.w700,
                         color: AppColors.primaryColor,
                         // textAlign: TextAlign.start,

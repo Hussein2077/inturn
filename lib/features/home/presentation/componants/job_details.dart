@@ -92,7 +92,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                   ),
                   CustomText(
                     text: widget
-                        .matchedVacancyWrapper.matchedVacancy.responsibilities,
+                        .matchedVacancyWrapper.matchedVacancy.responsibilities??"",
                     lineHeight: AppSize.defaultSize! * .2,
                     maxLines: 100,
                     fontSize: AppSize.defaultSize! * 1.2,
@@ -119,7 +119,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                   ),
                   CustomText(
                     text: widget
-                        .matchedVacancyWrapper.matchedVacancy.requirements,
+                        .matchedVacancyWrapper.matchedVacancy.requirements??"",
                     lineHeight: AppSize.defaultSize! * .2,
                     maxLines: 100,
                     fontSize: AppSize.defaultSize! * 1.2,
@@ -139,7 +139,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                       BlocProvider.of<ApplyBloc>(context).add(ApplyEvent(
                         userID: MyApp.userId,
                         vacancyID: widget
-                            .matchedVacancyWrapper.matchedVacancy.vacancyId,
+                            .matchedVacancyWrapper.matchedVacancy.vacancyId!,
                       ));
                     })),
             SizedBox(

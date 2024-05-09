@@ -13,19 +13,29 @@ import 'package:inturn/features/home/data/model/skill_model.dart';
 import 'package:inturn/features/home/data/model/university_model.dart';
 import 'package:inturn/main.dart';
 
-abstract class BaseRemotelyDataSourceHome{
+abstract class BaseRemotelyDataSourceHome {
   Future<List<MatchedVacancyWrapper>> getMatchedJobs();
-  Future<List<VacancyModel>> getJobDetails(int id);
-  Future<List<Country>> getCities();
-  Future<List<FacultyModel>> getFaculty(int id);
-  Future<List<UniversityModel>> getUniversity();
-  Future<List<MajorModel>> getMajor();
-  Future<List<SkillModel>> getSkill();
-  Future<List<VacancyModel>> getMyApplications(String type);
-  Future<List<CompanyModel>> getCompanies();
-  Future<dynamic> apply(VacancyApply vacancyApply);
-  Future<List<VacancyModel>> getInternshipsBySearch(VacancySearch vacancySearch);
 
+  Future<List<VacancyModel>> getJobDetails(int id);
+
+  Future<List<Country>> getCities();
+
+  Future<List<FacultyModel>> getFaculty(int id);
+
+  Future<List<UniversityModel>> getUniversity();
+
+  Future<List<MajorModel>> getMajor();
+
+  Future<List<SkillModel>> getSkill();
+
+  Future<List<VacancyModel>> getMyApplications(String type);
+
+  Future<List<CompanyModel>> getCompanies();
+
+  Future<dynamic> apply(VacancyApply vacancyApply);
+
+  Future<List<VacancyModel>> getInternshipsBySearch(
+      VacancySearch vacancySearch);
 }
 
 class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
@@ -36,28 +46,30 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
         ConstantApi.getVacancy(MyApp.userId),
       );
       List<MatchedVacancyWrapper> jsonData = List<MatchedVacancyWrapper>.from(
-          (response.data as List).map((e) => MatchedVacancyWrapper.fromJson(e)));
+          (response.data as List)
+              .map((e) => MatchedVacancyWrapper.fromJson(e)));
       return jsonData;
-
     } on DioException catch (e) {
-      throw DioHelper.handleDioError(dioError: e, endpointName: "getMatchedJobs");
+      throw DioHelper.handleDioError(
+          dioError: e, endpointName: "getMatchedJobs");
     }
   }
+
   @override
   Future<List<VacancyModel>> getJobDetails(int id) async {
-
     try {
       final response = await Dio().get(
-          ConstantApi.vacancyDetails(id),
-
+        ConstantApi.vacancyDetails(id),
       );
       List<VacancyModel> jsonData = List<VacancyModel>.from(
           (response.data as List).map((e) => VacancyModel.fromJson(e)));
       return jsonData;
     } on DioException catch (e) {
-      throw DioHelper.handleDioError(dioError: e, endpointName: "getJobDetails");
+      throw DioHelper.handleDioError(
+          dioError: e, endpointName: "getJobDetails");
     }
   }
+
   @override
   Future<List<Country>> getCities() async {
     try {
@@ -67,11 +79,12 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
       List<Country> jsonData = List<Country>.from(
           (response.data as List).map((e) => Country.fromJson(e)));
       return jsonData;
-
     } on DioException catch (e) {
-      throw DioHelper.handleDioError(dioError: e, endpointName: "get getCities");
+      throw DioHelper.handleDioError(
+          dioError: e, endpointName: "get getCities");
     }
   }
+
   @override
   Future<List<FacultyModel>> getFaculty(int id) async {
     try {
@@ -81,11 +94,11 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
       List<FacultyModel> jsonData = List<FacultyModel>.from(
           (response.data as List).map((e) => FacultyModel.fromJson(e)));
       return jsonData;
-
     } on DioException catch (e) {
       throw DioHelper.handleDioError(dioError: e, endpointName: "getFaculty");
     }
   }
+
   @override
   Future<List<UniversityModel>> getUniversity() async {
     try {
@@ -97,11 +110,12 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
       log('${jsonData}ssssssssssssssssss');
 
       return jsonData;
-
     } on DioException catch (e) {
-      throw DioHelper.handleDioError(dioError: e, endpointName: "getUniversity");
+      throw DioHelper.handleDioError(
+          dioError: e, endpointName: "getUniversity");
     }
   }
+
   @override
   Future<List<MajorModel>> getMajor() async {
     try {
@@ -112,11 +126,12 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
           (response.data as List).map((e) => MajorModel.fromJson(e)));
       log('${jsonData}ssssssssssssssssss');
       return jsonData;
-
     } on DioException catch (e) {
       throw DioHelper.handleDioError(dioError: e, endpointName: "getMajor");
     }
-  } @override
+  }
+
+  @override
   Future<List<SkillModel>> getSkill() async {
     try {
       final response = await Dio().get(
@@ -126,7 +141,6 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
           (response.data as List).map((e) => SkillModel.fromJson(e)));
       log('${jsonData[0]}ssssssssssssssssss');
       return jsonData;
-
     } on DioException catch (e) {
       throw DioHelper.handleDioError(dioError: e, endpointName: "getSkill");
     }
@@ -139,11 +153,11 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
         ConstantApi.myApplications,
       );
       List<VacancyModel> jsonData = List<VacancyModel>.from(
-          (response.data as List)
-              .map((e) => VacancyModel.fromJson(e)));
+          (response.data as List).map((e) => VacancyModel.fromJson(e)));
       return jsonData;
     } on DioException catch (e) {
-      throw DioHelper.handleDioError(dioError: e, endpointName: "getMyApplications");
+      throw DioHelper.handleDioError(
+          dioError: e, endpointName: "getMyApplications");
     }
   }
 
@@ -154,36 +168,36 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
         ConstantApi.getCompanies,
       );
       List<CompanyModel> jsonData = List<CompanyModel>.from(
-          (response.data as List)
-              .map((e) => CompanyModel.fromJson(e)));
+          (response.data as List).map((e) => CompanyModel.fromJson(e)));
       return jsonData;
     } on DioException catch (e) {
-      throw DioHelper.handleDioError(dioError: e, endpointName: "getMyApplications");
+      throw DioHelper.handleDioError(
+          dioError: e, endpointName: "getMyApplications");
     }
   }
+
   @override
-  Future apply(VacancyApply vacancyApply) async{
-    log ('${vacancyApply.userID}ehehhet ${vacancyApply.vacancyID}');
+  Future apply(VacancyApply vacancyApply) async {
+    log('${vacancyApply.userID}ehehhet ${vacancyApply.vacancyID}');
     final body = {
       // 'vacancyId ': vacancyApply.vacancyID,
       // 'userId ': vacancyApply.userID,
     };
     try {
-
-      final response =  await Dio().post(
-          ConstantApi.apply (vacancyApply.userID, vacancyApply.vacancyID),
-          data: body
-      );
+      final response = await Dio().post(
+          ConstantApi.apply(vacancyApply.userID, vacancyApply.vacancyID),
+          data: body);
       dynamic jsonData = response.data;
       return jsonData;
     } on DioException catch (e) {
       throw DioHelper.handleDioError(dioError: e, endpointName: "apply");
     }
   }
+
   @override
   Future<List<VacancyModel>> getInternshipsBySearch(
       VacancySearch vacancySearch) async {
-
+    log('${vacancySearch.cityId}ehehhet\n ${vacancySearch.countryId}\n${vacancySearch.vacancyLevelId}\n${vacancySearch.companyId}\n${vacancySearch.title}\n${vacancySearch.userId}');
     final body = {
       'cityId': vacancySearch.cityId,
       'countryId': vacancySearch.countryId,
@@ -193,9 +207,10 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
       'userId': vacancySearch.userId
     };
     try {
-      final response = await Dio().get(ConstantApi.getGetInternshipsBySearch(vacancySearch),
-          data: body,
-          );
+      final response = await Dio().post(
+        ConstantApi.getGetInternshipsBySearch,
+        data: body,
+      );
       List<VacancyModel> jsonData = List<VacancyModel>.from(
           (response.data as List).map((e) => VacancyModel.fromJson(e)));
       return jsonData;
@@ -204,5 +219,4 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
           dioError: e, endpointName: "get Internships by search");
     }
   }
-
 }

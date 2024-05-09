@@ -21,6 +21,7 @@ import 'package:inturn/core/widgets/main_button.dart';
 import 'package:inturn/core/widgets/major_drop_down.dart';
 import 'package:inturn/core/widgets/show_dialog.dart';
 import 'package:inturn/core/widgets/university.dart';
+import 'package:inturn/features/auth/presentation/add_info_flow/skills.dart';
 import 'package:inturn/features/auth/presentation/login_screen.dart';
 import 'package:inturn/features/auth/presentation/widgets/multi_segment.dart';
 import 'package:inturn/features/auth/presentation/widgets/multi_select2.dart';
@@ -547,50 +548,53 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   SizedBox(
                                     height: AppSize.defaultSize! * 1.6,
                                   ),
+
                                   BlocBuilder<OptionsBloc, GetOptionsStates>(
-                                    builder: (context, state) {
-                                      if (state.getSkillsRequest ==
+                                    builder: (context, state2) {
+                                      log('sijvgwogbowgowrgb');
+
+                                      if (state2.getSkillsRequest ==
                                           RequestState.loading) {
                                         return const LoadingWidget();
-                                      } else if (state.getSkillsRequest ==
+                                      } else if (state2.getSkillsRequest ==
                                           RequestState.loaded) {
                                         return SearchField<SkillModel>(
                                           controller: controller,
+                                          itemHeight:   AppSize.defaultSize! * 5,
                                           onSuggestionTap: (v) {
-                                            if (!skillIds.contains(v.item!)) {
-                                              skillIds.add(v.item!);
+                                            if (!SkillInfo.skillIds.contains(v.item!)) {
+                                              SkillInfo.skillIds.add(v.item!);
                                             }
                                             addToSkill.value++;
                                             controller.clear();
-                                            _skillSegment = skillIds
-                                                .map((e) => skillIds.indexOf(e))
+
+                                            _currentSegment=SkillInfo.skillIds
+                                                .map((e) => SkillInfo.skillIds.indexOf(e))
                                                 .toList();
                                           },
-                                          suggestions: state.getSkills
+
+                                          suggestions: state2.getSkills
                                               .map(
-                                                (e) => SearchFieldListItem<
-                                                    SkillModel>(
-                                                  e.skillNameEn ?? "",
-                                                  item: e,
-                                                  // Use child to show Custom Widgets in the suggestions
-                                                  // defaults to Text widget
-                                                  child: Padding(
-                                                    padding: EdgeInsets.all(
-                                                        AppSize.defaultSize!),
-                                                    child: CustomText(
-                                                        text: e.skillNameEn ??
-                                                            ""),
-                                                  ),
-                                                ),
-                                              )
+                                                (e) => SearchFieldListItem<SkillModel>(
+                                              e.skillNameEn ?? "",
+                                              item: e,
+                                              // Use child to show Custom Widgets in the suggestions
+                                              // defaults to Text widget
+                                              child: Padding(
+                                                padding: EdgeInsets.all(
+                                                    AppSize.defaultSize!),
+                                                child: CustomText(
+                                                    text: e.skillNameEn ?? ""),
+                                              ),
+
+                                            ),
+                                          )
                                               .toList(),
-                                          hint: StringManager.searchForSkills
-                                              .tr(),
+                                          hint: StringManager.searchForSkills.tr(),
                                           searchStyle: TextStyle(
-                                            fontSize:
-                                                AppSize.defaultSize! * 1.2,
-                                            color:
-                                                Colors.black.withOpacity(0.8),
+                                            fontSize: AppSize.defaultSize! * 1.2,
+                                            decoration: TextDecoration.none,
+                                            color: Colors.black.withOpacity(0.8),
                                           ),
                                           // autofocus: true,
                                         );
@@ -613,17 +617,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       valueListenable: addToSkill,
                                       builder: (context_, value, child) {
                                         return CustomSegmentedButton2(
-                                          onTapClose: (i) {},
-                                          segments: skillIds
+                                          onTapClose: (i) {
+                                            SkillInfo.skillIds.removeAt(i);
+                                            addToSkill.value++;
+                                          },
+                                          segments: SkillInfo.skillIds
                                               .map((e) => e.skillNameEn ?? "")
                                               .toList(),
                                           onValueChanged: (index) =>
-                                              _onValueChangedSkill(index),
-                                          initialSelectedIndexes: skillIds
-                                              .map((e) => skillIds.indexOf(e))
+                                              _onValueChanged(index),
+                                          initialSelectedIndexes: SkillInfo.skillIds
+                                              .map((e) => SkillInfo.skillIds.indexOf(e))
                                               .toList(),
                                         );
                                       }),
+                                  SizedBox(
+                                    height: AppSize.defaultSize! * 4,
+                                  ),
+
                                 ],
                               ),
                             ),

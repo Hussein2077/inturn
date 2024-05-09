@@ -19,13 +19,13 @@ class MatchedVacancyWrapper {
 }
 
 class MatchedVacancy {
-  final int vacancyId;
-  final int vacancyLevelId;
-  final String title;
-  final String responsibilities;
-  final String requirements;
+  final int? vacancyId;
+  final int? vacancyLevelId;
+  final String? title;
+  final String? responsibilities;
+  final String? requirements;
   final DateTime? deadline;
-  final int companyId;
+  final int? companyId;
   final List<VacancySkill>?
       vacancySkills; // You can define a more specific type here if needed.
   final int? majorId;
@@ -34,13 +34,13 @@ class MatchedVacancy {
 
 
   MatchedVacancy({
-    required this.vacancyId,
-    required this.vacancyLevelId,
-    required this.title,
-    required this.responsibilities,
-    required this.requirements,
+     this.vacancyId,
+     this.vacancyLevelId,
+     this.title,
+     this.responsibilities,
+     this.requirements,
     this.deadline,
-    required this.companyId,
+      this.companyId,
     this.vacancySkills,
     this.majorId,
     this.company,

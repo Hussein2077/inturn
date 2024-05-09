@@ -13,7 +13,7 @@ final double? width;
     return CachedNetworkImage(
       height: height??AppSize.defaultSize!*4.2,
       width: width??AppSize.defaultSize!*4.2,
-      imageUrl: url,
+      imageUrl: 'https://www.gannett-cdn.com/-mm-/e2ac46bf6bf629d94619497199c0026ab22dc692/c=0-95-1955-1200/local/-/media/2017/10/17/WIGroup/Appleton/636438397538841392-2017-Toyota-Corolla-iM-5-door-hatchback.jpg?width=3200&height=1680&fit=crop',
       imageBuilder: (context, imageProvider) => Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(AppSize.defaultSize!),
