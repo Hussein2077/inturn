@@ -27,6 +27,7 @@ import 'package:inturn/features/home/domain/use_case/vacancy_details_uc.dart';
 import 'package:inturn/features/home/presentation/controller/apply_bloc/get_jobs_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/company_bloc/get_companies_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_bloc.dart';
+import 'package:inturn/features/home/presentation/controller/get_major/bloc.dart';
 import 'package:inturn/features/home/presentation/controller/get_my_applications/get_my_applications_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/intern_search_bloc/get_internships_search_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_bloc.dart';
@@ -69,7 +70,9 @@ class ServerLocator {
     getIt.registerLazySingleton(
         () => GetCompaniesBloc(getCompaniesUseCase: getIt()));
     getIt.registerLazySingleton(
-        () => HomeBloc(getMajorUseCase: getIt(), getMatchedJobsCase: getIt()));
+        () => HomeBloc( getMatchedJobsCase: getIt()));
+    getIt.registerLazySingleton(
+        () => GetMajorBloc( getMajorUseCase: getIt()));
     getIt.registerLazySingleton(() => AddPersonalInfoBloc(
         addPersonalInfoUseCase: getIt(),
         sendExperienceLevelUseCase: getIt(),

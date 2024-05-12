@@ -17,6 +17,8 @@ import 'package:inturn/features/home/presentation/controller/company_bloc/get_co
 import 'package:inturn/features/home/presentation/controller/company_bloc/get_companies_event.dart';
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_events.dart';
+import 'package:inturn/features/home/presentation/controller/get_major/bloc.dart';
+import 'package:inturn/features/home/presentation/controller/get_major/event.dart';
 import 'package:inturn/features/home/presentation/controller/get_my_applications/get_my_applications_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/intern_search_bloc/get_internships_search_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_bloc.dart';
@@ -95,12 +97,13 @@ class _MyAppState extends State<MyApp> {
           create: (context) => getIt<OptionsBloc>()
             // ..add(const GetMajorEvent())
             ..add(const GetUniversityEvent())
-            ..add(const GetCitiesEvent())
             ..add(const GetSkillsEvent())
           ,
         ),
         BlocProvider(
-            create: (context) => getIt<HomeBloc>()..add(GetMajorEvent())),
+            create: (context) => getIt<HomeBloc>()),
+        BlocProvider(
+            create: (context) => getIt<GetMajorBloc>()..add(GetMajorEvent())),
         BlocProvider(
           create: (context) => getIt<GetMyApplicationsBloc>(),
         ),  BlocProvider(

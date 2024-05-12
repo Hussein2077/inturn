@@ -21,11 +21,7 @@ class Position {
   final String majorNameAr;
   final String majorRank;
   final int majorCategoryId;
-  final String creationDate;
-  final String lastModificationTime;
-  final String creatorUserId;
-  final int lastModificationUserId;
-  final int deleteStatusId;
+
 
   Position({
     required this.majorId,
@@ -33,25 +29,17 @@ class Position {
     required this.majorNameAr,
     required this.majorRank,
     required this.majorCategoryId,
-    required this.creationDate,
-    required this.lastModificationTime,
-    required this.creatorUserId,
-    required this.lastModificationUserId,
-    required this.deleteStatusId,
+
   });
 
   factory Position.fromJson(Map<String, dynamic> json) {
     return Position(
-      majorId: json['majorId'],
-      majorNameEn: json['majorNameEn'],
-      majorNameAr: json['majorNameAr'],
-      majorRank: json['majorRank'],
-      majorCategoryId: json['majorCategoryId'],
-      creationDate: json['creationDate'],
-      lastModificationTime: json['lastModificationTime'],
-      creatorUserId: json['creatorUserId'],
-      lastModificationUserId: json['lastModificationUserId'],
-      deleteStatusId: json['deleteStatusId'],
+      majorId: json['majorId']??0,
+      majorNameEn: json['majorNameEn']??"",
+      majorNameAr: json['majorNameAr']??"",
+      majorRank: json['majorRank']??"",
+      majorCategoryId: json['majorCategoryId']??0,
+
     );
   }
 
@@ -61,12 +49,6 @@ class Position {
     map['majorNameEn'] = majorNameEn;
     map['majorNameAr'] = majorNameAr;
     map['majorRank'] = majorRank;
-    map['majorCategoryId'] = majorCategoryId;
-    map['creationDate'] = creationDate;
-    map['lastModificationTime'] = lastModificationTime;
-    map['creatorUserId'] = creatorUserId;
-    map['lastModificationUserId'] = lastModificationUserId;
-    map['deleteStatusId'] = deleteStatusId;
     return map;
   }
 }

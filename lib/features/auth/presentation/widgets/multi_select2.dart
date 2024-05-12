@@ -17,6 +17,7 @@ class CustomSegmentedButton2 extends StatefulWidget {
   final List<int> initialSelectedIndexes;
   final double? width;
   final Function (int index) onTapClose;
+  final bool showClose;
   const CustomSegmentedButton2({
     super.key,
     required this.segments,
@@ -24,7 +25,7 @@ class CustomSegmentedButton2 extends StatefulWidget {
     required this.onTapClose,
 
     this.width,
-    this.initialSelectedIndexes = const [],
+    this.initialSelectedIndexes = const [],   this.showClose=true,
   });
 
   @override
@@ -73,6 +74,7 @@ SizedBox(height: AppSize.defaultSize!*7,),
                     ),
                   ),
                 ),
+                if(widget.showClose)
                 Positioned(
                   top: -AppSize.defaultSize!*.2, // Position it outside the top boundary of the container
                   right: AppSize.defaultSize!*.5, // Position it outside the right boundary of the container
@@ -81,7 +83,7 @@ SizedBox(height: AppSize.defaultSize!*7,),
                     backgroundColor: Colors.white,
                     child:   InkWell(
                       onTap:(){
-                        widget.onTapClose!(index);
+                        widget.onTapClose(index);
                       } ,
                       child: Icon(
                         Icons.close,

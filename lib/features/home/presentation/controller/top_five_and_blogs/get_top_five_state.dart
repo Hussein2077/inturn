@@ -29,18 +29,3 @@ class GetMatchedVacancySuccessMessageState extends HomeState {
   const GetMatchedVacancySuccessMessageState({required this.vacancyModel});
 }
 
-class GetMajorLoadingState extends HomeState {
-  const GetMajorLoadingState();
-}
-
-class GetMajorErrorMessageState extends HomeState {
-  final String errorMessage;
-
-  const GetMajorErrorMessageState({required this.errorMessage});
-}
-
-class GetMajorSuccessMessageState extends HomeState {
-  final List<MajorModel> topFiveModel;
-
-  const GetMajorSuccessMessageState({required this.topFiveModel});
-}

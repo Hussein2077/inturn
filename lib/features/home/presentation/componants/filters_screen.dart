@@ -47,7 +47,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
             Text(StringManager.city.tr(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: AppSize.defaultSize! * 1.7),),
             Padding(
               padding: EdgeInsets.symmetric(vertical: AppSize.defaultSize! * 2,),
-              child: const Center(child: CitiesDropDown(showCountry: false,)),
+              child: const Center(child: CitiesDropDown(showCountry: true,)),
             ),
             Container(
               color: AppColors.breakLineColor,

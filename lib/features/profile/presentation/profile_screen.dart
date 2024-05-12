@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:custom_accordion/custom_accordion.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,18 +20,14 @@ import 'package:inturn/core/widgets/main_button.dart';
 import 'package:inturn/core/widgets/major_drop_down.dart';
 import 'package:inturn/core/widgets/show_dialog.dart';
 import 'package:inturn/core/widgets/university.dart';
+import 'package:inturn/features/auth/presentation/add_info_flow/fields_of_work.dart';
 import 'package:inturn/features/auth/presentation/add_info_flow/skills.dart';
-import 'package:inturn/features/auth/presentation/login_screen.dart';
-import 'package:inturn/features/auth/presentation/widgets/multi_segment.dart';
 import 'package:inturn/features/auth/presentation/widgets/multi_select2.dart';
 import 'package:inturn/features/auth/presentation/widgets/segment_button.dart';
 import 'package:inturn/features/auth/presentation/widgets/upload_photo.dart';
 import 'package:inturn/features/home/data/model/skill_model.dart';
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_states.dart';
-import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_bloc.dart';
-import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_event.dart';
-import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_state.dart';
 import 'package:inturn/features/profile/domain/use_case/edit_profile_uc.dart';
 import 'package:inturn/features/profile/presentation/controller/edit_profile/edit_profile_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/edit_profile/edit_profile_event.dart';
@@ -40,6 +35,8 @@ import 'package:inturn/features/profile/presentation/controller/edit_profile/edi
 import 'package:inturn/features/profile/presentation/controller/get_my_profile_data/get_my_profile_data_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_profile_data/get_my_profile_data_event.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_profile_data/get_my_profile_data_state.dart';
+import 'package:inturn/features/profile/presentation/widgets/profile-major.dart';
+import 'package:inturn/features/profile/presentation/widgets/profile_skills.dart';
 import 'package:inturn/main.dart';
 import 'package:searchfield/searchfield.dart';
 
@@ -54,6 +51,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late TextEditingController emailController;
   late TextEditingController firstNameController;
   late TextEditingController lastNameController;
+  late TextEditingController descriptionController;
+
 
   ProfileDataModel? profileDataModel;
 
@@ -81,35 +80,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
-  List<int> _currentSegment = [-1];
-
-  void _onValueChanged(List<int> newValue) {
-    setState(() {
-      _currentSegment = newValue;
-    });
-  }
-
-  Widget closeIcon = Transform.rotate(
-    angle: 180 * 3.14 / 180,
-    child: SvgPicture.asset(
-      AssetPath.collapsed,
-    ),
-  );
-
-  Widget openIcon = SvgPicture.asset(
-    AssetPath.collapsed,
-  );
-
   @override
   void initState() {
     BlocProvider.of<GetMyProfileDataBloc>(context)
         .add(GetMyProfileDataEvent(MyApp.userProfileId.toString()));
-    BlocProvider.of<HomeBloc>(context).add(GetMajorEvent());
 
     emailController = TextEditingController();
     firstNameController = TextEditingController();
     lastNameController = TextEditingController();
-    controller = TextEditingController();
+    descriptionController = TextEditingController();
     super.initState();
   }
 
@@ -118,10 +97,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     emailController.dispose();
     firstNameController.dispose();
     lastNameController.dispose();
+    descriptionController.dispose();
     super.dispose();
   }
-
-  late TextEditingController controller = TextEditingController();
 
   List<SkillModel> skillIds = [];
   List<int> _skillSegment = [];
@@ -131,8 +109,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       _skillSegment = newValue;
     });
   }
-
-  ValueNotifier<int> addToSkill = ValueNotifier<int>(0);
 
   @override
   Widget build(BuildContext context) {
@@ -146,10 +122,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: BlocBuilder<GetMyProfileDataBloc, GetMyProfileDataState>(
         builder: (context, state) {
           if (state is GetMyProfileDataSuccessMessageState) {
-
+            log('${state.profileDataModel.faculty?.name}state.profileDataModel.faculty');
             profileDataModel = state.profileDataModel;
-            // UniversityDropDown.selectedValue = profileDataModel!.university;
-            // FacultyDropDown.selectedValue = profileDataModel!.faculty;
+            UniversityDropDown.selectedValue = profileDataModel?.university;
+            FacultyDropDown.selectedValue = profileDataModel?.faculty;
             emailController.text = state.profileDataModel.user?.email ?? "";
             firstNameController.text = state.profileDataModel.firstName ?? "";
             lastNameController.text = state.profileDataModel.lastName ?? "";
@@ -245,6 +221,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 CustomTextField(
                                   controller: emailController,
                                 ),
+                                SizedBox(
+                                  height: AppSize.defaultSize! * 2,
+                                ),
+                                CustomTextField(
+                                  controller: descriptionController,
+                                  hintText: StringManager.description.tr(),
+                                  hintStyle:  TextStyle(
+                                    fontSize: AppSize.defaultSize! * 1.2,
+                                  ),
+                                  maxLines: 10,
+                                  height: AppSize.defaultSize! * 10,
+                                ),
                               ],
                             ),
                           ),
@@ -281,14 +269,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                   UniversityDropDown(
                                     universityId: state.profileDataModel
-                                        .university?.universityId,
+                                        .university,
                                   ),
                                   SizedBox(
                                     height: AppSize.defaultSize! * 2,
                                   ),
                                   FacultyDropDown(
                                     facultyId:
-                                        state.profileDataModel.faculty?.id,
+                                        state.profileDataModel.faculty,
                                   ),
                                 ],
                               ),
@@ -426,243 +414,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                       ),
-                      Material(
-                        borderRadius:
-                            BorderRadius.circular(AppSize.defaultSize! * 1.5),
-                        elevation: 1,
-                        child: Container(
-                          width: AppSize.screenWidth!,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(
-                                AppSize.defaultSize! * 1.5),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.all(AppSize.defaultSize! * 2),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CustomText(
-                                  text: StringManager.fieldsOfWork.tr(),
-                                  fontSize: AppSize.defaultSize! * 1.6,
-                                  color: AppColors.primaryColor,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                                SizedBox(
-                                  height: AppSize.defaultSize! * 1.6,
-                                ),
-                                BlocBuilder<HomeBloc, HomeState>(
-                                  builder: (context, state1) {
-                                    log('${ state.profileDataModel.user?.majors} state.profileDataModel.user?.majors');
-                                var s=    state.profileDataModel.user?.majors??[];
-                                    if (state1 is GetMajorLoadingState) {
-                                      return const Center(
-                                          child: LoadingWidget());
-                                    } else if (state1
-                                        is GetMajorSuccessMessageState) {
-                                      return ListView.builder(
-                                          itemCount: state1.topFiveModel.length,
-                                          shrinkWrap: true,
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemBuilder: (context, index) {
-                                            List<int> selected = [];
-                                            for (int i = 0;
-                                                i < state1.topFiveModel.length;
-                                                i++) {
-                                              selected = Methods.instance
-                                                  .findCommonItems(
-                                                      state1.topFiveModel[i]
-                                                          .positions,
-                                                      profileDataModel!
-                                                          .user!.majors??[]);
-                                            }
-                                            return CustomAccordion(
-                                              title: state1
-                                                  .topFiveModel[index].field,
-                                              showContent: true,
-                                              headerBackgroundColor:
-                                                  Colors.transparent,
-                                              titleStyle: TextStyle(
-                                                color: AppColors.thirdColor,
-                                                fontSize:
-                                                    AppSize.defaultSize! * 1.4,
-                                                fontWeight: FontWeight.w400,
-                                              ),
-                                              toggleIconOpen: openIcon,
-                                              toggleIconClose: closeIcon,
-                                              headerIconColor:
-                                                  AppColors.primaryColor,
-                                              accordionElevation: 0,
-                                              widgetItems: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.stretch,
-                                                children: [
-                                                  MultiSegmentedButton(
-                                                    initialSelectedIndices:
-                                                        selected,
-                                                    segments:
-                                                        state1.topFiveModel,
-                                                    onValueChanged: (index) =>
-                                                        _onValueChanged(index),
-                                                    initialIndex: 0,
-                                                  ),
-                                                ],
-                                              ),
-                                            );
-                                          });
-                                    }
-                                    return Container();
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                      ProfileMajor(
+                        profileDataModel: profileDataModel,
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: AppSize.defaultSize! * 2),
-                        child: Material(
-                          borderRadius:
-                              BorderRadius.circular(AppSize.defaultSize! * 1.5),
-                          elevation: 1,
-                          child: Container(
-                            width: AppSize.screenWidth!,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(
-                                  AppSize.defaultSize! * 1.5),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(AppSize.defaultSize! * 2),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CustomText(
-                                    text: StringManager.skills.tr(),
-                                    fontSize: AppSize.defaultSize! * 1.6,
-                                    color: AppColors.primaryColor,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                  SizedBox(
-                                    height: AppSize.defaultSize! * 1.6,
-                                  ),
-
-                                  BlocBuilder<OptionsBloc, GetOptionsStates>(
-                                    builder: (context, state2) {
-                                      log('sijvgwogbowgowrgb');
-
-                                      if (state2.getSkillsRequest ==
-                                          RequestState.loading) {
-                                        return const LoadingWidget();
-                                      } else if (state2.getSkillsRequest ==
-                                          RequestState.loaded) {
-                                        return SearchField<SkillModel>(
-                                          controller: controller,
-                                          itemHeight:   AppSize.defaultSize! * 5,
-                                          onSuggestionTap: (v) {
-                                            if (!SkillInfo.skillIds.contains(v.item!)) {
-                                              SkillInfo.skillIds.add(v.item!);
-                                            }
-                                            addToSkill.value++;
-                                            controller.clear();
-
-                                            _currentSegment=SkillInfo.skillIds
-                                                .map((e) => SkillInfo.skillIds.indexOf(e))
-                                                .toList();
-                                          },
-
-                                          suggestions: state2.getSkills
-                                              .map(
-                                                (e) => SearchFieldListItem<SkillModel>(
-                                              e.skillNameEn ?? "",
-                                              item: e,
-                                              // Use child to show Custom Widgets in the suggestions
-                                              // defaults to Text widget
-                                              child: Padding(
-                                                padding: EdgeInsets.all(
-                                                    AppSize.defaultSize!),
-                                                child: CustomText(
-                                                    text: e.skillNameEn ?? ""),
-                                              ),
-
-                                            ),
-                                          )
-                                              .toList(),
-                                          hint: StringManager.searchForSkills.tr(),
-                                          searchStyle: TextStyle(
-                                            fontSize: AppSize.defaultSize! * 1.2,
-                                            decoration: TextDecoration.none,
-                                            color: Colors.black.withOpacity(0.8),
-                                          ),
-                                          // autofocus: true,
-                                        );
-                                      } else {
-                                        return const SizedBox();
-                                      }
-                                    },
-                                  ),
-                                  SizedBox(
-                                    height: AppSize.defaultSize! * 3,
-                                  ),
-                                  CustomText(
-                                    text: StringManager.selectSkills.tr(),
-                                    color: AppColors.thirdColor,
-                                  ),
-                                  SizedBox(
-                                    height: AppSize.defaultSize! * 3,
-                                  ),
-                                  ValueListenableBuilder(
-                                      valueListenable: addToSkill,
-                                      builder: (context_, value, child) {
-                                        return CustomSegmentedButton2(
-                                          onTapClose: (i) {
-                                            SkillInfo.skillIds.removeAt(i);
-                                            addToSkill.value++;
-                                          },
-                                          segments: SkillInfo.skillIds
-                                              .map((e) => e.skillNameEn ?? "")
-                                              .toList(),
-                                          onValueChanged: (index) =>
-                                              _onValueChanged(index),
-                                          initialSelectedIndexes: SkillInfo.skillIds
-                                              .map((e) => SkillInfo.skillIds.indexOf(e))
-                                              .toList(),
-                                        );
-                                      }),
-                                  SizedBox(
-                                    height: AppSize.defaultSize! * 4,
-                                  ),
-
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
+                      ProfileSkills(
+                        profileDataModel: profileDataModel,
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(
                             vertical: AppSize.defaultSize! * 2),
                         child: MainButton(
                           onTap: () {
+                            FieldsInfo.id = Methods.instance
+                                  .combineLists(
+                                FieldsInfo.id,
+                                profileDataModel?.user?.userMajors
+                                    ?.map((e) => e.major?.majorId??0)
+                                    .toList()??[]);
                             BlocProvider.of<EditProfileBloc>(context)
                                 .add(EditProfileEvent(
                               EditPersonalInfoParams(
                                 id: MyApp.userProfileId.toString(),
                                 firstName: firstNameController.text,
                                 lastName: lastNameController.text,
-                                UniversityId: UniversityDropDown
-                                    .selectedValue!.universityId
+                                UniversityId: (UniversityDropDown
+                                    .selectedValue?.universityId?? state.profileDataModel
+                                    .university?.universityId)
                                     .toString(),
-                                FacultyId: FacultyDropDown.selectedValue!.id
+                                FacultyId: (FacultyDropDown.selectedValue?.id?? state.profileDataModel
+                                    .faculty?.id)
                                     .toString(),
-                                Description: '',
+                                Description:  descriptionController.text,
                                 JobLevelId: jop.toString(),
                                 GraduationStatusId: education.toString(),
                                 JobLocationTypeId: location.toString(),
-                                MajorIds: [],
-                                SkillIds: [],
+                                MajorIds: FieldsInfo.id,
+                                SkillIds: ProfileSkills.newSkills .map((e) => e.skillId).toList(),
                                 CountryId: '',
                                 CityId: '',
                               ),

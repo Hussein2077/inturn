@@ -74,6 +74,8 @@ class StringManager {
   static const String remotely = "Remotely";
   static const String hybrid = "Hybrid";
   static const String fieldsOfWork = "What's Your Fields Of Work?";
+  static const String yourFields  = "Your Fields";
+  static const String updateFields   = "Update Your Fields?";
   static const String yourSkills = "What's Your Skills?";
   static const String searchForSkills = "Search For Skills...";
   static const String selectSkills = "Select Your Skills";
@@ -124,6 +126,7 @@ class StringManager {
   static const String jobsDetails = "Job details";
   static const String jobRequirements = "Job Requirements";
   static const String jobDescription = "Job Description";
+  static const String description = "Description";
   static const String viewJob = "View job";
   static const String internships = "Internships";
   static const String viewProfile = "View Profile";

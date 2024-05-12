@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:inturn/core/models/profile_data_model.dart';
@@ -38,7 +39,9 @@ showCV(BuildContext context, ProfileDataModel profileDataModel) {
                 color: Colors.transparent,
                 borderRadius: BorderRadius.circular(AppSize.defaultSize!),
               ),
-              child:   CVPage(  profileDataModel: profileDataModel,),
+              child: CVPage(
+                profileDataModel: profileDataModel,
+              ),
             ),
           ),
         );
@@ -47,7 +50,9 @@ showCV(BuildContext context, ProfileDataModel profileDataModel) {
 
 class CVPage extends StatelessWidget {
   const CVPage({super.key, required this.profileDataModel});
-final ProfileDataModel profileDataModel;
+
+  final ProfileDataModel profileDataModel;
+
   Future<void> saveAndLaunchFile(List<int> bytes, String fileName) async {
     final path = (await getExternalStorageDirectory())?.path;
     final file = File('$path/$fileName');
@@ -66,37 +71,36 @@ final ProfileDataModel profileDataModel;
     page.graphics.drawImage(PdfBitmap(await _readImageData(AssetPath.logoPNG)),
         const Rect.fromLTWH(0, 0, 120, 40));
     page.graphics.drawString(
-        '${profileDataModel.firstName} ${profileDataModel.lastName}', PdfStandardFont(PdfFontFamily.helvetica, 30),
-        brush: PdfBrushes.black, bounds: const Rect.fromLTWH(0, 100, 400, 50));
-    page.graphics.drawString(
-        'Highly skilled software developer with 8 years of experience in designing, developing, and implementing software solutions. Proficient in multiple programming languages and technologies.',
+        '${profileDataModel.firstName} ${profileDataModel.lastName}',
+        PdfStandardFont(PdfFontFamily.helvetica, 30),
+        brush: PdfBrushes.black,
+        bounds: const Rect.fromLTWH(0, 100, 400, 50));
+    page.graphics.drawString(profileDataModel.description??'',
         PdfStandardFont(PdfFontFamily.helvetica, 20),
-        brush: PdfBrushes.gray,
-        bounds: const Rect.fromLTWH(0, 150, 400, 300));
+        brush: PdfBrushes.gray, bounds: const Rect.fromLTWH(0, 150, 400, 300));
     page.graphics.drawImage(
         PdfBitmap(await _readImageData(AssetPath.cvContacts)),
-        const Rect.fromLTWH(
-            0, 280, 30, 110));
+        const Rect.fromLTWH(0, 280, 30, 110));
     page.graphics.drawString(
-        '+20 1145 7898 20', PdfStandardFont(PdfFontFamily.helvetica, 20),
+        profileDataModel.user?.phoneNumber??"+201125391736", PdfStandardFont(PdfFontFamily.helvetica, 20),
         brush: PdfBrushes.black,
         bounds: const Rect.fromLTWH(40, 290, 400, 300));
     page.graphics.drawString(
-        'Mohamed@gmail.com', PdfStandardFont(PdfFontFamily.helvetica, 20),
+        profileDataModel.user?.email??"", PdfStandardFont(PdfFontFamily.helvetica, 20),
         brush: PdfBrushes.black,
         bounds: const Rect.fromLTWH(40, 320, 400, 300));
-    page.graphics.drawString('15 Abbas Al Akkad, Madinet nasr , Cairo, Egypt',
+    page.graphics.drawString((profileDataModel.country?.countryNameEn??""),
         PdfStandardFont(PdfFontFamily.helvetica, 20),
         brush: PdfBrushes.black,
         bounds: const Rect.fromLTWH(40, 350, 400, 300));
     page.graphics.drawString(
         'Education', PdfStandardFont(PdfFontFamily.helvetica, 25),
         brush: PdfBrushes.black, bounds: const Rect.fromLTWH(0, 420, 400, 50));
-    page.graphics.drawString('American University in Cairo',
+    page.graphics.drawString(profileDataModel.university?.universityName??"",
         PdfStandardFont(PdfFontFamily.helvetica, 20),
         brush: PdfBrushes.black, bounds: const Rect.fromLTWH(0, 450, 400, 50));
     page.graphics.drawString(
-        'Computer Science', PdfStandardFont(PdfFontFamily.helvetica, 20),
+        profileDataModel.faculty?.name??"", PdfStandardFont(PdfFontFamily.helvetica, 20),
         brush: PdfBrushes.gray, bounds: const Rect.fromLTWH(0, 480, 400, 50));
     // Create a PDF ordered list.
     final PdfOrderedList orderedList = PdfOrderedList(
@@ -118,26 +122,24 @@ final ProfileDataModel profileDataModel;
         marker: PdfUnorderedMarker(
             font: PdfStandardFont(PdfFontFamily.helvetica, 15),
             style: PdfUnorderedMarkerStyle.disk),
-        items: PdfListItemCollection(<String>[
-          'ASP .NET',
-          'Object Oriented',
-          'MVC',
-          'SQL Server',
-        ]),
+        items: PdfListItemCollection(profileDataModel.user?.userSkills?.map((e) => e.skill?.skillNameEn??"").toList()),
         font: PdfStandardFont(PdfFontFamily.helvetica, 15),
         textIndent: 10,
-        format:   PdfStringFormat(lineSpacing: 10,lineAlignment: PdfVerticalAlignment.top),
+        format: PdfStringFormat(
+            lineSpacing: 10, lineAlignment: PdfVerticalAlignment.top),
         indent: 20);
 // Draw the list to the PDF page.
     orderedList.draw(
         page: page,
-format: PdfLayoutFormat(breakType: PdfLayoutBreakType.fitColumnsToPage ,  ),
+        format: PdfLayoutFormat(
+          breakType: PdfLayoutBreakType.fitColumnsToPage,
+        ),
         bounds: Rect.fromLTWH(
             -35, 530, page.getClientSize().width, page.getClientSize().height));
 
     List<int> bytes = await document.save();
     document.dispose();
-    saveAndLaunchFile(bytes, 'hussein_yasser.pdf');
+    saveAndLaunchFile(bytes, '${profileDataModel.firstName} ${profileDataModel.lastName}.pdf');
   }
 
   Future<Uint8List> _readImageData(String name) async {
@@ -186,14 +188,14 @@ format: PdfLayoutFormat(breakType: PdfLayoutBreakType.fitColumnsToPage ,  ),
                     height: AppSize.defaultSize! * 2,
                   ),
                   CustomText(
-                    text: '${profileDataModel.firstName!} ${profileDataModel.lastName!}',
+                    text:
+                        '${profileDataModel.firstName!} ${profileDataModel.lastName!}',
                     color: AppColors.primaryColor,
                     fontSize: AppSize.defaultSize! * 1.8,
                     fontWeight: FontWeight.w700,
                   ),
                   CustomText(
-                    text:
-                    profileDataModel.description??"",
+                    text: profileDataModel.description ?? "",
 
                     // lineHeight: AppSize.defaultSize! * .1,
                     maxLines: 20,
@@ -244,7 +246,7 @@ format: PdfLayoutFormat(breakType: PdfLayoutBreakType.fitColumnsToPage ,  ),
                           children: [
                             //todo add phone number
                             CustomText(
-                              text:profileDataModel.lastModificationTime??"",
+                              text: profileDataModel.user?.phoneNumber ?? "+201125391736",
                               color: AppColors.primaryColor,
                               fontSize: AppSize.defaultSize! * 1.4,
                               fontWeight: FontWeight.w700,
@@ -252,18 +254,18 @@ format: PdfLayoutFormat(breakType: PdfLayoutBreakType.fitColumnsToPage ,  ),
                             ),
                             //todo add email
                             CustomText(
-                              text: 'Mohamed@gmail.com',
+                              text:  profileDataModel.user?.email ?? "",
                               color: AppColors.primaryColor,
                               fontSize: AppSize.defaultSize! * 1.4,
                               fontWeight: FontWeight.w700,
                               textAlign: TextAlign.start,
                             ),
-                              //todo add location
+                            //todo add location
                             SizedBox(
                               width: AppSize.screenWidth! * .6,
                               child: CustomText(
                                 text:
-                                    '15 Abbas Al Akkad, Madinet nasr , Cairo, Egypt',
+                                profileDataModel.city?.cityNameEn ?? "",
                                 color: AppColors.primaryColor,
                                 textAlign: TextAlign.start,
                                 fontSize: AppSize.defaultSize! * 1.4,
@@ -283,13 +285,13 @@ format: PdfLayoutFormat(breakType: PdfLayoutBreakType.fitColumnsToPage ,  ),
                     fontWeight: FontWeight.w700,
                   ),
                   CustomText(
-                    text: 'American University in Cairo ',
+                    text:  profileDataModel.university?.universityName ?? "",
                     color: AppColors.primaryColor,
                     fontSize: AppSize.defaultSize! * 1.4,
                     fontWeight: FontWeight.w700,
                   ),
                   CustomText(
-                    text: '''Computer Science''',
+                    text:  profileDataModel.faculty?.name ?? "",
                     maxLines: 2,
                     fontSize: AppSize.defaultSize! * 1.2,
                     color: AppColors.greyColor,
@@ -301,14 +303,24 @@ format: PdfLayoutFormat(breakType: PdfLayoutBreakType.fitColumnsToPage ,  ),
                     fontSize: AppSize.defaultSize! * 1.6,
                     fontWeight: FontWeight.w700,
                   ),
-                  CustomText(
-                    text:
-                        '''- ASP.NET\n- Object Oriented\n- MVC\n- SQL Server''',
-                    maxLines: 100,
-                    fontSize: AppSize.defaultSize! * 1.2,
-                    color: AppColors.greyColor,
-                    textAlign: TextAlign.start,
+                  Expanded(
+
+                    child: ListView.builder(
+                        itemCount:  profileDataModel.user?.userSkills?.length,
+                        itemBuilder: (context, index) {
+                      return Padding(
+                        padding:   EdgeInsets.all(AppSize.defaultSize! * .5),
+                        child: CustomText(
+                          text: profileDataModel.user?.userSkills![index].skill?.skillNameEn ?? "",
+                          maxLines: 2,
+                          fontSize: AppSize.defaultSize! * 1.2,
+                          color: AppColors.greyColor,
+                          textAlign: TextAlign.start,
+                        ),
+                      );
+                    }),
                   ),
+
                 ],
               ),
             )),
@@ -317,7 +329,7 @@ format: PdfLayoutFormat(breakType: PdfLayoutBreakType.fitColumnsToPage ,  ),
         ),
         MainButton(
           text: StringManager.downloadAsPDF.tr(),
-          onTap: _createPDF ,
+          onTap: _createPDF,
         ),
       ],
     );

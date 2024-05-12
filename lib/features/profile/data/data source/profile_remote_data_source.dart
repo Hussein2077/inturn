@@ -7,6 +7,7 @@ import 'package:inturn/core/utils/api_helper.dart';
 import 'package:inturn/core/utils/constant_api.dart';
 import 'package:inturn/core/models/vacancey_model.dart';
 import 'package:inturn/features/profile/domain/use_case/edit_profile_uc.dart';
+import 'package:inturn/main.dart';
 
 abstract class BaseRemotelyDataSourceProfile {
   Future<MyDataModel> getMyData(String id);
@@ -48,10 +49,10 @@ class ProfileRemotelyDateSource extends BaseRemotelyDataSourceProfile {
   @override
   Future<String> editProfileData(EditPersonalInfoParams parameter) async {
     FormData formData = FormData.fromMap({
-      'UserId': parameter.id,
+      'UserId': MyApp.userId,
       'FirstName': parameter.firstName,
       'LastName': parameter.lastName,
-      'UniversityId': parameter.UniversityId,
+      'UniversityId': parameter.UniversityId=='0'?null:parameter.UniversityId,
       'FacultyId': parameter.FacultyId,
       'Description': parameter.Description,
       'JobLevelId': parameter.JobLevelId,
@@ -63,15 +64,42 @@ class ProfileRemotelyDateSource extends BaseRemotelyDataSourceProfile {
       'CityId': parameter.CityId,
     });
 
+    log('${parameter.firstName} firstname');
+
+    log('${parameter.lastName} lastname');
+
+    log('${parameter.UniversityId} UniversityId');
+
+    log('${parameter.FacultyId} FacultyId');
+
+    log('${parameter.Description} Description');
+
+    log('${parameter.JobLevelId} JobLevelId');
+
+    log('${parameter.GraduationStatusId} GraduationStatusId');
+
+    log('${parameter.JobLocationTypeId} JobLocationTypeId');
+
+    log('${parameter.MajorIds} MajorIds');
+
+    log('${parameter.SkillIds} SkillIds');
+
+    log('${parameter.CountryId} CountryId');
+
+    log('${parameter.CityId} CityId');
+
+    log('${MyApp.userId} userId');
+
+
     try {
       final response = await Dio().post(
-        ConstantApi.editProfileData(parameter.id),
+        ConstantApi.editProfileData( ),
         data: formData,
       );
 
-      return "seccess";
+      return 'success';
     } on DioException catch (e) {
-      throw DioHelper.handleDioError(dioError: e, endpointName: "get my data");
+      throw DioHelper.handleDioError(dioError: e, endpointName: "editProfileData");
     }
   }
 

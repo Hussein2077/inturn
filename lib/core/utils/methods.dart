@@ -1,11 +1,13 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:inturn/core/models/profile_data_model.dart';
 import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/service/navigator_services.dart';
 import 'package:inturn/core/service/service_locator.dart';
 import 'package:inturn/features/home/data/model/major_model.dart';
+import 'package:inturn/features/home/data/model/skill_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Methods {
@@ -109,7 +111,12 @@ class Methods {
 
     }
   }
-
+  List<T> combineLists<T>(List<T> list1, List<T> list2) {
+    Set<T> resultSet = {};
+    resultSet.addAll(list1);
+    resultSet.addAll(list2);
+    return resultSet.toList();
+  }
   List<int> findCommonItems(List<Position> list1, List<Position> list2) {
     List<int> commonItems = [];
 
@@ -123,5 +130,20 @@ class Methods {
 
     return commonItems;
   }
+  List<CommonType> castLists(List<SkillModel> list1, List<UserSkill> list2) {
+    List<CommonType> result = [];
+
+    result.addAll(list1.map((model) => CommonType(model.skillNameEn??"", model.skillId??0)));
+    result.addAll(list2.map((model) => CommonType(model.skill?.skillNameEn??"", model.skill?.skillId??0)));
+
+    return result;
+  }
 
 }
+class CommonType {
+  final String skillNameEn;
+  final int skillId;
+
+  CommonType(this.skillNameEn, this.skillId);
+}
+

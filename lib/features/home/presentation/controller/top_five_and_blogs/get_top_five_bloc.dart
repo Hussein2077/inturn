@@ -8,13 +8,14 @@ import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/
 
 class HomeBloc extends Bloc<BaseGeMatchedVacancyEvent, HomeState> {
   final GetMatchedJobsCase getMatchedJobsCase;
-  final GetMajorUseCase getMajorUseCase;
 
   HomeBloc({
     required this.getMatchedJobsCase,
-    required this.getMajorUseCase,
   }) : super(GetMatchedVacancyInitial()) {
-    on<GeMatchedVacancyEvent >((event, emit) async {
+    on<InitEvent> ((event, emit) async {
+      emit(GetMatchedVacancyInitial());
+    });
+     on<GeMatchedVacancyEvent >((event, emit) async {
       emit(const GetMatchedVacancyLoadingState());
       final result = await getMatchedJobsCase.call(const NoParameter());
       result.fold(
@@ -22,13 +23,6 @@ class HomeBloc extends Bloc<BaseGeMatchedVacancyEvent, HomeState> {
           (r) => emit(GetMatchedVacancyErrorMessageState(
               errorMessage: DioHelper().getTypeOfFailure(r))));
     });
-    on<GetMajorEvent>((event, emit) async {
-      emit(const GetMajorLoadingState());
-      final result = await getMajorUseCase.call(const NoParameter());
-      result.fold(
-          (l) => emit(GetMajorSuccessMessageState(topFiveModel: l)),
-          (r) => emit(GetMajorErrorMessageState(
-              errorMessage: DioHelper().getTypeOfFailure(r))));
-    });
+
   }
 }

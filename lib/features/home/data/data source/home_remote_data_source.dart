@@ -78,6 +78,7 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
       );
       List<Country> jsonData = List<Country>.from(
           (response.data as List).map((e) => Country.fromJson(e)));
+
       return jsonData;
     } on DioException catch (e) {
       throw DioHelper.handleDioError(
@@ -169,10 +170,11 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
       );
       List<CompanyModel> jsonData = List<CompanyModel>.from(
           (response.data as List).map((e) => CompanyModel.fromJson(e)));
+      log('${response.data}response.data');
       return jsonData;
     } on DioException catch (e) {
       throw DioHelper.handleDioError(
-          dioError: e, endpointName: "getMyApplications");
+          dioError: e, endpointName: "getCompanies");
     }
   }
 

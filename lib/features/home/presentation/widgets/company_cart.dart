@@ -63,7 +63,7 @@ class CompanyCart extends StatelessWidget {
                         scale: 2,
                       ),
                       CustomText(
-                        text: '35 jobs',
+                        text: data?.companyName ?? "",
                         color: AppColors.thirdColor,
                         fontSize: AppSize.defaultSize! * 1.4,
                       ),

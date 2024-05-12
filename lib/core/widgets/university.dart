@@ -21,7 +21,7 @@ class UniversityDropDown extends StatefulWidget {
   });
 
   static UniversityModel? selectedValue;
-  final int? universityId;
+  final UniversityModel? universityId;
   @override
   State<UniversityDropDown> createState() => _UniversityDropDownState();
 }
@@ -30,9 +30,14 @@ class _UniversityDropDownState extends State<UniversityDropDown> {
   @override
   void initState() {
   if(widget.universityId!=null){
-    UniversityDropDown.selectedValue = UniversityModel(universityId: widget.universityId!);
+    UniversityDropDown.selectedValue = widget.universityId;
   }
     super.initState();
+  }
+  @override
+  void dispose() {
+    UniversityDropDown.selectedValue = null;
+    super.dispose();
   }
   @override
   Widget build(BuildContext context) {
@@ -67,7 +72,7 @@ class _UniversityDropDownState extends State<UniversityDropDown> {
                   UniversityDropDown.selectedValue = newValue;
                 });
                 BlocProvider.of<OptionsBloc>(context).add(GetFacultyEvent(
-                    UniversityDropDown.selectedValue?.universityId ?? 0));
+                    UniversityDropDown.selectedValue!.universityId !));
               },
               hint: Padding(
                 padding: EdgeInsets.only(left: AppSize.defaultSize!),

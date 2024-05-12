@@ -6,7 +6,10 @@ import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
+import 'package:inturn/core/widgets/area_drop_down.dart';
 import 'package:inturn/core/widgets/coming_soon.dart';
+import 'package:inturn/core/widgets/major_drop_down.dart';
+import 'package:inturn/core/widgets/university.dart';
 import 'package:inturn/features/home/presentation/componants/applications.dart';
 import 'package:inturn/features/home/presentation/componants/companies.dart';
 import 'package:inturn/features/home/presentation/home_screen.dart';
@@ -85,6 +88,11 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void initState() {
+    CitiesDropDown.selectedValue = null;
+    CitiesDropDown.selectedValue2 = null;
+    UniversityDropDown.selectedValue = null;
+    FacultyDropDown.selectedValue = null;
+
     _controller = PersistentTabController(initialIndex: MainScreen.mainIndex);
     super.initState();
   }

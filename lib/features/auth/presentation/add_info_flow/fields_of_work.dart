@@ -18,11 +18,15 @@ import 'package:inturn/core/widgets/cutom_text.dart';
 import 'package:inturn/core/widgets/loading_widget.dart';
 import 'package:inturn/core/widgets/main_button.dart';
 import 'package:inturn/core/widgets/snack_bar.dart';
+import 'package:inturn/features/auth/presentation/add_info_flow/skills.dart';
 import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_info_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_info_events.dart';
 import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_info_states.dart';
 import 'package:inturn/features/auth/presentation/widgets/multi_segment.dart';
 import 'package:inturn/features/auth/presentation/widgets/segment_button.dart';
+import 'package:inturn/features/home/presentation/controller/get_major/bloc.dart';
+import 'package:inturn/features/home/presentation/controller/get_major/event.dart';
+import 'package:inturn/features/home/presentation/controller/get_major/state.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_event.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_state.dart';
@@ -56,7 +60,7 @@ class _FieldsInfoState extends State<FieldsInfo> {
   );
 @override
   void initState() {
-    BlocProvider.of<HomeBloc>(context).add(GetMajorEvent());
+    BlocProvider.of<GetMajorBloc>(context).add(GetMajorEvent());
     super.initState();
   }
   @override
@@ -78,7 +82,7 @@ class _FieldsInfoState extends State<FieldsInfo> {
     else if (state is AddMajorIdLoadingState) {
       EasyLoading.show(status: 'loading...');    }
   },
-  child: BlocBuilder<HomeBloc, HomeState >(
+  child: BlocBuilder<GetMajorBloc, GetMajorsState >(
               builder: (context, state) {
                 if (state is GetMajorLoadingState) {
                   return const Center(child: LoadingWidget());
@@ -136,7 +140,7 @@ class _FieldsInfoState extends State<FieldsInfo> {
                 return MainButton(
                   text: StringManager.next.tr(),
                   onTap: () {
-                    if (true) {
+                    if (SkillInfo.skillIds.isNotEmpty) {
                       Navigator.pushNamed(context, Routes.skillsInfo);
                     } else {
                       errorSnackBar(

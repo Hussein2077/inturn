@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -13,11 +15,13 @@ import 'package:inturn/features/home/presentation/controller/get_cities_major_un
 
 class FacultyDropDown extends StatefulWidget {
   const FacultyDropDown({
-    super.key, this.facultyId,
+    super.key,
+    this.facultyId,
   });
 
   static FacultyModel? selectedValue;
-  final int? facultyId;
+  final FacultyModel? facultyId;
+
   @override
   State<FacultyDropDown> createState() => _FacultyDropDownState();
 }
@@ -25,11 +29,19 @@ class FacultyDropDown extends StatefulWidget {
 class _FacultyDropDownState extends State<FacultyDropDown> {
   @override
   void initState() {
-    if(widget.facultyId!=null){
-      FacultyDropDown.selectedValue = FacultyModel(id: widget.facultyId!);
-    }
+    log('${FacultyDropDown.selectedValue?.name} aehwjwtjw ${widget.facultyId?.name} ');
+
+    FacultyDropDown.selectedValue = widget.facultyId;
+    log('${FacultyDropDown.selectedValue?.name} aehwjwtjw ${widget.facultyId?.name} ');
     super.initState();
   }
+
+  @override
+  void dispose() {
+    FacultyDropDown.selectedValue = null;
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<OptionsBloc, GetOptionsStates>(
@@ -45,11 +57,11 @@ class _FacultyDropDownState extends State<FacultyDropDown> {
             child: DropdownButton2<FacultyModel>(
               value: FacultyDropDown.selectedValue,
               buttonStyleData: ButtonStyleData(
-                width: AppSize.screenWidth! * .9,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2),
-                )
-              ),
+                  width: AppSize.screenWidth! * .9,
+                  decoration: BoxDecoration(
+                    borderRadius:
+                        BorderRadius.circular(AppSize.defaultSize! * 2),
+                  )),
               dropdownStyleData: DropdownStyleData(
                   width: AppSize.screenWidth! * .9,
                   // padding: EdgeInsets.symmetric(horizontal: 10),
@@ -96,11 +108,11 @@ class _FacultyDropDownState extends State<FacultyDropDown> {
                 borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2)),
             child: DropdownButton2(
                 buttonStyleData: ButtonStyleData(
-                  width: AppSize.screenWidth! * .9,
+                    width: AppSize.screenWidth! * .9,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2),
-                    )
-                ),
+                      borderRadius:
+                          BorderRadius.circular(AppSize.defaultSize! * 2),
+                    )),
                 dropdownStyleData: DropdownStyleData(
                     width: AppSize.screenWidth! * .9,
                     // padding: EdgeInsets.symmetric(horizontal: 10),

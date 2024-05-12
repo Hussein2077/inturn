@@ -115,9 +115,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
         preferences.remove(StringManager.userIDKey);
         preferences.remove(StringManager.profileIDKey);
         Methods.instance.saveUserToken(authToken: resultData['token']);
-        Methods.instance.saveUserId(userId: resultData['userID']);
-        log('${resultData['userID']}resultData');
-        log('${AuthWithGoogleModel}resultData');
+        Methods.instance.saveUserId(userId: resultData['userId']);
         return AuthWithGoogleModel(apiUserData: userData, userData: userModel);
       } on DioException catch (e) {
         throw DioHelper.handleDioError(
@@ -131,8 +129,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       PersonalInfoParams params) async {
     MyApp.  userId = await Methods.instance.returnUserId();
     MyApp.userProfileId = await Methods.instance.returnProfileId();
-    log('${MyApp.userId} husseinsh');
-    File file = params.image;
+    // File file = params.image;
     // String fileName = file.path.split('/').last;
    //  var formData = FormData.fromMap({
    //                  'img': await MultipartFile.fromFile(params.image.path,
@@ -157,7 +154,6 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       );
 
       Map<String, dynamic> jsonData = response.data as Map<String, dynamic>;
-      log('${jsonData['userProfileId']} zazaaza');
       Methods.instance.saveProfileId(profileId: jsonData['userProfileId']);
       MyApp.userProfileId = jsonData['userProfileId'];
       // Additional processing if needed

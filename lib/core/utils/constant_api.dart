@@ -25,8 +25,8 @@ class ConstantApi {
   static String complete(String id) => "${baseUrl}Auth/complete?userId=$id";
   static const String getCompanies = "${baseUrl}Companies/GetAllCompanies";
 
-  static String editProfileData(String id) =>
-      "${baseUrl}UserProfiles/EditUserProfileBy$id";
+  static String editProfileData() =>
+      "${baseUrl}UserProfiles/EditUserProfileBy${MyApp.userProfileId}";
 
   static String sendUniversityFacultyIds(String id, int userprofileId) =>
       "${baseUrl}UserProfiles/EditFormExperience?userId=$id&userProfileId=$userprofileId";

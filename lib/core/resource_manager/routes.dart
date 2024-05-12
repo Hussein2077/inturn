@@ -195,7 +195,7 @@ Widget customAnimate(BuildContext context, Animation<double> animation,
 
 Widget getScreenFromCompletion(int completion) {
   switch (completion) {
-    case 0:
+    case 20:
       return const PersonalInfo();
     case 30:
       return const AcademicInfo();
