@@ -17,6 +17,8 @@ import 'package:inturn/features/home/data/model/matched_model.dart';
 import 'package:inturn/features/home/presentation/controller/apply_bloc/get_jobs_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/apply_bloc/get_jobs_event.dart';
 import 'package:inturn/features/home/presentation/controller/apply_bloc/get_jobs_state.dart';
+import 'package:inturn/features/home/presentation/controller/get_my_applications/get_my_applications_bloc.dart';
+import 'package:inturn/features/home/presentation/controller/get_my_applications/get_my_applications_event.dart';
 import 'package:inturn/features/home/presentation/controller/vacancy_details_bloc/bloc.dart';
 import 'package:inturn/features/home/presentation/controller/vacancy_details_bloc/event.dart';
 import 'package:inturn/features/home/presentation/controller/vacancy_details_bloc/state.dart';
@@ -51,8 +53,11 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
         EasyLoading.show();
     }
     if (state is ApplySuccessMessageState) {
+
         EasyLoading.dismiss();
         EasyLoading.showSuccess(state.successMessage);
+        BlocProvider.of<GetMyApplicationsBloc>(context)
+            .add(GetMyApplicationsEvent( MyApp.userId));
     }
     if (state is ApplyErrorMessageState) {
         EasyLoading.dismiss();

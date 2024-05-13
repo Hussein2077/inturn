@@ -10,6 +10,7 @@ import 'package:inturn/core/widgets/app_bar.dart';
 import 'package:inturn/core/widgets/loading_widget.dart';
 import 'package:inturn/features/home/data/model/matched_model.dart';
 import 'package:inturn/features/home/presentation/controller/get_my_applications/get_my_applications_bloc.dart';
+import 'package:inturn/features/home/presentation/controller/get_my_applications/get_my_applications_event.dart';
 import 'package:inturn/features/home/presentation/controller/get_my_applications/get_my_applications_state.dart';
 import 'package:inturn/features/home/presentation/controller/intern_search_bloc/get_internships_search_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/intern_search_bloc/get_internships_search_event.dart';
@@ -27,8 +28,8 @@ class ApplicationsScreen extends StatefulWidget {
 class _ApplicationsScreenState extends State<ApplicationsScreen> {
   @override
   void initState() {
-    BlocProvider.of<GetInternshipsBySearchBloc>(context)
-        .add(GetInternshipsBySearchEvent(userId: MyApp.userId));
+    BlocProvider.of<GetMyApplicationsBloc>(context)
+        .add(GetMyApplicationsEvent( MyApp.userId));
     super.initState();
   }
 
@@ -38,34 +39,36 @@ class _ApplicationsScreenState extends State<ApplicationsScreen> {
       appBar: appBar(context,
           text: StringManager.applications.tr(), leading: false),
       body: Column(children: [
-        BlocBuilder<GetInternshipsBySearchBloc, GetInternshipsBySearchState>(
+        BlocBuilder<GetMyApplicationsBloc, GetMyApplicationsState>(
           builder: (context, state) {
-            if (state is GetInternshipsBySearchLoadingState) {
+            if (state is GetMyApplicationsLoadingState) {
               return const LoadingWidget();
-            } else if (state is GetInternshipsBySearchSuccessMessageState) {
+            } else if (state is GetMyApplicationsSuccessMessageState) {
               return ListView.builder(
-                  itemCount: state.vacancyModel.length,
+                  itemCount: state.jobModel.length,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (item, index) {
                     return Padding(
                       padding: EdgeInsets.all(AppSize.defaultSize! * 1.2),
                       child: JobCart(
+                    linearCircle: false,
                         vacancyModel: MatchedVacancyWrapper(
                           matchedVacancy: MatchedVacancy(
-                            vacancyId: state.vacancyModel[index].vacancyId!,
-                            title: state.vacancyModel[index].title!,
-                            companyId: state.vacancyModel[index].companyId!,
-                            company: state.vacancyModel[index].company!,
-                            cityName: state.vacancyModel[index].cityName!,
+                            vacancyId: state.jobModel[index].vacancyId!,
+                            title: state.jobModel[index].title!,
+                            companyId: state.jobModel[index].companyId!,
+                            company: state.jobModel[index].company!,
+                            cityName: state.jobModel[index].cityName!,
                             vacancyLevelId:
-                                state.vacancyModel[index].vacancyLevelId!,
+                                state.jobModel[index].vacancyLevelId!,
                             requirements:
-                                state.vacancyModel[index].requirements!,
+                                state.jobModel[index].requirements!,
                             responsibilities:
-                                state.vacancyModel[index].responsibilities!,
+                                state.jobModel[index].responsibilities!,
                           ),
-                          matchmakingPercentage: '',
+                          matchmakingPercentage: 0,
+
                         ),
                       )
                           .animate()
@@ -74,7 +77,7 @@ class _ApplicationsScreenState extends State<ApplicationsScreen> {
                           .move(delay: 300.ms, duration: 600.ms),
                     );
                   });
-            } else if (state is GetInternshipsBySearchErrorMessageState) {
+            } else if (state is GetMyApplicationsErrorMessageState) {
               return ErrorWidget(state.errorMessage);
             } else {
               return const SizedBox();

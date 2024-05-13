@@ -159,7 +159,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                   responsibilities:
                                       state.vacancyModel[index].responsibilities,
                                 ),
-                                matchmakingPercentage: '',
+                                matchmakingPercentage: 0,
                               ),
                             )
                                 .animate()

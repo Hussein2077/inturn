@@ -1,39 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:inturn/core/resource_manager/asset_path.dart';
+import 'package:inturn/core/resource_manager/routes.dart';
+import 'package:inturn/core/service/navigator_services.dart';
+import 'package:inturn/core/service/service_locator.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/utils/methods.dart';
 import 'package:inturn/features/auth/presentation/login_screen.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-AppBar appBar(BuildContext context, {required String text,bool leading =true,bool actions=false}) {
+AppBar appBar(BuildContext context,
+    {required String text, bool leading = true, bool actions = false}) {
   return AppBar(
     backgroundColor: Colors.white,
     elevation: 1,
-    title: Text(text,  style: TextStyle(fontSize: AppSize.defaultSize!*2,fontWeight: FontWeight.w500),),
+    title: Text(
+      text,
+      style: TextStyle(
+          fontSize: AppSize.defaultSize! * 2, fontWeight: FontWeight.w500),
+    ),
     centerTitle: true,
-    leading:leading? IconButton(
-      onPressed: () {
-        Navigator.pop(context);
-      },
-      icon: const Icon(Icons.arrow_back_ios),
-    ):null,
-    actions: actions?    [
-      IconButton(
-      onPressed: () async {
-    Methods.instance.saveUserToken(authToken: null);
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.clear();
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (BuildContext context) {
-          return const LoginScreen();
-        },
-      ),
-          (_) => false,
-    );
-  },
-  icon: const Icon(Icons.logout))
-  ]:null,
+    leading: leading
+        ? IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back_ios),
+          )
+        : null,
+    actions: actions
+        ? [
+            IconButton(
+                onPressed: () async {
+
+                  await Methods.instance.saveUserToken(authToken: null);
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  await prefs.clear();
+                  // PersistentNavBarNavigator.pushNewScreen(
+                  //   getIt<NavigationService>().navigatorKey.currentContext!,
+                  //   screen: const LoginScreen(),
+                  //   withNavBar: false,
+                  //   // OPTIONAL VALUE. True by default.
+                  //   pageTransitionAnimation: PageTransitionAnimation.fade,
+                  // );
+                  Navigator.of(getIt<NavigationService>()
+                          .navigatorKey
+                          .currentContext!)
+                      .pushNamedAndRemoveUntil(
+                          Routes.login, (Route<dynamic> route) => false);
+                },
+                icon: const Icon(Icons.logout))
+          ]
+        : null,
   );
 }
 
@@ -45,7 +64,8 @@ AppBar homeAppBar(BuildContext context,
     title: widget ??
         Text(
           '$text',
-          style: TextStyle(fontSize: AppSize.defaultSize!*2,fontWeight: FontWeight.w500),
+          style: TextStyle(
+              fontSize: AppSize.defaultSize! * 2, fontWeight: FontWeight.w500),
         ),
     centerTitle: true,
     leading: IconButton(

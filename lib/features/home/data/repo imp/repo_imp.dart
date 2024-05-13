@@ -19,9 +19,9 @@ class HomeRepositoryImp extends BaseRepositoryHome {
   HomeRepositoryImp({required this.baseRemotelyDataSourceHome});
 
   @override
-  Future<Either<List<MatchedVacancyWrapper>, Failure>> getMatchedJobs() async {
+  Future<Either<List<MatchedVacancyWrapper>, Failure>> getMatchedJobs(String userId) async {
     try {
-      final result = await baseRemotelyDataSourceHome.getMatchedJobs();
+      final result = await baseRemotelyDataSourceHome.getMatchedJobs(userId);
       return Left(result);
     } on Exception catch (e) {
       return right(DioHelper.buildFailure(e));

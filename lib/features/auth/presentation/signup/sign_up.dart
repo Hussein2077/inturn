@@ -15,6 +15,8 @@ import 'package:inturn/core/widgets/university.dart';
 import 'package:inturn/features/auth/presentation/controller/sign_up_bloc/sign_up_with_email_and_password_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/sign_up_bloc/sign_up_with_email_and_password_events.dart';
 import 'package:inturn/features/auth/presentation/controller/sign_up_bloc/sign_up_with_email_and_password_states.dart';
+import 'package:inturn/main.dart';
+
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -65,7 +67,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           EasyLoading.dismiss();
 
           Navigator.pushNamedAndRemoveUntil(
-              context, Routes.main, (route) => false);
+              context, Routes.main, (route) => false,arguments: MyApp.userId);
         } else if (state is SignUpWithEmailAndPasswordErrorMessageState) {
           EasyLoading.dismiss();
           errorSnackBar(context, StringManager.unexpectedError.tr());

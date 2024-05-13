@@ -274,7 +274,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                   responsibilities:
                                   state.vacancyModel[index].responsibilities!,
                                 ),
-                                matchmakingPercentage: '',
+                                matchmakingPercentage: 0,
                               ),
                             )
                                 .animate()

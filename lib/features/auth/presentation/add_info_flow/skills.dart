@@ -66,11 +66,11 @@ class _SkillInfoState extends State<SkillInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appBar(context, text: StringManager.yourSkills.tr()),
+        appBar: appBar(context, text: StringManager.yourSkills.tr(),leading: false),
         body: BlocListener<AddSkillsBloc , AddSkillsState>(
           listener: (context, state) {
             if (state is AddSkillsSuccessState) {
-              Navigator.pushNamed(context, Routes.thanks);
+              Navigator.pushNamedAndRemoveUntil(context, Routes.thanks,(route) => false);
               BlocProvider.of<GetMyDataBloc>(context).add( CompleteProfileEvent(MyApp.userId));
             }
             else if (state is AddSkillsErrorState) {

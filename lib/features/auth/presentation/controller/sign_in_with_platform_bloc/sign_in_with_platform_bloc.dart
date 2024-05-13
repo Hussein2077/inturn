@@ -19,7 +19,9 @@ class SignInWithPlatformBloc extends Bloc<BaseSignInWithPlatformEvent, SignInWit
       emit(const SignWithPlatFormLoadingState());
       final result = await signInWithGoogleUC.call(const NoParameter());
       result.fold(
-              (l) => emit(SignWithGoogleSuccesMessageState(userData: l, isCompleted: l.apiUserData.isCompleted??false, complition: l.apiUserData.complition??0)),
+              (l) => emit(SignWithGoogleSuccesMessageState(userData: l,
+                  userId: l.apiUserData.id.toString(),
+                  isCompleted: l.apiUserData.isCompleted??false, complition: l.apiUserData.complition??0)),
               (r) => emit(SignWithGoogleErrorMessageState(errorMessage: DioHelper().getTypeOfFailure(r))));
     });
 

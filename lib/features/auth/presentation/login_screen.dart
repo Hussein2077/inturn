@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ import 'package:inturn/features/auth/presentation/controller/sign_in_with_platfo
 import 'package:inturn/features/auth/presentation/widgets/sign_in_button.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_event.dart';
+import 'package:inturn/main.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -65,13 +67,14 @@ class _LoginScreenState extends State<LoginScreen> {
             LoginWithEmailAndPasswordState>(
           listener: (context, state) {
             if (state is LoginWithEmailAndPasswordSuccessMessageState) {
+              MyApp.userId=state.userId;
               EasyLoading.dismiss();
               Methods.instance.navigateToAddInfo(
                   isComplete: state.isCompleted,
+                  userId: state.userId,
                   completion: state.completion);
             } else if (state is LoginWithEmailAndPasswordErrorMessageState) {
               EasyLoading.dismiss();
-              EasyLoading.showError(state.errorMessage);
               EasyLoading.showError(state.errorMessage);
             } else if (state is LoginWithEmailAndPasswordLoadingState) {
               EasyLoading.show(status: 'loading...');
@@ -81,8 +84,9 @@ class _LoginScreenState extends State<LoginScreen> {
           child: BlocListener<SignInWithPlatformBloc, SignInWithPlatformState>(
             listener: (context, state) async {
               if (state is SignWithGoogleSuccesMessageState) {
+                MyApp.userId=state.userId;
                 Methods.instance.navigateToAddInfo(
-                    isComplete: state.isCompleted,
+                    isComplete: state.isCompleted,  userId: state.userId,
                     completion: state.complition);
               } else if (state is SignWithGoogleErrorMessageState) {
                 EasyLoading.showError(state.errorMessage);
@@ -129,11 +133,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   //   },
                   // ),
                   SizedBox(height: AppSize.defaultSize! * 2),
+                  if(Platform.isIOS)
                   CustomSignInButton(
                     text: StringManager.continueWithApple.tr(),
                     logo: SvgPicture.asset(AssetPath.apple),
                     onPressed: () {
-                      Navigator.pushNamed(context, Routes.personalInfo);
+                      // Navigator.pushNamed(context, Routes.personalInfo);
                       // BlocProvider.of<SignInWithPlatformBloc>(context)
                       //     .add(SignInWithFacebookEvent());
                     },

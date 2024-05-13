@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inturn/core/models/vacancey_model.dart';
+import 'package:inturn/core/service/navigator_services.dart';
+import 'package:inturn/core/service/service_locator.dart';
 import 'package:inturn/core/utils/methods.dart';
 import 'package:inturn/core/widgets/loading_widget.dart';
 import 'package:inturn/features/auth/presentation/add_info_flow/acdemic_info.dart';
@@ -56,12 +60,22 @@ class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.main:
-
+  String? userId ;
+  userId=MyApp.userId;
+if( MyApp.fromLogin){
+  return PageRouteBuilder(
+      settings: settings,
+      pageBuilder: (context, animation, secondaryAnimation) =>
+            MainScreen(userID: userId??MyApp.userId,),
+      transitionsBuilder: customAnimate);
+}
 
         return PageRouteBuilder(
             settings: settings,
+
             pageBuilder: (context, animation, secondaryAnimation) {
               // return const MainScreen();
+
               BlocProvider.of<GetMyDataBloc>(context)
                   .add(GetMyDataEvent(MyApp.userId));
 
@@ -72,16 +86,16 @@ class RouteGenerator {
                 }
                 if (state is GetMyDataSuccessMessageState) {
                   if (state.myDataModel.isCompleted!) {
-                    return const MainScreen();
+                    return   MainScreen(userID: userId??MyApp.userId,);
                   } else {
                     return getScreenFromCompletion(
-                        state.myDataModel.complition ?? 0);
+                        state.myDataModel.complition ?? 0,userId??MyApp.userId);
                   }
                 }
                 if (state is GetMyDataErrorMessageState) {
                   return const LoginScreen();
                 }
-                return const MainScreen();
+                return    MainScreen(userID: userId??MyApp.userId,);
               });
             },
             transitionsBuilder: customAnimate);
@@ -169,14 +183,47 @@ class RouteGenerator {
         return PageRouteBuilder(
             settings: settings,
             pageBuilder: (context, animation, secondaryAnimation) =>
-                FiltersScreen(),
+                const FiltersScreen(),
             transitionsBuilder: customAnimate);
     }
-    return unDefinedRoute();
+    return unDefinedRoute(  getIt<NavigationService>().navigatorKey.currentContext!);
   }
 
-  static Route<dynamic> unDefinedRoute() {
-    return MaterialPageRoute(builder: (context) => const Scaffold());
+  static Route<dynamic> unDefinedRoute(BuildContext context) {
+    return MaterialPageRoute(
+      builder: (context) => WillPopScope(
+        onWillPop: () async {
+          bool leaveApp = await showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('Confirm Exit'),
+              content: const Text('Are you sure you want to leave the app?'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    // Stay in the app
+                    Navigator.of(context).pushNamedAndRemoveUntil(Routes.main, (route) => false,arguments: MyApp.userId);
+                  },
+                  child: const Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    // Leave the app
+                    Navigator.of(context).pop(true);
+                  },
+                  child: Text('Exit'),
+                ),
+              ],
+            ),
+          );
+
+          // Return whether to leave the app or not
+          return leaveApp ?? false;
+        },
+        child: Container(
+        ), // Replace with your app's content
+      ),
+    );
   }
 }
 
@@ -193,7 +240,7 @@ Widget customAnimate(BuildContext context, Animation<double> animation,
   );
 }
 
-Widget getScreenFromCompletion(int completion) {
+Widget getScreenFromCompletion(int completion, String userId) {
   switch (completion) {
     case 20:
       return const PersonalInfo();
@@ -208,6 +255,6 @@ Widget getScreenFromCompletion(int completion) {
     case 90:
       return const SkillInfo();
     default:
-      return const MainScreen();
+      return MainScreen(userID: userId,);
   }
 }

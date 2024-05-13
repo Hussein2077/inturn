@@ -21,11 +21,11 @@ class AcademicInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar:
-        appBar(context, text: StringManager.fillAcademicInformation.tr()),
+        appBar(context, text: StringManager.fillAcademicInformation.tr(),leading: false),
         body: BlocListener<AddPersonalInfoBloc, AddPersonalInfoState >(
           listener: (context, state) {
             if (state is AddUniversitySuccessState) {
-              Navigator.pushNamed(context, Routes.experienceInfo);
+              Navigator.pushNamedAndRemoveUntil(context, Routes.experienceInfo,(route) => false);
             }
             else if (state is AddUniversityErrorState) {
               EasyLoading.showError(state.errorMessage);

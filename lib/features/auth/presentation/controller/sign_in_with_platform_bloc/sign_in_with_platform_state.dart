@@ -25,7 +25,8 @@ class SignWithGoogleSuccesMessageState extends SignInWithPlatformState{
   final AuthWithGoogleModel userData ;
   final bool isCompleted ;
   final int complition ;
+  final String userId ;
 
-  const SignWithGoogleSuccesMessageState({   required this.userData , required this.isCompleted, required this.complition,});
+  const SignWithGoogleSuccesMessageState({  required this.userId,  required this.userData , required this.isCompleted, required this.complition,});
 
 }

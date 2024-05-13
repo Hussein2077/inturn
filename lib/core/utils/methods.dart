@@ -8,6 +8,7 @@ import 'package:inturn/core/service/navigator_services.dart';
 import 'package:inturn/core/service/service_locator.dart';
 import 'package:inturn/features/home/data/model/major_model.dart';
 import 'package:inturn/features/home/data/model/skill_model.dart';
+import 'package:inturn/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Methods {
@@ -64,14 +65,14 @@ class Methods {
         preferences.getInt(StringManager.profileIDKey) ?? 0;
     return tokenPref;
   }
-  navigateToAddInfo({required bool isComplete, required int completion }) {
+  navigateToAddInfo({required bool isComplete, required int completion,required String userId }) {
     if (isComplete) {
       Navigator.pushNamedAndRemoveUntil(
           getIt<NavigationService>().navigatorKey.currentContext!,
-          Routes.main,
+          Routes.main,arguments: userId,
               (route) => false);
     } else {
-      if(completion == 0){
+      if(completion == 20){
         Navigator.pushNamedAndRemoveUntil(
             getIt<NavigationService>().navigatorKey.currentContext!,
             Routes.personalInfo,
@@ -105,6 +106,13 @@ class Methods {
         Navigator.pushNamedAndRemoveUntil(
             getIt<NavigationService>().navigatorKey.currentContext!,
             Routes.skillsInfo,
+                (route) => false);
+      }
+      else{
+        MyApp.fromLogin = true;
+        Navigator.pushNamedAndRemoveUntil(
+            getIt<NavigationService>().navigatorKey.currentContext!,
+            Routes.main,arguments: userId,
                 (route) => false);
       }
 

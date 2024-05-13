@@ -3,7 +3,7 @@ import 'package:inturn/features/home/data/model/company_model.dart';
 
 class MatchedVacancyWrapper {
   final MatchedVacancy matchedVacancy;
-  final String matchmakingPercentage;
+  final num matchmakingPercentage;
 
   MatchedVacancyWrapper({
     required this.matchedVacancy,
@@ -13,7 +13,7 @@ class MatchedVacancyWrapper {
   factory MatchedVacancyWrapper.fromJson(Map<String, dynamic> json) {
     return MatchedVacancyWrapper(
       matchedVacancy: MatchedVacancy.fromJson(json['matchedVacancy']),
-      matchmakingPercentage: json['matchmakingPercentage'] ?? "0.00",
+      matchmakingPercentage: json['matchmakingPercentage']??0.00 ,
     );
   }
 }
@@ -32,20 +32,18 @@ class MatchedVacancy {
   final CompanyModel? company;
   final String? cityName;
 
-
   MatchedVacancy({
-     this.vacancyId,
-     this.vacancyLevelId,
-     this.title,
-     this.responsibilities,
-     this.requirements,
+    this.vacancyId,
+    this.vacancyLevelId,
+    this.title,
+    this.responsibilities,
+    this.requirements,
     this.deadline,
-      this.companyId,
+    this.companyId,
     this.vacancySkills,
     this.majorId,
     this.company,
     this.cityName,
-
   });
 
   factory MatchedVacancy.fromJson(Map<String, dynamic> json) {
@@ -64,12 +62,17 @@ class MatchedVacancy {
               .toList()
           : null,
       majorId: json['majorId'] as int?,
-      company:
-          json['company'] != null ? CompanyModel.fromJson(json['company']) : null,
-      cityName:
-          // json['cityId']  ??
-          'Unknown city',
-
+      company: json['company'] != null
+          ? CompanyModel.fromJson(json['company'])
+          : null,
+      cityName: json['city'] == null
+          ? 'Unknown city'
+          : json['country'] == null
+              ? 'Unknown city'
+              : (json['city']['cityNameEn'] +
+                      ',' +
+                      json['country']['countryNameEn'] ??
+                  'Unknown city'),
     );
   }
 }

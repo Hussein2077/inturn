@@ -66,9 +66,8 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       preferences.remove(StringManager.userIDKey);
       preferences.remove(StringManager.profileIDKey);
-      Methods.instance.saveUserToken(authToken: jsonData['token']);
-
-      Methods.instance.saveUserId(userId: jsonData['userId']);
+      await Methods.instance.saveUserToken(authToken: jsonData['token']);
+      await  Methods.instance.saveUserId(userId: jsonData['userId']);
       return jsonData;
     } on DioException catch (e) {
       throw DioHelper.handleDioError(
@@ -114,8 +113,8 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
         SharedPreferences preferences = await SharedPreferences.getInstance();
         preferences.remove(StringManager.userIDKey);
         preferences.remove(StringManager.profileIDKey);
-        Methods.instance.saveUserToken(authToken: resultData['token']);
-        Methods.instance.saveUserId(userId: resultData['userId']);
+        await  Methods.instance.saveUserToken(authToken: resultData['token']);
+       await Methods.instance.saveUserId(userId: resultData['userId']);
         return AuthWithGoogleModel(apiUserData: userData, userData: userModel);
       } on DioException catch (e) {
         throw DioHelper.handleDioError(
@@ -293,8 +292,8 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
         data: body,
       );
       Map<String, dynamic> jsonData = response.data;
-      Methods.instance.saveUserToken(authToken: jsonData['token']);
-      Methods.instance.saveUserId(userId: jsonData['userID']);
+      await Methods.instance.saveUserToken(authToken: jsonData['token']);
+      await  Methods.instance.saveUserId(userId: jsonData['userID']);
 
       if (jsonData['token'] == null) {
         DioException? e;

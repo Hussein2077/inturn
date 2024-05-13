@@ -11,7 +11,7 @@ import 'package:inturn/features/home/data/model/skill_model.dart';
 import 'package:inturn/features/home/data/model/university_model.dart';
 
 abstract class BaseRepositoryHome {
-  Future<Either<List<MatchedVacancyWrapper>, Failure>> getMatchedJobs();
+  Future<Either<List<MatchedVacancyWrapper>, Failure>> getMatchedJobs(String userId);
 
   Future<Either<List<VacancyModel>, Failure>> getJobDetails(int id);
 

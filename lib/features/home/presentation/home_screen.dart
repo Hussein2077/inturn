@@ -20,11 +20,12 @@ import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/
 import 'package:inturn/features/home/presentation/widgets/job_cart.dart';
 import 'package:inturn/features/home/presentation/widgets/top_container.dart';
 import 'package:inturn/features/main_screen.dart';
+import 'package:inturn/main.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, this.onPressedIntern, this.onPressedJob});
-
+  const HomeScreen({super.key, this.onPressedIntern, this.onPressedJob, required this.userID});
+final String userID;
   final void Function()? onPressedJob;
   final void Function()? onPressedIntern;
 
@@ -35,7 +36,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    BlocProvider.of<HomeBloc>(context).add(GeMatchedVacancyEvent());
+    BlocProvider.of<HomeBloc>(context).add(GeMatchedVacancyEvent(widget.userID));
     super.initState();
   }
   @override
@@ -72,16 +73,16 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           MainButton(
             text: StringManager.changeWorkPreferences.tr(),
-            onTap: () {
-              MainScreen.mainIndex = 3;
-              PersistentNavBarNavigator.pushNewScreen(
-                context,
-                screen: const MainScreen(),
-                withNavBar: false,
-                // OPTIONAL VALUE. True by default.
-                pageTransitionAnimation: PageTransitionAnimation.fade,
-              );
-            },
+            // onTap: () {
+            //   MainScreen.mainIndex = 3;
+            //   PersistentNavBarNavigator.pushNewScreen(
+            //     context,
+            //     screen:   MainScreen(userID: MyApp.userId,),
+            //     withNavBar: false,
+            //     // OPTIONAL VALUE. True by default.
+            //     pageTransitionAnimation: PageTransitionAnimation.fade,
+            //   );
+            // },
             color: AppColors.lightGreyColor,
             textColor: AppColors.primaryColor,
           ),

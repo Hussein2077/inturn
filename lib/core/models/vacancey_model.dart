@@ -40,8 +40,9 @@ class VacancyModel {
       majorId: json['majorId'] as int?,
       countryId: json['countryId'] as int?,
       cityName:
-      // json['cityId']  ??
+      json['city']['cityNameEn']+','+ json['country']['countryNameEn'] ??
           'Unknown city',
+
     );
   }
 }

@@ -17,9 +17,9 @@ import 'package:inturn/features/profile/presentation/profile_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+  const MainScreen({super.key, required this.userID,    });
   static int mainIndex = 0;
-
+final String userID;
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
@@ -29,7 +29,7 @@ class _MainScreenState extends State<MainScreen> {
 
   List<Widget> _buildScreens() {
     return [
-      const HomeScreen(),
+        HomeScreen(userID: widget.userID,),
       const ApplicationsScreen(),
       const CompaniesScreen(),
       const ProfileScreen(),

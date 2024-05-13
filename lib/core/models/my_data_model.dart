@@ -1,5 +1,5 @@
 class MyDataModel {
-  int? id;
+  String? id;
   String? email;
   String? name;
   String? message;
@@ -26,7 +26,7 @@ class MyDataModel {
   });
 
   setNewMyData({
-    int? id,
+    String? id,
     String? email,
     String? name,
     String? message,
@@ -47,7 +47,7 @@ class MyDataModel {
     if (_instance == null) {
       //create  first time
       _instance = MyDataModel(
-        id: map['id'] ?? 0,
+        id: map['userId'] ?? '0',
         email: map['email'] ?? '',
         isCompleted: map['isCompleted'] ?? false,
         isAuthenticated: map['isAuthenticated'] ?? false,
@@ -57,7 +57,7 @@ class MyDataModel {
       );
     } else {
       _instance?.setNewMyData(
-        id: map['id'] ?? 0,
+        id: map['userId'] ?? '0',
         email: map['email'] ?? '',
         isCompleted: map['isCompleted'] ?? false,
         isAuthenticated: map['isAuthenticated'] ?? false,

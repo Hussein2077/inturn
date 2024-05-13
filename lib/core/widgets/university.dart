@@ -51,7 +51,7 @@ class _UniversityDropDownState extends State<UniversityDropDown> {
                     Border.all(color: AppColors.borderColor.withOpacity(.4)),
                 borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2)),
             child: DropdownButton2<UniversityModel>(
-              value: UniversityDropDown.selectedValue,
+              // value: UniversityDropDown.selectedValue,
               buttonStyleData: ButtonStyleData(
                   width: AppSize.screenWidth! * .9,
                   decoration: BoxDecoration(
@@ -101,35 +101,36 @@ class _UniversityDropDownState extends State<UniversityDropDown> {
             ),
           );
         } else if (state.getUniversityRequest == RequestState.loading) {
-          return Container(
-            height: AppSize.defaultSize! * 5,
-            decoration: BoxDecoration(
-                border:
-                    Border.all(color: AppColors.borderColor.withOpacity(.4)),
-                borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2)),
-            child: DropdownButton2(
-                buttonStyleData: ButtonStyleData(
-                    width: AppSize.screenWidth! * .9,
-                    decoration: BoxDecoration(
-                      borderRadius:
-                          BorderRadius.circular(AppSize.defaultSize! * 2),
-                    )),
-                dropdownStyleData: DropdownStyleData(
-                    width: AppSize.screenWidth! * .9,
-                    // padding: EdgeInsets.symmetric(horizontal: 10),
-                    maxHeight: AppSize.screenHeight! * .5),
-                underline: const SizedBox(),
-                hint: Padding(
-                  padding: EdgeInsets.only(left: AppSize.defaultSize!),
-                  child: Text(
-                    StringManager.selectUniversity.tr(),
-                    style: TextStyle(
-                      fontSize: AppSize.defaultSize!,
-                    ),
-                  ),
-                ),
-                items: []),
-          );
+          return const LoadingWidget();
+          //   Container(
+          //   height: AppSize.defaultSize! * 5,
+          //   decoration: BoxDecoration(
+          //       border:
+          //           Border.all(color: AppColors.borderColor.withOpacity(.4)),
+          //       borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2)),
+          //   child: DropdownButton2(
+          //       buttonStyleData: ButtonStyleData(
+          //           width: AppSize.screenWidth! * .9,
+          //           decoration: BoxDecoration(
+          //             borderRadius:
+          //                 BorderRadius.circular(AppSize.defaultSize! * 2),
+          //           )),
+          //       dropdownStyleData: DropdownStyleData(
+          //           width: AppSize.screenWidth! * .9,
+          //           // padding: EdgeInsets.symmetric(horizontal: 10),
+          //           maxHeight: AppSize.screenHeight! * .5),
+          //       underline: const SizedBox(),
+          //       hint: Padding(
+          //         padding: EdgeInsets.only(left: AppSize.defaultSize!),
+          //         child: Text(
+          //           StringManager.selectUniversity.tr(),
+          //           style: TextStyle(
+          //             fontSize: AppSize.defaultSize!,
+          //           ),
+          //         ),
+          //       ),
+          //       items: []),
+          // );
         } else if (state.getUniversityRequest == RequestState.error) {
           return ErrorWidget(state.getUniversityMessage);
         } else {

@@ -29,10 +29,7 @@ class FacultyDropDown extends StatefulWidget {
 class _FacultyDropDownState extends State<FacultyDropDown> {
   @override
   void initState() {
-    log('${FacultyDropDown.selectedValue?.name} aehwjwtjw ${widget.facultyId?.name} ');
-
     FacultyDropDown.selectedValue = widget.facultyId;
-    log('${FacultyDropDown.selectedValue?.name} aehwjwtjw ${widget.facultyId?.name} ');
     super.initState();
   }
 
@@ -55,7 +52,7 @@ class _FacultyDropDownState extends State<FacultyDropDown> {
                     Border.all(color: AppColors.borderColor.withOpacity(.4)),
                 borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2)),
             child: DropdownButton2<FacultyModel>(
-              value: FacultyDropDown.selectedValue,
+              // value: FacultyDropDown.selectedValue,
               buttonStyleData: ButtonStyleData(
                   width: AppSize.screenWidth! * .9,
                   decoration: BoxDecoration(

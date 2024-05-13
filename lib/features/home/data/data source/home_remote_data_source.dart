@@ -14,7 +14,7 @@ import 'package:inturn/features/home/data/model/university_model.dart';
 import 'package:inturn/main.dart';
 
 abstract class BaseRemotelyDataSourceHome {
-  Future<List<MatchedVacancyWrapper>> getMatchedJobs();
+  Future<List<MatchedVacancyWrapper>> getMatchedJobs(String userId);
 
   Future<List<VacancyModel>> getJobDetails(int id);
 
@@ -40,10 +40,10 @@ abstract class BaseRemotelyDataSourceHome {
 
 class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
   @override
-  Future<List<MatchedVacancyWrapper>> getMatchedJobs() async {
+  Future<List<MatchedVacancyWrapper>> getMatchedJobs(String userId) async {
     try {
       final response = await Dio().get(
-        ConstantApi.getVacancy(MyApp.userId),
+        ConstantApi.getVacancy(userId),
       );
       List<MatchedVacancyWrapper> jsonData = List<MatchedVacancyWrapper>.from(
           (response.data as List)

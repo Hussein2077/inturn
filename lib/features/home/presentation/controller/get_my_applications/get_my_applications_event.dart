@@ -3,7 +3,7 @@ abstract class BaseGetMyApplicationsEvent {}
 class InitEvent extends BaseGetMyApplicationsEvent {}
 
 class GetMyApplicationsEvent extends BaseGetMyApplicationsEvent {
-final  String type;
+final  String userId;
 
-GetMyApplicationsEvent(this.type);
+GetMyApplicationsEvent(this.userId);
 }

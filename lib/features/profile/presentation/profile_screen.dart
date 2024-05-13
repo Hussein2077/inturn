@@ -53,7 +53,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late TextEditingController lastNameController;
   late TextEditingController descriptionController;
 
-
   ProfileDataModel? profileDataModel;
 
   int education = 0;
@@ -227,7 +226,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 CustomTextField(
                                   controller: descriptionController,
                                   hintText: StringManager.description.tr(),
-                                  hintStyle:  TextStyle(
+                                  hintStyle: TextStyle(
                                     fontSize: AppSize.defaultSize! * 1.2,
                                   ),
                                   maxLines: 10,
@@ -268,15 +267,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     height: AppSize.defaultSize! * 1,
                                   ),
                                   UniversityDropDown(
-                                    universityId: state.profileDataModel
-                                        .university,
+                                    universityId:
+                                        state.profileDataModel.university,
                                   ),
                                   SizedBox(
                                     height: AppSize.defaultSize! * 2,
                                   ),
                                   FacultyDropDown(
-                                    facultyId:
-                                        state.profileDataModel.faculty,
+                                    facultyId: state.profileDataModel.faculty,
                                   ),
                                 ],
                               ),
@@ -425,12 +423,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             vertical: AppSize.defaultSize! * 2),
                         child: MainButton(
                           onTap: () {
-                            FieldsInfo.id = Methods.instance
-                                  .combineLists(
+                            List<int>? mergeSkill = ProfileSkills.newSkills
+                                    .map((e) => e.skillId)
+                                    .toList()
+                                    .isEmpty
+                                ? profileDataModel?.user?.userSkills
+                                    ?.map((e) => (e.skillId!))
+                                    .toList()
+                                : ProfileSkills.newSkills
+                                    .map((e) => e.skillId)
+                                    .toList();
+                            log('${state.profileDataModel.university
+                                ?.universityId}wnwnrknpwn');
+                            FieldsInfo.id = Methods.instance.combineLists(
                                 FieldsInfo.id,
                                 profileDataModel?.user?.userMajors
-                                    ?.map((e) => e.major?.majorId??0)
-                                    .toList()??[]);
+                                        ?.map((e) => e.major?.majorId ?? 0)
+                                        .toList() ??
+                                    []);
                             BlocProvider.of<EditProfileBloc>(context)
                                 .add(EditProfileEvent(
                               EditPersonalInfoParams(
@@ -438,18 +448,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 firstName: firstNameController.text,
                                 lastName: lastNameController.text,
                                 UniversityId: (UniversityDropDown
-                                    .selectedValue?.universityId?? state.profileDataModel
-                                    .university?.universityId)
+                                            .selectedValue?.universityId ??
+                                        state.profileDataModel.university
+                                            ?.universityId)
                                     .toString(),
-                                FacultyId: (FacultyDropDown.selectedValue?.id?? state.profileDataModel
-                                    .faculty?.id)
+                                FacultyId: (FacultyDropDown.selectedValue?.id ??
+                                        state.profileDataModel.faculty?.id)
                                     .toString(),
-                                Description:  descriptionController.text,
+                                Description: descriptionController.text,
                                 JobLevelId: jop.toString(),
                                 GraduationStatusId: education.toString(),
                                 JobLocationTypeId: location.toString(),
                                 MajorIds: FieldsInfo.id,
-                                SkillIds: ProfileSkills.newSkills .map((e) => e.skillId).toList(),
+                                SkillIds: mergeSkill,
                                 CountryId: '',
                                 CityId: '',
                               ),

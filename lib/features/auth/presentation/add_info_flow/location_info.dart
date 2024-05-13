@@ -37,11 +37,11 @@ class _LocationInfoState extends State<LocationInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appBar(context, text: StringManager.workLocationAndType.tr()),
+        appBar: appBar(context, text: StringManager.workLocationAndType.tr(),leading: false),
         body: BlocListener<AddPersonalInfoBloc, AddPersonalInfoState >(
           listener: (context, state) {
             if(state is AddLocationTypeSuccessState){
-              Navigator.pushNamed(context, Routes.fieldInfo);
+              Navigator.pushNamedAndRemoveUntil(context, Routes.fieldInfo,(route) => false);
             }
             else if(state is AddLocationTypeErrorState){
               errorSnackBar(context, StringManager.unexpectedError );

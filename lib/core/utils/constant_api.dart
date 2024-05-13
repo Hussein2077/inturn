@@ -4,7 +4,7 @@ import 'package:inturn/main.dart';
 class ConstantApi {
   static const String baseUrl = 'http://128.140.69.196/Intrn/api/';
 
-  static getImage(String url) => 'https://api.inturn.app/api/$url';
+  static getImage(String url) => 'http://128.140.69.196/Intrn/uploads/$url';
 
   static const String login = "${baseUrl}Auth/Login";
   static const String universities = "${baseUrl}Universities/GetAllUniversity";

@@ -59,6 +59,7 @@ class MyApp extends StatefulWidget {
   const MyApp({super.key});
 static String userId = '0';
 static int userProfileId = 0;
+  static bool fromLogin=false;
   @override
   State<MyApp> createState() => _MyAppState();
 }

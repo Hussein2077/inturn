@@ -33,11 +33,15 @@ class JobCart extends StatefulWidget {
 
 class _JobCartState extends State<JobCart> {
   double percent = 0.0;
+
   @override
   void initState() {
-    // percent = double.parse((widget.vacancyModel.matchmakingPercentage).substring(0,4))/100;
+    if (widget.linearCircle) {
+      percent = (widget.vacancyModel.matchmakingPercentage) / 100;
+    }
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -66,7 +70,7 @@ class _JobCartState extends State<JobCart> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomText(
-                        text: widget.vacancyModel.matchedVacancy.title??"",
+                        text: widget.vacancyModel.matchedVacancy.title ?? "",
                         fontWeight: FontWeight.w700,
                         color: AppColors.primaryColor,
                         // textAlign: TextAlign.start,
@@ -76,16 +80,16 @@ class _JobCartState extends State<JobCart> {
                         CachedNetworkCustom(
                           height: AppSize.defaultSize! * 3,
                           width: AppSize.defaultSize! * 3,
-                          url: widget.vacancyModel
-                                  .matchedVacancy.company?.profileLogo! ??
+                          url: widget.vacancyModel.matchedVacancy.company
+                                  ?.profileLogo! ??
                               "",
                         ),
                         SizedBox(
                           width: AppSize.defaultSize! * .5,
                         ),
                         CustomText(
-                          text: widget.vacancyModel
-                                  .matchedVacancy.company?.companyName ??
+                          text: widget.vacancyModel.matchedVacancy.company
+                                  ?.companyName ??
                               "",
                           fontWeight: FontWeight.w500,
                           color: AppColors.primaryColor,
@@ -103,7 +107,8 @@ class _JobCartState extends State<JobCart> {
                           width: AppSize.defaultSize! * .5,
                         ),
                         CustomText(
-                          text: widget.vacancyModel.matchedVacancy.cityName! ?? "",
+                          text: widget.vacancyModel.matchedVacancy.cityName! ??
+                              "",
                           color: AppColors.greyColor,
                           // textAlign: TextAlign.start,
                           fontSize: AppSize.defaultSize! * 1.4,
@@ -112,7 +117,9 @@ class _JobCartState extends State<JobCart> {
                           width: AppSize.defaultSize! * 2,
                         ),
                         MainButton(
-                          text: widget.vacancyModel.matchedVacancy.vacancyLevelId == 1
+                          text: widget.vacancyModel.matchedVacancy
+                                      .vacancyLevelId ==
+                                  1
                               ? StringManager.internship.tr()
                               : StringManager.fullTime.tr(),
                           onTap: () {},
@@ -128,8 +135,9 @@ class _JobCartState extends State<JobCart> {
                       ),
                       widget.skillRequired ?? const SizedBox(),
                       CustomText(
-                        text:
-                            widget.vacancyModel.matchedVacancy.responsibilities ?? "",
+                        text: widget
+                                .vacancyModel.matchedVacancy.responsibilities ??
+                            "",
                         maxLines: 10,
                         textAlign: TextAlign.start,
                         color: AppColors.blackColor,
@@ -143,16 +151,18 @@ class _JobCartState extends State<JobCart> {
                       animation: true,
                       lineHeight: AppSize.defaultSize! * 2.5,
                       animationDuration: 2000,
-                      percent:percent,
+                      percent: percent,
                       padding: EdgeInsets.zero,
                       barRadius: Radius.circular(AppSize.defaultSize! * 2),
                       center: CustomText(
-                        text: "${widget.vacancyModel.matchmakingPercentage} ${StringManager.matched.tr()}",
+                        text:
+                            "${widget.vacancyModel.matchmakingPercentage}% ${StringManager.matched.tr()}",
                         fontSize: AppSize.defaultSize! * 1.3,
                         color: Colors.white,
                       ),
                       linearStrokeCap: LinearStrokeCap.butt,
-                      progressColor:percent>=.5? Colors.green:(percent<.5&&percent>0)?Colors.yellow:Colors.red,
+                      progressColor:
+                          percent >= .5 ? Colors.green : Colors.yellow,
                     )
                   : Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -167,7 +177,11 @@ class _JobCartState extends State<JobCart> {
                                 bottomLeft:
                                     Radius.circular(AppSize.defaultSize! * 2),
                               ),
-                              color: AppColors.homeColor),
+                              color: widget.vacancyModel.matchedVacancy
+                                          .vacancyLevelId ==
+                                      1
+                                  ? AppColors.homeColor
+                                  : AppColors.greyColor),
                           child: Center(
                             child: CustomText(
                               text: StringManager.viewed.tr(),

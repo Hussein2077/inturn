@@ -17,7 +17,7 @@ class HomeBloc extends Bloc<BaseGeMatchedVacancyEvent, HomeState> {
     });
      on<GeMatchedVacancyEvent >((event, emit) async {
       emit(const GetMatchedVacancyLoadingState());
-      final result = await getMatchedJobsCase.call(const NoParameter());
+      final result = await getMatchedJobsCase.call(event.userId);
       result.fold(
           (l) => emit(GetMatchedVacancySuccessMessageState(vacancyModel: l)),
           (r) => emit(GetMatchedVacancyErrorMessageState(

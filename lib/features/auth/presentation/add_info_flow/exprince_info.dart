@@ -42,11 +42,11 @@ class _ExperienceInfoState extends State<ExperienceInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appBar(context, text: StringManager.experience.tr()),
+        appBar: appBar(context, text: StringManager.experience.tr(),leading: false),
         body: BlocListener<AddPersonalInfoBloc, AddPersonalInfoState >(
           listener: (context, state) {
             if (state is AddExperienceLevelLoadingState) {
-             Navigator.pushNamed(context, Routes.locationInfo);
+             Navigator.pushNamedAndRemoveUntil(context, Routes.locationInfo,(route) => false);
             }
             if (state is AddExperienceLevelErrorState) {
               errorSnackBar(context, StringManager.unexpectedError.tr());

@@ -94,7 +94,9 @@ class _ProfileSkillsState extends State<ProfileSkills> {
                         onSuggestionTap: (v) {
                           v.item!.skillId;
                           // ProfileSkills.newSkills.add(v.item! as CommonType);
-                          ProfileSkills.newSkills.add(CommonType(v.item!.skillNameEn!, v.item!.skillId!));
+                          if(! ProfileSkills.newSkills.contains(CommonType(v.item!.skillNameEn!, v.item!.skillId!))) {
+                            ProfileSkills.newSkills.add(CommonType(v.item!.skillNameEn!, v.item!.skillId!));
+                          }
 
                             // ProfileSkills.newSkills.addAll(v.item!.((b) => CommonType(b.name, b.description.length)));
 

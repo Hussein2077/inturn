@@ -45,13 +45,13 @@ class _PersonalInfoState extends State<PersonalInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(context, text: StringManager.personalInformation.tr(),actions: true),
+      appBar: appBar(context, text: StringManager.personalInformation.tr(),actions: true,leading: false),
       body: Padding(
         padding: EdgeInsets.all(AppSize.defaultSize! * 1.5),
         child: BlocListener<AddPersonalInfoBloc, AddPersonalInfoState >(
           listener: (context, state) {
             if (state is AddPersonalInfoSuccessState) {
-              Navigator.pushNamed(context, Routes.academicInfo);
+              Navigator.pushNamedAndRemoveUntil(context, Routes.academicInfo, (route) => false);
             }
             else if (state is AddPersonalInfoErrorState) {
               EasyLoading.showError(state.errorMessage);

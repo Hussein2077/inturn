@@ -66,7 +66,7 @@ class _FieldsInfoState extends State<FieldsInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(context, text: StringManager.fieldsOfWork.tr()),
+      appBar: appBar(context, text: StringManager.fieldsOfWork.tr(),leading: false),
 
       body: SingleChildScrollView(
         child: Column(
@@ -74,7 +74,7 @@ class _FieldsInfoState extends State<FieldsInfo> {
             BlocListener<AddPersonalInfoBloc, AddPersonalInfoState >(
   listener: (context, state) {
     if (state is AddMajorIdSuccessState) {  EasyLoading.dismiss();
-      Navigator.pushNamed(context, Routes.skillsInfo);
+      Navigator.pushNamedAndRemoveUntil(context, Routes.skillsInfo,(route) => false);
     }
     else if (state is AddMajorIdErrorState) {  EasyLoading.dismiss();
       errorSnackBar(context, StringManager.unexpectedError);
