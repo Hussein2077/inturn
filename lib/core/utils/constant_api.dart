@@ -29,10 +29,12 @@ class ConstantApi {
       "${baseUrl}UserProfiles/EditUserProfileBy${MyApp.userProfileId}";
 
   static String sendUniversityFacultyIds(String id, int userprofileId) =>
-      "${baseUrl}UserProfiles/EditFormExperience?userId=$id&userProfileId=$userprofileId";
+      "${baseUrl}UserProfiles/EditFormEducation?userId=$id&userProfileId=$userprofileId";
 
   static String sendLocationTypeIds(String id, int userprofileId) =>
       "${baseUrl}UserProfiles/EditFormLocation?userId=$id&userProfileId=$userprofileId";
+  static String sendExperienceLevel (String id, int userprofileId) =>
+      "${baseUrl}UserProfiles/EditFormExperience?userId=$id&userProfileId=$userprofileId";
 
   static String sendMajorIds(String id, int userprofileId) =>
       "${baseUrl}UserProfiles/EditFormMajors?userId=$id&userProfileId=$userprofileId";

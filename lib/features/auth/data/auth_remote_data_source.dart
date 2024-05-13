@@ -166,6 +166,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
   @override
   Future<dynamic> sendUniversityFacultyIds(
       String universityId, String facultyId) async {
+    log('${universityId} suidgwh4 ${facultyId} sfidgwh4 ${MyApp.userProfileId} ${MyApp.userId}  ');
     final body = {
       'userId': MyApp.userId,
       'userProfileId': MyApp.userProfileId,
@@ -196,7 +197,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
 
     try {
       final response = await Dio().post(
-        ConstantApi.sendUniversityFacultyIds(MyApp.userId, MyApp.userProfileId),
+        ConstantApi.sendExperienceLevel(MyApp.userId, MyApp.userProfileId),
         data: body,
       );
       return response.data;
