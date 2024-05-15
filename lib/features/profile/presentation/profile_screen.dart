@@ -41,8 +41,8 @@ import 'package:inturn/main.dart';
 import 'package:searchfield/searchfield.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
-
+  const ProfileScreen({super.key, required this.userId});
+final String userId;
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
@@ -60,6 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void _onValueChangededucation(int newValue) {
     setState(() {
       education = newValue;
+
     });
   }
 
@@ -75,15 +76,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   void _onValueChangedLocation(int newValue) {
     setState(() {
-      jop = newValue;
+      location = newValue;
     });
   }
 
   @override
   void initState() {
+    log(widget.userId+'skjdvbwjobwo');
     BlocProvider.of<GetMyProfileDataBloc>(context)
-        .add(GetMyProfileDataEvent(MyApp.userProfileId.toString()));
-
+        .add(GetMyProfileDataEvent(widget.userId));
     emailController = TextEditingController();
     firstNameController = TextEditingController();
     lastNameController = TextEditingController();
@@ -111,6 +112,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return BlocListener<EditProfileBloc, EditProfileState>(
       listener: (context, state) {
         if (state is EditProfileSuccessMessageState) {
@@ -121,13 +123,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: BlocBuilder<GetMyProfileDataBloc, GetMyProfileDataState>(
         builder: (context, state) {
           if (state is GetMyProfileDataSuccessMessageState) {
-            log('${state.profileDataModel.faculty?.name}state.profileDataModel.faculty');
+            log('${profileDataModel?.graduationStatusId}profileDataModel?.graduationStatusId');
             profileDataModel = state.profileDataModel;
             UniversityDropDown.selectedValue = profileDataModel?.university;
             FacultyDropDown.selectedValue = profileDataModel?.faculty;
             emailController.text = state.profileDataModel.user?.email ?? "";
             firstNameController.text = state.profileDataModel.firstName ?? "";
             lastNameController.text = state.profileDataModel.lastName ?? "";
+
             return Scaffold(
               appBar: appBar(context,
                   text: StringManager.profile.tr(),
@@ -318,10 +321,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   width: AppSize.defaultSize! * 15,
                                   initialSelectedIndex: (profileDataModel
                                                   ?.graduationStatusId ??
-                                              0) >
+                                              1) >
                                           0
-                                      ? profileDataModel?.graduationStatusId ??
-                                          0 - 1
+                                      ? (profileDataModel?.graduationStatusId ??
+                                          1) - 1
                                       : 0,
                                   segments: [
                                     StringManager.student.tr(),
@@ -343,9 +346,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 CustomSegmentedButton(
                                   width: AppSize.defaultSize! * 15,
                                   initialSelectedIndex:
-                                      (profileDataModel?.jobLevelId ?? 0) > 0
-                                          ? profileDataModel?.jobLevelId ??
-                                              0 - 1
+                                      (profileDataModel?.jobLevelId ?? 1) > 0
+                                          ? (profileDataModel?.jobLevelId ??
+                                              1 )- 1
                                           : 0,
                                   segments: [
                                     StringManager.internship.tr(),
@@ -445,8 +448,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 .add(EditProfileEvent(
                               EditPersonalInfoParams(
                                 id: MyApp.userProfileId.toString(),
-                                firstName: firstNameController.text,
-                                lastName: lastNameController.text,
+                                firstName: firstNameController.text.isEmpty?  state.profileDataModel.firstName:firstNameController.text,
+                                lastName: lastNameController.text.isEmpty?  state.profileDataModel.lastName:lastNameController.text,
                                 UniversityId: (UniversityDropDown
                                             .selectedValue?.universityId ??
                                         state.profileDataModel.university
@@ -455,14 +458,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 FacultyId: (FacultyDropDown.selectedValue?.id ??
                                         state.profileDataModel.faculty?.id)
                                     .toString(),
-                                Description: descriptionController.text,
-                                JobLevelId: jop.toString(),
-                                GraduationStatusId: education.toString(),
-                                JobLocationTypeId: location.toString(),
+                                Description: descriptionController.text.isEmpty?  state.profileDataModel.description:descriptionController.text,
+                                JobLevelId: (jop+1).toString() ,
+                                GraduationStatusId: (education+1).toString(),
+                                JobLocationTypeId: (location+1).toString(),
                                 MajorIds: FieldsInfo.id,
                                 SkillIds: mergeSkill,
-                                CountryId: '',
-                                CityId: '',
+                                // CountryId: '',
+                                // CityId: '',
                               ),
                             ));
                           },

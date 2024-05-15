@@ -49,7 +49,7 @@ class ConstantApi {
   static String addPersonalInfo() => "${baseUrl}UserProfiles/AddFormUserInfo";
 
   static String getMyData(String id) =>
-      "${baseUrl}UserProfiles/GetUserProfileBy${id}Included";
+      "${baseUrl}UserProfiles/GetUserProfileByUserId?userId=$id";
   static const String getSkill = "${baseUrl}Skills/GetAllSkills";
 
   static String apply(String userId, int vacancyId) =>

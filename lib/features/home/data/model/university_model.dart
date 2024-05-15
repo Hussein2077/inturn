@@ -1,6 +1,5 @@
-import 'package:inturn/core/models/options_model.dart';
 
-class UniversityModel extends OptionsModel{
+class UniversityModel {
   final int? universityId;
   final String? universityName;
   final String? universityNameAr;

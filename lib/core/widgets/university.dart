@@ -29,6 +29,7 @@ class UniversityDropDown extends StatefulWidget {
 class _UniversityDropDownState extends State<UniversityDropDown> {
   @override
   void initState() {
+    BlocProvider.of<OptionsBloc>(context).add(const GetUniversityEvent());
   if(widget.universityId!=null){
     UniversityDropDown.selectedValue = widget.universityId;
   }
@@ -51,7 +52,7 @@ class _UniversityDropDownState extends State<UniversityDropDown> {
                     Border.all(color: AppColors.borderColor.withOpacity(.4)),
                 borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2)),
             child: DropdownButton2<UniversityModel>(
-              // value: UniversityDropDown.selectedValue,
+              value:state.getUniversity.contains( widget.universityId)? widget.universityId: null,
               buttonStyleData: ButtonStyleData(
                   width: AppSize.screenWidth! * .9,
                   decoration: BoxDecoration(
@@ -77,7 +78,7 @@ class _UniversityDropDownState extends State<UniversityDropDown> {
               hint: Padding(
                 padding: EdgeInsets.only(left: AppSize.defaultSize!),
                 child: Text(
-                  StringManager.university.tr(),
+                    widget.universityId?.universityName??     StringManager.university.tr(),
                   style: TextStyle(
                     fontSize: AppSize.defaultSize!,
                   ),

@@ -155,11 +155,11 @@ class ProfileDataModel {
   factory ProfileDataModel.fromJson(Map<String, dynamic> json) {
     return ProfileDataModel(
       userProfileId: json['userProfileId'] ??0,
-      jobLevelId: json['jobLevelId'] ??0,
-      graduationStatusId: json['graduationStatusId'] ??0,
-      jobLocationTypeId: json['jobLocationTypeId'] ??0,
-      universityId: json['universityId'] ??0,
-      facultyId: json['facultyId'] ??0,
+      jobLevelId: json['jobLevelId'] ??1,
+      graduationStatusId: json['graduationStatusId'] ??1,
+      jobLocationTypeId: json['jobLocationTypeId'] ??1,
+      universityId: json['universityId'] ??1,
+      facultyId: json['facultyId'] ??1,
       userId: json['userId'] ??"",
       firstName: json['firstName'] ??"",
       lastName: json['lastName'] ??"",

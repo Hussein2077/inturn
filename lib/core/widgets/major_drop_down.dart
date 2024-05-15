@@ -11,6 +11,7 @@ import 'package:inturn/core/utils/enums.dart';
 import 'package:inturn/core/widgets/loading_widget.dart';
 import 'package:inturn/features/home/data/model/faculty_model.dart';
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_bloc.dart';
+import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_events.dart';
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_states.dart';
 
 class FacultyDropDown extends StatefulWidget {
@@ -30,6 +31,10 @@ class _FacultyDropDownState extends State<FacultyDropDown> {
   @override
   void initState() {
     FacultyDropDown.selectedValue = widget.facultyId;
+    if(widget.facultyId?.universityId!=null) {
+      BlocProvider.of<OptionsBloc>(context).add(GetFacultyEvent(
+        widget.facultyId!.universityId!));
+    }
     super.initState();
   }
 
@@ -52,7 +57,7 @@ class _FacultyDropDownState extends State<FacultyDropDown> {
                     Border.all(color: AppColors.borderColor.withOpacity(.4)),
                 borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2)),
             child: DropdownButton2<FacultyModel>(
-              // value: FacultyDropDown.selectedValue,
+              value: state.getFaculty.contains(widget.facultyId) ? widget.facultyId : null,
               buttonStyleData: ButtonStyleData(
                   width: AppSize.screenWidth! * .9,
                   decoration: BoxDecoration(
@@ -72,7 +77,7 @@ class _FacultyDropDownState extends State<FacultyDropDown> {
               hint: Padding(
                 padding: EdgeInsets.only(left: AppSize.defaultSize!),
                 child: Text(
-                  StringManager.selectFaculty.tr(),
+                 widget.facultyId?.name ?? StringManager.selectFaculty.tr(),
                   style: TextStyle(
                     fontSize: AppSize.defaultSize!,
                   ),

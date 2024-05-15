@@ -163,7 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         });
                       },
                       child: Icon(
-                        isVisible ? Icons.visibility_off : Icons.visibility,
+                        isVisible ? Icons.visibility : Icons.visibility_off,
                         color: Colors.grey,
                       ),
                     ),

@@ -167,10 +167,13 @@ if( MyApp.fromLogin){
                 const ChangePassword(),
             transitionsBuilder: customAnimate);
       case Routes.profile:
+        String  userId = settings.arguments as String;
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
-                const ProfileScreen(),
-            transitionsBuilder: customAnimate);
+                  ProfileScreen(userId: userId,),
+            transitionsBuilder: customAnimate,
+        settings: settings,
+        );
 
       case Routes.searchScreen:
         return PageRouteBuilder(

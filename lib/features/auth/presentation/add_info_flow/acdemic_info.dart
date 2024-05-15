@@ -21,7 +21,7 @@ class AcademicInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar:
-        appBar(context, text: StringManager.fillAcademicInformation.tr(),leading: false),
+        appBar(context, text: StringManager.fillAcademicInformation.tr(),leading: true,actions: true),
         body: BlocListener<AddPersonalInfoBloc, AddPersonalInfoState >(
           listener: (context, state) {
             if (state is AddUniversitySuccessState) {

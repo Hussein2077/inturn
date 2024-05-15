@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/utils/app_size.dart';
@@ -31,6 +33,7 @@ class CustomSegmentedButtonState extends State<CustomSegmentedButton> {
 
   @override
   Widget build(BuildContext context) {
+    log('${_selectedIndex}sdbadva');
     return Wrap(
       alignment: WrapAlignment.start,
       direction: Axis.horizontal,
@@ -43,6 +46,7 @@ class CustomSegmentedButtonState extends State<CustomSegmentedButton> {
               _selectedIndex = index;
               widget.onValueChanged(_selectedIndex);
             });
+
           },
           child: Container(
             margin: EdgeInsets.all(AppSize.defaultSize! * 0.5),

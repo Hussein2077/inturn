@@ -32,7 +32,7 @@ class _MainScreenState extends State<MainScreen> {
         HomeScreen(userID: widget.userID,),
       const ApplicationsScreen(),
       const CompaniesScreen(),
-      const ProfileScreen(),
+        ProfileScreen(userId:  widget.userID),
 
     ];
   }

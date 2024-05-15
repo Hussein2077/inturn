@@ -1,4 +1,3 @@
-import 'package:inturn/core/models/options_model.dart';
 import 'package:inturn/core/models/vacancey_model.dart';
 
 class Country {

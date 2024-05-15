@@ -1,6 +1,5 @@
-import 'package:inturn/core/models/options_model.dart';
 
-class FacultyModel extends OptionsModel {
+class FacultyModel  {
   int? id;
   int? universityId;
   String? name;
@@ -17,7 +16,6 @@ class FacultyModel extends OptionsModel {
   ) {
     id = json['facultyId'];
     name = json['facultyNameEn'];
-    text = json['name'];
     nameAr = json['facultyNameAr'];
     universityId = json['universityId'];
   }
@@ -25,7 +23,6 @@ class FacultyModel extends OptionsModel {
     final map = <String, dynamic>{};
     map['facultyId'] = id;
     map['facultyNameEn'] = name;
-    map['name'] = text;
     map['facultyNameAr'] = nameAr;
     map['universityId'] = universityId;
     return map;

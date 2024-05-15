@@ -3,8 +3,9 @@ import 'package:inturn/core/utils/app_size.dart';
 
 void errorSnackBar(BuildContext context, String message) {
   final snackBar = SnackBar(
-    content: Text(message),
-    duration:   Duration(seconds: 3),
+    content: Center(child: Text(message)),
+    duration:   const Duration(seconds: 3),
+    shape:     const StadiumBorder(),
     margin: EdgeInsets.only(
         bottom: AppSize.defaultSize!*4 ,
         left: AppSize.screenWidth! * .1,
