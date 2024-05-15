@@ -84,13 +84,17 @@ class _LoginScreenState extends State<LoginScreen> {
           child: BlocListener<SignInWithPlatformBloc, SignInWithPlatformState>(
             listener: (context, state) async {
               if (state is SignWithGoogleSuccesMessageState) {
+                EasyLoading.dismiss();
                 MyApp.userId=state.userId;
                 Methods.instance.navigateToAddInfo(
                     isComplete: state.isCompleted,  userId: state.userId,
                     completion: state.complition);
               } else if (state is SignWithGoogleErrorMessageState) {
+                EasyLoading.dismiss();
                 EasyLoading.showError(state.errorMessage);
-              } else if (state is SignWithPlatFormLoadingState) {}
+              } else if (state is SignWithPlatFormLoadingState) {
+                EasyLoading.show(status: 'loading...');
+              }
             },
             child: Padding(
               padding: EdgeInsets.all(AppSize.defaultSize! * 1.5),

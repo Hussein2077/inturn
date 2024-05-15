@@ -39,13 +39,12 @@ void main() async {
 
   await ServerLocator().init();
   await EasyLocalization.ensureInitialized();
-  FlutterNativeSplash.remove();
-
   token = await Methods.instance.returnUserToken();
   await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
 
       );
+  FlutterNativeSplash.remove();
 
   runApp(EasyLocalization(
       fallbackLocale: const Locale('en'),
