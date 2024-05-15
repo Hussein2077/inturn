@@ -2,9 +2,9 @@ import 'package:inturn/core/models/vacancey_model.dart';
 import 'package:inturn/main.dart';
 
 class ConstantApi {
-  static const String baseUrl = 'http://128.140.69.196/Intrn/api/';
+  static const String baseUrl = 'https://api.intrn.app/Intrn/api/';
 
-  static getImage(String url) => 'http://128.140.69.196/Intrn/uploads/$url';
+  static getImage(String url) => 'https://api.intrn.app/Intrn/uploads/$url';
 
   static const String login = "${baseUrl}Auth/Login";
   static const String universities = "${baseUrl}Universities/GetAllUniversity";
@@ -26,8 +26,8 @@ class ConstantApi {
   static const String getCompanies = "${baseUrl}Companies/GetAllCompanies";
 
   static String editProfileData() =>
-      "${baseUrl}UserProfiles/EditUserProfileBy${MyApp.userProfileId}";
-
+      "${baseUrl}UserProfiles/EditUserProfileByUserId";
+  //https://api.intrn.app/Intrn/api/UserProfiles/EditUserProfileByUserId
   static String sendUniversityFacultyIds(String id, int userprofileId) =>
       "${baseUrl}UserProfiles/EditFormEducation?userId=$id&userProfileId=$userprofileId";
 
@@ -43,7 +43,7 @@ class ConstantApi {
       "${baseUrl}UserProfiles/EditFormSkills?userId=$id&userProfileId=$userprofileId";
 
   static const String getGetInternshipsBySearch =
-      'http://128.140.69.196/Intrn/api/Vacancies/SearchVacancies';
+      '${baseUrl}Vacancies/SearchVacancies';
 
 //add personal info
   static String addPersonalInfo() => "${baseUrl}UserProfiles/AddFormUserInfo";

@@ -19,14 +19,17 @@ import 'package:searchfield/searchfield.dart';
 
 class ProfileSkills extends StatefulWidget {
   const ProfileSkills({super.key, required this.profileDataModel});
-final ProfileDataModel? profileDataModel;
-static  List<CommonType> newSkills=[];
+
+  final ProfileDataModel? profileDataModel;
+  static List<CommonType> newSkills = [];
+
   @override
   State<ProfileSkills> createState() => _ProfileSkillsState();
 }
 
 class _ProfileSkillsState extends State<ProfileSkills> {
-  late TextEditingController controller ;
+  late TextEditingController controller;
+
   ValueNotifier<int> addToSkill = ValueNotifier<int>(0);
   List<int> _currentSegment = [-1];
 
@@ -35,35 +38,36 @@ class _ProfileSkillsState extends State<ProfileSkills> {
       _currentSegment = newValue;
     });
   }
+
   @override
   void initState() {
-    if(widget.profileDataModel?.user?.userSkills!=null) {
-      ProfileSkills.newSkills=Methods.instance.castLists( SkillInfo.skillIds, widget.profileDataModel!.user!.userSkills!);
+    if (widget.profileDataModel?.user?.userSkills != null) {
+      ProfileSkills.newSkills = Methods.instance.castLists(
+          SkillInfo.skillIds, widget.profileDataModel!.user!.userSkills!);
     }
 
     controller = TextEditingController();
     super.initState();
   }
-@override
+
+  @override
   void dispose() {
     controller.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
-    return   Padding(
-      padding: EdgeInsets.symmetric(
-          vertical: AppSize.defaultSize! * 2),
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: AppSize.defaultSize! * 2),
       child: Material(
-        borderRadius:
-        BorderRadius.circular(AppSize.defaultSize! * 1.5),
+        borderRadius: BorderRadius.circular(AppSize.defaultSize! * 1.5),
         elevation: 1,
         child: Container(
           width: AppSize.screenWidth!,
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(
-                AppSize.defaultSize! * 1.5),
+            borderRadius: BorderRadius.circular(AppSize.defaultSize! * 1.5),
           ),
           child: Padding(
             padding: EdgeInsets.all(AppSize.defaultSize! * 2),
@@ -83,59 +87,46 @@ class _ProfileSkillsState extends State<ProfileSkills> {
                   builder: (context, state2) {
                     log('sijvgwogbowgowrgb');
 
-                    if (state2.getSkillsRequest ==
-                        RequestState.loading) {
+                    if (state2.getSkillsRequest == RequestState.loading) {
                       return const LoadingWidget();
-                    } else if (state2.getSkillsRequest ==
-                        RequestState.loaded) {
+                    } else if (state2.getSkillsRequest == RequestState.loaded) {
                       return SearchField<SkillModel>(
                         controller: controller,
                         itemHeight: AppSize.defaultSize! * 5,
                         onSuggestionTap: (v) {
                           v.item!.skillId;
                           // ProfileSkills.newSkills.add(v.item! as CommonType);
-                          if(! ProfileSkills.newSkills.contains(CommonType(v.item!.skillNameEn!, v.item!.skillId!))) {
-                            ProfileSkills.newSkills.add(CommonType(v.item!.skillNameEn!, v.item!.skillId!));
+                          if (!ProfileSkills.newSkills.contains(CommonType(
+                              v.item!.skillNameEn!, v.item!.skillId!))) {
+                            ProfileSkills.newSkills.add(CommonType(
+                                v.item!.skillNameEn!, v.item!.skillId!));
                           }
-
-                            // ProfileSkills.newSkills.addAll(v.item!.((b) => CommonType(b.name, b.description.length)));
-
-
                           addToSkill.value++;
                           controller.clear();
-
                           _currentSegment = SkillInfo.skillIds
-                              .map((e) => SkillInfo.skillIds
-                              .indexOf(e))
+                              .map((e) => SkillInfo.skillIds.indexOf(e))
                               .toList();
                         },
 
                         suggestions: state2.getSkills
                             .map(
-                              (e) => SearchFieldListItem<
-                                  SkillModel>(
-                            e.skillNameEn ?? "",
-                            item: e,
-                            // Use child to show Custom Widgets in the suggestions
-                            // defaults to Text widget
-                            child: Padding(
-                              padding: EdgeInsets.all(
-                                  AppSize.defaultSize!),
-                              child: CustomText(
-                                  text: e.skillNameEn ??
-                                      ""),
-                            ),
-                          ),
-                        )
+                              (e) => SearchFieldListItem<SkillModel>(
+                                e.skillNameEn ?? "",
+                                item: e,
+                                // Use child to show Custom Widgets in the suggestions
+                                // defaults to Text widget
+                                child: Padding(
+                                  padding: EdgeInsets.all(AppSize.defaultSize!),
+                                  child: CustomText(text: e.skillNameEn ?? ""),
+                                ),
+                              ),
+                            )
                             .toList(),
-                        hint: StringManager.searchForSkills
-                            .tr(),
+                        hint: StringManager.searchForSkills.tr(),
                         searchStyle: TextStyle(
-                          fontSize:
-                          AppSize.defaultSize! * 1.2,
+                          fontSize: AppSize.defaultSize! * 1.2,
                           decoration: TextDecoration.none,
-                          color:
-                          Colors.black.withOpacity(0.8),
+                          color: Colors.black.withOpacity(0.8),
                         ),
                         // autofocus: true,
                       );
@@ -164,13 +155,13 @@ class _ProfileSkillsState extends State<ProfileSkills> {
                         },
                         segments: ProfileSkills.newSkills
                             .map((e) => e.skillNameEn ?? "")
+                            .toList()
+                            .toSet()
                             .toList(),
-                        onValueChanged: (index) =>
-                            _onValueChanged(index),
-                        initialSelectedIndexes:  ProfileSkills.newSkills
-                            .map((e) =>
-                            ProfileSkills.newSkills.indexOf(e))
-                            .toList(),
+                        onValueChanged: (index) => _onValueChanged(index),
+                        initialSelectedIndexes: ProfileSkills.newSkills
+                            .map((e) => ProfileSkills.newSkills.indexOf(e))
+                            .toList().toSet().toList(),
                       );
                     }),
                 SizedBox(

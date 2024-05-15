@@ -57,7 +57,7 @@ class _FacultyDropDownState extends State<FacultyDropDown> {
                     Border.all(color: AppColors.borderColor.withOpacity(.4)),
                 borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2)),
             child: DropdownButton2<FacultyModel>(
-              value: state.getFaculty.contains(widget.facultyId) ? widget.facultyId : null,
+              value: state.getFaculty.contains(FacultyDropDown.selectedValue) ?  FacultyDropDown.selectedValue : null ,
               buttonStyleData: ButtonStyleData(
                   width: AppSize.screenWidth! * .9,
                   decoration: BoxDecoration(
@@ -70,6 +70,7 @@ class _FacultyDropDownState extends State<FacultyDropDown> {
                   maxHeight: AppSize.screenHeight! * .5),
               underline: const SizedBox(),
               onChanged: (FacultyModel? newValue) {
+                log('newValue: $newValue');
                 setState(() {
                   FacultyDropDown.selectedValue = newValue;
                 });
@@ -77,7 +78,7 @@ class _FacultyDropDownState extends State<FacultyDropDown> {
               hint: Padding(
                 padding: EdgeInsets.only(left: AppSize.defaultSize!),
                 child: Text(
-                 widget.facultyId?.name ?? StringManager.selectFaculty.tr(),
+                StringManager.selectFaculty.tr(),
                   style: TextStyle(
                     fontSize: AppSize.defaultSize!,
                   ),

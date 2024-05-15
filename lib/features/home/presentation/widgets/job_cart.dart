@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:inturn/core/models/vacancey_model.dart';
@@ -156,7 +158,7 @@ class _JobCartState extends State<JobCart> {
                       barRadius: Radius.circular(AppSize.defaultSize! * 2),
                       center: CustomText(
                         text:
-                            "${widget.vacancyModel.matchmakingPercentage}% ${StringManager.matched.tr()}",
+                            "${widget.vacancyModel.matchmakingPercentage.toString().contains('.') ? widget.vacancyModel.matchmakingPercentage.toString().substring(0, 5) : widget.vacancyModel.matchmakingPercentage}% ${StringManager.matched.tr()}",
                         fontSize: AppSize.defaultSize! * 1.3,
                         color: Colors.white,
                       ),
@@ -171,17 +173,18 @@ class _JobCartState extends State<JobCart> {
                           width: AppSize.defaultSize! * 10,
                           height: AppSize.defaultSize! * 2.4,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topLeft:
-                                    Radius.circular(AppSize.defaultSize! * 2),
-                                bottomLeft:
-                                    Radius.circular(AppSize.defaultSize! * 2),
-                              ),
-                              color: widget.vacancyModel.matchedVacancy
-                                          .vacancyLevelId ==
-                                      1
-                                  ? AppColors.homeColor
-                                  : AppColors.greyColor),
+                            borderRadius: BorderRadius.only(
+                              topLeft:
+                                  Radius.circular(AppSize.defaultSize! * 2),
+                              bottomLeft:
+                                  Radius.circular(AppSize.defaultSize! * 2),
+                            ),
+                            color: widget.vacancyModel.matchedVacancy
+                                        .vacancyLevelId !=
+                                    1
+                                ? AppColors.homeColor
+                                : AppColors.greyColor,
+                          ),
                           child: Center(
                             child: CustomText(
                               text: StringManager.viewed.tr(),
@@ -193,8 +196,16 @@ class _JobCartState extends State<JobCart> {
                         Container(
                           width: AppSize.defaultSize! * 10,
                           height: AppSize.defaultSize! * 2.4,
-                          decoration:
-                              const BoxDecoration(color: AppColors.greyColor),
+                          decoration: BoxDecoration(
+                            color: (widget.vacancyModel.matchedVacancy
+                                            .vacancyLevelId ==
+                                        5 ||
+                                    widget.vacancyModel.matchedVacancy
+                                            .vacancyLevelId ==
+                                        2)
+                                ? AppColors.yellowColor
+                                : AppColors.greyColor,
+                          ),
                           child: Center(
                             child: CustomText(
                               text: StringManager.shortlist.tr(),
@@ -207,16 +218,29 @@ class _JobCartState extends State<JobCart> {
                           width: AppSize.defaultSize! * 10,
                           height: AppSize.defaultSize! * 2.4,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topRight:
-                                    Radius.circular(AppSize.defaultSize! * 2),
-                                bottomRight:
-                                    Radius.circular(AppSize.defaultSize! * 2),
-                              ),
-                              color: AppColors.greyColor),
+                            borderRadius: BorderRadius.only(
+                              topRight:
+                                  Radius.circular(AppSize.defaultSize! * 2),
+                              bottomRight:
+                                  Radius.circular(AppSize.defaultSize! * 2),
+                            ),
+                            color: widget.vacancyModel.matchedVacancy
+                                        .vacancyLevelId ==
+                                    2
+                                ? Colors.green
+                                : widget.vacancyModel.matchedVacancy
+                                            .vacancyLevelId ==
+                                        3
+                                    ? Colors.red
+                                    : AppColors.greyColor,
+                          ),
                           child: Center(
                             child: CustomText(
-                              text: StringManager.selection.tr(),
+                              text: widget.vacancyModel.matchedVacancy
+                                          .vacancyLevelId ==
+                                      3
+                                  ? StringManager.rejected.tr()
+                                  : StringManager.selection.tr(),
                               color: Colors.white,
                               fontSize: AppSize.defaultSize! * 1.3,
                             ),
@@ -224,6 +248,67 @@ class _JobCartState extends State<JobCart> {
                         ),
                       ],
                     ),
+
+              // Row(
+              //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //         children: [
+              //           Container(
+              //             width: AppSize.defaultSize! * 10,
+              //             height: AppSize.defaultSize! * 2.4,
+              //             decoration: BoxDecoration(
+              //                 borderRadius: BorderRadius.only(
+              //                   topLeft:
+              //                       Radius.circular(AppSize.defaultSize! * 2),
+              //                   bottomLeft:
+              //                       Radius.circular(AppSize.defaultSize! * 2),
+              //                 ),
+              //                 color: widget.vacancyModel.matchedVacancy
+              //                             .vacancyLevelId ==
+              //                         1
+              //                     ? AppColors.homeColor
+              //                     : AppColors.greyColor),
+              //             child: Center(
+              //               child: CustomText(
+              //                 text: StringManager.viewed.tr(),
+              //                 color: Colors.white,
+              //                 fontSize: AppSize.defaultSize! * 1.3,
+              //               ),
+              //             ),
+              //           ),
+              //           Container(
+              //             width: AppSize.defaultSize! * 10,
+              //             height: AppSize.defaultSize! * 2.4,
+              //             decoration:
+              //                 const BoxDecoration(color: AppColors.greyColor),
+              //             child: Center(
+              //               child: CustomText(
+              //                 text: StringManager.shortlist.tr(),
+              //                 color: Colors.white,
+              //                 fontSize: AppSize.defaultSize! * 1.3,
+              //               ),
+              //             ),
+              //           ),
+              //           Container(
+              //             width: AppSize.defaultSize! * 10,
+              //             height: AppSize.defaultSize! * 2.4,
+              //             decoration: BoxDecoration(
+              //                 borderRadius: BorderRadius.only(
+              //                   topRight:
+              //                       Radius.circular(AppSize.defaultSize! * 2),
+              //                   bottomRight:
+              //                       Radius.circular(AppSize.defaultSize! * 2),
+              //                 ),
+              //                 color: AppColors.greyColor),
+              //             child: Center(
+              //               child: CustomText(
+              //                 text: StringManager.selection.tr(),
+              //                 color: Colors.white,
+              //                 fontSize: AppSize.defaultSize! * 1.3,
+              //               ),
+              //             ),
+              //           ),
+              //         ],
+              //       ),
               if (!widget.linearCircle)
                 SizedBox(
                   height: AppSize.defaultSize! * 1.2,

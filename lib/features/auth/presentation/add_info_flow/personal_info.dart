@@ -51,7 +51,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
         child: BlocListener<AddPersonalInfoBloc, AddPersonalInfoState >(
           listener: (context, state) {
             if (state is AddPersonalInfoSuccessState) {
-              Navigator.pushNamedAndRemoveUntil(context, Routes.academicInfo, (route) => false);
+              Navigator.pushNamed(context, Routes.academicInfo, );
             }
             else if (state is AddPersonalInfoErrorState) {
               EasyLoading.showError(state.errorMessage);
@@ -77,7 +77,6 @@ class _PersonalInfoState extends State<PersonalInfo> {
                 CustomTextField(
                   labelText: StringManager.firstName.tr(),
                   controller: firstNameController,
-                  keyboardType: TextInputType.emailAddress,
                 ),
                 SizedBox(
                   height: AppSize.defaultSize! * 2,
@@ -85,7 +84,6 @@ class _PersonalInfoState extends State<PersonalInfo> {
                 CustomTextField(
                   labelText: StringManager.secondName.tr(),
                   controller: secondNameController,
-                  keyboardType: TextInputType.emailAddress,
                 ),
                 SizedBox(
                   height: AppSize.defaultSize! * 2,

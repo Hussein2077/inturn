@@ -89,8 +89,6 @@ class ProfileRemotelyDateSource extends BaseRemotelyDataSourceProfile {
     log('${parameter.CityId} CityId');
 
     log('${MyApp.userId} userId');
-
-
     try {
       final response = await Dio().post(
         ConstantApi.editProfileData( ),

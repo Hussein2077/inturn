@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:inturn/core/models/profile_data_model.dart';
 import 'package:inturn/core/resource_manager/asset_path.dart';
@@ -42,7 +43,9 @@ import 'package:searchfield/searchfield.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key, required this.userId});
-final String userId;
+
+  final String userId;
+
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
@@ -60,7 +63,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void _onValueChangededucation(int newValue) {
     setState(() {
       education = newValue;
-
     });
   }
 
@@ -82,7 +84,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void initState() {
-    log(widget.userId+'skjdvbwjobwo');
     BlocProvider.of<GetMyProfileDataBloc>(context)
         .add(GetMyProfileDataEvent(widget.userId));
     emailController = TextEditingController();
@@ -112,13 +113,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return BlocListener<EditProfileBloc, EditProfileState>(
       listener: (context, state) {
         if (state is EditProfileSuccessMessageState) {
+          EasyLoading.dismiss();
+          EasyLoading.showSuccess('Success');
           BlocProvider.of<GetMyProfileDataBloc>(context)
-              .add(GetMyProfileDataEvent(MyApp.userProfileId.toString()));
+              .add(GetMyProfileDataEvent(MyApp.userId.toString()));
+        } else if (state is EditProfileErrorMessageState) {
+          EasyLoading.dismiss();
+          EasyLoading.showError(state.errorMessage);
         }
+          else if (state is EditProfileLoadingState) {
+            EasyLoading.show();
+          }
       },
       child: BlocBuilder<GetMyProfileDataBloc, GetMyProfileDataState>(
         builder: (context, state) {
@@ -324,7 +332,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               1) >
                                           0
                                       ? (profileDataModel?.graduationStatusId ??
-                                          1) - 1
+                                              1) -
+                                          1
                                       : 0,
                                   segments: [
                                     StringManager.student.tr(),
@@ -348,7 +357,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   initialSelectedIndex:
                                       (profileDataModel?.jobLevelId ?? 1) > 0
                                           ? (profileDataModel?.jobLevelId ??
-                                              1 )- 1
+                                                  1) -
+                                              1
                                           : 0,
                                   segments: [
                                     StringManager.internship.tr(),
@@ -429,6 +439,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             List<int>? mergeSkill = ProfileSkills.newSkills
                                     .map((e) => e.skillId)
                                     .toList()
+                                    .toSet()
                                     .isEmpty
                                 ? profileDataModel?.user?.userSkills
                                     ?.map((e) => (e.skillId!))
@@ -436,8 +447,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 : ProfileSkills.newSkills
                                     .map((e) => e.skillId)
                                     .toList();
-                            log('${state.profileDataModel.university
-                                ?.universityId}wnwnrknpwn');
+                            log('${state.profileDataModel.university?.universityId}wnwnrknpwn');
                             FieldsInfo.id = Methods.instance.combineLists(
                                 FieldsInfo.id,
                                 profileDataModel?.user?.userMajors
@@ -448,8 +458,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 .add(EditProfileEvent(
                               EditPersonalInfoParams(
                                 id: MyApp.userProfileId.toString(),
-                                firstName: firstNameController.text.isEmpty?  state.profileDataModel.firstName:firstNameController.text,
-                                lastName: lastNameController.text.isEmpty?  state.profileDataModel.lastName:lastNameController.text,
+                                firstName: firstNameController.text.isEmpty
+                                    ? state.profileDataModel.firstName
+                                    : firstNameController.text,
+                                lastName: lastNameController.text.isEmpty
+                                    ? state.profileDataModel.lastName
+                                    : lastNameController.text,
                                 UniversityId: (UniversityDropDown
                                             .selectedValue?.universityId ??
                                         state.profileDataModel.university
@@ -458,10 +472,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 FacultyId: (FacultyDropDown.selectedValue?.id ??
                                         state.profileDataModel.faculty?.id)
                                     .toString(),
-                                Description: descriptionController.text.isEmpty?  state.profileDataModel.description:descriptionController.text,
-                                JobLevelId: (jop+1).toString() ,
-                                GraduationStatusId: (education+1).toString(),
-                                JobLocationTypeId: (location+1).toString(),
+                                Description: descriptionController.text.isEmpty
+                                    ? state.profileDataModel.description
+                                    : descriptionController.text,
+                                JobLevelId: (jop + 1).toString(),
+                                GraduationStatusId: (education + 1).toString(),
+                                JobLocationTypeId: (location + 1).toString(),
                                 MajorIds: FieldsInfo.id,
                                 SkillIds: mergeSkill,
                                 // CountryId: '',

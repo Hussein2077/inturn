@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
@@ -28,10 +29,13 @@ static  CityModel? selectedValue2 ;
 
 class _CitiesDropDownState extends State<CitiesDropDown> {
   List<CityModel>? cityModel;
+  bool cityVisible=false;
 @override
   void initState() {
     BlocProvider.of<OptionsBloc>(context).add(const GetCitiesEvent());
-     super.initState();
+    cityVisible=cityModel!=null;
+
+    super.initState();
   }
   @override
   void dispose() {
@@ -41,6 +45,8 @@ class _CitiesDropDownState extends State<CitiesDropDown> {
   }
   @override
   Widget build(BuildContext context) {
+    cityVisible=cityModel!=null;
+
     return BlocBuilder<OptionsBloc, GetOptionsStates>(
       builder: (context, state) {
         if (state.getCitiesRequest == RequestState.loaded) {
@@ -55,7 +61,7 @@ class _CitiesDropDownState extends State<CitiesDropDown> {
                     Border.all(color: AppColors.borderColor.withOpacity(.4)),
                     borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2)),
                 child: DropdownButton2<Country>(
-                  // value: CitiesDropDown.selectedValue,
+                  value:state.getCities.contains(CitiesDropDown.selectedValue)? CitiesDropDown.selectedValue:null,
                   buttonStyleData: ButtonStyleData(
                     width: AppSize.screenWidth! * .9,
                   ),
@@ -101,54 +107,58 @@ class _CitiesDropDownState extends State<CitiesDropDown> {
                 SizedBox(
                 height: AppSize.defaultSize! * 2,
               ),
-              Container(
-                // width: AppSize.screenWidth! * .9,
-                height: AppSize.defaultSize! * 5,
-                decoration: BoxDecoration(
-                    border:
-                    Border.all(color: AppColors.borderColor.withOpacity(.4)),
-                    borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2)),
-                child: DropdownButton2<CityModel>(
-                  // value: CitiesDropDown.selectedValue2,
-                  buttonStyleData: ButtonStyleData(
-                    width: AppSize.screenWidth! * .9,
-                  ),
-                  dropdownStyleData: DropdownStyleData(
-                      width: AppSize.screenWidth! * .9,
-                      // padding: EdgeInsets.symmetric(horizontal: 10),
-                      maxHeight: AppSize.screenHeight! * .5),
-                  underline: const SizedBox(),
-                  onChanged: (CityModel? newValue) {
-                    setState(() {
-                      CitiesDropDown.selectedValue2 = newValue;
-                    });
-                  },
 
-                  hint: Padding(
-                    padding:   EdgeInsets.only(left: AppSize.defaultSize!),
-                    child: Text(
-                      StringManager.selectCity.tr(),
-                      style: TextStyle(
-                        fontSize: AppSize.defaultSize!,
-                      ),
+              Visibility(
+                visible: cityVisible,
+                child: Container(
+                  // width: AppSize.screenWidth! * .9,
+                  height: AppSize.defaultSize! * 5,
+                  decoration: BoxDecoration(
+                      border:
+                      Border.all(color: AppColors.borderColor.withOpacity(.4)),
+                      borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2)),
+                  child: DropdownButton2<CityModel>(
+                    value:(cityModel?.contains(CitiesDropDown.selectedValue2)??false)? CitiesDropDown.selectedValue2:null,
+                    buttonStyleData: ButtonStyleData(
+                      width: AppSize.screenWidth! * .9,
                     ),
-                  ),
-                  items:
-                  (cityModel??( state.getCities.isNotEmpty?  state.getCities[0].cities:[])??[])
-                      .map<DropdownMenuItem<CityModel>>((CityModel value) {
-                    return DropdownMenuItem(
-                      value: value,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: AppSize.defaultSize!),
-                        child: Text(
-                          value.cityNameEn,
-                          style: TextStyle(
-                            fontSize: AppSize.defaultSize!,
-                          ),
+                    dropdownStyleData: DropdownStyleData(
+                        width: AppSize.screenWidth! * .9,
+                        // padding: EdgeInsets.symmetric(horizontal: 10),
+                        maxHeight: AppSize.screenHeight! * .5),
+                    underline: const SizedBox(),
+                    onChanged: (CityModel? newValue) {
+                      setState(() {
+                        CitiesDropDown.selectedValue2 = newValue;
+                      });
+                    },
+
+                    hint: Padding(
+                      padding:   EdgeInsets.only(left: AppSize.defaultSize!),
+                      child: Text(
+                        StringManager.selectCity.tr(),
+                        style: TextStyle(
+                          fontSize: AppSize.defaultSize!,
                         ),
                       ),
-                    );
-                  }).toList(),
+                    ),
+                    items:
+                    (cityModel??( state.getCities.isNotEmpty?  state.getCities[0].cities:[])??[])
+                        .map<DropdownMenuItem<CityModel>>((CityModel value) {
+                      return DropdownMenuItem(
+                        value: value,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: AppSize.defaultSize!),
+                          child: Text(
+                            value.cityNameEn,
+                            style: TextStyle(
+                              fontSize: AppSize.defaultSize!,
+                            ),
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
                 ),
               ),
             ],

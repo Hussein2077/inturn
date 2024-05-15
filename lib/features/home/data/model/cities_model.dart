@@ -1,6 +1,7 @@
+import 'package:equatable/equatable.dart';
 import 'package:inturn/core/models/vacancey_model.dart';
 
-class Country {
+class Country extends Equatable {
   final int countryId;
   final String countryNameEn;
   final String countryNameAr;
@@ -29,6 +30,16 @@ class Country {
     'countryNameAr': countryNameAr,
     'citys': cities?.map((x) => x.toJson()).toList(),
   };
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [
+    countryId,
+    countryNameEn,
+    countryNameAr,
+    cities
+
+  ];
 }
 
 class CityModel {

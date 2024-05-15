@@ -164,6 +164,7 @@ class StringManager {
   static const String viewed = "Viewed";
   static const String shortlist = "Shortlist";
   static const String selection = "Selection";
+  static const String rejected = "Rejected";
   static const String moreAboutTheCompany = "More About The Company";
   static const String anotherSuggestedJobs = "Another Suggested Jobs";
   static const String all = "All";

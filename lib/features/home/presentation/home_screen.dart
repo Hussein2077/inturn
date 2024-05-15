@@ -62,6 +62,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: LiquidPullToRefresh(
         key: _refreshIndicatorKey,
+        showChildOpacityTransition: false,
+        backgroundColor: AppColors.secondaryColor,
+        color: AppColors.primaryColor,
         onRefresh: _handleRefresh,
         child: SingleChildScrollView(
           child: Column(children: [

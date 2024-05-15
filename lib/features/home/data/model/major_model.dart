@@ -1,4 +1,6 @@
-class MajorModel {
+import 'package:equatable/equatable.dart';
+
+class MajorModel extends Equatable {
   final String field;
   final List<Position> positions;
 
@@ -12,15 +14,20 @@ class MajorModel {
       ),
     );
   }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [field, positions];
 }
 
 
-class Position {
+class Position extends Equatable {
   final int majorId;
   final String majorNameEn;
   final String majorNameAr;
   final String majorRank;
   final int majorCategoryId;
+
 
 
   Position({
@@ -51,4 +58,15 @@ class Position {
     map['majorRank'] = majorRank;
     return map;
   }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [
+    majorId,
+    majorNameEn,
+    majorNameAr,
+    majorRank
+
+  ];
+
 }

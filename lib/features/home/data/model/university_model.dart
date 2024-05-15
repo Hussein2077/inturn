@@ -1,5 +1,7 @@
 
-class UniversityModel {
+import 'package:equatable/equatable.dart';
+
+class UniversityModel extends Equatable{
   final int? universityId;
   final String? universityName;
   final String? universityNameAr;
@@ -25,4 +27,13 @@ class UniversityModel {
     map['universityNameAr'] = universityNameAr;
     return map;
   }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [
+    universityId,
+    universityName,
+    universityNameAr
+  ];
+
 }

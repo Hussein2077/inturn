@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
@@ -42,14 +43,20 @@ class _ExperienceInfoState extends State<ExperienceInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appBar(context, text: StringManager.experience.tr(),leading: false),
+        appBar: appBar(context, text: StringManager.experience.tr(),leading: true),
         body: BlocListener<AddPersonalInfoBloc, AddPersonalInfoState >(
           listener: (context, state) {
             if (state is AddExperienceLevelLoadingState) {
-             Navigator.pushNamedAndRemoveUntil(context, Routes.locationInfo,(route) => false);
+              EasyLoading.show();
             }
-            if (state is AddExperienceLevelErrorState) {
+          else  if (state is AddExperienceLevelErrorState) {
+              EasyLoading.dismiss();
               errorSnackBar(context, StringManager.unexpectedError.tr());
+            }
+            else if (state is AddExperienceLevelSuccessState) {
+              EasyLoading.dismiss();
+              Navigator.pushNamed(context, Routes.locationInfo,);
+
             }
           },
           child: Padding(

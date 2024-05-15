@@ -17,11 +17,13 @@ import 'package:inturn/features/home/presentation/controller/get_cities_major_un
 
 class UniversityDropDown extends StatefulWidget {
   const UniversityDropDown({
-    super.key, this.universityId,
+    super.key,
+    this.universityId,
   });
 
   static UniversityModel? selectedValue;
   final UniversityModel? universityId;
+
   @override
   State<UniversityDropDown> createState() => _UniversityDropDownState();
 }
@@ -30,21 +32,25 @@ class _UniversityDropDownState extends State<UniversityDropDown> {
   @override
   void initState() {
     BlocProvider.of<OptionsBloc>(context).add(const GetUniversityEvent());
-  if(widget.universityId!=null){
-    UniversityDropDown.selectedValue = widget.universityId;
-  }
+
     super.initState();
   }
+
   @override
   void dispose() {
     UniversityDropDown.selectedValue = null;
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
+
     return BlocBuilder<OptionsBloc, GetOptionsStates>(
       builder: (context, state) {
         if (state.getUniversityRequest == RequestState.loaded) {
+          log('${UniversityDropDown.selectedValue}');
+          log('${widget.universityId}');
+           log('${ state.getUniversity.contains(widget.universityId)}fbwbwe');
           return Container(
             height: AppSize.defaultSize! * 5,
             decoration: BoxDecoration(
@@ -52,7 +58,10 @@ class _UniversityDropDownState extends State<UniversityDropDown> {
                     Border.all(color: AppColors.borderColor.withOpacity(.4)),
                 borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2)),
             child: DropdownButton2<UniversityModel>(
-              value:state.getUniversity.contains( widget.universityId)? widget.universityId: null,
+              value:widget.universityId==null?UniversityDropDown.selectedValue: ( state.getUniversity.contains(widget.universityId)
+                  ? UniversityDropDown.selectedValue
+                  : null),
+
               buttonStyleData: ButtonStyleData(
                   width: AppSize.screenWidth! * .9,
                   decoration: BoxDecoration(
@@ -69,16 +78,18 @@ class _UniversityDropDownState extends State<UniversityDropDown> {
                   maxHeight: AppSize.screenHeight! * .5),
               underline: const SizedBox(),
               onChanged: (UniversityModel? newValue) {
+                log('newValue: $newValue');
                 setState(() {
                   UniversityDropDown.selectedValue = newValue;
                 });
                 BlocProvider.of<OptionsBloc>(context).add(GetFacultyEvent(
-                    UniversityDropDown.selectedValue!.universityId !));
+                    UniversityDropDown.selectedValue!.universityId!));
               },
               hint: Padding(
                 padding: EdgeInsets.only(left: AppSize.defaultSize!),
                 child: Text(
-                    widget.universityId?.universityName??     StringManager.university.tr(),
+
+                      StringManager.university.tr(),
                   style: TextStyle(
                     fontSize: AppSize.defaultSize!,
                   ),

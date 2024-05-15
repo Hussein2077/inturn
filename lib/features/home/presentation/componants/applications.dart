@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inturn/core/models/vacancey_model.dart';
+import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/widgets/app_bar.dart';
@@ -30,7 +31,8 @@ class ApplicationsScreen extends StatefulWidget {
 }
 
 class _ApplicationsScreenState extends State<ApplicationsScreen> {
-  final _refreshIndicatorKey = GlobalKey<LiquidPullToRefreshState>();
+  final refreshIndicatorKey = GlobalKey<LiquidPullToRefreshState>();
+
 
   Future<void> _handleRefresh() async {
     final Completer<void> completer = Completer<void>();
@@ -59,7 +61,9 @@ class _ApplicationsScreenState extends State<ApplicationsScreen> {
       appBar: appBar(context,
           text: StringManager.applications.tr(), leading: false),
       body: LiquidPullToRefresh(
-        key: _refreshIndicatorKey,
+        key: refreshIndicatorKey,
+        showChildOpacityTransition: false,
+        backgroundColor: AppColors.primaryColor,
         onRefresh: _handleRefresh,
         child: Column(children: [
           BlocBuilder<GetMyApplicationsBloc, GetMyApplicationsState>(

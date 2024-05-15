@@ -60,25 +60,27 @@ class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.main:
-  String? userId ;
-  userId=MyApp.userId;
-if( MyApp.fromLogin){
-  return PageRouteBuilder(
-      settings: settings,
-      pageBuilder: (context, animation, secondaryAnimation) =>
-            MainScreen(userID: userId??MyApp.userId,),
-      transitionsBuilder: customAnimate);
-}
+        String? userId;
+        log("userIdbefffoof: $userId");
 
+        userId = MyApp.userId;
+        log("userId: $userId");
+        BlocProvider.of<GetMyDataBloc>(
+                getIt<NavigationService>().navigatorKey.currentContext!)
+            .add(GetMyDataEvent(userId ?? MyApp.userId));
+        if (MyApp.fromLogin) {
+          return PageRouteBuilder(
+              settings: settings,
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  MainScreen(
+                    userID: userId ?? MyApp.userId,
+                  ),
+              transitionsBuilder: customAnimate);
+        }
         return PageRouteBuilder(
             settings: settings,
-
             pageBuilder: (context, animation, secondaryAnimation) {
               // return const MainScreen();
-
-              BlocProvider.of<GetMyDataBloc>(context)
-                  .add(GetMyDataEvent(MyApp.userId));
-
               return BlocBuilder<GetMyDataBloc, GetMyDataState>(
                   builder: (context, state) {
                 if (state is GetMyDataLoadingState) {
@@ -86,16 +88,23 @@ if( MyApp.fromLogin){
                 }
                 if (state is GetMyDataSuccessMessageState) {
                   if (state.myDataModel.isCompleted!) {
-                    return   MainScreen(userID: userId??MyApp.userId,);
+                    return MainScreen(
+                      userID: userId ?? MyApp.userId,
+                    );
                   } else {
                     return getScreenFromCompletion(
-                        state.myDataModel.complition ?? 0,userId??MyApp.userId);
+                        state.myDataModel.complition ?? 0,
+                        userId ?? MyApp.userId);
                   }
                 }
                 if (state is GetMyDataErrorMessageState) {
-                  return const LoginScreen();
+                  return MainScreen(
+                    userID: userId ?? MyApp.userId,
+                  );
                 }
-                return    MainScreen(userID: userId??MyApp.userId,);
+                return MainScreen(
+                  userID: userId ?? MyApp.userId,
+                );
               });
             },
             transitionsBuilder: customAnimate);
@@ -167,12 +176,14 @@ if( MyApp.fromLogin){
                 const ChangePassword(),
             transitionsBuilder: customAnimate);
       case Routes.profile:
-        String  userId = settings.arguments as String;
+        String userId = settings.arguments as String;
         return PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) =>
-                  ProfileScreen(userId: userId,),
-            transitionsBuilder: customAnimate,
-        settings: settings,
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              ProfileScreen(
+            userId: userId,
+          ),
+          transitionsBuilder: customAnimate,
+          settings: settings,
         );
 
       case Routes.searchScreen:
@@ -189,7 +200,8 @@ if( MyApp.fromLogin){
                 const FiltersScreen(),
             transitionsBuilder: customAnimate);
     }
-    return unDefinedRoute(  getIt<NavigationService>().navigatorKey.currentContext!);
+    return unDefinedRoute(
+        getIt<NavigationService>().navigatorKey.currentContext!);
   }
 
   static Route<dynamic> unDefinedRoute(BuildContext context) {
@@ -205,7 +217,9 @@ if( MyApp.fromLogin){
                 TextButton(
                   onPressed: () {
                     // Stay in the app
-                    Navigator.of(context).pushNamedAndRemoveUntil(Routes.main, (route) => false,arguments: MyApp.userId);
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        Routes.main, (route) => false,
+                        arguments: MyApp.userId);
                   },
                   child: const Text('Cancel'),
                 ),
@@ -223,8 +237,7 @@ if( MyApp.fromLogin){
           // Return whether to leave the app or not
           return leaveApp ?? false;
         },
-        child: Container(
-        ), // Replace with your app's content
+        child: Container(), // Replace with your app's content
       ),
     );
   }
@@ -258,6 +271,8 @@ Widget getScreenFromCompletion(int completion, String userId) {
     case 90:
       return const SkillInfo();
     default:
-      return MainScreen(userID: userId,);
+      return MainScreen(
+        userID: userId,
+      );
   }
 }

@@ -1,5 +1,6 @@
+import 'package:equatable/equatable.dart';
 
-class FacultyModel  {
+class FacultyModel extends Equatable {
   int? id;
   int? universityId;
   String? name;
@@ -19,6 +20,7 @@ class FacultyModel  {
     nameAr = json['facultyNameAr'];
     universityId = json['universityId'];
   }
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['facultyId'] = id;
@@ -27,4 +29,8 @@ class FacultyModel  {
     map['universityId'] = universityId;
     return map;
   }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [id, name, nameAr, universityId];
 }

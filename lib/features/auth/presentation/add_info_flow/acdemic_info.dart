@@ -25,10 +25,15 @@ class AcademicInfo extends StatelessWidget {
         body: BlocListener<AddPersonalInfoBloc, AddPersonalInfoState >(
           listener: (context, state) {
             if (state is AddUniversitySuccessState) {
-              Navigator.pushNamedAndRemoveUntil(context, Routes.experienceInfo,(route) => false);
+              EasyLoading.dismiss();
+              Navigator.pushNamed(context, Routes.experienceInfo,);
             }
             else if (state is AddUniversityErrorState) {
+              EasyLoading.dismiss();
               EasyLoading.showError(state.errorMessage);
+            }
+            else if(state  is AddUniversityLoadingState){
+              EasyLoading.show();
             }
 
           },
