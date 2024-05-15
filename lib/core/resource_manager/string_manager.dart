@@ -154,7 +154,7 @@ class StringManager {
   static const String viewDetails = "View details";
   static const String pleaseCompleteYourData = "Please complete your data";
   static const String tabToUploadCV = "Tap here to \nUpload your CV";
-  static const String thereIsNo = "There is no items";
+  static const String thereIsNo = "There is no Jobs";
   static const String theMost = "The most ingenious recycled homes";
   static const String anotherRecommendedArticles =
       "Another Recommended Articles";
