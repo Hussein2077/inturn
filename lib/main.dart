@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/service/navigator_services.dart';
 import 'package:inturn/core/service/service_locator.dart';
@@ -34,13 +35,18 @@ String? token;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding:  WidgetsFlutterBinding.ensureInitialized());
+
   await ServerLocator().init();
   await EasyLocalization.ensureInitialized();
+  FlutterNativeSplash.remove();
+
   token = await Methods.instance.returnUserToken();
   await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
 
       );
+
   runApp(EasyLocalization(
       fallbackLocale: const Locale('en'),
       supportedLocales: const [
