@@ -36,6 +36,7 @@ class AddPersonalInfoBloc
     );
     final result = await addPersonalInfoUseCase.call(PersonalInfoParams(
         image: event.image,
+        userId: event.userID,
         firstName: event.firstName,
         lastName: event.lastName));
     result.fold(

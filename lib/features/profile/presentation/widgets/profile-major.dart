@@ -125,7 +125,7 @@ class _ProfileMajorState extends State<ProfileMajor> {
                               // }
                               return CustomAccordion(
                                 title: state1.topFiveModel[index].field,
-                                showContent: true,
+                                showContent: false,
                                 headerBackgroundColor: Colors.transparent,
                                 titleStyle: TextStyle(
                                   color: AppColors.thirdColor,

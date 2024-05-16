@@ -18,8 +18,8 @@ import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_i
 import 'package:inturn/features/auth/presentation/widgets/upload_photo.dart';
 
 class PersonalInfo extends StatefulWidget {
-  const PersonalInfo({super.key});
-
+  const PersonalInfo({super.key, required this.userId});
+  final String userId ;
   @override
   State<PersonalInfo> createState() => _PersonalInfoState();
 }
@@ -104,6 +104,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       BlocProvider.of<AddPersonalInfoBloc>(context).add(
                           AddPersonalInfoButtonPressedEvent(
                             image: UploadProfileImagePage.imageFile!,
+                            userID: widget.userId,
                             firstName: firstNameController.text,
                             lastName: secondNameController.text,
                           ));

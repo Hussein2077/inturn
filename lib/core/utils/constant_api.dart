@@ -28,26 +28,26 @@ class ConstantApi {
   static String editProfileData() =>
       "${baseUrl}UserProfiles/EditUserProfileByUserId";
   //https://api.intrn.app/Intrn/api/UserProfiles/EditUserProfileByUserId
-  static String sendUniversityFacultyIds(String id, int userprofileId) =>
-      "${baseUrl}UserProfiles/EditFormEducation?userId=$id&userProfileId=$userprofileId";
 
-  static String sendLocationTypeIds(String id, int userprofileId) =>
-      "${baseUrl}UserProfiles/EditFormLocation?userId=$id&userProfileId=$userprofileId";
-  static String sendExperienceLevel (String id, int userprofileId) =>
-      "${baseUrl}UserProfiles/EditFormExperience?userId=$id&userProfileId=$userprofileId";
-
-  static String sendMajorIds(String id, int userprofileId) =>
-      "${baseUrl}UserProfiles/EditFormMajors?userId=$id&userProfileId=$userprofileId";
-
-  static String sendSkills(String id, int userprofileId) =>
-      "${baseUrl}UserProfiles/EditFormSkills?userId=$id&userProfileId=$userprofileId";
 
   static const String getGetInternshipsBySearch =
       '${baseUrl}Vacancies/SearchVacancies';
 
 //add personal info
   static String addPersonalInfo() => "${baseUrl}UserProfiles/AddFormUserInfo";
+  static String sendUniversityFacultyIds(String id, ) =>
+      "${baseUrl}UserProfiles/EditFormEducation?userId=$id";
 
+  static String sendLocationTypeIds(String id, ) =>
+      "${baseUrl}UserProfiles/EditFormLocation?userId=$id";
+  static String sendExperienceLevel (String id, ) =>
+      "${baseUrl}UserProfiles/EditFormExperience?userId=$id";
+
+  static String sendMajorIds(String id, ) =>
+      "${baseUrl}UserProfiles/EditFormMajors?userId=$id";
+
+  static String sendSkills(String id, ) =>
+      "${baseUrl}UserProfiles/EditFormSkills?userId=$id";
   static String getMyData(String id) =>
       "${baseUrl}UserProfiles/GetUserProfileByUserId?userId=$id";
   static const String getSkill = "${baseUrl}Skills/GetAllSkills";

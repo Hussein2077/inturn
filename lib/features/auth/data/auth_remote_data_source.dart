@@ -126,8 +126,11 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
   @override
   Future<Map<String, dynamic>> addPersonalInfo(
       PersonalInfoParams params) async {
-    MyApp.  userId = await Methods.instance.returnUserId();
-    MyApp.userProfileId = await Methods.instance.returnProfileId();
+    log('${params.userId}_addPersonalInfo');
+    log('${params.firstName}_addPersonalInfo');
+    log('${params.lastName}_addPersonalInfo');
+    log('${params.image.path}_addPersonalInfo');
+
     // File file = params.image;
     // String fileName = file.path.split('/').last;
    //  var formData = FormData.fromMap({
@@ -137,7 +140,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
    // });
 
     FormData formData = FormData.fromMap({
-      'UserId': MyApp.userId,
+      'UserId': params.userId,
       'FirstName': params.firstName,
       'LastName': params.lastName,
       'ImageFile':
@@ -154,6 +157,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
 
       Map<String, dynamic> jsonData = response.data as Map<String, dynamic>;
       Methods.instance.saveProfileId(profileId: jsonData['userProfileId']);
+
       MyApp.userProfileId = jsonData['userProfileId'];
       // Additional processing if needed
       return jsonData;
@@ -166,7 +170,6 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
   @override
   Future<dynamic> sendUniversityFacultyIds(
       String universityId, String facultyId) async {
-    log('${universityId} suidgwh4 ${facultyId} sfidgwh4 ${MyApp.userProfileId} ${MyApp.userId}  ');
     final body = {
       'userId': MyApp.userId,
       'userProfileId': MyApp.userProfileId,
@@ -176,7 +179,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
 
     try {
       final response = await Dio().post(
-        ConstantApi.sendUniversityFacultyIds(MyApp.userId, MyApp.userProfileId),
+        ConstantApi.sendUniversityFacultyIds(MyApp.userId,),
         data: body,
       );
       return response.data;
@@ -197,7 +200,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
 
     try {
       final response = await Dio().post(
-        ConstantApi.sendExperienceLevel(MyApp.userId, MyApp.userProfileId),
+        ConstantApi.sendExperienceLevel(MyApp.userId, ),
         data: body,
       );
       return response.data;
@@ -209,9 +212,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
 
   @override
   Future<dynamic> locationType(LocationTypeParams locationTypeParams) async {
-    log('${locationTypeParams.cityID}');
-    log('${locationTypeParams.countryID}');
-    log('${locationTypeParams.locationTypeID} locationTypeParams.locationTypeID');
+
     final body = {
       'jobLocationTypeId': locationTypeParams.locationTypeID,
       'userId': MyApp.userId,
@@ -222,7 +223,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
 
     try {
       final response = await Dio().post(
-        ConstantApi.sendLocationTypeIds(MyApp.userId, MyApp.userProfileId),
+        ConstantApi.sendLocationTypeIds(MyApp.userId,),
         data: body,
       );
       return response.data;
@@ -233,7 +234,6 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
 
   @override
   Future<dynamic> majorOfFields(List<int> majorIds) async {
-    log('${majorIds} majorIds');
     final body = {
       'majorIds': majorIds,
       'userId': MyApp.userId,
@@ -242,7 +242,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
 
     try {
       final response = await Dio().post(
-        ConstantApi.sendMajorIds(MyApp.userId, MyApp.userProfileId),
+        ConstantApi.sendMajorIds(MyApp.userId,),
         data: body,
       );
       return response.data;
@@ -254,7 +254,6 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
 
   @override
   Future<dynamic> sendSkills(List<int> skillIds) async {
-    log('${skillIds} skillIdsssssssss');
     final body = {
       'skillIds': skillIds,
       'userId': MyApp.userId,
@@ -263,7 +262,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
 
     try {
       final response = await Dio().post(
-        ConstantApi.sendSkills(MyApp.userId, MyApp.userProfileId),
+        ConstantApi.sendSkills(MyApp.userId,),
         data: body,
       );
       return response.data;

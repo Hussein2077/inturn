@@ -38,6 +38,7 @@ class _JobCartState extends State<JobCart> {
 
   @override
   void initState() {
+    log('${widget.vacancyModel.matchedVacancy.cityName}vacancyModelvacancyModel');
     if (widget.linearCircle) {
       percent = (widget.vacancyModel.matchmakingPercentage) / 100;
     }

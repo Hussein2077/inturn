@@ -120,9 +120,11 @@ class RouteGenerator {
                 const SignUpScreen(),
             transitionsBuilder: customAnimate);
       case Routes.personalInfo:
+        String userId = settings.arguments as String;
         return PageRouteBuilder(
+          settings: settings,
             pageBuilder: (context, animation, secondaryAnimation) =>
-                PersonalInfo(),
+                PersonalInfo(userId: userId,),
             transitionsBuilder: customAnimate);
       case Routes.academicInfo:
         return PageRouteBuilder(
@@ -259,7 +261,7 @@ Widget customAnimate(BuildContext context, Animation<double> animation,
 Widget getScreenFromCompletion(int completion, String userId) {
   switch (completion) {
     case 20:
-      return const PersonalInfo();
+      return   PersonalInfo(userId: userId,);
     case 30:
       return const AcademicInfo();
     case 45:

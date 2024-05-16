@@ -110,10 +110,11 @@ class LocationTypeParams {
 }
 
 class PersonalInfoParams {
+  final String userId;
   final File image;
   final String firstName;
   final String lastName;
 
   PersonalInfoParams(
-      {required this.image, required this.firstName, required this.lastName});
+      {required this.image, required this.firstName, required this.lastName,  required this.userId});
 }

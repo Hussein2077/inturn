@@ -66,6 +66,8 @@ class Methods {
     return tokenPref;
   }
   navigateToAddInfo({required bool isComplete, required int completion,required String userId }) {
+    MyApp.userId=userId;
+    MyApp.userId=userId;
     if (isComplete) {
       Navigator.pushNamedAndRemoveUntil(
           getIt<NavigationService>().navigatorKey.currentContext!,
@@ -76,6 +78,7 @@ class Methods {
         Navigator.pushNamedAndRemoveUntil(
             getIt<NavigationService>().navigatorKey.currentContext!,
             Routes.personalInfo,
+                arguments: userId,
                 (route) => false);
       }
       else if(completion == 30){
