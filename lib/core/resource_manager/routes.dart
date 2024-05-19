@@ -28,9 +28,11 @@ import 'package:inturn/features/profile/presentation/controller/get_my_data/get_
 import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_state.dart';
 import 'package:inturn/features/profile/presentation/profile_screen.dart';
 import 'package:inturn/main.dart';
+import 'package:inturn/splash_screen.dart';
 
 class Routes {
   static const String login = "/login";
+  static const String splash = "/splash";
   static const String main = "/main";
   static const String signUp = "/signUp";
   static const String forgetPassword = "/forgetPassword";
@@ -113,6 +115,12 @@ class RouteGenerator {
             pageBuilder: (context, animation, secondaryAnimation) =>
                 const LoginScreen(),
             transitionsBuilder: customAnimate);
+      case Routes.splash:
+        return PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const SplashScreen(),
+            transitionsBuilder: customAnimate);
+
 
       case Routes.signUp:
         return PageRouteBuilder(

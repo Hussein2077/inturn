@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:inturn/core/models/vacancey_model.dart';
+import 'package:inturn/features/home/data/model/application_model.dart';
 
 abstract class GetMyApplicationsState extends Equatable {
   const GetMyApplicationsState();
@@ -21,7 +22,7 @@ class GetMyApplicationsErrorMessageState extends GetMyApplicationsState {
 }
 
 class GetMyApplicationsSuccessMessageState extends GetMyApplicationsState {
-  final List<VacancyModel> jobModel;
+  final List<ApplicationModel> jobModel;
 
   const GetMyApplicationsSuccessMessageState({required this.jobModel});
 }

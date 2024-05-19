@@ -68,6 +68,7 @@ dependencies:
   url_launcher: ^6.2.6
   searchfield: ^1.0.1
   flutter_native_splash: ^2.4.0
+  video_player: ^2.8.6
 dev_dependencies:
   flutter_test:
     sdk: flutter

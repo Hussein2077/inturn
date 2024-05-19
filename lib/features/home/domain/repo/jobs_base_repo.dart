@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:inturn/core/error/failure.dart';
 import 'package:inturn/core/models/vacancey_model.dart';
+import 'package:inturn/features/home/data/model/application_model.dart';
 import 'package:inturn/features/home/data/model/company_model.dart';
 import 'package:inturn/features/home/data/model/major_model.dart';
 import 'package:inturn/features/home/data/model/cities_model.dart';
@@ -25,7 +26,7 @@ abstract class BaseRepositoryHome {
 
   Future<Either<List<SkillModel>, Failure>> getSkill();
 
-  Future<Either<List<VacancyModel>, Failure>> getMyApplications(String type);
+  Future<Either<List<ApplicationModel>, Failure>> getMyApplications(String userId);
 
   Future<Either<List<CompanyModel>, Failure>> getCompanies();
   Future<Either<List<VacancyModel>, Failure>> getInternshipsBySearch(VacancySearch vacancySearch);

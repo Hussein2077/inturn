@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:inturn/core/models/vacancey_model.dart';
 import 'package:inturn/core/utils/api_helper.dart';
 import 'package:inturn/core/utils/constant_api.dart';
+import 'package:inturn/features/home/data/model/application_model.dart';
 import 'package:inturn/features/home/data/model/company_model.dart';
 import 'package:inturn/features/home/data/model/major_model.dart';
 import 'package:inturn/features/home/data/model/cities_model.dart';
@@ -28,7 +29,7 @@ abstract class BaseRemotelyDataSourceHome {
 
   Future<List<SkillModel>> getSkill();
 
-  Future<List<VacancyModel>> getMyApplications(String type);
+  Future<List<ApplicationModel>> getMyApplications(String userId);
 
   Future<List<CompanyModel>> getCompanies();
 
@@ -148,13 +149,13 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
   }
 
   @override
-  Future<List<VacancyModel>> getMyApplications(String type) async {
+  Future<List<ApplicationModel>> getMyApplications(String userId ) async {
     try {
       final response = await Dio().get(
-        ConstantApi.myApplications,
+        ConstantApi.myApplications(userId),
       );
-      List<VacancyModel> jsonData = List<VacancyModel>.from(
-          (response.data as List).map((e) => VacancyModel.fromJson(e)));
+      List<ApplicationModel> jsonData = List<ApplicationModel>.from(
+          (response.data as List).map((e) => ApplicationModel.fromJson(e)));
       return jsonData;
     } on DioException catch (e) {
       throw DioHelper.handleDioError(

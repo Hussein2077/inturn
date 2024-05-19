@@ -83,22 +83,22 @@ class _ApplicationsScreenState extends State<ApplicationsScreen> {
                         padding: EdgeInsets.all(AppSize.defaultSize! * 1.2),
                         child: JobCart(
                       linearCircle: false,
+                          applicationStatusId: state.jobModel[index].applicationStatusId!,
                           vacancyModel: MatchedVacancyWrapper(
                             matchedVacancy: MatchedVacancy(
-                              vacancyId: state.jobModel[index].vacancyId!,
-                              title: state.jobModel[index].title!,
-                              companyId: state.jobModel[index].companyId!,
-                              company: state.jobModel[index].company!,
-                              cityName: state.jobModel[index].cityName!,
+                              vacancyId: state.jobModel[index].vacancyId,
+                              title: state.jobModel[index].vacancy?.title,
+                              companyId: state.jobModel[index].vacancy?.companyId,
+                              company: state.jobModel[index].vacancy?.company,
+                              cityName: state.jobModel[index].vacancy?.cityName,
                               vacancyLevelId:
-                                  state.jobModel[index].vacancyLevelId!,
+                                  state.jobModel[index].vacancy?.vacancyLevelId,
                               requirements:
-                                  state.jobModel[index].requirements!,
+                                  state.jobModel[index].vacancy?.requirements,
                               responsibilities:
-                                  state.jobModel[index].responsibilities!,
+                                  state.jobModel[index].vacancy?.responsibilities,
                             ),
                             matchmakingPercentage: 0,
-
                           ),
                         )
                             .animate()

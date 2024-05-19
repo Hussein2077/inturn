@@ -7,14 +7,12 @@ import 'package:inturn/features/home/presentation/controller/get_my_applications
 import 'package:inturn/features/home/presentation/controller/get_my_applications/get_my_applications_state.dart';
 
 class GetMyApplicationsBloc extends Bloc<BaseGetMyApplicationsEvent, GetMyApplicationsState> {
-  GetInternshipsBySearchUseCase getMyApplicationsUseCase;
+  GetMyApplicationsUseCase getMyApplicationsUseCase;
 
   GetMyApplicationsBloc({required this.getMyApplicationsUseCase}) : super(GetMyApplicationsInitial()) {
     on<GetMyApplicationsEvent>((event, emit) async {
       emit(const GetMyApplicationsLoadingState());
-      final result = await getMyApplicationsUseCase.call(VacancySearch(
-          userId: event.userId
-      ));
+      final result = await getMyApplicationsUseCase.call(event.userId);
       result.fold(
           (l) => emit(GetMyApplicationsSuccessMessageState(jobModel: l)),
           (r) => emit(GetMyApplicationsErrorMessageState(

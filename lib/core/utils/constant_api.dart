@@ -18,7 +18,7 @@ class ConstantApi {
 
   static String getVacancy(String id) =>
       "${baseUrl}UserProfiles/SuggestedJobsForUser/$id";
-  static const String myApplications = "${baseUrl}Apply/Myapplications";
+  static   String myApplications(String userId ) =>"${baseUrl}applications/GetMyApplicationsByUserId?userId=$userId";
 
   static String myData(String id) => "${baseUrl}Auth/UserData?userId=$id";
 

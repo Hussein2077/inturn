@@ -21,12 +21,12 @@ class JobCart extends StatefulWidget {
       this.linearCircle = true,
       this.skillRequired,
       this.height,
-      required this.vacancyModel});
+      required this.vacancyModel, this.applicationStatusId});
 
   final bool linearCircle;
   final Widget? skillRequired;
   final double? height;
-
+  final int? applicationStatusId;
   final MatchedVacancyWrapper vacancyModel;
 
   @override
@@ -180,8 +180,7 @@ class _JobCartState extends State<JobCart> {
                               bottomLeft:
                                   Radius.circular(AppSize.defaultSize! * 2),
                             ),
-                            color: widget.vacancyModel.matchedVacancy
-                                        .vacancyLevelId !=
+                            color: widget.applicationStatusId!=
                                     1
                                 ? AppColors.homeColor
                                 : AppColors.greyColor,
@@ -198,11 +197,9 @@ class _JobCartState extends State<JobCart> {
                           width: AppSize.defaultSize! * 10,
                           height: AppSize.defaultSize! * 2.4,
                           decoration: BoxDecoration(
-                            color: (widget.vacancyModel.matchedVacancy
-                                            .vacancyLevelId ==
+                            color: (widget.applicationStatusId ==
                                         5 ||
-                                    widget.vacancyModel.matchedVacancy
-                                            .vacancyLevelId ==
+                                widget.applicationStatusId ==
                                         2)
                                 ? AppColors.yellowColor
                                 : AppColors.greyColor,
@@ -225,20 +222,17 @@ class _JobCartState extends State<JobCart> {
                               bottomRight:
                                   Radius.circular(AppSize.defaultSize! * 2),
                             ),
-                            color: widget.vacancyModel.matchedVacancy
-                                        .vacancyLevelId ==
+                            color: widget.applicationStatusId==
                                     2
                                 ? Colors.green
-                                : widget.vacancyModel.matchedVacancy
-                                            .vacancyLevelId ==
+                                : widget.applicationStatusId ==
                                         3
                                     ? Colors.red
                                     : AppColors.greyColor,
                           ),
                           child: Center(
                             child: CustomText(
-                              text: widget.vacancyModel.matchedVacancy
-                                          .vacancyLevelId ==
+                              text: widget.applicationStatusId ==
                                       3
                                   ? StringManager.rejected.tr()
                                   : StringManager.selection.tr(),
