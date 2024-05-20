@@ -31,29 +31,28 @@ static  CityModel? selectedValue2 ;
 
 class _CitiesDropDownState extends State<CitiesDropDown> {
   List<CityModel>? cityModel;
-  bool cityVisible=false;
-  bool areaVisible=false;
+  ValueNotifier<bool> cityVisible = ValueNotifier<bool>(false);
+  ValueNotifier<bool> areaVisible = ValueNotifier<bool>(false);
+
+
 @override
   void initState() {
     BlocProvider.of<OptionsBloc>(context).add(const GetCitiesEvent());
-    log('${cityVisible}cityVisible');
-    cityVisible=cityModel!=null;
-    log('${cityVisible}cityVisible2222222');
-    areaVisible=CitiesDropDown.selectedValue2!=null;
+    cityVisible.value=cityModel!=null;
+    areaVisible.value=CitiesDropDown.selectedValue2!=null;
 
     super.initState();
   }
   @override
   void dispose() {
-    CitiesDropDown.selectedValue=null;
-    CitiesDropDown.selectedValue2=null;
+    // CitiesDropDown.selectedValue=null;
+    // CitiesDropDown.selectedValue2=null;
     super.dispose();
   }
   @override
   Widget build(BuildContext context) {
-    cityVisible=cityModel!=null;
-    areaVisible=CitiesDropDown.selectedValue2!=null;
-    log('${cityVisible}cityVisible33333333333');
+    cityVisible.value=cityModel!=null;
+    areaVisible.value=CitiesDropDown.selectedValue2!=null;
     return BlocBuilder<OptionsBloc, GetOptionsStates>(
       builder: (context, state) {
         if (state.getCitiesRequest == RequestState.loaded) {
@@ -83,8 +82,9 @@ class _CitiesDropDownState extends State<CitiesDropDown> {
                     onChanged: (Country? newValue) {
                       setState(() {
                         CitiesDropDown.selectedValue = newValue;
-                        cityModel=CitiesDropDown.selectedValue?.cities;
+                        cityModel=newValue?.cities;
                       });
+                      log('${  CitiesDropDown.selectedValue?.countryId}ggggg${cityModel?[0].cityId}');
                     },
                     hint: Padding(
                       padding:   EdgeInsets.only(left: AppSize.defaultSize!),
@@ -113,74 +113,94 @@ class _CitiesDropDownState extends State<CitiesDropDown> {
                   ),
                 ),
               ),
-              if(cityVisible)
+              if(cityVisible.value)
                 SizedBox(
                 height: AppSize.defaultSize! * 2,
               ),
-              Visibility(
-                visible: cityVisible,
-                child: Container(
-                  // width: AppSize.screenWidth! * .9,
-                  height: AppSize.defaultSize! * 5,
-                  decoration: BoxDecoration(
-                      border:
-                      Border.all(color: AppColors.borderColor.withOpacity(.4)),
-                      borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2)),
-                  child: Center(
-                    child: DropdownButton2<CityModel>(
-                      value:(cityModel?.contains(CitiesDropDown.selectedValue2)??false)? CitiesDropDown.selectedValue2:null,
-                      buttonStyleData: ButtonStyleData(
-                        width: AppSize.screenWidth! * .9,
-                      ), iconStyleData: IconStyleData(
-                      iconSize: AppSize.defaultSize! * 2.5,
-                    ),
-                      dropdownStyleData: DropdownStyleData(
-                          width: AppSize.screenWidth! * .9,
-                          // padding: EdgeInsets.symmetric(horizontal: 10),
-                          maxHeight: AppSize.screenHeight! * .5),
-                      underline: const SizedBox(),
-                      onChanged: (CityModel? newValue) {
-                        BlocProvider.of<OptionsBloc>(context).add(  GetAreasEvent(newValue?.cityId??  (CitiesDropDown.selectedValue2 ?.cityId??1)));
-                        setState(() {
-                          CitiesDropDown.selectedValue2 = newValue;
-                        });
-                      },
+              ValueListenableBuilder(
+                  valueListenable:  cityVisible,
 
-                      hint: Padding(
-                        padding:   EdgeInsets.only(left: AppSize.defaultSize!),
-                        child: Text(
-                          StringManager.selectCity.tr(),
-                          style: TextStyle(
-                            fontSize: AppSize.defaultSize!,
-                          ),
-                        ),
+                  builder: (context_, value, child) {
+                    if(value) {
+                      return Container(
+                    // width: AppSize.screenWidth! * .9,
+                    height: AppSize.defaultSize! * 5,
+                    decoration: BoxDecoration(
+                        border:
+                        Border.all(color: AppColors.borderColor.withOpacity(.4)),
+                        borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2)),
+                    child: Center(
+                      child: DropdownButton2<CityModel>(
+                        value:(cityModel?.contains(CitiesDropDown.selectedValue2)??false)? CitiesDropDown.selectedValue2:null,
+                        buttonStyleData: ButtonStyleData(
+                          width: AppSize.screenWidth! * .9,
+                        ), iconStyleData: IconStyleData(
+                        iconSize: AppSize.defaultSize! * 2.5,
                       ),
-                      items:
-                      (cityModel??( state.getCities.isNotEmpty?  state.getCities[0].cities:[])??[])
-                          .map<DropdownMenuItem<CityModel>>((CityModel value) {
-                        return DropdownMenuItem(
-                          value: value,
-                          child: Padding(
-                            padding: EdgeInsets.only(left: AppSize.defaultSize!),
-                            child: Text(
-                              value.cityNameEn,
-                              style: TextStyle(
-                                fontSize: AppSize.defaultSize!,
-                              ),
+                        dropdownStyleData: DropdownStyleData(
+                            width: AppSize.screenWidth! * .9,
+                            // padding: EdgeInsets.symmetric(horizontal: 10),
+                            maxHeight: AppSize.screenHeight! * .5),
+                        underline: const SizedBox(),
+                        onChanged: (CityModel? newValue) {
+                          AreaDropDown.selectedValue2=null;
+
+                          BlocProvider.of<OptionsBloc>(context).add(  GetAreasEvent(newValue?.cityId??  (CitiesDropDown.selectedValue2 ?.cityId??1)));
+                          setState(() {
+                            CitiesDropDown.selectedValue2 = newValue;
+                          });
+
+                        },
+
+                        hint: Padding(
+                          padding:   EdgeInsets.only(left: AppSize.defaultSize!),
+                          child: Text(
+                            StringManager.selectCity.tr(),
+                            style: TextStyle(
+                              fontSize: AppSize.defaultSize!,
                             ),
                           ),
-                        );
-                      }).toList(),
+                        ),
+                        items:
+                        (cityModel??( state.getCities.isNotEmpty?  state.getCities[0].cities:[])??[])
+                            .map<DropdownMenuItem<CityModel>>((CityModel value) {
+                          return DropdownMenuItem(
+                            value: value,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: AppSize.defaultSize!),
+                              child: Text(
+                                value.cityNameEn,
+                                style: TextStyle(
+                                  fontSize: AppSize.defaultSize!,
+                                ),
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
                     ),
-                  ),
-                ),
+                  );
+                    }
+                    else {
+                      return const SizedBox();
+                    }
+                }
               ),
               SizedBox(
                 height: AppSize.defaultSize! * 2,
               ),
-              Visibility(
-                  visible:  areaVisible,
-                  child: AreaDropDown(cityId: CitiesDropDown.selectedValue2?.cityId??1)),
+              ValueListenableBuilder(
+                  valueListenable: areaVisible,
+
+                  builder: (context_, value, child) {
+                    if(value) {
+                      return AreaDropDown(cityId: CitiesDropDown.selectedValue2?.cityId??1);
+                    }
+                    else {
+                      return const SizedBox();
+                    }
+                }
+              ),
             ],
           );
         } else if (state.getCitiesRequest == RequestState.loading) {

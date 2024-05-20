@@ -7,6 +7,7 @@ import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/widgets/app_bar.dart';
+import 'package:inturn/core/widgets/area_drop_down.dart';
 import 'package:inturn/core/widgets/country_drop_down.dart';
 import 'package:inturn/core/widgets/cutom_text.dart';
 import 'package:inturn/core/widgets/main_button.dart';
@@ -81,7 +82,7 @@ class _LocationInfoState extends State<LocationInfo> {
                 text: StringManager.next.tr(),
                 onTap: () {
                   if (CitiesDropDown.selectedValue != null &&
-                      CitiesDropDown.selectedValue2 != null) {
+                      CitiesDropDown.selectedValue2 != null&&AreaDropDown.selectedValue2!=null) {
                     BlocProvider.of<AddPersonalInfoBloc>(context).add(
                         SendLocationEvent(
                           countryID: CitiesDropDown.selectedValue?.countryId
@@ -91,9 +92,16 @@ class _LocationInfoState extends State<LocationInfo> {
                           locationTypeID: (LocationInfo.locationSegment+1)
                               .toString(),)
                     );
-                  } else {
+                  }
+                  else if(CitiesDropDown.selectedValue == null){
                     errorSnackBar(
-                        context, StringManager.pleaseCompleteYourData.tr());
+                        context, StringManager.pleaseAddCountry.tr());
+                  } else if(CitiesDropDown.selectedValue2 == null){
+                    errorSnackBar(
+                        context, StringManager.pleaseAddCity.tr());
+                  } else if(AreaDropDown.selectedValue2 == null){
+                    errorSnackBar(
+                        context, StringManager.pleaseAddArea.tr());
                   }
                 },
               ),

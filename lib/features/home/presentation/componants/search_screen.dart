@@ -53,9 +53,15 @@ class _SearchScreenState extends State<SearchScreen> {
                 child: CustomTextField(
                   controller: searchController,
                   onChanged: (value) {
+                    log('${  CitiesDropDown.selectedValue?.countryId}gggggsss${CitiesDropDown.selectedValue2?.cityId}');
+
                     Future.delayed(const Duration(milliseconds: 500), () {
                       BlocProvider.of<GetInternshipsBySearchBloc>(context)
-                          .add(GetInternshipsBySearchEvent(title: value));
+                          .add(GetInternshipsBySearchEvent(title: value,
+                        vacancyLevelId: FiltersScreen.careerLevel,
+                        cityId: CitiesDropDown.selectedValue2?.cityId,
+                        countryId: CitiesDropDown.selectedValue?.countryId ?? 1,
+                      ));
                     });
                   },
                   hintText: StringManager.searchForJobs.tr(),

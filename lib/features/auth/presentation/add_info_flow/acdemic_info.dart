@@ -60,10 +60,14 @@ class AcademicInfo extends StatelessWidget {
                                 ?.universityId.toString() ?? "",
                             facultyId: FacultyDropDown.selectedValue?.id
                                 .toString() ?? ""));
-                  } else {
+                  } else if(UniversityDropDown.selectedValue == null) {
                     errorSnackBar(
-                        context, StringManager.pleaseCompleteYourData.tr());
+                        context, StringManager.pleaseAddUniversity.tr());
+                  }else if( FacultyDropDown.selectedValue == null) {
+                    errorSnackBar(
+                        context, StringManager.pleaseAddFaculty.tr());
                   }
+
                 },
               ),
             ]),

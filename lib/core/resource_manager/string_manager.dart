@@ -153,6 +153,15 @@ class StringManager {
   static const String applyNow = "Apply Now";
   static const String viewDetails = "View details";
   static const String pleaseCompleteYourData = "Please complete your data";
+  static const String pleaseAddUniversity= "Please add your university";
+  static const String pleaseAddFaculty= "Please add your Faculty";
+  static const String pleaseAddCountry= "Please add your Country";
+  static const String pleaseAddCity= "Please add your City";
+  static const String pleaseAddArea= "Please add your Area";
+  static const String pleaseAddField= "Please add at least one field";
+  static const String pleaseAddSkill= "Please add at least one skill";
+  static const String pleaseUploadImage = "Please Upload your Image";
+  static const String pleaseUploadName= "Please complete your name";
   static const String tabToUploadCV = "Tap here to \nUpload your CV";
   static const String thereIsNo = "There is no Jobs";
   static const String theMost = "The most ingenious recycled homes";
@@ -167,6 +176,7 @@ class StringManager {
   static const String rejected = "Rejected";
   static const String moreAboutTheCompany = "More About The Company";
   static const String anotherSuggestedJobs = "Another Suggested Jobs";
+  static const String suggestedJobs = "Suggested Jobs";
   static const String all = "All";
   static const String freshGraduate = "Fresh Graduate";
 }

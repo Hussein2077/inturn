@@ -39,7 +39,7 @@ class _AreaDropDownState extends State<AreaDropDown> {
               borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2)),
           child: Center(
             child: DropdownButton2<AreaModel>(
-              value:AreaDropDown.selectedValue2,
+              value:state.getAreas.contains(AreaDropDown.selectedValue2)? AreaDropDown.selectedValue2:null,
               buttonStyleData: ButtonStyleData(
                 width: AppSize.screenWidth! * .9,
               ),
@@ -87,7 +87,47 @@ class _AreaDropDownState extends State<AreaDropDown> {
         );
         }
         else if (state.getAreasRequest == RequestState.loading) {
-          return const LoadingWidget();
+          return Container(
+            // width: AppSize.screenWidth! * .9,
+            height: AppSize.defaultSize! * 5,
+            decoration: BoxDecoration(
+                border:
+                Border.all(color: AppColors.borderColor.withOpacity(.4)),
+                borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2)),
+            child: Center(
+              child: DropdownButton2<AreaModel>(
+                // value:AreaDropDown.selectedValue2,
+                buttonStyleData: ButtonStyleData(
+                  width: AppSize.screenWidth! * .9,
+                ),
+                iconStyleData: IconStyleData(
+                  iconSize: AppSize.defaultSize! * 2.5,
+                ),
+                dropdownStyleData: DropdownStyleData(
+                    width: AppSize.screenWidth! * .9,
+                    // padding: EdgeInsets.symmetric(horizontal: 10),
+                    maxHeight: AppSize.screenHeight! * .5),
+                underline: const SizedBox(),
+                onChanged: (AreaModel? newValue) {
+                  setState(() {
+                    AreaDropDown.selectedValue2 = newValue;
+                  });
+                },
+
+                hint: Padding(
+                  padding: EdgeInsets.only(left: AppSize.defaultSize!),
+                  child: Text(
+                    StringManager.selectArea.tr(),
+                    style: TextStyle(
+                      fontSize: AppSize.defaultSize!,
+                    ),
+                  ),
+                ),
+                items:[]
+
+              ),
+            ),
+          );
         } else if (state.getAreasRequest == RequestState.error) {
           return ErrorWidget(state.getAreasMessage);
         } else {

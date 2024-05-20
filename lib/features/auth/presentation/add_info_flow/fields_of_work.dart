@@ -42,11 +42,7 @@ class _FieldsInfoState extends State<FieldsInfo> {
 
   List <int>  _currentSegment = [];
 
-  void _onValueChanged( List <int> newValue) {
-    setState(() {
-      _currentSegment = newValue;
-    });
-  }
+
 
   Widget closeIcon = Transform.rotate(
     angle: 180 * 3.14 / 180,
@@ -73,10 +69,12 @@ class _FieldsInfoState extends State<FieldsInfo> {
           children: [
             BlocListener<AddPersonalInfoBloc, AddPersonalInfoState >(
   listener: (context, state) {
-    if (state is AddMajorIdSuccessState) {  EasyLoading.dismiss();
+    if (state is AddMajorIdSuccessState) {
+      EasyLoading.dismiss();
       Navigator.pushNamed(context, Routes.skillsInfo,);
     }
-    else if (state is AddMajorIdErrorState) {  EasyLoading.dismiss();
+    else if (state is AddMajorIdErrorState) {
+      EasyLoading.dismiss();
       errorSnackBar(context, StringManager.unexpectedError);
     }
     else if (state is AddMajorIdLoadingState) {
@@ -110,12 +108,23 @@ class _FieldsInfoState extends State<FieldsInfo> {
                               widgetItems: Column(
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
-                                  MultiSegmentedButton(
-                                    initialIndex: index,
-                                    segments:state.topFiveModel,
-                                    ids: state.topFiveModel[index].positions.map((position) => position.majorId).toList(),
-                                    // segments:state.topFiveModel[index].positions.map((position) => position.majorId).toList(),
-                                    onValueChanged: (index) => _onValueChanged( index),
+                                  StatefulBuilder(
+                                    builder: (context,setState) {
+                                      return MultiSegmentedButton(
+                                        initialIndex: index,
+                                        segments:state.topFiveModel,
+                                        ids: state.topFiveModel[index].positions.map((position) => position.majorId).toList(),
+                                        // segments:state.topFiveModel[index].positions.map((position) => position.majorId).toList(),
+                                        onValueChanged: (index) {
+                                          void onValueChanged( List <int> newValue) {
+                                            setState(() {
+                                              _currentSegment = newValue;
+                                            });
+                                          }
+                                          return onValueChanged( index);
+                                        },
+                                      );
+                                    }
                                   ),
                                 ],
                               ),
@@ -131,7 +140,7 @@ class _FieldsInfoState extends State<FieldsInfo> {
                             BlocProvider.of<AddPersonalInfoBloc>(context).add(SendMajorIdEvent(majorIds: FieldsInfo.id));
                           } else {
                             errorSnackBar(
-                                context, StringManager.pleaseCompleteYourData.tr());
+                                context, StringManager.pleaseAddField.tr());
                           }
                         },
                       ),

@@ -23,11 +23,15 @@ import 'package:inturn/features/home/presentation/controller/get_my_applications
 import 'package:inturn/features/home/presentation/controller/intern_search_bloc/get_internships_search_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/intern_search_bloc/get_internships_search_event.dart';
 import 'package:inturn/features/home/presentation/controller/intern_search_bloc/get_internships_search_state.dart';
+import 'package:inturn/features/home/presentation/controller/suggested/bloc.dart';
+import 'package:inturn/features/home/presentation/controller/suggested/event.dart';
+import 'package:inturn/features/home/presentation/controller/suggested/state.dart';
 import 'package:inturn/features/home/presentation/controller/vacancy_details_bloc/bloc.dart';
 import 'package:inturn/features/home/presentation/controller/vacancy_details_bloc/event.dart';
 import 'package:inturn/features/home/presentation/controller/vacancy_details_bloc/state.dart';
 import 'package:inturn/features/home/presentation/widgets/company_cart.dart';
 import 'package:inturn/features/home/presentation/widgets/job_cart.dart';
+import 'package:inturn/features/home/presentation/widgets/suggested_view.dart';
 import 'package:inturn/main.dart';
 
 class JobDetailsScreen extends StatefulWidget {
@@ -44,10 +48,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
   void initState() {
     // BlocProvider.of<VacancyBloc>(context)
     //     .add(GetVacancyDetailsEvent(widget.id));
-    BlocProvider.of<GetInternshipsBySearchBloc>(context)
-        .add(GetInternshipsBySearchEvent(
-      companyId: widget.matchedVacancyWrapper.matchedVacancy.companyId,
-    ));
+
     super.initState();
   }
 
@@ -175,68 +176,17 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
               SizedBox(
                 height: AppSize.defaultSize! * 2,
               ),
-              BlocBuilder<GetInternshipsBySearchBloc,
-                  GetInternshipsBySearchState>(
-                builder: (context, state) {
-
-                  if (state is GetInternshipsBySearchLoadingState) {
-                    return const LoadingWidget();
-                  } else if (state
-                      is GetInternshipsBySearchSuccessMessageState) {
-                    state.vacancyModel.removeWhere((element) => element.vacancyId == widget.matchedVacancyWrapper.matchedVacancy.vacancyId);
-
-                    if(state.vacancyModel.isEmpty){
-                      return const EmptyWidget(text: 'No more jobs related',);
-                    }
-                    return ListView.builder(
-                        itemCount: state.vacancyModel.isNotEmpty?state.vacancyModel.length-1: state.vacancyModel.length,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (item, index) {
-
-                          return Padding(
-                            padding: EdgeInsets.all(AppSize.defaultSize! * 1.2),
-                            child: JobCart(
-                              vacancyModel: MatchedVacancyWrapper(
-                                matchedVacancy: MatchedVacancy(
-                                  vacancyId:
-                                      state.vacancyModel[index].vacancyId,
-                                  title: state.vacancyModel[index].title,
-                                  companyId:
-                                      state.vacancyModel[index].companyId,
-                                  company: state.vacancyModel[index].company,
-                                  cityName: state.vacancyModel[index].cityName,
-                                  vacancyLevelId:
-                                      state.vacancyModel[index].vacancyLevelId,
-                                  requirements:
-                                      state.vacancyModel[index].requirements,
-                                  responsibilities: state
-                                      .vacancyModel[index].responsibilities,
-                                ),
-                                matchmakingPercentage: 0,
-                              ),
-                            )
-                                .animate()
-                                .fadeIn() // uses `Animate.defaultDuration`
-                                .scale() // inherits duration from fadeIn
-                                .move(delay: 300.ms, duration: 600.ms),
-                          );
-                        });
-                  } else if (state is GetInternshipsBySearchErrorMessageState) {
-                    return ErrorWidget(state.errorMessage);
-                  } else {
-                    return const SizedBox();
-                  }
-                },
+              SuggestedView(
+                companyId:
+                    widget.matchedVacancyWrapper.matchedVacancy.companyId ?? 1,
+                vacancyId:
+                    widget.matchedVacancyWrapper.matchedVacancy.vacancyId ?? 1,
               ),
-
               SizedBox(
                 height: AppSize.defaultSize!,
               ),
             ],
-          )
-
-              ),
+          )),
         ),
       ),
     );

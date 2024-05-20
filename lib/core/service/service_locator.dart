@@ -31,6 +31,7 @@ import 'package:inturn/features/home/presentation/controller/get_cities_major_un
 import 'package:inturn/features/home/presentation/controller/get_major/bloc.dart';
 import 'package:inturn/features/home/presentation/controller/get_my_applications/get_my_applications_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/intern_search_bloc/get_internships_search_bloc.dart';
+import 'package:inturn/features/home/presentation/controller/suggested/bloc.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/vacancy_details_bloc/bloc.dart';
 import 'package:inturn/features/profile/data/data%20source/profile_remote_data_source.dart';
@@ -93,7 +94,8 @@ class ServerLocator {
         () => VacancyBloc(getVacancyDetailsUseCase: getIt()));
     getIt.registerLazySingleton(() => ApplyBloc(applyUseCase: getIt()));
     getIt.registerLazySingleton(() =>
-        GetInternshipsBySearchBloc(getInternshipsBySearchUseCase: getIt()));
+        GetInternshipsBySearchBloc(getInternshipsBySearchUseCase: getIt()));  getIt.registerLazySingleton(() =>
+        SuggestedBloc(getInternshipsBySearchUseCase: getIt()));
 
 //use_case
     getIt.registerFactory(

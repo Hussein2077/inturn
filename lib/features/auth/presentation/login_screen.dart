@@ -67,9 +67,9 @@ class _LoginScreenState extends State<LoginScreen> {
             LoginWithEmailAndPasswordState>(
           listener: (context, state) {
             if (state is LoginWithEmailAndPasswordSuccessMessageState) {
-              MyApp.userId=state.userId;
               EasyLoading.dismiss();
-              Methods.instance.navigateToAddInfo(
+              MyApp.userId=state.userId;
+                            Methods.instance.navigateToAddInfo(
                   isComplete: state.isCompleted,
                   userId: state.userId,
                   completion: state.completion);
@@ -79,6 +79,9 @@ class _LoginScreenState extends State<LoginScreen> {
             } else if (state is LoginWithEmailAndPasswordLoadingState) {
               EasyLoading.show(status: 'loading...');
               
+            }
+            else {
+              EasyLoading.dismiss();
             }
           },
           child: BlocListener<SignInWithPlatformBloc, SignInWithPlatformState>(
@@ -94,6 +97,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 EasyLoading.showError(state.errorMessage);
               } else if (state is SignWithPlatFormLoadingState) {
                 EasyLoading.show(status: 'loading...');
+              }
+              else{
+                EasyLoading.dismiss();
               }
             },
             child: Padding(

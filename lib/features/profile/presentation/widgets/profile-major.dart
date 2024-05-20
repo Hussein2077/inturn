@@ -92,7 +92,7 @@ class _ProfileMajorState extends State<ProfileMajor> {
                         CustomSegmentedButton2(
                           segments: widget.profileDataModel?.user?.userMajors
                                   ?.map((e) => e.major?.majorNameEn??"")
-                                  .toList() ??
+                                  .toSet().toList() ??
                               [],
                           showClose: false,
                           onValueChanged: (List<int> list) {},
@@ -125,7 +125,7 @@ class _ProfileMajorState extends State<ProfileMajor> {
                               // }
                               return CustomAccordion(
                                 title: state1.topFiveModel[index].field,
-                                showContent: false,
+                                showContent: true,
                                 headerBackgroundColor: Colors.transparent,
                                 titleStyle: TextStyle(
                                   color: AppColors.thirdColor,

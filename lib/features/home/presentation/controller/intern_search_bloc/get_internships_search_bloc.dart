@@ -11,6 +11,9 @@ class GetInternshipsBySearchBloc extends Bloc<BaseGetInternshipsBySearchEvent, G
   GetInternshipsBySearchUseCase getInternshipsBySearchUseCase;
 
   GetInternshipsBySearchBloc({required this.getInternshipsBySearchUseCase}) : super(GetInternshipsBySearchInitial()) {
+    on<InitEvent>((event, emit){
+      emit(GetInternshipsBySearchInitial());
+    });
     on<GetInternshipsBySearchEvent>((event, emit) async {
       emit(const GetInternshipsBySearchLoadingState());
       final result = await getInternshipsBySearchUseCase.call(VacancySearch(

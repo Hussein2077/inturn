@@ -106,7 +106,7 @@ class _FacultyDropDownState extends State<FacultyDropDown> {
             ),
           );
         } else if (state.getFacultyRequest == RequestState.loading) {
-          return const LoadingWidget();
+          // return const LoadingWidget();
           return Container(
             // width: AppSize.screenWidth! * .9,
             height: AppSize.defaultSize! * 4,
@@ -123,6 +123,7 @@ class _FacultyDropDownState extends State<FacultyDropDown> {
                     )), iconStyleData: IconStyleData(
               iconSize: AppSize.defaultSize! * 2.5,
             ),
+
                 dropdownStyleData: DropdownStyleData(
                     width: AppSize.screenWidth! * .9,
                     // padding: EdgeInsets.symmetric(horizontal: 10),

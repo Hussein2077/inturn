@@ -213,14 +213,14 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
   @override
   Future<List<VacancyModel>> getInternshipsBySearch(
       VacancySearch vacancySearch) async {
-    log('${vacancySearch.cityId}ehehhet\n ${vacancySearch.countryId}\n${vacancySearch.vacancyLevelId}\n${vacancySearch.companyId}\n${vacancySearch.title}\n${vacancySearch.userId}');
+    log('${vacancySearch.countryId}ehehhet\n ${vacancySearch.cityId}\n${vacancySearch.vacancyLevelId}\n${vacancySearch.companyId}\n${vacancySearch.title}\n${vacancySearch.userId}');
     final body = {
       'cityId': vacancySearch.cityId,
       'countryId': vacancySearch.countryId,
       'vacancyLevelId': vacancySearch.vacancyLevelId,
       'companyId': vacancySearch.companyId,
       'title': vacancySearch.title,
-      'userId': vacancySearch.userId
+      'userId': vacancySearch.userId,
     };
     try {
       final response = await Dio().post(

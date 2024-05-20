@@ -197,7 +197,7 @@ class _SkillInfoState extends State<SkillInfo> {
                               );
                             } else {
                               errorSnackBar(context,
-                                  StringManager.pleaseCompleteYourData.tr());
+                                  StringManager.pleaseAddSkill.tr());
                             }
                               // if (_currentSegment.isNotEmpty) {
                               //   // Map the indexes in _currentSegment to their corresponding skill IDs

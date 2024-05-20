@@ -32,7 +32,7 @@ class UniversityDropDown extends StatefulWidget {
 class _UniversityDropDownState extends State<UniversityDropDown> {
   @override
   void initState() {
-    BlocProvider.of<OptionsBloc>(context).add(const GetUniversityEvent());
+    // BlocProvider.of<OptionsBloc>(context).add(const GetUniversityEvent());
 
     super.initState();
   }

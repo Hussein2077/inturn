@@ -92,7 +92,6 @@ class _MainScreenState extends State<MainScreen> {
     CitiesDropDown.selectedValue2 = null;
     UniversityDropDown.selectedValue = null;
     FacultyDropDown.selectedValue = null;
-
     _controller = PersistentTabController(initialIndex: MainScreen.mainIndex);
     super.initState();
   }

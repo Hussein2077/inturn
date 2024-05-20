@@ -108,9 +108,13 @@ class _PersonalInfoState extends State<PersonalInfo> {
                             firstName: firstNameController.text,
                             lastName: secondNameController.text,
                           ));
-                    } else {
+                    } else if(UploadProfileImagePage.imageFile == null ){
                       errorSnackBar(
-                          context, StringManager.pleaseCompleteYourData.tr());
+                          context, StringManager.pleaseUploadImage.tr());
+                    }
+                    else{
+                      errorSnackBar(
+                          context, StringManager.pleaseUploadName.tr());
                     }
                   },
                 ),
