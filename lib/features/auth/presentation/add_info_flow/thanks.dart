@@ -27,7 +27,7 @@ class ThanksScreen extends StatelessWidget {
               AssetPath.done,
               height: AppSize.screenHeight,
               width: AppSize.screenWidth,
-              fit: BoxFit.fitHeight,
+              fit: BoxFit.cover,
             ),
             Padding(
               padding: EdgeInsets.only(bottom: AppSize.defaultSize! * 15),

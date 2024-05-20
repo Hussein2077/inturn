@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:inturn/core/utils/enums.dart';
+import 'package:inturn/features/home/data/model/area_model.dart';
 import 'package:inturn/features/home/data/model/cities_model.dart';
 import 'package:inturn/features/home/data/model/faculty_model.dart';
 import 'package:inturn/features/home/data/model/skill_model.dart';
@@ -18,7 +19,9 @@ class GetOptionsStates extends Equatable {
   final List<SkillModel> getSkills;
   final RequestState getSkillsRequest;
   final String getSkillsMessage;
-
+  final List<AreaModel> getAreas;
+  final RequestState getAreasRequest;
+  final String getAreasMessage;
   const GetOptionsStates(
       {this.getFaculty = const [],
       this.getFacultyRequest = RequestState.loading,
@@ -31,7 +34,11 @@ class GetOptionsStates extends Equatable {
       this.getCitiesMessage = "",
       this.getSkills = const [],
       this.getSkillsRequest = RequestState.loading,
-      this.getSkillsMessage = ""});
+      this.getSkillsMessage = "",
+      this.getAreas = const [],
+      this.getAreasRequest = RequestState.loading,
+      this.getAreasMessage = ""});
+
 
   GetOptionsStates copyWith({
     List<FacultyModel>? getFaculty,
@@ -47,6 +54,9 @@ class GetOptionsStates extends Equatable {
     List<SkillModel>? getSkills,
     RequestState? getSkillsRequest,
     String? getSkillsMessage,
+    List<AreaModel>? getAreas,
+    RequestState? getAreasRequest,
+    String? getAreasMessage
   }) {
     return GetOptionsStates(
         getFaculty: getFaculty ?? this.getFaculty,
@@ -60,8 +70,10 @@ class GetOptionsStates extends Equatable {
         getCitiesMessage: getCitiesMessage ?? this.getUniversityMessage,
         getSkills: getSkills ?? this.getSkills,
         getSkillsRequest: getSkillsRequest ?? this.getSkillsRequest,
-        getSkillsMessage: getSkillsMessage ?? this.getSkillsMessage
-
+        getSkillsMessage: getSkillsMessage ?? this.getSkillsMessage,
+         getAreas: getAreas ?? this.getAreas,
+        getAreasRequest: getAreasRequest ?? this.getAreasRequest,
+        getAreasMessage: getAreasMessage ?? this.getAreasMessage
     );
   }
 
@@ -78,6 +90,9 @@ class GetOptionsStates extends Equatable {
         getCitiesMessage,
         getSkills,
         getSkillsRequest,
-        getSkillsMessage
+        getSkillsMessage,
+        getAreas,
+        getAreasRequest,
+        getAreasMessage
       ];
 }

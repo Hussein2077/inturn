@@ -4,12 +4,13 @@ import 'package:inturn/main.dart';
 class ConstantApi {
   static const String baseUrl = 'https://api.intrn.app/Intrn/api/';
 
-  static getImage(String url) => 'https://api.intrn.app/Intrn/uploads/$url';
+  static getImage(String url) => 'https://api.intrn.app/Intrn/Images/$url';
 
   static const String login = "${baseUrl}Auth/Login";
   static const String universities = "${baseUrl}Universities/GetAllUniversity";
 
   static String faculty(int id) => "${baseUrl}Faculties/GetFacultiesBy$id";
+  static String getAreas(int id) => "${baseUrl}Areas/GetAreaByCityId?cityId=$id";
   static const String provinces = "${baseUrl}Countries/GetAllCountriesIncluded";
   static const String getMajorsByCategory =
       "${baseUrl}Majors/GetAllMajorsAsyncGroupedByCategory";

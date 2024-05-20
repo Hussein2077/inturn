@@ -2,7 +2,7 @@ class StringManager {
   //new
   static const String letBeginTheJourney = "Let's Begin The Journey";
   static const String continueWithGoogle = "Continue with Google";
-  static const String continueWithFacebook = "Continue with Facebook";
+  static const String continueWithLinkedin = "Continue with  Linkedin";
   static const String continueWithApple = "Continue with Apple";
   static const String uploadProfileImage = "Upload Profile Image";
   static const String next = "Next";

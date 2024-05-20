@@ -7,13 +7,10 @@ class AssetPath {
   static const String apple = '$pathImage/apple.svg';
   static const String google = '$pathImage/google.svg';
   static const String facebook = '$pathImage/facebook.svg';
+  static const String linkedin2  = '$pathImage/link.svg';
   static const String collapsed = '$pathImage/collapsed.svg';
   static const String done = '$pathImage/done.svg';
   static const String backgroundInturn = '$pathImage/bg.png';
-  static const String test = '$pathImage/test.jpeg';
-  static const String test2 = '$pathImage/image.png';
-  static const String test3 = '$pathImage/image2.png';
-  static const String test4 = '$pathImage/cimage.png';
   static const String employees = '$pathImage/employees.png';
   static const String facebook2 = '$pathImage/facebook.png';
   static const String instagram = '$pathImage/instagram.png';

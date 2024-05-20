@@ -2,10 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:inturn/core/models/vacancey_model.dart';
 import 'package:inturn/core/service/navigator_services.dart';
 import 'package:inturn/core/service/service_locator.dart';
-import 'package:inturn/core/utils/methods.dart';
 import 'package:inturn/core/widgets/loading_widget.dart';
 import 'package:inturn/features/auth/presentation/add_info_flow/acdemic_info.dart';
 import 'package:inturn/features/auth/presentation/add_info_flow/exprince_info.dart';
@@ -20,7 +18,6 @@ import 'package:inturn/features/auth/presentation/forget%20password/send_otp_cod
 import 'package:inturn/features/auth/presentation/login_screen.dart';
 import 'package:inturn/features/auth/presentation/signup/sign_up.dart';
 import 'package:inturn/features/home/presentation/componants/filters_screen.dart';
-import 'package:inturn/features/home/presentation/componants/job_details.dart';
 import 'package:inturn/features/home/presentation/componants/search_screen.dart';
 import 'package:inturn/features/main_screen.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_bloc.dart';
@@ -69,7 +66,7 @@ class RouteGenerator {
         log("userId: $userId");
         BlocProvider.of<GetMyDataBloc>(
                 getIt<NavigationService>().navigatorKey.currentContext!)
-            .add(GetMyDataEvent(userId ?? MyApp.userId));
+            .add(GetMyDataEvent(userId));
         if (MyApp.fromLogin) {
           return PageRouteBuilder(
               settings: settings,
@@ -100,8 +97,8 @@ class RouteGenerator {
                   }
                 }
                 if (state is GetMyDataErrorMessageState) {
-                  return MainScreen(
-                    userID: userId ?? MyApp.userId,
+                  return const LoginScreen(
+                    // userID: userId ?? MyApp.userId,
                   );
                 }
                 return MainScreen(
@@ -200,7 +197,7 @@ class RouteGenerator {
         return PageRouteBuilder(
             settings: settings,
             pageBuilder: (context, animation, secondaryAnimation) =>
-                SearchScreen(),
+                const SearchScreen(),
             transitionsBuilder: customAnimate);
 
       case Routes.filtersScreen:
@@ -238,7 +235,7 @@ class RouteGenerator {
                     // Leave the app
                     Navigator.of(context).pop(true);
                   },
-                  child: Text('Exit'),
+                  child: const Text('Exit'),
                 ),
               ],
             ),

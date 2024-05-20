@@ -56,52 +56,57 @@ class _FacultyDropDownState extends State<FacultyDropDown> {
                 border:
                     Border.all(color: AppColors.borderColor.withOpacity(.4)),
                 borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2)),
-            child: DropdownButton2<FacultyModel>(
-              value: state.getFaculty.contains(FacultyDropDown.selectedValue) ?  FacultyDropDown.selectedValue : null ,
-              buttonStyleData: ButtonStyleData(
-                  width: AppSize.screenWidth! * .9,
-                  decoration: BoxDecoration(
-                    borderRadius:
-                        BorderRadius.circular(AppSize.defaultSize! * 2),
-                  )),
-              dropdownStyleData: DropdownStyleData(
-                  width: AppSize.screenWidth! * .9,
-                  // padding: EdgeInsets.symmetric(horizontal: 10),
-                  maxHeight: AppSize.screenHeight! * .5),
-              underline: const SizedBox(),
-              onChanged: (FacultyModel? newValue) {
-                log('newValue: $newValue');
-                setState(() {
-                  FacultyDropDown.selectedValue = newValue;
-                });
-              },
-              hint: Padding(
-                padding: EdgeInsets.only(left: AppSize.defaultSize!),
-                child: Text(
-                StringManager.selectFaculty.tr(),
-                  style: TextStyle(
-                    fontSize: AppSize.defaultSize!,
-                  ),
-                ),
+            child: Center(
+              child: DropdownButton2<FacultyModel>(
+                value: state.getFaculty.contains(FacultyDropDown.selectedValue) ?  FacultyDropDown.selectedValue : null ,
+                buttonStyleData: ButtonStyleData(
+                    width: AppSize.screenWidth! * .9,
+                    decoration: BoxDecoration(
+                      borderRadius:
+                          BorderRadius.circular(AppSize.defaultSize! * 2),
+                    )), iconStyleData: IconStyleData(
+                iconSize: AppSize.defaultSize! * 2.5,
               ),
-              items: state.getFaculty
-                  .map<DropdownMenuItem<FacultyModel>>((FacultyModel value) {
-                return DropdownMenuItem(
-                  value: value,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: AppSize.defaultSize!),
-                    child: Text(
-                      value.name ?? "",
-                      style: TextStyle(
-                        fontSize: AppSize.defaultSize!,
-                      ),
+                dropdownStyleData: DropdownStyleData(
+                    width: AppSize.screenWidth! * .9,
+                    // padding: EdgeInsets.symmetric(horizontal: 10),
+                    maxHeight: AppSize.screenHeight! * .5),
+                underline: const SizedBox(),
+                onChanged: (FacultyModel? newValue) {
+                  log('newValue: $newValue');
+                  setState(() {
+                    FacultyDropDown.selectedValue = newValue;
+                  });
+                },
+                hint: Padding(
+                  padding: EdgeInsets.only(left: AppSize.defaultSize!),
+                  child: Text(
+                  StringManager.selectFaculty.tr(),
+                    style: TextStyle(
+                      fontSize: AppSize.defaultSize!,
                     ),
                   ),
-                );
-              }).toList(),
+                ),
+                items: state.getFaculty
+                    .map<DropdownMenuItem<FacultyModel>>((FacultyModel value) {
+                  return DropdownMenuItem(
+                    value: value,
+                    child: Padding(
+                      padding: EdgeInsets.only(left: AppSize.defaultSize!),
+                      child: Text(
+                        value.name ?? "",
+                        style: TextStyle(
+                          fontSize: AppSize.defaultSize!,
+                        ),
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
             ),
           );
         } else if (state.getFacultyRequest == RequestState.loading) {
+          return const LoadingWidget();
           return Container(
             // width: AppSize.screenWidth! * .9,
             height: AppSize.defaultSize! * 4,
@@ -115,7 +120,9 @@ class _FacultyDropDownState extends State<FacultyDropDown> {
                     decoration: BoxDecoration(
                       borderRadius:
                           BorderRadius.circular(AppSize.defaultSize! * 2),
-                    )),
+                    )), iconStyleData: IconStyleData(
+              iconSize: AppSize.defaultSize! * 2.5,
+            ),
                 dropdownStyleData: DropdownStyleData(
                     width: AppSize.screenWidth! * .9,
                     // padding: EdgeInsets.symmetric(horizontal: 10),

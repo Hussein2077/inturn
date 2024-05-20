@@ -25,7 +25,7 @@ AppBar appBar(BuildContext context,
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: const Icon(Icons.arrow_back_ios),
+            icon:   Icon(Icons.arrow_back_ios,size:  AppSize.defaultSize!*2,),
           )
         : null,
     actions: actions
@@ -50,7 +50,7 @@ AppBar appBar(BuildContext context,
                       .pushNamedAndRemoveUntil(
                           Routes.login, (Route<dynamic> route) => false);
                 },
-                icon: const Icon(Icons.logout))
+                icon:   Icon(Icons.logout,size: AppSize.defaultSize!*2,))
           ]
         : null,
   );

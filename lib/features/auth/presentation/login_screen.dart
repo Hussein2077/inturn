@@ -103,7 +103,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: AppSize.defaultSize! * 8,
                   ),
-                  SvgPicture.asset(AssetPath.logo)
+                  SvgPicture.asset(AssetPath.logo,
+                    width:  AppSize.defaultSize! * 5,
+                    height:  AppSize.defaultSize! * 5,
+                  )
                       .animate()
                       .fadeIn() // uses `Animate.defaultDuration`
                       .scale() // inherits duration from fadeIn
@@ -122,25 +125,36 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   CustomSignInButton(
                     text: StringManager.continueWithGoogle.tr(),
-                    logo: SvgPicture.asset(AssetPath.google),
+                    logo: SvgPicture.asset(AssetPath.google,
+                      width:  AppSize.defaultSize! * 2.5,
+                      height:  AppSize.defaultSize! * 2.5,
+                    ),
                     onPressed: () {
                       BlocProvider.of<SignInWithPlatformBloc>(context)
                           .add(SignGoogleEvent());
                     },
                   ),
-                  // CustomSignInButton(
-                  //   text: StringManager.continueWithFacebook.tr(),
-                  //   logo: SvgPicture.asset(AssetPath.facebook),
-                  //   onPressed: () {     Navigator.pushNamed(context, Routes.personalInfo);
-                  //     // BlocProvider.of<SignInWithPlatformBloc>(context)
-                  //     //     .add(SignInWithFacebookEvent());
-                  //   },
-                  // ),
                   SizedBox(height: AppSize.defaultSize! * 2),
-                  if(Platform.isIOS)
+                  CustomSignInButton(
+                    text: StringManager.continueWithLinkedin.tr(),
+                    logo: SvgPicture.asset(AssetPath.linkedin2,
+
+                      width:  AppSize.defaultSize! * 2.5,
+                      height:  AppSize.defaultSize! * 2.5,),
+                    onPressed: () {
+                      // Navigator.pushNamed(context, Routes.personalInfo);
+                      // BlocProvider.of<SignInWithPlatformBloc>(context)
+                      //     .add(SignInWithFacebookEvent());
+                    },
+                  ),
+                  SizedBox(height: AppSize.defaultSize! * 2),
+                  // if(Platform.isIOS)
                   CustomSignInButton(
                     text: StringManager.continueWithApple.tr(),
-                    logo: SvgPicture.asset(AssetPath.apple),
+                    logo: SvgPicture.asset(AssetPath.apple,
+                      width:  AppSize.defaultSize! * 3,
+                      height:  AppSize.defaultSize! *3,
+                    ),
                     onPressed: () {
                       // Navigator.pushNamed(context, Routes.personalInfo);
                       // BlocProvider.of<SignInWithPlatformBloc>(context)

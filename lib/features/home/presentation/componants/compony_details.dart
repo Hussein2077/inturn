@@ -262,17 +262,18 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                             child: JobCart(
                               vacancyModel: MatchedVacancyWrapper(
                                 matchedVacancy: MatchedVacancy(
-                                  vacancyId: state.vacancyModel[index].vacancyId!,
-                                  title: state.vacancyModel[index].title!,
-                                  companyId: state.vacancyModel[index].companyId!,
-                                  company: state.vacancyModel[index].company!,
-                                  cityName: state.vacancyModel[index].cityName!,
+                                  vacancyId: state.vacancyModel[index].vacancyId,
+                                  title: state.vacancyModel[index].title,
+                                  companyId: state.vacancyModel[index].companyId,
+                                  company: state.vacancyModel[index].company,
+                                  cityName: state.vacancyModel[index].cityName,
                                   vacancyLevelId:
-                                  state.vacancyModel[index].vacancyLevelId!,
+                                  state.vacancyModel[index].vacancyLevelId,
                                   requirements:
-                                  state.vacancyModel[index].requirements!,
+                                  state.vacancyModel[index].requirements,
                                   responsibilities:
-                                  state.vacancyModel[index].responsibilities!,
+                                  state.vacancyModel[index].responsibilities,
+                                  description: state.vacancyModel[index].description,
                                 ),
                                 matchmakingPercentage: 0,
                               ),

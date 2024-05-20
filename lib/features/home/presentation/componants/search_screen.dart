@@ -8,7 +8,7 @@ import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/widgets/app_bar.dart';
-import 'package:inturn/core/widgets/area_drop_down.dart';
+import 'package:inturn/core/widgets/country_drop_down.dart';
 import 'package:inturn/core/widgets/custom_text_field.dart';
 import 'package:inturn/core/widgets/empty_widget.dart';
 import 'package:inturn/core/widgets/loading_widget.dart';
@@ -177,6 +177,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                           .vacancyModel[index].requirements,
                                       responsibilities: state
                                           .vacancyModel[index].responsibilities,
+                                      description: state.vacancyModel[index].description,
                                     ),
                                     matchmakingPercentage: 0,
                                   ),

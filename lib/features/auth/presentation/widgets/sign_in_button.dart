@@ -17,26 +17,37 @@ class CustomSignInButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: AppSize.defaultSize! * 4.8,
-      width: double.maxFinite, // AppSize.screenWidth! * .9,
-      child: ElevatedButton.icon(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white,
-          disabledForegroundColor: Colors.white,
-          disabledBackgroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppSize.defaultSize! * 1.5),
-            side: const BorderSide(color: Colors.grey), // Border color
-          ), // Text color
+    return InkWell(
+      onTap: onPressed,
+      borderRadius: BorderRadius.circular(AppSize.defaultSize! * 1.5),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(AppSize.defaultSize! * 1.5),
+          border:   Border.all(color: AppColors.borderColor),
         ),
-        icon: logo,
-        label: CustomText(
-          text: text,
-          fontSize: AppSize.defaultSize! * 1.6,
-          color: AppColors.primaryColor,
-          fontWeight: FontWeight.w600,
+        height: AppSize.defaultSize! * 5,
+        width: double.maxFinite, // AppSize.screenWidth! * .9,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            // SizedBox(width: AppSize.defaultSize! *2,),
+            Padding(
+              padding:   EdgeInsets.only(left: AppSize.defaultSize!*3),
+              child: logo,
+            ),
+            SizedBox(width: AppSize.defaultSize!*5 ,),
+            SizedBox(
+              width:  AppSize.defaultSize! * 20,
+              child: CustomText(
+                text: text,
+                fontSize: AppSize.defaultSize! * 1.4,
+                textAlign: TextAlign.center,
+                color: AppColors.primaryColor,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            // SizedBox(width: AppSize.defaultSize! *10,),
+          ],
         ),
       ),
     );

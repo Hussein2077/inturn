@@ -5,6 +5,7 @@ import 'package:inturn/core/models/vacancey_model.dart';
 import 'package:inturn/core/utils/api_helper.dart';
 import 'package:inturn/core/utils/constant_api.dart';
 import 'package:inturn/features/home/data/model/application_model.dart';
+import 'package:inturn/features/home/data/model/area_model.dart';
 import 'package:inturn/features/home/data/model/company_model.dart';
 import 'package:inturn/features/home/data/model/major_model.dart';
 import 'package:inturn/features/home/data/model/cities_model.dart';
@@ -20,6 +21,7 @@ abstract class BaseRemotelyDataSourceHome {
   Future<List<VacancyModel>> getJobDetails(int id);
 
   Future<List<Country>> getCities();
+  Future<List<AreaModel>> getAreas(int cityId);
 
   Future<List<FacultyModel>> getFaculty(int id);
 
@@ -98,6 +100,18 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
       return jsonData;
     } on DioException catch (e) {
       throw DioHelper.handleDioError(dioError: e, endpointName: "getFaculty");
+    }
+  }  @override
+  Future<List<AreaModel>> getAreas(int cityId) async {
+    try {
+      final response = await Dio().get(
+        ConstantApi.getAreas(cityId),
+      );
+      List<AreaModel> jsonData = List<AreaModel>.from(
+          (response.data as List).map((e) => AreaModel.fromJson(e)));
+      return jsonData;
+    } on DioException catch (e) {
+      throw DioHelper.handleDioError(dioError: e, endpointName: "getAreas");
     }
   }
 
@@ -221,4 +235,5 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
           dioError: e, endpointName: "get Internships by search");
     }
   }
+
 }

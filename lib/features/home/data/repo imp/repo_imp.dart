@@ -4,6 +4,7 @@ import 'package:inturn/core/models/vacancey_model.dart';
 import 'package:inturn/core/utils/api_helper.dart';
 import 'package:inturn/features/home/data/data%20source/home_remote_data_source.dart';
 import 'package:inturn/features/home/data/model/application_model.dart';
+import 'package:inturn/features/home/data/model/area_model.dart';
 import 'package:inturn/features/home/data/model/company_model.dart';
 import 'package:inturn/features/home/data/model/major_model.dart';
 import 'package:inturn/features/home/data/model/cities_model.dart';
@@ -43,6 +44,14 @@ class HomeRepositoryImp extends BaseRepositoryHome {
   Future<Either<List<FacultyModel>, Failure>> getFaculty(int id) async {
     try {
       final result = await baseRemotelyDataSourceHome.getFaculty(  id);
+      return Left(result);
+    } on Exception catch (e) {
+      return right(DioHelper.buildFailure(e));
+    }
+  }  @override
+  Future<Either<List<AreaModel>, Failure>> getAreas(int cityId) async {
+    try {
+      final result = await baseRemotelyDataSourceHome.getAreas(  cityId);
       return Left(result);
     } on Exception catch (e) {
       return right(DioHelper.buildFailure(e));

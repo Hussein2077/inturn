@@ -6,6 +6,7 @@ class VacancyModel {
   final String? title;
   final String? responsibilities;
   final String? requirements;
+  final String? description;
   final DateTime? deadline;
   final int? companyId;
   final CompanyModel? company;
@@ -21,6 +22,7 @@ class VacancyModel {
      this.requirements,
     this.deadline,
       this.companyId,
+    this.description,
     this.company,
     this.majorId,
     this.countryId,
@@ -34,6 +36,7 @@ class VacancyModel {
       title: json['title'] ?? 'Unknown title',
       responsibilities: json['responsbilities'] ?? 'No responsibilities listed',
       requirements: json['requirements'] ?? 'No requirements listed',
+      description: json['description'] ?? 'No description',
       deadline: json['deadline'] != null ? DateTime.parse(json['deadline']) : null,
       companyId: json['companyId'] ?? 0,
       company: json['company'] != null ? CompanyModel.fromJson(json['company']) : null,

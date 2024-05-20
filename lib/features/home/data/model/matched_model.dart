@@ -24,6 +24,7 @@ class MatchedVacancy {
   final String? title;
   final String? responsibilities;
   final String? requirements;
+  final String? description;
   final DateTime? deadline;
   final int? companyId;
   final List<VacancySkill>?
@@ -43,6 +44,7 @@ class MatchedVacancy {
     this.vacancySkills,
     this.majorId,
     this.company,
+    this.description,
     this.cityName,
   });
 
@@ -53,6 +55,7 @@ class MatchedVacancy {
       title: json['title'] ?? 'Unknown title',
       responsibilities: json['responsbilities'] ?? 'No responsibilities listed',
       requirements: json['requirements'] ?? 'No requirements listed',
+      description: json['description'] ?? 'No description',
       deadline:
           json['deadline'] != null ? DateTime.parse(json['deadline']) : null,
       companyId: json['companyId'] ?? 0,

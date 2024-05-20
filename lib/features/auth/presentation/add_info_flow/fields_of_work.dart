@@ -96,7 +96,7 @@ class _FieldsInfoState extends State<FieldsInfo> {
                           itemBuilder: (context, index) {
                             return CustomAccordion(
                               title: state.topFiveModel[index].field  ,
-                              showContent: true,
+                              showContent:  true,
                               headerBackgroundColor: Colors.transparent,
                               titleStyle: TextStyle(
                                 color: AppColors.thirdColor,
@@ -121,7 +121,9 @@ class _FieldsInfoState extends State<FieldsInfo> {
                               ),
                             );
                           }),
-
+                      SizedBox(
+                        height: AppSize.defaultSize!
+                      ),
                       MainButton(
                         text: StringManager.next.tr(),
                         onTap: () {
@@ -132,6 +134,9 @@ class _FieldsInfoState extends State<FieldsInfo> {
                                 context, StringManager.pleaseCompleteYourData.tr());
                           }
                         },
+                      ),
+                      SizedBox(
+                        height: AppSize.defaultSize! * 2,
                       ),
                     ],
                   );

@@ -12,13 +12,13 @@ final double? size;
   Widget build(BuildContext context) {
     return Center(
       child: SizedBox(
-        height:height?? AppSize.screenHeight!*.3,
-        width:width??AppSize.defaultSize!*6,
+        height:height,
+        width:width,
         child: Center(
           child: LoadingAnimationWidget.twistingDots(
             leftDotColor: AppColors.primaryColor,
             rightDotColor:AppColors.black,
-            size:size?? AppSize.defaultSize!*7,
+            size:size?? (AppSize.defaultSize??10)*7,
           ),
         ),
       ),

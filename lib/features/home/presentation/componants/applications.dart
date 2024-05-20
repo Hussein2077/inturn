@@ -97,6 +97,7 @@ class _ApplicationsScreenState extends State<ApplicationsScreen> {
                                   state.jobModel[index].vacancy?.requirements,
                               responsibilities:
                                   state.jobModel[index].vacancy?.responsibilities,
+                              description: state.jobModel[index].vacancy?.description,
                             ),
                             matchmakingPercentage: 0,
                           ),

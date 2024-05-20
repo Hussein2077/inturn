@@ -72,8 +72,6 @@ static int userProfileId = 0;
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-
-
     Future.delayed(Duration.zero, () async {
       MyApp.  userId = await Methods.instance.returnUserId();
       MyApp.userProfileId = await Methods.instance.returnProfileId();

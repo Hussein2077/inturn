@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inturn/core/base_use_case/base_use_case.dart';
 import 'package:inturn/core/utils/api_helper.dart';
 import 'package:inturn/core/utils/enums.dart';
+import 'package:inturn/features/home/domain/use_case/get_areas_uc.dart';
 import 'package:inturn/features/home/domain/use_case/get_cities.dart';
 import 'package:inturn/features/home/domain/use_case/get_major_uc.dart';
 import 'package:inturn/features/home/domain/use_case/get_university_uc.dart';
@@ -17,17 +18,20 @@ class OptionsBloc extends Bloc<OptionsEvent, GetOptionsStates> {
 
   final GetUniversityUseCase getUniversityUseCase;
   final GetSkillsUseCase getSkillUseCase;
-
+  final GetAreaUseCase getAreaUseCase;
   OptionsBloc(
       {required this.getUniversityUseCase,
       required this.getFacultyUseCase,
       required this.getSkillUseCase,
-      required this.getCitiesUseCase})
+      required this.getCitiesUseCase,
+
+      required this.getAreaUseCase})
       : super(const GetOptionsStates()) {
     on<GetFacultyEvent>(getFaculty);
     on<GetUniversityEvent>(getUniversity);
     on<GetCitiesEvent>(getCities);
     on<GetSkillsEvent>(getSkills);
+    on<GetAreasEvent>(getAreas);
   }
 
   FutureOr<void> getFaculty(
@@ -61,7 +65,8 @@ class OptionsBloc extends Bloc<OptionsEvent, GetOptionsStates> {
         (r) => emit(state.copyWith(
             getCitiesRequest: RequestState.error,
             getCitiesMessage: DioHelper().getTypeOfFailure(r))));
-  }  FutureOr<void> getSkills(
+  }
+  FutureOr<void> getSkills(
       GetSkillsEvent event, Emitter<GetOptionsStates> emit) async {
     final result = await getSkillUseCase.call(const NoParameter());
     result.fold(
@@ -70,5 +75,14 @@ class OptionsBloc extends Bloc<OptionsEvent, GetOptionsStates> {
         (r) => emit(state.copyWith(
             getSkillsRequest: RequestState.error,
             getSkillsMessage: DioHelper().getTypeOfFailure(r))));
+  } FutureOr<void> getAreas(
+      GetAreasEvent event, Emitter<GetOptionsStates> emit) async {
+    final result = await  getAreaUseCase.call(event.cityId);
+    result.fold(
+        (l) => emit(state.copyWith(
+            getAreas: l, getAreasRequest: RequestState.loaded)),
+        (r) => emit(state.copyWith(
+            getAreasRequest: RequestState.error,
+            getAreasMessage: DioHelper().getTypeOfFailure(r))));
   }
 }

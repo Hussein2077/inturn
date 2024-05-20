@@ -6,7 +6,7 @@ import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/widgets/app_bar.dart';
-import 'package:inturn/core/widgets/area_drop_down.dart';
+import 'package:inturn/core/widgets/country_drop_down.dart';
 
 class FiltersScreen extends StatefulWidget {
   const FiltersScreen({super.key});

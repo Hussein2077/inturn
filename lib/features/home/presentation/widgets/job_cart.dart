@@ -139,7 +139,7 @@ class _JobCartState extends State<JobCart> {
                       widget.skillRequired ?? const SizedBox(),
                       CustomText(
                         text: widget
-                                .vacancyModel.matchedVacancy.responsibilities ??
+                                .vacancyModel.matchedVacancy.description ??
                             "",
                         maxLines: 10,
                         textAlign: TextAlign.start,

@@ -20,4 +20,7 @@ class GetCitiesEvent extends OptionsEvent {
   const GetCitiesEvent();
 }class GetSkillsEvent extends OptionsEvent {
   const GetSkillsEvent();
+}class GetAreasEvent extends OptionsEvent {
+  final int cityId;
+  const GetAreasEvent(  this.cityId);
 }

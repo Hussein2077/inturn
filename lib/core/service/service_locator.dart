@@ -17,6 +17,7 @@ import 'package:inturn/features/home/data/repo%20imp/repo_imp.dart';
 import 'package:inturn/features/home/domain/repo/jobs_base_repo.dart';
 import 'package:inturn/features/home/domain/use_case/apply_use_case.dart';
 import 'package:inturn/features/home/domain/use_case/companies_uc.dart';
+import 'package:inturn/features/home/domain/use_case/get_areas_uc.dart';
 import 'package:inturn/features/home/domain/use_case/get_blogs_uc.dart';
 import 'package:inturn/features/home/domain/use_case/get_cities.dart';
 import 'package:inturn/features/home/domain/use_case/get_major_uc.dart';
@@ -65,6 +66,7 @@ class ServerLocator {
           getFacultyUseCase: getIt(),
           getUniversityUseCase: getIt(),
           getSkillUseCase: getIt(),
+      getAreaUseCase: getIt(),
         ));
 
     getIt.registerLazySingleton(
@@ -133,7 +135,8 @@ class ServerLocator {
         () => GetVacancyDetailsUseCase(baseRepositoryHome: getIt()));
     getIt.registerFactory(() => ApplyUseCase(baseRepositoryJobs: getIt()));
     getIt.registerFactory(
-        () => GetInternshipsBySearchUseCase(baseRepositoryHome: getIt()));
+        () => GetInternshipsBySearchUseCase(baseRepositoryHome: getIt())); getIt.registerFactory(
+        () => GetAreaUseCase(baseRepositoryHome: getIt()));
 
     //remote data
     getIt.registerLazySingleton<BaseRemotelyDataSource>(

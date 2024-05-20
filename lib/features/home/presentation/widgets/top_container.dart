@@ -35,7 +35,10 @@ class _TopContainerState extends State<TopContainer> {
         SizedBox(
           height: AppSize.defaultSize! * 3.5,
         ),
-        SvgPicture.asset(AssetPath.logo)
+        SvgPicture.asset(AssetPath.logo,
+          width:  AppSize.defaultSize! * 3,
+          height:  AppSize.defaultSize! * 3,
+        )
             .animate()
             .fadeIn() // uses `Animate.defaultDuration`
             .scale() // inherits duration from fadeIn

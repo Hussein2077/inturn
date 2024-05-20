@@ -6,7 +6,7 @@ import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
-import 'package:inturn/core/widgets/area_drop_down.dart';
+import 'package:inturn/core/widgets/country_drop_down.dart';
 import 'package:inturn/core/widgets/coming_soon.dart';
 import 'package:inturn/core/widgets/major_drop_down.dart';
 import 'package:inturn/core/widgets/university.dart';
@@ -103,7 +103,9 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       drawerScrimColor: AppColors.greyColor,
       body: PersistentTabView(
+
         context,
+        navBarHeight: AppSize.defaultSize! * 5.5,
         controller: _controller,
         screens: _buildScreens(),
         items: _navBarsItems(),
@@ -112,6 +114,7 @@ class _MainScreenState extends State<MainScreen> {
         backgroundColor:AppColors.homeColor,
         // Default is Colors.white.
         handleAndroidBackButtonPress: true,
+
         // Default is true.
         resizeToAvoidBottomInset: true,
         // This needs to be true if you want to move up the screen when keyboard appears. Default is true.

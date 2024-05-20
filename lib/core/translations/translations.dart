@@ -82,7 +82,7 @@ class CodegenLoader extends AssetLoader {
     StringManager.discoverInternships: 'اكتشاف التدريب',
     StringManager.letBeginTheJourney: "لنبدأ الرحلة",
     StringManager.continueWithGoogle: "المتابعة مع Google",
-    StringManager.continueWithFacebook: "المتابعة مع Facebook",
+    StringManager.continueWithLinkedin: "المتابعة مع Linkedin",
     StringManager.continueWithApple: "المتابعة مع Apple",
     StringManager.all: "الكل",
     StringManager.freshGraduate: "خريج جديد",
