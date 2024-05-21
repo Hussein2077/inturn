@@ -95,14 +95,12 @@ class _MainScreenState extends State<MainScreen> {
     _controller = PersistentTabController(initialIndex: MainScreen.mainIndex);
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     AppSize().init(context);
     return Scaffold(
       drawerScrimColor: AppColors.greyColor,
       body: PersistentTabView(
-
         context,
         navBarHeight: AppSize.defaultSize! * 5.5,
         controller: _controller,

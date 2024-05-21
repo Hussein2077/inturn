@@ -154,7 +154,7 @@ class _ProfileSkillsState extends State<ProfileSkills> {
                           addToSkill.value++;
                         },
                         segments: ProfileSkills.newSkills
-                            .map((e) => e.skillNameEn ?? "")
+                            .map((e) => e.nameEn ?? "")
                             .toList()
                             .toSet()
                             .toList(),

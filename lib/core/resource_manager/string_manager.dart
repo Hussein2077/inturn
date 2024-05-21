@@ -2,7 +2,7 @@ class StringManager {
   //new
   static const String letBeginTheJourney = "Let's Begin The Journey";
   static const String continueWithGoogle = "Continue with Google";
-  static const String continueWithLinkedin = "Continue with  Linkedin";
+  static const String continueWithLinkedin = "Continue with Linkedin";
   static const String continueWithApple = "Continue with Apple";
   static const String uploadProfileImage = "Upload Profile Image";
   static const String next = "Next";
@@ -78,7 +78,9 @@ class StringManager {
   static const String updateFields   = "Update Your Fields?";
   static const String yourSkills = "What's Your Skills?";
   static const String searchForSkills = "Search For Skills...";
+  static const String searchForMajors  = "Search For Majors...";
   static const String selectSkills = "Select Your Skills";
+  static const String selectMajor = "Select Your majors";
   static const String discoverInternships = "Discover Opportunities";
 
   static String profileCompleted(String name) =>
@@ -121,6 +123,7 @@ class StringManager {
   static const String selectGrad = "Select Grad. Year";
   static const String university = "University";
   static const String major = "Major";
+  static const String majors = "Majors";
   static const String jobs = "Jobs";
   static const String fullTime = "Full Time";
   static const String jobsDetails = "Job details";
@@ -179,4 +182,5 @@ class StringManager {
   static const String suggestedJobs = "Suggested Jobs";
   static const String all = "All";
   static const String freshGraduate = "Fresh Graduate";
+  static const String majorError = "Please select your major";
 }

@@ -20,6 +20,7 @@ import 'package:inturn/core/widgets/loading_widget.dart';
 import 'package:inturn/core/widgets/main_button.dart';
 import 'package:inturn/core/widgets/major_drop_down.dart';
 import 'package:inturn/core/widgets/show_dialog.dart';
+import 'package:inturn/core/widgets/snack_bar.dart';
 import 'package:inturn/core/widgets/university.dart';
 import 'package:inturn/features/auth/presentation/add_info_flow/fields_of_work.dart';
 import 'package:inturn/features/auth/presentation/add_info_flow/skills.dart';
@@ -437,24 +438,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: MainButton(
                           onTap: () {
                             List<int>? mergeSkill = ProfileSkills.newSkills
-                                    .map((e) => e.skillId)
-                                    .toList()
-                                    .toSet()
-                                    .isEmpty
-                                ? profileDataModel?.user?.userSkills
-                                    ?.map((e) => (e.skillId!))
-                                    .toList()
-                                : ProfileSkills.newSkills
-                                    .map((e) => e.skillId)
+                                    .map((e) => e.id).toSet()
                                     .toList();
-                            log('${state.profileDataModel.university?.universityId}wnwnrknpwn');
-                            FieldsInfo.id = Methods.instance.combineLists(
-                                FieldsInfo.id,
-                                profileDataModel?.user?.userMajors
-                                        ?.map((e) => e.major?.majorId ?? 0)
-                                        .toList() ??
-                                    []);
-                            BlocProvider.of<EditProfileBloc>(context)
+                            FieldsInfo.majorsId =  ProfileMajor.newMajors .map((e) => e.id).toList();
+                            if(  ProfileMajor.newMajors.isNotEmpty&&mergeSkill.isNotEmpty) {
+                              BlocProvider.of<EditProfileBloc>(context)
                                 .add(EditProfileEvent(
                               EditPersonalInfoParams(
                                 id: MyApp.userProfileId.toString(),
@@ -478,12 +466,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 JobLevelId: (jop + 1).toString(),
                                 GraduationStatusId: (education + 1).toString(),
                                 JobLocationTypeId: (location + 1).toString(),
-                                MajorIds: FieldsInfo.id,
+                                MajorIds: FieldsInfo.majorsId,
                                 SkillIds: mergeSkill,
                                 // CountryId: '',
                                 // CityId: '',
                               ),
                             ));
+                            }
+                            else if (ProfileMajor.newMajors.isEmpty) {
+                                errorSnackBar(context, StringManager.majorError.tr());
+                            }  else if (mergeSkill.isEmpty) {
+                                errorSnackBar(context, StringManager.pleaseAddSkill.tr());
+                            }
                           },
                           text: StringManager.confirm.tr(),
                         ),

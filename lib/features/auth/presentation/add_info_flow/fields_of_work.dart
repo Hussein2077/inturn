@@ -33,7 +33,7 @@ import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/
 
 class FieldsInfo extends StatefulWidget {
   const FieldsInfo({super.key});
-static   List<int> id = [];
+static   List<int> majorsId = [];
   @override
   State<FieldsInfo> createState() => _FieldsInfoState();
 }
@@ -137,7 +137,7 @@ class _FieldsInfoState extends State<FieldsInfo> {
                         text: StringManager.next.tr(),
                         onTap: () {
                           if (_currentSegment.isNotEmpty) {
-                            BlocProvider.of<AddPersonalInfoBloc>(context).add(SendMajorIdEvent(majorIds: FieldsInfo.id));
+                            BlocProvider.of<AddPersonalInfoBloc>(context).add(SendMajorIdEvent(majorIds: FieldsInfo.majorsId));
                           } else {
                             errorSnackBar(
                                 context, StringManager.pleaseAddField.tr());

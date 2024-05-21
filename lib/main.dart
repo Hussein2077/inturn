@@ -7,6 +7,7 @@ import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/service/navigator_services.dart';
 import 'package:inturn/core/service/service_locator.dart';
 import 'package:inturn/core/translations/translations.dart';
+import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/utils/methods.dart';
 import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_info_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/add_skill/bloc.dart';
@@ -39,6 +40,7 @@ void main() async {
   FlutterNativeSplash.preserve(widgetsBinding:  WidgetsFlutterBinding.ensureInitialized());
 
   await ServerLocator().init();
+
   await EasyLocalization.ensureInitialized();
   token = await Methods.instance.returnUserToken();
   await Firebase.initializeApp(
@@ -84,6 +86,7 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    AppSize().init(context);
     return MultiBlocProvider(
       providers: [
         BlocProvider(

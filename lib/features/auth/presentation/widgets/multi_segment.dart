@@ -49,10 +49,10 @@ class MultiSegmentedButtonState extends State<MultiSegmentedButton> {
 
               MultiSegmentedButton.selectedIndex=index;
               if (_selectedIndices.contains(index)) {
-                FieldsInfo.id.remove(widget.ids![index]);
+                FieldsInfo.majorsId.remove(widget.ids![index]);
                 _selectedIndices.remove(index);
               } else {
-                FieldsInfo.id.add(widget.ids![index]);
+                FieldsInfo.majorsId.add(widget.ids![index]);
                 _selectedIndices.add(index);
               }
               widget.onValueChanged(_selectedIndices);

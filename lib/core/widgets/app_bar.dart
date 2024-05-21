@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:inturn/core/resource_manager/asset_path.dart';
 import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/service/navigator_services.dart';
@@ -32,11 +33,14 @@ AppBar appBar(BuildContext context,
         ? [
             IconButton(
                 onPressed: () async {
-
+                  GoogleSignIn googleSignIn = GoogleSignIn(
+                    scopes: ['email'],
+                  );
                   await Methods.instance.saveUserToken(authToken: null);
                   SharedPreferences prefs =
                       await SharedPreferences.getInstance();
                   await prefs.clear();
+                  googleSignIn.disconnect();
                   // PersistentNavBarNavigator.pushNewScreen(
                   //   getIt<NavigationService>().navigatorKey.currentContext!,
                   //   screen: const LoginScreen(),

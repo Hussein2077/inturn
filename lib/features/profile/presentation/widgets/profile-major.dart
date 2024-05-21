@@ -16,34 +16,46 @@ import 'package:inturn/core/widgets/loading_widget.dart';
 import 'package:inturn/features/auth/presentation/add_info_flow/fields_of_work.dart';
 import 'package:inturn/features/auth/presentation/widgets/multi_segment.dart';
 import 'package:inturn/features/auth/presentation/widgets/multi_select2.dart';
+import 'package:inturn/features/home/data/model/major_model.dart';
 import 'package:inturn/features/home/presentation/controller/get_major/bloc.dart';
 import 'package:inturn/features/home/presentation/controller/get_major/event.dart';
 import 'package:inturn/features/home/presentation/controller/get_major/state.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_event.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_state.dart';
+import 'package:searchfield/searchfield.dart';
 
 class ProfileMajor extends StatefulWidget {
   const ProfileMajor({super.key, required this.profileDataModel});
 
   final ProfileDataModel? profileDataModel;
+  static List<CommonType> newMajors = [];
 
   @override
   State<ProfileMajor> createState() => _ProfileMajorState();
 }
 
 class _ProfileMajorState extends State<ProfileMajor> {
+  late TextEditingController controller;
+
   @override
   initState() {
     BlocProvider.of<GetMajorBloc>(context).add(GetMajorEvent());
+    for(int i = 0; i < widget.profileDataModel!.user!.userMajors!.length; i++){
+      ProfileMajor.newMajors.add(CommonType(
+          widget.profileDataModel!.user!.userMajors![i].major!.majorNameEn!,
+          widget.profileDataModel!.user!.userMajors![i].majorId!));
+    }
+    ProfileMajor.newMajors.toSet();
 
+    controller = TextEditingController();
     super.initState();
   }
 
   List<int> _currentSegment = [-1];
 
   void _onValueChanged(List<int> newValue) {
-    log('${FieldsInfo.id} FieldsInfo.id');
+    log('${FieldsInfo.majorsId} FieldsInfo.id');
     setState(() {
       _currentSegment = newValue;
     });
@@ -59,6 +71,7 @@ class _ProfileMajorState extends State<ProfileMajor> {
   Widget openIcon = SvgPicture.asset(
     AssetPath.collapsed,
   );
+  ValueNotifier<int> addToMajor = ValueNotifier<int>(0);
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +80,12 @@ class _ProfileMajorState extends State<ProfileMajor> {
         if (state1 is GetMajorLoadingState) {
           return const Center(child: LoadingWidget());
         } else if (state1 is GetMajorSuccessMessageState) {
+          List<Position> listOfPosition = [];
+          for (int i = 0; i < state1.topFiveModel.length; i++) {
+            for (int j = 0; j < state1.topFiveModel[i].positions.length; j++) {
+              listOfPosition.add(state1.topFiveModel[i].positions[j]);
+            }
+          }
 
           return Material(
               borderRadius: BorderRadius.circular(AppSize.defaultSize! * 1.5),
@@ -84,6 +103,99 @@ class _ProfileMajorState extends State<ProfileMajor> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CustomText(
+                          text: StringManager.majors.tr(),
+                          fontSize: AppSize.defaultSize! * 1.6,
+                          color: AppColors.primaryColor,
+                          fontWeight: FontWeight.w700,
+                        ),
+                        SizedBox(
+                          height: AppSize.defaultSize! * 1.6,
+                        ),
+                        SearchField<Position>(
+                          controller: controller,
+                          itemHeight: AppSize.defaultSize! * 5,
+                          onSuggestionTap: (v) {
+                            if (!ProfileMajor.newMajors.contains(CommonType(
+                                v.item!.majorNameEn, v.item!.majorId))) {
+                              ProfileMajor.newMajors.add(CommonType(
+                                  v.item!.majorNameEn, v.item!.majorId));
+                            }
+                            addToMajor.value++;
+                            controller.clear();
+                            _currentSegment =FieldsInfo.majorsId
+                                .map((e) =>FieldsInfo.majorsId.indexOf(e))
+                                .toList();
+                          },
+
+                          suggestions: listOfPosition
+                              .map(
+                                (e) => SearchFieldListItem<Position>(
+                                  e.majorNameEn ?? "",
+                                  item: e,
+                                  // Use child to show Custom Widgets in the suggestions
+                                  // defaults to Text widget
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsets.all(AppSize.defaultSize!),
+                                    child:
+                                        CustomText(text: e.majorNameEn ?? ""),
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                          hint: StringManager.searchForMajors.tr(),
+                          searchStyle: TextStyle(
+                            fontSize: AppSize.defaultSize! * 1.2,
+                            decoration: TextDecoration.none,
+                            color: Colors.black.withOpacity(0.8),
+                          ),
+                          // autofocus: true,
+                        ),
+                        SizedBox(
+                          height: AppSize.defaultSize! * 3,
+                        ),
+                        CustomText(
+                          text: StringManager.selectMajor.tr(),
+                          color: AppColors.thirdColor,
+                        ),
+                        SizedBox(
+                          height: AppSize.defaultSize! * 3,
+                        ),
+                        ValueListenableBuilder(
+                            valueListenable: addToMajor,
+                            builder: (context_, value, child) {
+                              return CustomSegmentedButton2(
+                                onTapClose: (i) {
+
+                                  ProfileMajor.newMajors.removeAt(i);
+                                  addToMajor.value++;
+                                },
+                                segments: ProfileMajor.newMajors
+                                    .map((e) => e.nameEn ?? "")
+                                    .toList()
+                                    .toSet()
+                                    .toList(),
+                                onValueChanged: (index) =>
+                                    _onValueChanged(index),
+                                initialSelectedIndexes: ProfileMajor.newMajors
+                                    .map((e) =>
+                                        ProfileMajor.newMajors.indexOf(e))
+                                    .toList()
+                                    .toSet()
+                                    .toList(),
+                              );
+                            }),
+                      ],
+                    ),
+                  )));
+        }
+        return Container();
+      },
+    );
+  }
+}
+/*
+  CustomText(
                           text: StringManager.yourFields.tr(),
                           fontSize: AppSize.defaultSize! * 1.6,
                           color: AppColors.primaryColor,
@@ -153,12 +265,4 @@ class _ProfileMajorState extends State<ProfileMajor> {
                                 ),
                               );
                             }),
-                      ],
-                    ),
-                  )));
-        }
-        return Container();
-      },
-    );
-  }
-}
+ */

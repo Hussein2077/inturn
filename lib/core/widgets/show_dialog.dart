@@ -74,8 +74,8 @@ class CVPage extends StatelessWidget {
         '${profileDataModel.firstName} ${profileDataModel.lastName}',
         PdfStandardFont(PdfFontFamily.helvetica, 30),
         brush: PdfBrushes.black,
-        bounds: const Rect.fromLTWH(0, 100, 400, 50));
-    page.graphics.drawString(profileDataModel.description??'',
+        bounds: const Rect.fromLTWH(0, 100, 400, 40));
+    page.graphics.drawString(profileDataModel.description??'description',
         PdfStandardFont(PdfFontFamily.helvetica, 20),
         brush: PdfBrushes.gray, bounds: const Rect.fromLTWH(0, 150, 400, 300));
     page.graphics.drawImage(

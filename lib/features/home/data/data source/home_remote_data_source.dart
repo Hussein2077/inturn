@@ -123,7 +123,6 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
       );
       List<UniversityModel> jsonData = List<UniversityModel>.from(
           (response.data as List).map((e) => UniversityModel.fromJson(e)));
-      log('${jsonData}ssssssssssssssssss');
 
       return jsonData;
     } on DioException catch (e) {
@@ -140,7 +139,6 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
       );
       List<MajorModel> jsonData = List<MajorModel>.from(
           (response.data as List).map((e) => MajorModel.fromJson(e)));
-      log('${jsonData}ssssssssssssssssss');
       return jsonData;
     } on DioException catch (e) {
       throw DioHelper.handleDioError(dioError: e, endpointName: "getMajor");
@@ -155,7 +153,6 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
       );
       List<SkillModel> jsonData = List<SkillModel>.from(
           (response.data as List).map((e) => SkillModel.fromJson(e)));
-      log('${jsonData[0]}ssssssssssssssssss');
       return jsonData;
     } on DioException catch (e) {
       throw DioHelper.handleDioError(dioError: e, endpointName: "getSkill");

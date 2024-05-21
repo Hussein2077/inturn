@@ -152,9 +152,9 @@ class Methods {
 
 }
 class CommonType {
-  final String skillNameEn;
-  final int skillId;
+  final String nameEn;
+  final int id;
 
-  CommonType(this.skillNameEn, this.skillId);
+  CommonType(this.nameEn, this.id);
 }
 
