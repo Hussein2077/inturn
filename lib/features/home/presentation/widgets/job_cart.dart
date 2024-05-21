@@ -49,14 +49,17 @@ class _JobCartState extends State<JobCart> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        PersistentNavBarNavigator.pushNewScreen(
-          context,
-          screen: JobDetailsScreen(
-            matchedVacancyWrapper: widget.vacancyModel,
-          ),
-          withNavBar: false,
-          pageTransitionAnimation: PageTransitionAnimation.fade,
-        );
+        if(widget.skillRequired == null) {
+          PersistentNavBarNavigator.pushNewScreen(
+            context,
+            screen: JobDetailsScreen(
+              matchedVacancyWrapper: widget.vacancyModel,
+            ),
+            withNavBar: false,
+            pageTransitionAnimation: PageTransitionAnimation.fade,
+          );
+        }
+
       },
       child: SizedBox(
         width: AppSize.screenWidth,
