@@ -14,6 +14,7 @@ import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/utils/enums.dart';
 import 'package:inturn/core/utils/methods.dart';
 import 'package:inturn/core/widgets/app_bar.dart';
+import 'package:inturn/core/widgets/column_with_text_field.dart';
 import 'package:inturn/core/widgets/custom_text_field.dart';
 import 'package:inturn/core/widgets/cutom_text.dart';
 import 'package:inturn/core/widgets/loading_widget.dart';
@@ -217,19 +218,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 SizedBox(
                                   height: AppSize.defaultSize! * 2.5,
                                 ),
-                                CustomTextField(
+                                ColumnWithTextField(
+                                  text: StringManager.firstName.tr(),
                                   controller: firstNameController,
                                 ),
-                                SizedBox(
-                                  height: AppSize.defaultSize! * 2,
-                                ),
-                                CustomTextField(
+                                // SizedBox(
+                                //   height: AppSize.defaultSize! ,
+                                // ),
+                                ColumnWithTextField(
+                                  text: StringManager.secondName.tr(),
                                   controller: lastNameController,
                                 ),
-                                SizedBox(
-                                  height: AppSize.defaultSize! * 2,
-                                ),
-                                CustomTextField(
+                                // SizedBox(
+                                //   height: AppSize.defaultSize! ,
+                                // ),
+                                ColumnWithTextField(
+                                  text:   StringManager.email.tr(),
                                   controller: emailController,
                                 ),
                                 SizedBox(

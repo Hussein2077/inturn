@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/widgets/custom_text_field.dart';
+import 'package:inturn/core/widgets/cutom_text.dart';
 
 class ColumnWithTextField extends StatefulWidget {
   const ColumnWithTextField({
@@ -43,12 +45,14 @@ class _ColumnWithTextFieldState extends State<ColumnWithTextField> {
         SizedBox(
           height: AppSize.defaultSize! * 2,
         ),
-        Text(
+        CustomText(
+          text:
           widget.text,
-          style: TextStyle(
-              fontSize: AppSize.defaultSize! * 1.4,
-              fontWeight: FontWeight.w700),
+          fontSize: AppSize.defaultSize! * 1.4,
+          color: AppColors.primaryColor,
+          fontWeight: FontWeight.w500,
         ),
+
         SizedBox(
           height: AppSize.defaultSize! * .3,
         ),
