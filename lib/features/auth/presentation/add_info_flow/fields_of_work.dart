@@ -137,7 +137,7 @@ class _FieldsInfoState extends State<FieldsInfo> {
                         text: StringManager.next.tr(),
                         onTap: () {
                           if (_currentSegment.isNotEmpty) {
-                            BlocProvider.of<AddPersonalInfoBloc>(context).add(SendMajorIdEvent(majorIds: FieldsInfo.majorsId));
+                            BlocProvider.of<AddPersonalInfoBloc>(context).add(SendMajorIdEvent(majorIds: FieldsInfo.majorsId.toSet().toList()));
                           } else {
                             errorSnackBar(
                                 context, StringManager.pleaseAddField.tr());
