@@ -8,15 +8,18 @@ class GetInternshipsBySearchEvent extends BaseGetInternshipsBySearchEvent {
   final int? cityId;
   final int? countryId;
   final int? vacancyLevelId;
+  final int? vacancyWorkPlace;
+
 final String? userId;
 
-  GetInternshipsBySearchEvent({
+  GetInternshipsBySearchEvent( {
     this.title,
     this.companyId,
     this.cityId,
     this.countryId,
     this.vacancyLevelId,
-    this.userId
+    this.userId,
+    this.vacancyWorkPlace,
 });
 
 }

@@ -62,6 +62,7 @@ class VacancySearch {
   final int? cityId;
   final int? countryId;
   final int? vacancyLevelId;
+  final int? vacancyWorkPlace;
   final String? userId;
   VacancySearch({
     this.title,
@@ -70,6 +71,7 @@ class VacancySearch {
     this.countryId,
     this.vacancyLevelId,
     this.userId,
+    this.vacancyWorkPlace,
   });
 }class VacancyApply{
   final int vacancyID;

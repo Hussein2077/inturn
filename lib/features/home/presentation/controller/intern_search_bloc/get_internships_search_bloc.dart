@@ -22,7 +22,8 @@ class GetInternshipsBySearchBloc extends Bloc<BaseGetInternshipsBySearchEvent, G
         countryId: event.countryId,
         companyId: event.companyId,
         vacancyLevelId: event.vacancyLevelId,
-        userId: event.userId
+        userId: event.userId,
+        vacancyWorkPlace: event.vacancyWorkPlace
       ));
       result.fold(
           (l) => emit(GetInternshipsBySearchSuccessMessageState(vacancyModel: l)),

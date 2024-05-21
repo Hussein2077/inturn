@@ -36,6 +36,7 @@ class SuggestedView extends StatefulWidget {
   const SuggestedView({super.key, required this.companyId, required this.vacancyId});
 final int companyId;
 final int vacancyId;
+
   @override
   State<SuggestedView> createState() => _SuggestedViewState();
 }

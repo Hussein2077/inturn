@@ -40,6 +40,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    log('${FiltersScreen.workPlace}FiltersScreen.workPlace');
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: appBar(context, text: StringManager.searchResults.tr()),
@@ -53,7 +54,6 @@ class _SearchScreenState extends State<SearchScreen> {
                 child: CustomTextField(
                   controller: searchController,
                   onChanged: (value) {
-                    log('${  CitiesDropDown.selectedValue?.countryId}gggggsss${CitiesDropDown.selectedValue2?.cityId}');
 
                     Future.delayed(const Duration(milliseconds: 500), () {
                       BlocProvider.of<GetInternshipsBySearchBloc>(context)
@@ -61,6 +61,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         vacancyLevelId: FiltersScreen.careerLevel,
                         cityId: CitiesDropDown.selectedValue2?.cityId,
                         countryId: CitiesDropDown.selectedValue?.countryId ?? 1,
+                        vacancyWorkPlace: FiltersScreen.workPlace,
                       ));
                     });
                   },
@@ -79,6 +80,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         title: searchController.text,
                         vacancyLevelId: FiltersScreen.careerLevel,
                         cityId: CitiesDropDown.selectedValue2?.cityId,
+                        vacancyWorkPlace: FiltersScreen.workPlace,
                         countryId: CitiesDropDown.selectedValue?.countryId ?? 1,
                       ));
                     },
@@ -115,7 +117,16 @@ class _SearchScreenState extends State<SearchScreen> {
                                     // OPTIONAL VALUE. True by default.
                                     pageTransitionAnimation:
                                         PageTransitionAnimation.fade,
-                                  );
+                                  ).then((value) {
+                                    BlocProvider.of<GetInternshipsBySearchBloc>(context)
+                                        .add(GetInternshipsBySearchEvent(
+                                      title: searchController.text,
+                                      vacancyLevelId: FiltersScreen.careerLevel,
+                                      cityId: CitiesDropDown.selectedValue2?.cityId,
+                                      countryId: CitiesDropDown.selectedValue?.countryId ?? 1,
+                                        vacancyWorkPlace: FiltersScreen.workPlace,
+                                    ));
+                                  });
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
