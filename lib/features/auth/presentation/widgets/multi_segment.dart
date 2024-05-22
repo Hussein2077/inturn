@@ -34,19 +34,17 @@ class MultiSegmentedButtonState extends State<MultiSegmentedButton> {
     super.initState();
     _selectedIndices = List.from(widget.initialSelectedIndices);
   }
-
+  ValueNotifier<int> selectedIndex = ValueNotifier<int>(0);
   @override
   Widget build(BuildContext context) {
     return Wrap(
       alignment: WrapAlignment.start,
       direction: Axis.horizontal,
-      spacing: AppSize.defaultSize! * 1.5,
+      spacing: AppSize.defaultSize! ,
       children: List.generate(
         widget.segments[widget.initialIndex].positions.length,
             (index) => GestureDetector(
           onTap: () {
-            setState(() {
-
               MultiSegmentedButton.selectedIndex=index;
               if (_selectedIndices.contains(index)) {
                 FieldsInfo.majorsId.remove(widget.ids![index]);
@@ -56,30 +54,36 @@ class MultiSegmentedButtonState extends State<MultiSegmentedButton> {
                 _selectedIndices.add(index);
               }
               widget.onValueChanged(_selectedIndices);
-            });
+              selectedIndex.value++;
           },
-          child: Container(
-            margin: EdgeInsets.all(AppSize.defaultSize! * 0.5),
-            height: AppSize.defaultSize! * 4.5,
-            // width: widget.width ?? AppSize.defaultSize! * 16,
-            decoration: BoxDecoration(
-              color: _selectedIndices.contains(index)
-                  ? AppColors.secondaryColor
-                  : Colors.white,
-              borderRadius: BorderRadius.circular(AppSize.defaultSize! * 1.5),
-              border: Border.all(
-                color: AppColors.secondaryColor,
-                width: 2,
-              ),
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(AppSize.defaultSize!),
-              child: CustomText(
-                text: widget.segments[widget.initialIndex].positions[index].majorNameEn,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+          child: ValueListenableBuilder(
+            valueListenable: selectedIndex,
+            builder: (context, value, child) {
+              return Container(
+                margin: EdgeInsets.all(AppSize.defaultSize! * 0.5),
+
+                height: AppSize.defaultSize! * 4.5,
+                // width: widget.width ?? AppSize.defaultSize! * 16,
+                decoration: BoxDecoration(
+                  color: _selectedIndices.contains(index)
+                      ? AppColors.secondaryColor
+                      : Colors.white,
+                  borderRadius: BorderRadius.circular(AppSize.defaultSize! * 1.5),
+                  border: Border.all(
+                    color: AppColors.secondaryColor,
+                    width: 2,
+                  ),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(AppSize.defaultSize!),
+                  child: CustomText(
+                    text: widget.segments[widget.initialIndex].positions[index].majorNameEn,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              );
+            }
           ),
         ),
       ),
