@@ -23,6 +23,7 @@ import 'package:inturn/features/home/presentation/controller/get_major/bloc.dart
 import 'package:inturn/features/home/presentation/controller/get_major/event.dart';
 import 'package:inturn/features/home/presentation/controller/get_my_applications/get_my_applications_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/intern_search_bloc/get_internships_search_bloc.dart';
+import 'package:inturn/features/home/presentation/controller/suggested%20jobs%20in%20company/bloc.dart';
 import 'package:inturn/features/home/presentation/controller/suggested/bloc.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_event.dart';
@@ -138,7 +139,8 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
           create: (context) => getIt<GetInternshipsBySearchBloc>()),
         BlocProvider(
-          create: (context) => getIt<SuggestedBloc>()),
+          create: (context) => getIt<SuggestedJobsBloc>()), BlocProvider(
+          create: (context) => getIt<SuggestedJobsInCompanyBloc>()),
 
       ],
       child: MaterialApp(

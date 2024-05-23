@@ -171,7 +171,7 @@ class _JobCartState extends State<JobCart> {
                           percent >= .5 ? Colors.green : Colors.yellow,
                     )
                   : Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
                           width: AppSize.defaultSize! * 10,
@@ -196,6 +196,9 @@ class _JobCartState extends State<JobCart> {
                             ),
                           ),
                         ),
+                        SizedBox(
+                          width: AppSize.defaultSize! ,
+                        ),
                         Container(
                           width: AppSize.defaultSize! * 10,
                           height: AppSize.defaultSize! * 2.4,
@@ -214,6 +217,9 @@ class _JobCartState extends State<JobCart> {
                               fontSize: AppSize.defaultSize! * 1.3,
                             ),
                           ),
+                        ),
+                        SizedBox(
+                          width: AppSize.defaultSize! ,
                         ),
                         Container(
                           width: AppSize.defaultSize! * 10,
@@ -244,6 +250,7 @@ class _JobCartState extends State<JobCart> {
                             ),
                           ),
                         ),
+
                       ],
                     ),
 

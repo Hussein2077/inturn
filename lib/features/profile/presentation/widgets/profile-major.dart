@@ -117,6 +117,7 @@ class _ProfileMajorState extends State<ProfileMajor> {
                                 v.item!.majorNameEn, v.item!.majorId))) {
                               ProfileMajor.newMajors.add(CommonType(
                                   v.item!.majorNameEn, v.item!.majorId));
+
                             }
                             addToMajor.value++;
                             controller.clear();
@@ -164,7 +165,6 @@ class _ProfileMajorState extends State<ProfileMajor> {
                             builder: (context_, value, child) {
                               return CustomSegmentedButton2(
                                 onTapClose: (i) {
-
                                   ProfileMajor.newMajors.removeAt(i);
                                   addToMajor.value++;
                                 },

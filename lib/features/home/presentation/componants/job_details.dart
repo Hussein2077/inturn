@@ -166,7 +166,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                 companyId:
                     widget.matchedVacancyWrapper.matchedVacancy.companyId ?? 1,
                 vacancyId:
-                    widget.matchedVacancyWrapper.matchedVacancy.vacancyId ?? 1,
+                    widget.matchedVacancyWrapper.matchedVacancy.vacancyId!
               ),
               SizedBox(
                 height: AppSize.defaultSize!,

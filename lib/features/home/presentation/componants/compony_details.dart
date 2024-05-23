@@ -21,6 +21,7 @@ import 'package:inturn/features/home/presentation/controller/intern_search_bloc/
 import 'package:inturn/features/home/presentation/controller/intern_search_bloc/get_internships_search_state.dart';
 import 'package:inturn/features/home/presentation/widgets/job_cart.dart';
 import 'package:inturn/features/home/presentation/widgets/suggested_view.dart';
+import 'package:inturn/features/home/presentation/widgets/suggested_view_in_company.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CompanyDetails extends StatefulWidget {
@@ -67,8 +68,11 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                         children: [
                           CircleAvatar(
                             radius: AppSize.defaultSize! * 4.8,
+                            backgroundColor: Colors.transparent,
                             child: CachedNetworkCustom(
                               url: widget.data.profileLogo ?? "",
+                              width: AppSize.defaultSize!*9.8,
+                              height: AppSize.defaultSize! * 9.8,
                             ),
                           ),
                           SizedBox(
@@ -125,6 +129,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                 children: [
                   socialMediaButton(
                       asset: AssetPath.website,
+
                       onTap: () async {
                         await launchUrl(Uri.parse(widget.data.webSite ?? ""));
                       }),
@@ -181,7 +186,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                               Icon(
                                 Icons.date_range_outlined,
                                 color: AppColors.lightGreyColor,
-                                size: AppSize.defaultSize! * 2,
+                                size: AppSize.defaultSize! * 2.2,
                               ),
                               CustomText(
                                 text: widget.data.foundationYear ?? "",
@@ -194,7 +199,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                             children: [
                               Image.asset(
                                 AssetPath.employees,
-                                scale: 2,
+                                scale: AppSize.defaultSize! * .18,
                               ),
                               CustomText(
                                 text: widget.data.countOfEmployees ?? "",
@@ -207,7 +212,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                             children: [
                               Image.asset(
                                 AssetPath.job,
-                                scale: 2,
+                                scale: AppSize.defaultSize! * .18,
                               ),
                               CustomText(
                                 text: ' 35 jobs',
@@ -262,7 +267,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                 fontWeight: FontWeight.w700,
                 fontSize: 1.6 * AppSize.defaultSize!,
               ),
-              SuggestedView(
+              SuggestedInCompanyView(
                 companyId: widget.data.companyId ?? 1,
                 vacancyId: 0,
               ),
@@ -282,13 +287,12 @@ class _CompanyDetailsState extends State<CompanyDetails> {
         decoration: BoxDecoration(
           color: AppColors.lightGreyColor,
           borderRadius: BorderRadius.circular(AppSize.defaultSize! * 1.5),
-        ),
-        child: Image.asset(
-          asset,
-          scale: 2,
-
-          // height: AppSize.defaultSize! * 1,
-          // width: AppSize.defaultSize! * 1
+          image: DecorationImage(
+            scale: AppSize.defaultSize! * .15,
+            image: AssetImage(
+              asset,
+            ),
+          )
         ),
       ),
     );

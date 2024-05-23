@@ -6,14 +6,13 @@ import 'package:inturn/features/home/domain/use_case/intern_search_uc.dart';
 import 'package:inturn/features/home/presentation/controller/suggested/event.dart';
 import 'package:inturn/features/home/presentation/controller/suggested/state.dart';
 
-class SuggestedBloc extends Bloc<SuggestedEvent, SuggestedState> {
+class SuggestedJobsBloc extends Bloc<SuggestedEvent, SuggestedState> {
   GetInternshipsBySearchUseCase getInternshipsBySearchUseCase;
 
-  SuggestedBloc({required this.getInternshipsBySearchUseCase}) : super(SuggestedBySearchInitial()) {
+  SuggestedJobsBloc({required this.getInternshipsBySearchUseCase}) : super(SuggestedBySearchInitial()) {
    on<GetSuggestedBySearchEvent>((event, emit) async {
       emit(const GetSuggestedBySearchLoadingState());
       final result = await getInternshipsBySearchUseCase.call(VacancySearch(
-
           companyId: event.companyId,
           userId: event.userId
       ));

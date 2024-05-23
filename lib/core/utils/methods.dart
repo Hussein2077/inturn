@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:inturn/core/models/profile_data_model.dart';
 import 'package:inturn/core/resource_manager/routes.dart';
@@ -151,10 +152,13 @@ class Methods {
   }
 
 }
-class CommonType {
+class CommonType extends Equatable{
   final String nameEn;
   final int id;
 
-  CommonType(this.nameEn, this.id);
+  const CommonType(this.nameEn, this.id);
+
+  @override
+  List<Object> get props => [nameEn, id];
 }
 

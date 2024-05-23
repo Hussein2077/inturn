@@ -228,6 +228,7 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
       );
       List<VacancyModel> jsonData = List<VacancyModel>.from(
           (response.data as List).map((e) => VacancyModel.fromJson(e)));
+
       return jsonData;
     } on DioException catch (e) {
       throw DioHelper.handleDioError(

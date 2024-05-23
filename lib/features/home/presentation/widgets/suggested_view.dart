@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -44,7 +46,8 @@ final int vacancyId;
 class _SuggestedViewState extends State<SuggestedView> {
   @override
   void initState() {
-    BlocProvider.of<SuggestedBloc>(context)
+    log('${widget.companyId}widget.companyId');
+    BlocProvider.of<SuggestedJobsBloc>(context)
         .add(GetSuggestedBySearchEvent(
       companyId: widget.companyId,
     ));
@@ -52,24 +55,32 @@ class _SuggestedViewState extends State<SuggestedView> {
   }
   @override
   Widget build(BuildContext context) {
-    return  BlocBuilder<SuggestedBloc,
+    return  BlocBuilder<SuggestedJobsBloc,
         SuggestedState>(
       builder: (context, state) {
-
         if (state is GetSuggestedBySearchLoadingState) {
           return const LoadingWidget();
         } else if (state
         is GetSuggestedBySearchSuccessMessageState) {
-          state.vacancyModel.removeWhere((element) => element.vacancyId == widget.vacancyId);
 
-          if(state.vacancyModel.isEmpty){
-            return const EmptyWidget(text: 'No more jobs related',);
+
+          List<VacancyModel> vacancy = state.vacancyModel;
+          log('${vacancy.length}  aaaaaaaaaa111111');
+          vacancy.removeWhere((element) => element.vacancyId == widget.vacancyId);
+          log('${vacancy.length}  aaaaaaaaaa');
+          if(vacancy.isEmpty||(vacancy.length==1)){
+
+            return   EmptyWidget(text: 'No more jobs related',
+              width:  AppSize.screenWidth,
+            );
           }
           return ListView.builder(
-              itemCount: state.vacancyModel.isNotEmpty?state.vacancyModel.length-1: state.vacancyModel.length,
+              itemCount: vacancy.isNotEmpty?vacancy.length-1: vacancy.length,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (item, index) {
+                log('${state.vacancyModel[index]}wwwwwwwwwwwww');
+                log('${state.vacancyModel[index].vacancyId}aeheeeeeeeeeee${widget.vacancyId}');
                 return Padding(
                   padding: EdgeInsets.all(AppSize.defaultSize! * 1.2),
                   child: JobCart(
@@ -97,6 +108,7 @@ class _SuggestedViewState extends State<SuggestedView> {
                       .scale() // inherits duration from fadeIn
                       .move(delay: 300.ms, duration: 600.ms),
                 );
+
               });
         } else if (state is GetSuggestedBySearchErrorMessageState) {
           return ErrorWidget(state.errorMessage);

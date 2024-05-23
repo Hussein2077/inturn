@@ -39,7 +39,7 @@ class CompanyCart extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CachedNetworkCustom(url: data?.profileLogo ?? "",
+            CachedNetworkCustom(url: data?.coverLogo ?? "",
               width: AppSize.screenWidth,
               height: AppSize.defaultSize! * 8,
             ),
