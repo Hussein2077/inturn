@@ -42,9 +42,11 @@ import 'package:inturn/features/home/domain/use_case/my_applications_us.dart';
 import 'package:inturn/features/profile/domain/use_case/edit_profile_uc.dart';
 import 'package:inturn/features/profile/domain/use_case/get_my_data_uc.dart';
 import 'package:inturn/features/profile/domain/use_case/get_profile_data_uc.dart';
+import 'package:inturn/features/profile/domain/use_case/upload_pdf.dart';
 import 'package:inturn/features/profile/presentation/controller/edit_profile/edit_profile_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_profile_data/get_my_profile_data_bloc.dart';
+import 'package:inturn/features/profile/presentation/controller/upload_p_d_f/bloc.dart';
 
 final getIt = GetIt.instance;
 
@@ -68,15 +70,13 @@ class ServerLocator {
           getFacultyUseCase: getIt(),
           getUniversityUseCase: getIt(),
           getSkillUseCase: getIt(),
-      getAreaUseCase: getIt(),
+          getAreaUseCase: getIt(),
         ));
 
     getIt.registerLazySingleton(
         () => GetCompaniesBloc(getCompaniesUseCase: getIt()));
-    getIt.registerLazySingleton(
-        () => HomeBloc( getMatchedJobsCase: getIt()));
-    getIt.registerLazySingleton(
-        () => GetMajorBloc( getMajorUseCase: getIt()));
+    getIt.registerLazySingleton(() => HomeBloc(getMatchedJobsCase: getIt()));
+    getIt.registerLazySingleton(() => GetMajorBloc(getMajorUseCase: getIt()));
     getIt.registerLazySingleton(() => AddPersonalInfoBloc(
         addPersonalInfoUseCase: getIt(),
         sendExperienceLevelUseCase: getIt(),
@@ -96,9 +96,11 @@ class ServerLocator {
     getIt.registerLazySingleton(() => ApplyBloc(applyUseCase: getIt()));
     getIt.registerLazySingleton(() =>
         GetInternshipsBySearchBloc(getInternshipsBySearchUseCase: getIt()));
+    getIt.registerLazySingleton(
+        () => SuggestedJobsBloc(getInternshipsBySearchUseCase: getIt()));
     getIt.registerLazySingleton(() =>
-        SuggestedJobsBloc(getInternshipsBySearchUseCase: getIt())); getIt.registerLazySingleton(() =>
         SuggestedJobsInCompanyBloc(getInternshipsBySearchUseCase: getIt()));
+    getIt.registerLazySingleton(() => PdfUploadBloc(getIt()));
 
 //use_case
     getIt.registerFactory(
@@ -140,8 +142,9 @@ class ServerLocator {
         () => GetVacancyDetailsUseCase(baseRepositoryHome: getIt()));
     getIt.registerFactory(() => ApplyUseCase(baseRepositoryJobs: getIt()));
     getIt.registerFactory(
-        () => GetInternshipsBySearchUseCase(baseRepositoryHome: getIt())); getIt.registerFactory(
-        () => GetAreaUseCase(baseRepositoryHome: getIt()));
+        () => GetInternshipsBySearchUseCase(baseRepositoryHome: getIt()));
+    getIt.registerFactory(() => GetAreaUseCase(baseRepositoryHome: getIt()));
+    getIt.registerFactory(() => UploadPDFUseCase(baseRepositoryProfile: getIt()));
 
     //remote data
     getIt.registerLazySingleton<BaseRemotelyDataSource>(

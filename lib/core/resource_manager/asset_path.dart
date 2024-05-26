@@ -5,6 +5,7 @@ class AssetPath {
   static const String logo = '$pathImage/logo.svg';
   static const String logoPNG = '$pathImage/logo.png';
   static const String apple = '$pathImage/apple.svg';
+  static const String  leading = '$pathImage/Asset 39.png';
   static const String google = '$pathImage/google.svg';
   static const String facebook = '$pathImage/facebook.svg';
   static const String linkedin2  = '$pathImage/link.svg';
@@ -21,6 +22,9 @@ class AssetPath {
   static const String website = '$pathImage/website.png';
   static const String bgCv = '$pathImage/bg_cv.png';
   static const String cvContacts  = '$pathImage/cv_contacts.png';
+  static const String home  = '$pathImage/Asset 63.png';
+  static const String  search  = '$pathImage/Asset 76.svg';
+
 //Images
   static const String logoLarge = '$pathImage/logo@2x.jpg';
   static const String illustration = '$pathImage/illustration.jpg';
@@ -46,7 +50,6 @@ class AssetPath {
 
 //Icons
   static const String notification = '$pathImage/notification.png';
-  static const String home = '$pathImage/home.svg';
 
   static const String menu = '$pathImage/menu.png';
   static const String lolipop = '$pathImage/lolipop.png';

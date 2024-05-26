@@ -65,11 +65,8 @@ class _SuggestedViewState extends State<SuggestedView> {
 
 
           List<VacancyModel> vacancy = state.vacancyModel;
-          log('${vacancy.length}  aaaaaaaaaa111111');
           vacancy.removeWhere((element) => element.vacancyId == widget.vacancyId);
-          log('${vacancy.length}  aaaaaaaaaa');
           if(vacancy.isEmpty||(vacancy.length==1)){
-
             return   EmptyWidget(text: 'No more jobs related',
               width:  AppSize.screenWidth,
             );

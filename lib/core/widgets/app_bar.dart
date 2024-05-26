@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:inturn/core/resource_manager/asset_path.dart';
 import 'package:inturn/core/resource_manager/routes.dart';
@@ -26,7 +27,14 @@ AppBar appBar(BuildContext context,
             onPressed: () {
               Navigator.pop(context);
             },
-            icon:   Icon(Icons.arrow_back_ios,size:  AppSize.defaultSize!*2,),
+            icon: Transform.rotate(
+              angle: 180 * 3.14 / 180,
+
+              child: Image.asset(AssetPath.leading,
+                  height: AppSize.defaultSize! * 2.5,
+                  width: AppSize.defaultSize! * 2.5,
+              ),
+            )
           )
         : null,
     actions: actions

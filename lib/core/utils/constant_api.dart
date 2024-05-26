@@ -8,6 +8,7 @@ class ConstantApi {
 
   static const String login = "${baseUrl}Auth/Login";
   static const String universities = "${baseUrl}Universities/GetAllUniversity";
+  static const String uploadPdf = "${baseUrl}UploadCV/upload-cv";
 
   static String faculty(int id) => "${baseUrl}Faculties/GetFacultiesBy$id";
   static String getAreas(int id) => "${baseUrl}Areas/GetAreaByCityId?cityId=$id";
@@ -22,6 +23,7 @@ class ConstantApi {
   static   String myApplications(String userId ) =>"${baseUrl}applications/GetMyApplicationsByUserId?userId=$userId";
 
   static String myData(String id) => "${baseUrl}Auth/UserData?userId=$id";
+  static String getCV (String id) => "${baseUrl}UploadCV/getUserCV$id";
 
   static String complete(String id) => "${baseUrl}Auth/complete?userId=$id";
   static const String getCompanies = "${baseUrl}Companies/GetAllCompanies";

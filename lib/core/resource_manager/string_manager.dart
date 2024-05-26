@@ -24,6 +24,7 @@ class StringManager {
   static const String companyOverview = "Company overview";
   static const String changePassword = "Change Password";
   static const String downloadCV = "Download CV";
+  static const String uploadCV  = "Upload your CV";
   static const String personalInformation = "Personal Information";
   static const String changeProfileImage = "Change Profile Image";
   static const String searchResults = "Search Results";

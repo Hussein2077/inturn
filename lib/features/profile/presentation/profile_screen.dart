@@ -38,6 +38,7 @@ import 'package:inturn/features/profile/presentation/controller/edit_profile/edi
 import 'package:inturn/features/profile/presentation/controller/get_my_profile_data/get_my_profile_data_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_profile_data/get_my_profile_data_event.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_profile_data/get_my_profile_data_state.dart';
+import 'package:inturn/features/profile/presentation/widgets/pick_pdf.dart';
 import 'package:inturn/features/profile/presentation/widgets/profile-major.dart';
 import 'package:inturn/features/profile/presentation/widgets/profile_skills.dart';
 import 'package:inturn/main.dart';
@@ -45,7 +46,7 @@ import 'package:searchfield/searchfield.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key, required this.userId});
-
+  static bool isUploaded = false;
   final String userId;
 
   @override
@@ -124,6 +125,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               .add(GetMyProfileDataEvent(MyApp.userId.toString()));
         } else if (state is EditProfileErrorMessageState) {
           EasyLoading.dismiss();
+          log('${state.errorMessage}ssssssssss');
           EasyLoading.showError(state.errorMessage);
         }
           else if (state is EditProfileLoadingState) {
@@ -161,6 +163,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         color: AppColors.lightGreyColor,
                         fontWeight: FontWeight.bold,
                       ),
+
                       Padding(
                         padding: EdgeInsets.symmetric(
                             vertical: AppSize.defaultSize! * 2),
@@ -174,6 +177,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+
+                      const PdfUploadForm(),
                       Material(
                         borderRadius:
                             BorderRadius.circular(AppSize.defaultSize! * 1.5),
@@ -472,6 +477,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 JobLocationTypeId: (location + 1).toString(),
                                 MajorIds: FieldsInfo.majorsId,
                                 SkillIds: mergeSkill,
+                                image: ProfileScreen.  isUploaded? UploadProfileImagePage.imageFile!:null,
                                 // CountryId: '',
                                 // CityId: '',
                               ),

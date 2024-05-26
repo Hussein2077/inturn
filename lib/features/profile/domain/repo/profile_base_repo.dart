@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:inturn/core/error/failure.dart';
 import 'package:inturn/core/models/my_data_model.dart';
@@ -10,4 +12,5 @@ abstract class BaseRepositoryProfile {
   Future<Either<MyDataModel, Failure>> completeProfile( String id);
   Future<Either<String, Failure>> editProfileData(EditPersonalInfoParams parameter);
   Future<Either<ProfileDataModel, Failure>> getMyProfileData( String id);
+  Future<Either<String, Failure>> uploadPdf( File file);
 }

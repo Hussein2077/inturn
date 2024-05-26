@@ -32,22 +32,23 @@ import 'package:inturn/features/home/presentation/controller/vacancy_details_blo
 import 'package:inturn/features/profile/presentation/controller/edit_profile/edit_profile_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_profile_data/get_my_profile_data_bloc.dart';
+import 'package:inturn/features/profile/presentation/controller/upload_p_d_f/bloc.dart';
 import 'package:inturn/firebase_options.dart';
 
 String? token;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding:  WidgetsFlutterBinding.ensureInitialized());
+  FlutterNativeSplash.preserve(
+      widgetsBinding: WidgetsFlutterBinding.ensureInitialized());
 
   await ServerLocator().init();
 
   await EasyLocalization.ensureInitialized();
   token = await Methods.instance.returnUserToken();
   await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-
-      );
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   FlutterNativeSplash.remove();
 
   runApp(EasyLocalization(
@@ -66,9 +67,11 @@ void main() async {
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
-static String userId = '0';
-static int userProfileId = 0;
-  static bool fromLogin=false;
+
+  static String userId = '0';
+  static int userProfileId = 0;
+  static bool fromLogin = false;
+
   @override
   State<MyApp> createState() => _MyAppState();
 }
@@ -77,13 +80,14 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     Future.delayed(Duration.zero, () async {
-      MyApp.  userId = await Methods.instance.returnUserId();
+      MyApp.userId = await Methods.instance.returnUserId();
       MyApp.userProfileId = await Methods.instance.returnProfileId();
       print('user id ${MyApp.userId}');
       print('user profile id ${MyApp.userProfileId}');
     });
     super.initState();
   }
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -106,42 +110,43 @@ class _MyAppState extends State<MyApp> {
           create: (context) => getIt<OptionsBloc>()
             // ..add(const GetMajorEvent())
             ..add(const GetUniversityEvent())
-            ..add(const GetSkillsEvent())
-          ,
+            ..add(const GetSkillsEvent()),
         ),
-        BlocProvider(
-            create: (context) => getIt<HomeBloc>()),
+        BlocProvider(create: (context) => getIt<HomeBloc>()),
         BlocProvider(
             create: (context) => getIt<GetMajorBloc>()..add(GetMajorEvent())),
         BlocProvider(
           create: (context) => getIt<GetMyApplicationsBloc>(),
-        ),  BlocProvider(
+        ),
+        BlocProvider(
           create: (context) => getIt<GetMyDataBloc>(),
         ),
         BlocProvider(
           create: (context) => getIt<AddPersonalInfoBloc>(),
         ),
         BlocProvider(
-          create: (context) => getIt<GetCompaniesBloc>()..add(GetCompaniesEvent()),
+          create: (context) =>
+              getIt<GetCompaniesBloc>()..add(GetCompaniesEvent()),
         ),
         BlocProvider(
           create: (context) => getIt<EditProfileBloc>(),
         ),
         BlocProvider(
           create: (context) => getIt<GetMyProfileDataBloc>(),
-        ),  BlocProvider(
-          create: (context) => getIt<AddSkillsBloc>(),
-        ), BlocProvider(
-          create: (context) => getIt<VacancyBloc>(),
-        ),BlocProvider(
-          create: (context) => getIt<ApplyBloc>(),
         ),
         BlocProvider(
-          create: (context) => getIt<GetInternshipsBySearchBloc>()),
+          create: (context) => getIt<AddSkillsBloc>(),
+        ),
         BlocProvider(
-          create: (context) => getIt<SuggestedJobsBloc>()), BlocProvider(
-          create: (context) => getIt<SuggestedJobsInCompanyBloc>()),
-
+          create: (context) => getIt<VacancyBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<ApplyBloc>(),
+        ),
+        BlocProvider(create: (context) => getIt<GetInternshipsBySearchBloc>()),
+        BlocProvider(create: (context) => getIt<SuggestedJobsBloc>()),
+        BlocProvider(create: (context) => getIt<SuggestedJobsInCompanyBloc>()),
+        BlocProvider(create: (context) => getIt<PdfUploadBloc>()),
       ],
       child: MaterialApp(
         locale: context.locale,
@@ -152,7 +157,7 @@ class _MyAppState extends State<MyApp> {
         navigatorKey: getIt<NavigationService>().navigatorKey,
         builder: EasyLoading.init(),
         initialRoute: Routes.splash,
-            // token == null || token == 'noToken' ? Routes.login : Routes.main,
+        // token == null || token == 'noToken' ? Routes.login : Routes.main,
         theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,

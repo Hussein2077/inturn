@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:inturn/core/base_use_case/base_use_case.dart';
 import 'package:inturn/core/error/failure.dart';
@@ -20,7 +22,7 @@ class EditPersonalInfoParams {
   final String id;
   final String? firstName;
   final String? lastName;
-  var image;
+
   final String? UniversityId;
   final String? FacultyId;
   final String? Description;
@@ -31,7 +33,7 @@ class EditPersonalInfoParams {
   final List<int>? SkillIds;
   final String? CountryId;
   final String? CityId;
-
+  final File? image;
   EditPersonalInfoParams({
      required this.id,
      this.firstName,
@@ -46,5 +48,6 @@ class EditPersonalInfoParams {
      this.SkillIds,
      this.CountryId,
      this.CityId,
+    this.image
   });
 }
