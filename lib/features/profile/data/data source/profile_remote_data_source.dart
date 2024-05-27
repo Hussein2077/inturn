@@ -8,6 +8,7 @@ import 'package:inturn/core/utils/api_helper.dart';
 import 'package:inturn/core/utils/constant_api.dart';
 import 'package:inturn/core/models/vacancey_model.dart';
 import 'package:inturn/features/profile/domain/use_case/edit_profile_uc.dart';
+import 'package:inturn/features/profile/domain/use_case/upload_pdf.dart';
 import 'package:inturn/main.dart';
 import 'package:http_parser/http_parser.dart';
 
@@ -20,9 +21,9 @@ abstract class BaseRemotelyDataSourceProfile {
 
   Future<ProfileDataModel> getMyProfileData(String id);
 
-  Future<String> uploadPdf(File file);
-  Future<String> getPdf();
+  Future<String> uploadPdf(UploadPDFParams uploadPDFParams);
 
+  Future<String> getPdf();
 }
 
 class ProfileRemotelyDateSource extends BaseRemotelyDataSourceProfile {
@@ -39,15 +40,20 @@ class ProfileRemotelyDateSource extends BaseRemotelyDataSourceProfile {
       throw DioHelper.handleDioError(dioError: e, endpointName: "get my data");
     }
   }
+
   @override
   Future<String> getPdf() async {
+    log('gfgfresponse.data');
     try {
       final response = await Dio().get(
         ConstantApi.getCV(MyApp.userId),
       );
+
       Map<String, dynamic> jsonData = response.data;
-       return jsonData["fileName"];
+
+      return jsonData["fileName"];
     } on DioException catch (e) {
+      log('${e}ssssssssssssssssssssssffffffsss');
       throw DioHelper.handleDioError(dioError: e, endpointName: "getPdf");
     }
   }
@@ -163,16 +169,18 @@ class ProfileRemotelyDateSource extends BaseRemotelyDataSourceProfile {
   }
 
   @override
-  Future<String> uploadPdf(File file) async {
+  Future<String> uploadPdf(UploadPDFParams uploadPDFParams) async {
     try {
       FormData formData = FormData.fromMap({
         "CVFile": await MultipartFile.fromFile(
-          file.path,
-          filename: file.path.split('/').last.toString(),
+          uploadPDFParams.file.path,
+          filename: uploadPDFParams.file.path.split('/').last.toString(),
         ),
         "UserId": MyApp.userId
       });
-      final response = await Dio().post(ConstantApi.uploadPdf, data: formData);
+      final response = uploadPDFParams.type == 1
+          ? await Dio().post(ConstantApi.uploadPdf, data: formData)
+          : await Dio().post(ConstantApi.updatePdf, data: formData);
 
       return 'Upload Success';
     } on DioException catch (e) {

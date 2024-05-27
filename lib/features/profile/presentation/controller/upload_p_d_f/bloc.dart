@@ -10,7 +10,10 @@ class PdfUploadBloc extends Bloc<PdfUploadEvent, PdfUploadState> {
   PdfUploadBloc(this.uploadPdfUseCase) : super(PdfUploadInitial()) {
     on<UploadPdf>((event, emit) async {
       emit(PdfUploading());
-      final result = await uploadPdfUseCase.call(event.file);
+      final result = await uploadPdfUseCase.call(UploadPDFParams(
+        file: event.file,
+        type: event.type
+      ));
       result.fold((l) => emit(PdfUploadSuccess(l)),
           (r) => emit(PdfUploadFailure(DioHelper().getTypeOfFailure(r))));
     });

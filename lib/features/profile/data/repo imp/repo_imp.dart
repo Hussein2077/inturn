@@ -8,6 +8,7 @@ import 'package:inturn/core/utils/api_helper.dart';
 import 'package:inturn/features/profile/data/data%20source/profile_remote_data_source.dart';
 import 'package:inturn/features/profile/domain/repo/profile_base_repo.dart';
 import 'package:inturn/features/profile/domain/use_case/edit_profile_uc.dart';
+import 'package:inturn/features/profile/domain/use_case/upload_pdf.dart';
 
 class ProfileRepositoryImp extends BaseRepositoryProfile {
   final BaseRemotelyDataSourceProfile baseRemotelyDataSourceProfile;
@@ -57,9 +58,17 @@ class ProfileRepositoryImp extends BaseRepositoryProfile {
   }
 
   @override
-  Future<Either<String, Failure>> uploadPdf(File file) async {
+  Future<Either<String, Failure>> uploadPdf(UploadPDFParams uploadPDFParams) async {
     try {
-      final result = await baseRemotelyDataSourceProfile.uploadPdf(file);
+      final result = await baseRemotelyDataSourceProfile.uploadPdf(uploadPDFParams);
+      return Left(result);
+    } on Exception catch (e) {
+      return right(DioHelper.buildFailure(e));
+    }
+  } @override
+  Future<Either<String, Failure>> getPdf() async {
+    try {
+      final result = await baseRemotelyDataSourceProfile.getPdf();
       return Left(result);
     } on Exception catch (e) {
       return right(DioHelper.buildFailure(e));

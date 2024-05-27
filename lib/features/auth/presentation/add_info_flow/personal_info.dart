@@ -51,10 +51,15 @@ class _PersonalInfoState extends State<PersonalInfo> {
         child: BlocListener<AddPersonalInfoBloc, AddPersonalInfoState >(
           listener: (context, state) {
             if (state is AddPersonalInfoSuccessState) {
+              EasyLoading.dismiss();
               Navigator.pushNamed(context, Routes.academicInfo, );
             }
             else if (state is AddPersonalInfoErrorState) {
+              EasyLoading.dismiss();
               EasyLoading.showError(state.errorMessage);
+            }
+            else if(state is AddPersonalInfoLoadingState){
+              EasyLoading.show();
             }
           },
           child: Column(

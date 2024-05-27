@@ -5,10 +5,12 @@ class ConstantApi {
   static const String baseUrl = 'https://api.intrn.app/Intrn/api/';
 
   static getImage(String url) => 'https://api.intrn.app/Intrn/Images/$url';
+  static getPdf(String url) => 'https://api.intrn.app/Intrn/UsersCVs/$url';
 
   static const String login = "${baseUrl}Auth/Login";
   static const String universities = "${baseUrl}Universities/GetAllUniversity";
   static const String uploadPdf = "${baseUrl}UploadCV/upload-cv";
+  static const String updatePdf  = "${baseUrl}UploadCV/updateUserCV";
 
   static String faculty(int id) => "${baseUrl}Faculties/GetFacultiesBy$id";
   static String getAreas(int id) => "${baseUrl}Areas/GetAreaByCityId?cityId=$id";

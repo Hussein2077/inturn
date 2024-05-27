@@ -15,6 +15,7 @@ class MainButton extends StatelessWidget {
     this.padding,
     this.fontSize,
     this.fontWeight,
+    this.child,
   });
 
   final void Function()? onTap;
@@ -26,11 +27,12 @@ class MainButton extends StatelessWidget {
   final double? padding;
   final double? fontSize;
   final FontWeight? fontWeight;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:   EdgeInsets.all(padding??0),
+      padding: EdgeInsets.all(padding ?? 0),
       child: SizedBox(
         height: height ?? AppSize.defaultSize! * 4.5,
         width: width ?? AppSize.screenWidth! * .9,
@@ -39,14 +41,28 @@ class MainButton extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             backgroundColor: color ?? AppColors.primaryColor,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(AppSize.defaultSize!*2),
+              borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2),
             ),
           ),
-          child: CustomText(
+          child:child==null? CustomText(
             text: text,
             color: textColor ?? AppColors.secondaryColor,
-            fontSize: fontSize??AppSize.defaultSize! * 1.5,
-            fontWeight:fontWeight ,
+            fontSize: fontSize ?? AppSize.defaultSize! * 1.5,
+            fontWeight: fontWeight,
+          ):
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Spacer(flex: 3),
+              CustomText(
+                text: text,
+                color: textColor ?? AppColors.secondaryColor,
+                fontSize: fontSize ?? AppSize.defaultSize! * 1.5,
+                fontWeight: fontWeight,
+              ),
+              const Spacer(flex: 2,),
+              child!,
+            ],
           ),
         ),
       ),

@@ -25,6 +25,7 @@ class StringManager {
   static const String changePassword = "Change Password";
   static const String downloadCV = "Download CV";
   static const String uploadCV  = "Upload your CV";
+  static const String uploaded  = "View CV";
   static const String personalInformation = "Personal Information";
   static const String changeProfileImage = "Change Profile Image";
   static const String searchResults = "Search Results";
@@ -94,6 +95,7 @@ class StringManager {
   static const String unexpectedError = "Unexpected Error";
   static const String loginSuccessfully = " Login Successfully";
   static const String login = " Login";
+  static const String loading = " loading...";
   static const String youHaveBeenMissed = "You Have Been Missed For Long Time";
   static const String email = "Email";
   static const String password = "Password";

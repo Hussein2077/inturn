@@ -32,6 +32,7 @@ import 'package:inturn/features/home/presentation/controller/vacancy_details_blo
 import 'package:inturn/features/profile/presentation/controller/edit_profile/edit_profile_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_profile_data/get_my_profile_data_bloc.dart';
+import 'package:inturn/features/profile/presentation/controller/get_pdf/bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/upload_p_d_f/bloc.dart';
 import 'package:inturn/firebase_options.dart';
 
@@ -147,6 +148,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => getIt<SuggestedJobsBloc>()),
         BlocProvider(create: (context) => getIt<SuggestedJobsInCompanyBloc>()),
         BlocProvider(create: (context) => getIt<PdfUploadBloc>()),
+        BlocProvider(create: (context) => getIt<GetPdfBloc>()),
       ],
       child: MaterialApp(
         locale: context.locale,

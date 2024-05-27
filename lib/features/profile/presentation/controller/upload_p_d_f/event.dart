@@ -7,8 +7,8 @@ abstract class PdfUploadEvent extends Equatable {
 
 class UploadPdf extends PdfUploadEvent {
   final File file;
-
-  const UploadPdf(this.file);
+  final int type;
+  const UploadPdf({  required this.file, this.type = 1});
 
   @override
   List<Object> get props => [file];

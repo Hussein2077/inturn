@@ -11,8 +11,6 @@ import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
-import 'package:inturn/core/utils/enums.dart';
-import 'package:inturn/core/utils/methods.dart';
 import 'package:inturn/core/widgets/app_bar.dart';
 import 'package:inturn/core/widgets/column_with_text_field.dart';
 import 'package:inturn/core/widgets/custom_text_field.dart';
@@ -24,13 +22,9 @@ import 'package:inturn/core/widgets/show_dialog.dart';
 import 'package:inturn/core/widgets/snack_bar.dart';
 import 'package:inturn/core/widgets/university.dart';
 import 'package:inturn/features/auth/presentation/add_info_flow/fields_of_work.dart';
-import 'package:inturn/features/auth/presentation/add_info_flow/skills.dart';
-import 'package:inturn/features/auth/presentation/widgets/multi_select2.dart';
 import 'package:inturn/features/auth/presentation/widgets/segment_button.dart';
 import 'package:inturn/features/auth/presentation/widgets/upload_photo.dart';
 import 'package:inturn/features/home/data/model/skill_model.dart';
-import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_bloc.dart';
-import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_states.dart';
 import 'package:inturn/features/profile/domain/use_case/edit_profile_uc.dart';
 import 'package:inturn/features/profile/presentation/controller/edit_profile/edit_profile_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/edit_profile/edit_profile_event.dart';
@@ -42,7 +36,6 @@ import 'package:inturn/features/profile/presentation/widgets/pick_pdf.dart';
 import 'package:inturn/features/profile/presentation/widgets/profile-major.dart';
 import 'package:inturn/features/profile/presentation/widgets/profile_skills.dart';
 import 'package:inturn/main.dart';
-import 'package:searchfield/searchfield.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key, required this.userId});
@@ -89,6 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     BlocProvider.of<GetMyProfileDataBloc>(context)
         .add(GetMyProfileDataEvent(widget.userId));
+
     emailController = TextEditingController();
     firstNameController = TextEditingController();
     lastNameController = TextEditingController();
@@ -156,6 +150,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       MainButton(
                         onTap: () {
+                          // todo change password
                           Navigator.pushNamed(context, Routes.changePassword);
                         },
                         text: StringManager.changePassword.tr(),
@@ -179,6 +174,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
 
                       const PdfUploadForm(),
+                      SizedBox(
+                        height: AppSize .defaultSize!*2,
+                      ),
                       Material(
                         borderRadius:
                             BorderRadius.circular(AppSize.defaultSize! * 1.5),

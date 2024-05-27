@@ -41,11 +41,13 @@ import 'package:inturn/features/profile/domain/repo/profile_base_repo.dart';
 import 'package:inturn/features/home/domain/use_case/my_applications_us.dart';
 import 'package:inturn/features/profile/domain/use_case/edit_profile_uc.dart';
 import 'package:inturn/features/profile/domain/use_case/get_my_data_uc.dart';
+import 'package:inturn/features/profile/domain/use_case/get_pdf_uc.dart';
 import 'package:inturn/features/profile/domain/use_case/get_profile_data_uc.dart';
 import 'package:inturn/features/profile/domain/use_case/upload_pdf.dart';
 import 'package:inturn/features/profile/presentation/controller/edit_profile/edit_profile_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_profile_data/get_my_profile_data_bloc.dart';
+import 'package:inturn/features/profile/presentation/controller/get_pdf/bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/upload_p_d_f/bloc.dart';
 
 final getIt = GetIt.instance;
@@ -101,6 +103,7 @@ class ServerLocator {
     getIt.registerLazySingleton(() =>
         SuggestedJobsInCompanyBloc(getInternshipsBySearchUseCase: getIt()));
     getIt.registerLazySingleton(() => PdfUploadBloc(getIt()));
+    getIt.registerLazySingleton(() => GetPdfBloc(getPDFUseCase: getIt()));
 
 //use_case
     getIt.registerFactory(
@@ -145,6 +148,7 @@ class ServerLocator {
         () => GetInternshipsBySearchUseCase(baseRepositoryHome: getIt()));
     getIt.registerFactory(() => GetAreaUseCase(baseRepositoryHome: getIt()));
     getIt.registerFactory(() => UploadPDFUseCase(baseRepositoryProfile: getIt()));
+    getIt.registerFactory(() => GetPDFUseCase(baseRepositoryProfile: getIt()));
 
     //remote data
     getIt.registerLazySingleton<BaseRemotelyDataSource>(
