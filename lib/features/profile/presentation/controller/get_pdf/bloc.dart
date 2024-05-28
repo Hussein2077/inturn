@@ -13,10 +13,8 @@ class GetPdfBloc extends Bloc<BaseGetPdfEvent, GetPdfState> {
   GetPdfBloc({required this.getPDFUseCase}) : super(GetPdfInitial()) {
 
     on<GetPdfEvent>((event, emit) async {
-      log('111111111111111');
-      emit(  GetPdfLoadingState());
+      emit(  const GetPdfLoadingState());
       final result = await getPDFUseCase.call(const NoParameter());
-      log('assssssssssssss');
       result.fold(
               (l) => emit(GetPdfSuccessMessageState(filePath: l)),
               (r) => emit(GetPdfErrorMessageState(

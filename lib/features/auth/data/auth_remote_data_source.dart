@@ -346,7 +346,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       return jsonData;
     } on DioException catch (e) {
       throw DioHelper.handleDioError(
-          dioError: e, endpointName: "changePassword");
+          dioError: e, endpointName: "sendCode");
     }
   }
 

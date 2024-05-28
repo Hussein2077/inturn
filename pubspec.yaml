@@ -68,7 +68,6 @@ dependencies:
   searchfield: ^1.0.1
   flutter_native_splash: ^2.4.0
   video_player: ^2.8.6
-  easy_pdf_viewer: ^1.0.8
 dev_dependencies:
   flutter_test:
     sdk: flutter

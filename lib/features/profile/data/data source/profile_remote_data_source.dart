@@ -41,22 +41,7 @@ class ProfileRemotelyDateSource extends BaseRemotelyDataSourceProfile {
     }
   }
 
-  @override
-  Future<String> getPdf() async {
-    log('gfgfresponse.data');
-    try {
-      final response = await Dio().get(
-        ConstantApi.getCV(MyApp.userId),
-      );
 
-      Map<String, dynamic> jsonData = response.data;
-
-      return jsonData["fileName"];
-    } on DioException catch (e) {
-      log('${e}ssssssssssssssssssssssffffffsss');
-      throw DioHelper.handleDioError(dioError: e, endpointName: "getPdf");
-    }
-  }
 
   @override
   Future<MyDataModel> completeProfile(String id) async {
@@ -178,13 +163,27 @@ class ProfileRemotelyDateSource extends BaseRemotelyDataSourceProfile {
         ),
         "UserId": MyApp.userId
       });
-      final response = uploadPDFParams.type == 1
-          ? await Dio().post(ConstantApi.uploadPdf, data: formData)
-          : await Dio().post(ConstantApi.updatePdf, data: formData);
-
+      final response = uploadPDFParams.type == 2
+          ? await Dio().post(ConstantApi.updatePdf, data: formData)
+          : await Dio().post(ConstantApi.uploadPdf, data: formData);
+      log('${response.data}scscscscscs');
       return 'Upload Success';
     } on DioException catch (e) {
       throw DioHelper.handleDioError(dioError: e, endpointName: "uploadPdf");
+    }
+  }
+  @override
+  Future<String> getPdf() async {
+    try {
+      final response = await Dio().get(
+        ConstantApi.getCV(MyApp.userId),
+      );
+
+      Map<String, dynamic> jsonData = response.data;
+      log('${response.data}scscscscscs2222222');
+      return jsonData["fileName"];
+    } on DioException catch (e) {
+      throw DioHelper.handleDioError(dioError: e, endpointName: "getPdf");
     }
   }
 }
