@@ -23,11 +23,11 @@ abstract class BaseRemotelyDataSource {
   Future<Map<String, dynamic>> signUpWithEmailAndPassword(
       SignUpModel signUpModel);
 
-  Future<Map<String, dynamic>> sendCode(SignUpModel signUpModel);
+  Future<String> sendCode(SignUpModel signUpModel);
 
   Future<Map<String, dynamic>> verifyCode(SignUpModel signUpModel);
 
-  Future<Map<String, dynamic>> changePassword(SignUpModel signUpModel);
+  Future<Map<String, dynamic>> resetPassword(SignUpModel signUpModel);
 
   Future<AuthWithGoogleModel> sigInWithGoogle();
 
@@ -309,14 +309,16 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
   }
 
   @override
-  Future<Map<String, dynamic>> changePassword(SignUpModel signUpModel) async {
+  Future<Map<String, dynamic>> resetPassword(SignUpModel signUpModel) async {
     final body = {
-      ConstantApi.password: signUpModel.password,
+      'newPassword' : signUpModel.password,
+      'email': signUpModel.email,
+      'otp': signUpModel.code,
     };
 
     try {
       final response = await Dio().post(
-        ConstantApi.login,
+        ConstantApi.resetPassword,
         data: body,
       );
 
@@ -330,9 +332,9 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
   }
 
   @override
-  Future<Map<String, dynamic>> sendCode(SignUpModel signUpModel) async {
+  Future<String> sendCode(SignUpModel signUpModel) async {
     final body = {
-      ConstantApi.email: signUpModel.email,
+      'email': signUpModel.email,
     };
 
     try {
@@ -341,7 +343,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
         data: body,
       );
 
-      Map<String, dynamic> jsonData = response.data;
+      String jsonData = response.data;
 
       return jsonData;
     } on DioException catch (e) {
@@ -353,8 +355,8 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
   @override
   Future<Map<String, dynamic>> verifyCode(SignUpModel signUpModel) async {
     final body = {
-      ConstantApi.email: signUpModel.email,
-      'verification_code': signUpModel.code,
+      'email': signUpModel.email,
+      'otp': signUpModel.code,
     };
 
     try {

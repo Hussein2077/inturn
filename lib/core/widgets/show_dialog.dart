@@ -67,7 +67,11 @@ class CVPage extends StatelessWidget {
     page.graphics.drawImage(
         PdfBitmap(await _readImageData(AssetPath.bgCv)),
         Rect.fromLTWH(
-            0, 0, page.getClientSize().width, page.getClientSize().height));
+            0, 0, page
+            .getClientSize()
+            .width, page
+            .getClientSize()
+            .height));
     page.graphics.drawImage(PdfBitmap(await _readImageData(AssetPath.logoPNG)),
         const Rect.fromLTWH(0, 0, 120, 40));
     page.graphics.drawString(
@@ -75,32 +79,37 @@ class CVPage extends StatelessWidget {
         PdfStandardFont(PdfFontFamily.helvetica, 30),
         brush: PdfBrushes.black,
         bounds: const Rect.fromLTWH(0, 100, 400, 40));
-    page.graphics.drawString(profileDataModel.description??'description',
+    page.graphics.drawString(
+        (profileDataModel.description ?? 'description').length > 175 ? profileDataModel
+            .description!.substring(0, 175): (profileDataModel.description ?? 'description'),
         PdfStandardFont(PdfFontFamily.helvetica, 20),
         brush: PdfBrushes.gray, bounds: const Rect.fromLTWH(0, 150, 400, 300));
     page.graphics.drawImage(
         PdfBitmap(await _readImageData(AssetPath.cvContacts)),
         const Rect.fromLTWH(0, 280, 30, 110));
     page.graphics.drawString(
-        profileDataModel.user?.phoneNumber??"+201125391736", PdfStandardFont(PdfFontFamily.helvetica, 20),
+        profileDataModel.user?.phoneNumber ?? "+201125391736",
+        PdfStandardFont(PdfFontFamily.helvetica, 20),
         brush: PdfBrushes.black,
         bounds: const Rect.fromLTWH(40, 290, 400, 300));
     page.graphics.drawString(
-        profileDataModel.user?.email??"", PdfStandardFont(PdfFontFamily.helvetica, 20),
+        profileDataModel.user?.email ?? "",
+        PdfStandardFont(PdfFontFamily.helvetica, 20),
         brush: PdfBrushes.black,
         bounds: const Rect.fromLTWH(40, 320, 400, 300));
-    page.graphics.drawString((profileDataModel.country?.countryNameEn??""),
+    page.graphics.drawString((profileDataModel.country?.countryNameEn ?? ""),
         PdfStandardFont(PdfFontFamily.helvetica, 20),
         brush: PdfBrushes.black,
         bounds: const Rect.fromLTWH(40, 350, 400, 300));
     page.graphics.drawString(
         'Education', PdfStandardFont(PdfFontFamily.helvetica, 25),
         brush: PdfBrushes.black, bounds: const Rect.fromLTWH(0, 420, 400, 50));
-    page.graphics.drawString(profileDataModel.university?.universityName??"",
+    page.graphics.drawString(profileDataModel.university?.universityName ?? "",
         PdfStandardFont(PdfFontFamily.helvetica, 20),
         brush: PdfBrushes.black, bounds: const Rect.fromLTWH(0, 450, 400, 50));
     page.graphics.drawString(
-        profileDataModel.faculty?.name??"", PdfStandardFont(PdfFontFamily.helvetica, 20),
+        profileDataModel.faculty?.name ?? "",
+        PdfStandardFont(PdfFontFamily.helvetica, 20),
         brush: PdfBrushes.gray, bounds: const Rect.fromLTWH(0, 480, 400, 50));
     // Create a PDF ordered list.
     final PdfOrderedList orderedList = PdfOrderedList(
@@ -122,7 +131,9 @@ class CVPage extends StatelessWidget {
         marker: PdfUnorderedMarker(
             font: PdfStandardFont(PdfFontFamily.helvetica, 15),
             style: PdfUnorderedMarkerStyle.disk),
-        items: PdfListItemCollection(profileDataModel.user?.userSkills?.map((e) => e.skill?.skillNameEn??"").toList()),
+        items: PdfListItemCollection(
+            profileDataModel.user?.userSkills?.map((e) => e.skill
+                ?.skillNameEn ?? "").toList()),
         font: PdfStandardFont(PdfFontFamily.helvetica, 15),
         textIndent: 10,
         format: PdfStringFormat(
@@ -135,11 +146,16 @@ class CVPage extends StatelessWidget {
           breakType: PdfLayoutBreakType.fitColumnsToPage,
         ),
         bounds: Rect.fromLTWH(
-            -35, 530, page.getClientSize().width, page.getClientSize().height));
+            -35, 530, page
+            .getClientSize()
+            .width, page
+            .getClientSize()
+            .height));
 
     List<int> bytes = await document.save();
     document.dispose();
-    saveAndLaunchFile(bytes, '${profileDataModel.firstName} ${profileDataModel.lastName}.pdf');
+    saveAndLaunchFile(bytes,
+        '${profileDataModel.firstName} ${profileDataModel.lastName}.pdf');
   }
 
   Future<Uint8List> _readImageData(String name) async {
@@ -166,162 +182,166 @@ class CVPage extends StatelessWidget {
             ),
             child: Padding(
               padding: EdgeInsets.all(AppSize.defaultSize!),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SvgPicture.asset(AssetPath.logo),
-                      IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon: Icon(
-                            Icons.close,
-                            color: AppColors.primaryColor,
-                            size: AppSize.defaultSize! * 3.5,
-                          ))
-                    ],
-                  ),
-                  SizedBox(
-                    height: AppSize.defaultSize! * 2,
-                  ),
-                  CustomText(
-                    text:
-                        '${profileDataModel.firstName!} ${profileDataModel.lastName!}',
-                    color: AppColors.primaryColor,
-                    fontSize: AppSize.defaultSize! * 1.8,
-                    fontWeight: FontWeight.w700,
-                  ),
-                  CustomText(
-                    text: profileDataModel.description ?? "",
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SvgPicture.asset(AssetPath.logo),
+                        IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(
+                              Icons.close,
+                              color: AppColors.primaryColor,
+                              size: AppSize.defaultSize! * 3.5,
+                            ))
+                      ],
+                    ),
+                    SizedBox(
+                      height: AppSize.defaultSize! * 2,
+                    ),
+                    CustomText(
+                      text:
+                      '${profileDataModel.firstName!} ${profileDataModel
+                          .lastName!}',
+                      color: AppColors.primaryColor,
+                      fontSize: AppSize.defaultSize! * 1.8,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    CustomText(
+                      text: profileDataModel.description ?? "",
 
-                    // lineHeight: AppSize.defaultSize! * .1,
-                    maxLines: 20,
-                    fontSize: AppSize.defaultSize! * 1.2,
-                    color: AppColors.greyColor,
-                    textAlign: TextAlign.start,
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        height: AppSize.defaultSize! * 11.8,
-                        width: AppSize.defaultSize! * 3.2,
-                        decoration: BoxDecoration(
-                          color: AppColors.secondaryColor,
-                          borderRadius: BorderRadius.circular(
-                            AppSize.defaultSize! * 2,
+                      // lineHeight: AppSize.defaultSize! * .1,
+                      maxLines: 20,
+                      fontSize: AppSize.defaultSize! * 1.2,
+                      color: AppColors.greyColor,
+                      textAlign: TextAlign.start,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          height: AppSize.defaultSize! * 11.8,
+                          width: AppSize.defaultSize! * 3.2,
+                          decoration: BoxDecoration(
+                            color: AppColors.secondaryColor,
+                            borderRadius: BorderRadius.circular(
+                              AppSize.defaultSize! * 2,
+                            ),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Icon(
+                                Icons.phone_outlined,
+                                color: AppColors.black,
+                                size: AppSize.defaultSize! * 2,
+                              ),
+                              Icon(
+                                Icons.mail_outline,
+                                color: AppColors.black,
+                                size: AppSize.defaultSize! * 2,
+                              ),
+                              Icon(
+                                Icons.location_on_outlined,
+                                color: AppColors.black,
+                                size: AppSize.defaultSize! * 2,
+                              ),
+                            ],
                           ),
                         ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Icon(
-                              Icons.phone_outlined,
-                              color: AppColors.black,
-                              size: AppSize.defaultSize! * 2,
-                            ),
-                            Icon(
-                              Icons.mail_outline,
-                              color: AppColors.black,
-                              size: AppSize.defaultSize! * 2,
-                            ),
-                            Icon(
-                              Icons.location_on_outlined,
-                              color: AppColors.black,
-                              size: AppSize.defaultSize! * 2,
-                            ),
-                          ],
+                        SizedBox(
+                          width: AppSize.defaultSize!,
                         ),
-                      ),
-                      SizedBox(
-                        width: AppSize.defaultSize!,
-                      ),
-                      SizedBox(
-                        height: AppSize.defaultSize! * 11.8,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            //todo add phone number
-                            CustomText(
-                              text: profileDataModel.user?.phoneNumber ?? "+201125391736",
-                              color: AppColors.primaryColor,
-                              fontSize: AppSize.defaultSize! * 1.4,
-                              fontWeight: FontWeight.w700,
-                              textAlign: TextAlign.start,
-                            ),
-                            //todo add email
-                            CustomText(
-                              text:  profileDataModel.user?.email ?? "",
-                              color: AppColors.primaryColor,
-                              fontSize: AppSize.defaultSize! * 1.4,
-                              fontWeight: FontWeight.w700,
-                              textAlign: TextAlign.start,
-                            ),
-                            //todo add location
-                            SizedBox(
-                              width: AppSize.screenWidth! * .6,
-                              child: CustomText(
-                                text:
-                                profileDataModel.city?.cityNameEn ?? "",
+                        SizedBox(
+                          height: AppSize.defaultSize! * 11.8,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              //todo add phone number
+                              CustomText(
+                                text: profileDataModel.user?.phoneNumber ??
+                                    "+201125391736",
                                 color: AppColors.primaryColor,
-                                textAlign: TextAlign.start,
                                 fontSize: AppSize.defaultSize! * 1.4,
                                 fontWeight: FontWeight.w700,
-                                maxLines: 2,
+                                textAlign: TextAlign.start,
                               ),
-                            ),
-                          ],
+                              //todo add email
+                              CustomText(
+                                text: profileDataModel.user?.email ?? "",
+                                color: AppColors.primaryColor,
+                                fontSize: AppSize.defaultSize! * 1.4,
+                                fontWeight: FontWeight.w700,
+                                textAlign: TextAlign.start,
+                              ),
+                              //todo add location
+                              SizedBox(
+                                width: AppSize.screenWidth! * .6,
+                                child: CustomText(
+                                  text:
+                                  profileDataModel.city?.cityNameEn ?? "",
+                                  color: AppColors.primaryColor,
+                                  textAlign: TextAlign.start,
+                                  fontSize: AppSize.defaultSize! * 1.4,
+                                  fontWeight: FontWeight.w700,
+                                  maxLines: 2,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  CustomText(
-                    text: StringManager.education.tr(),
-                    color: AppColors.primaryColor,
-                    fontSize: AppSize.defaultSize! * 1.6,
-                    fontWeight: FontWeight.w700,
-                  ),
-                  CustomText(
-                    text:  profileDataModel.university?.universityName ?? "",
-                    color: AppColors.primaryColor,
-                    fontSize: AppSize.defaultSize! * 1.4,
-                    fontWeight: FontWeight.w700,
-                  ),
-                  CustomText(
-                    text:  profileDataModel.faculty?.name ?? "",
-                    maxLines: 2,
-                    fontSize: AppSize.defaultSize! * 1.2,
-                    color: AppColors.greyColor,
-                    textAlign: TextAlign.start,
-                  ),
-                  CustomText(
-                    text: StringManager.skills.tr(),
-                    color: AppColors.primaryColor,
-                    fontSize: AppSize.defaultSize! * 1.6,
-                    fontWeight: FontWeight.w700,
-                  ),
-                  Expanded(
-
-                    child: ListView.builder(
-                        itemCount:  profileDataModel.user?.userSkills?.length,
+                      ],
+                    ),
+                    CustomText(
+                      text: StringManager.education.tr(),
+                      color: AppColors.primaryColor,
+                      fontSize: AppSize.defaultSize! * 1.6,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    CustomText(
+                      text: profileDataModel.university?.universityName ?? "",
+                      color: AppColors.primaryColor,
+                      fontSize: AppSize.defaultSize! * 1.4,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    CustomText(
+                      text: profileDataModel.faculty?.name ?? "",
+                      maxLines: 2,
+                      fontSize: AppSize.defaultSize! * 1.2,
+                      color: AppColors.greyColor,
+                      textAlign: TextAlign.start,
+                    ),
+                    CustomText(
+                      text: StringManager.skills.tr(),
+                      color: AppColors.primaryColor,
+                      fontSize: AppSize.defaultSize! * 1.6,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    ListView.builder(
+                        itemCount: profileDataModel.user?.userSkills?.length,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-                      return Padding(
-                        padding:   EdgeInsets.all(AppSize.defaultSize! * .5),
-                        child: CustomText(
-                          text: profileDataModel.user?.userSkills![index].skill?.skillNameEn ?? "",
-                          maxLines: 2,
-                          fontSize: AppSize.defaultSize! * 1.2,
-                          color: AppColors.greyColor,
-                          textAlign: TextAlign.start,
-                        ),
-                      );
-                    }),
-                  ),
+                          return Padding(
+                            padding: EdgeInsets.all(AppSize.defaultSize! * .5),
+                            child: CustomText(
+                              text: profileDataModel.user?.userSkills![index]
+                                  .skill?.skillNameEn ?? "",
+                              maxLines: 2,
+                              fontSize: AppSize.defaultSize! * 1.2,
+                              color: AppColors.greyColor,
+                              textAlign: TextAlign.start,
+                            ),
+                          );
+                        }),
 
-                ],
+                  ],
+                ),
               ),
             )),
         SizedBox(

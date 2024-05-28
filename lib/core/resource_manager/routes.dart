@@ -12,7 +12,7 @@ import 'package:inturn/features/auth/presentation/add_info_flow/location_info.da
 import 'package:inturn/features/auth/presentation/add_info_flow/personal_info.dart';
 import 'package:inturn/features/auth/presentation/add_info_flow/skills.dart';
 import 'package:inturn/features/auth/presentation/add_info_flow/thanks.dart';
-import 'package:inturn/features/auth/presentation/forget%20password/change_password.dart';
+import 'package:inturn/features/auth/presentation/forget%20password/reset_password.dart';
 import 'package:inturn/features/auth/presentation/forget%20password/forget_password.dart';
 import 'package:inturn/features/auth/presentation/forget%20password/send_otp_code.dart';
 import 'package:inturn/features/auth/presentation/login_screen.dart';
@@ -34,7 +34,7 @@ class Routes {
   static const String signUp = "/signUp";
   static const String forgetPassword = "/forgetPassword";
   static const String sendOTPCode = "/sendOTPCode";
-  static const String changePassword = "/changePassword";
+  static const String resetPassword = "/resetPassword";
   static const String personalInfo = "/personalInfo";
   static const String academicInfo = "/academicInfo";
   static const String experienceInfo = "/experienceInfo";
@@ -173,14 +173,17 @@ class RouteGenerator {
                 const ForgetPassword(),
             transitionsBuilder: customAnimate);
       case Routes.sendOTPCode:
+        String email = settings.arguments as String;
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
-                const SendOTPCode(),
+                  SendOTPCode(email: email,),
             transitionsBuilder: customAnimate);
-      case Routes.changePassword:
+      case Routes.resetPassword:
+        String email = settings.arguments as String;
         return PageRouteBuilder(
+
             pageBuilder: (context, animation, secondaryAnimation) =>
-                const ChangePassword(),
+                  ResetPassword(email: email,),
             transitionsBuilder: customAnimate);
       case Routes.profile:
         String userId = settings.arguments as String;

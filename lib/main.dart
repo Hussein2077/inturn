@@ -11,6 +11,7 @@ import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/utils/methods.dart';
 import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_info_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/add_skill/bloc.dart';
+import 'package:inturn/features/auth/presentation/controller/change_password_bloc/change_password_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/login_bloc/login_with_email_and_password_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/sign_in_with_platform_bloc/sign_in_with_platform_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/sign_up_bloc/sign_up_with_email_and_password_bloc.dart';
@@ -149,6 +150,8 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => getIt<SuggestedJobsInCompanyBloc>()),
         BlocProvider(create: (context) => getIt<PdfUploadBloc>()),
         BlocProvider(create: (context) => getIt<GetPdfBloc>()),
+        BlocProvider(create: (context) => getIt<ResetPasswordFlowBloc>()),
+
       ],
       child: MaterialApp(
         locale: context.locale,

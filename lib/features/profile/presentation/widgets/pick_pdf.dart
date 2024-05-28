@@ -63,7 +63,6 @@ class _PdfUploadFormState extends State<PdfUploadForm> {
               fontWeight: FontWeight.bold,
               child: IconButton(
                 onPressed: () async {
-
                   result = await FilePicker.platform.pickFiles(
                     type: FileType.custom,
                     allowedExtensions: ['pdf'],
@@ -73,7 +72,6 @@ class _PdfUploadFormState extends State<PdfUploadForm> {
                       File file = File(result!.files.single.path!);
                       BlocProvider.of<PdfUploadBloc>(context)
                           .add(UploadPdf(file: file, type: 2));
-
                     }
                   }
                   setState(() {});
@@ -84,10 +82,8 @@ class _PdfUploadFormState extends State<PdfUploadForm> {
                 ),
               ),
               onTap: () async {
-                log('${ConstantApi.getPdf(state.filePath)}ccvcvcvcv');
                 await launchUrl(
                     Uri.parse(ConstantApi.getPdf(state.filePath)));
-
               },
             );
           } else if (state is GetPdfErrorMessageState) {

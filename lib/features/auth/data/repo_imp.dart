@@ -44,10 +44,10 @@ class RepositoryImp extends BaseRepository {
   }
 
   @override
-  Future<Either<Map<String, dynamic>, Failure>> changePassword(SignUpModel signUpModel) async{
+  Future<Either<Map<String, dynamic>, Failure>> resetPassword(SignUpModel signUpModel) async{
     try {
       final result =
-      await baseRemotelyDataSource.changePassword(signUpModel);
+      await baseRemotelyDataSource.resetPassword(signUpModel);
       return Left(result);
     } on Exception catch (e) {
       return right(DioHelper.buildFailure(e));
@@ -64,7 +64,7 @@ class RepositoryImp extends BaseRepository {
     }
   }
   @override
-  Future<Either<Map<String, dynamic>, Failure>> sendCode(SignUpModel signUpModel)async{
+  Future<Either< String, Failure>> sendCode(SignUpModel signUpModel)async{
     try {
       final result =
       await baseRemotelyDataSource.sendCode(signUpModel);

@@ -7,7 +7,7 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 
 class CustomPinCodeTextField extends StatefulWidget {
   const CustomPinCodeTextField({super.key});
-
+  static String otp = "";
   @override
   State<CustomPinCodeTextField> createState() => _CustomPinCodeTextFieldState();
 }
@@ -41,6 +41,7 @@ class _CustomPinCodeTextFieldState extends State<CustomPinCodeTextField> {
     return PinCodeTextField(
       appContext: context,
       length: 6,
+      keyboardType: TextInputType.phone,
       obscureText: false,
       animationType: AnimationType.fade,
       textStyle:     TextStyle(fontSize: AppSize.defaultSize! * 1.8),
@@ -63,11 +64,14 @@ class _CustomPinCodeTextFieldState extends State<CustomPinCodeTextField> {
       controller: controller,
       onCompleted: (v) {
         print("Completed");
+        CustomPinCodeTextField.otp = v;
       },
       onChanged: (value) {
         print(value);
         setState(() {
           currentText = value;
+          CustomPinCodeTextField.otp = value;
+
         });
       },
       beforeTextPaste: (text) {

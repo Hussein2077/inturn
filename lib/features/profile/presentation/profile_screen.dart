@@ -136,7 +136,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             emailController.text = state.profileDataModel.user?.email ?? "";
             firstNameController.text = state.profileDataModel.firstName ?? "";
             lastNameController.text = state.profileDataModel.lastName ?? "";
-
+            descriptionController.text = state.profileDataModel.description ?? "";
             return Scaffold(
               appBar: appBar(context,
                   text: StringManager.profile.tr(),
@@ -151,7 +151,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       MainButton(
                         onTap: () {
                           // todo change password
-                          Navigator.pushNamed(context, Routes.changePassword);
+                          Navigator.pushNamed(context, Routes.resetPassword);
                         },
                         text: StringManager.changePassword.tr(),
                         textColor: Colors.black,

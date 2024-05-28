@@ -11,9 +11,9 @@ abstract class BaseRepository {
       AuthModel authModel);
   Future<Either<Map<String, dynamic>, Failure>> signUpWithEmailAndPassword(
       SignUpModel signUpModel);
-  Future<Either<Map<String, dynamic>, Failure>> changePassword(
+  Future<Either<Map<String, dynamic>, Failure>> resetPassword(
       SignUpModel signUpModel);
-  Future<Either<Map<String, dynamic>, Failure>> sendCode(
+  Future<Either<String, Failure>> sendCode(
       SignUpModel signUpModel);
   Future<Either<Map<String, dynamic>, Failure>> verifyCode(
       SignUpModel signUpModel);

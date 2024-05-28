@@ -4,11 +4,15 @@ import 'package:inturn/features/auth/data/auth_remote_data_source.dart';
 import 'package:inturn/features/auth/data/repo_imp.dart';
 import 'package:inturn/features/auth/domain/repo/base_repo.dart';
 import 'package:inturn/features/auth/domain/use_case/add_info_uc.dart';
+import 'package:inturn/features/auth/domain/use_case/change_password.dart';
 import 'package:inturn/features/auth/domain/use_case/google_sign.dart';
 import 'package:inturn/features/auth/domain/use_case/login_with_email_and_password_use_case.dart';
+import 'package:inturn/features/auth/domain/use_case/send_code.dart';
 import 'package:inturn/features/auth/domain/use_case/sign_up_use_case.dart';
+import 'package:inturn/features/auth/domain/use_case/verify_code.dart';
 import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_info_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/add_skill/bloc.dart';
+import 'package:inturn/features/auth/presentation/controller/change_password_bloc/change_password_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/login_bloc/login_with_email_and_password_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/sign_in_with_platform_bloc/sign_in_with_platform_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/sign_up_bloc/sign_up_with_email_and_password_bloc.dart';
@@ -104,10 +108,18 @@ class ServerLocator {
         SuggestedJobsInCompanyBloc(getInternshipsBySearchUseCase: getIt()));
     getIt.registerLazySingleton(() => PdfUploadBloc(getIt()));
     getIt.registerLazySingleton(() => GetPdfBloc(getPDFUseCase: getIt()));
+    getIt.registerLazySingleton(() => ResetPasswordFlowBloc(
+          resetPasswordUseCase: getIt(),
+          sendCodeUseCase: getIt(),
+          verifyCodeUseCase: getIt(),
+        ));
 
 //use_case
     getIt.registerFactory(
         () => GetMyProfileDataUseCase(baseRepositoryProfile: getIt()));
+    getIt.registerFactory(() => ResetPasswordUseCase(baseRepository: getIt()));
+    getIt.registerFactory(() => SendCodeUseCase(baseRepository: getIt()));
+    getIt.registerFactory(() => VerifyCodeUseCase(baseRepository: getIt()));
     getIt.registerFactory(
         () => EditPersonalInfoUseCase(baseRepositoryProfile: getIt()));
     getIt.registerFactory(
@@ -147,7 +159,8 @@ class ServerLocator {
     getIt.registerFactory(
         () => GetInternshipsBySearchUseCase(baseRepositoryHome: getIt()));
     getIt.registerFactory(() => GetAreaUseCase(baseRepositoryHome: getIt()));
-    getIt.registerFactory(() => UploadPDFUseCase(baseRepositoryProfile: getIt()));
+    getIt.registerFactory(
+        () => UploadPDFUseCase(baseRepositoryProfile: getIt()));
     getIt.registerFactory(() => GetPDFUseCase(baseRepositoryProfile: getIt()));
 
     //remote data

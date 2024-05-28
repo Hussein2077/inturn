@@ -166,7 +166,6 @@ class ProfileRemotelyDateSource extends BaseRemotelyDataSourceProfile {
       final response = uploadPDFParams.type == 2
           ? await Dio().post(ConstantApi.updatePdf, data: formData)
           : await Dio().post(ConstantApi.uploadPdf, data: formData);
-      log('${response.data}scscscscscs');
       return 'Upload Success';
     } on DioException catch (e) {
       throw DioHelper.handleDioError(dioError: e, endpointName: "uploadPdf");
@@ -180,7 +179,6 @@ class ProfileRemotelyDateSource extends BaseRemotelyDataSourceProfile {
       );
 
       Map<String, dynamic> jsonData = response.data;
-      log('${response.data}scscscscscs2222222');
       return jsonData["fileName"];
     } on DioException catch (e) {
       throw DioHelper.handleDioError(dioError: e, endpointName: "getPdf");

@@ -23,6 +23,8 @@ class StringManager {
   static const String profile = "Profile";
   static const String companyOverview = "Company overview";
   static const String changePassword = "Change Password";
+  static const String passwordNotMatch = "Password Not Match";
+  static const String fillAllFields = "Fill All Fields";
   static const String downloadCV = "Download CV";
   static const String uploadCV  = "Upload your CV";
   static const String uploaded  = "View CV";
@@ -102,12 +104,14 @@ class StringManager {
   static const String confirmPassword = "Confirm password";
   static const String forgetYourPassword = "Forget Your Password ?";
   static const String forgetPassword = "Forget Password";
+  static const String   resetPassword = "Reset Password";
   static const String weWillSend =
-      "We will send a code to your Mobile No. to verify your Mobile No. to set the new password";
+      "We will send a code to your Email. to verify your Email. to set the new password";
   static const String pleaseEnterYOurCode =
       "Please enter the code which sent to";
   static const String or = "Or sign in with";
-  static const String enterYourMobile = "Enter Your Mobile No.";
+  static const String enterEmail  = "Enter Your Email.";
+  static const String enterCode   = "Please Enter the Code.";
   static const String signUp = "Sign up";
   static const String signIn = "Sign in";
   static const String sendCode = "Send Code";
