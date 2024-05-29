@@ -11,6 +11,8 @@ import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
+import 'package:inturn/core/utils/enums.dart';
+import 'package:inturn/core/utils/methods.dart';
 import 'package:inturn/core/widgets/app_bar.dart';
 import 'package:inturn/core/widgets/column_with_text_field.dart';
 import 'package:inturn/core/widgets/custom_text_field.dart';
@@ -26,6 +28,7 @@ import 'package:inturn/features/auth/presentation/widgets/segment_button.dart';
 import 'package:inturn/features/auth/presentation/widgets/upload_photo.dart';
 import 'package:inturn/features/home/data/model/skill_model.dart';
 import 'package:inturn/features/profile/domain/use_case/edit_profile_uc.dart';
+import 'package:inturn/features/profile/presentation/component/change_password/change_password_screen.dart';
 import 'package:inturn/features/profile/presentation/controller/edit_profile/edit_profile_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/edit_profile/edit_profile_event.dart';
 import 'package:inturn/features/profile/presentation/controller/edit_profile/edit_profile_state.dart';
@@ -36,6 +39,7 @@ import 'package:inturn/features/profile/presentation/widgets/pick_pdf.dart';
 import 'package:inturn/features/profile/presentation/widgets/profile-major.dart';
 import 'package:inturn/features/profile/presentation/widgets/profile_skills.dart';
 import 'package:inturn/main.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key, required this.userId});
@@ -47,6 +51,9 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  SingingCharacter language = SingingCharacter.no;
+
+
   late TextEditingController emailController;
   late TextEditingController firstNameController;
   late TextEditingController lastNameController;
@@ -82,7 +89,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     BlocProvider.of<GetMyProfileDataBloc>(context)
         .add(GetMyProfileDataEvent(widget.userId));
-
+    intilanguage();
     emailController = TextEditingController();
     firstNameController = TextEditingController();
     lastNameController = TextEditingController();
@@ -140,8 +147,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
             return Scaffold(
               appBar: appBar(context,
                   text: StringManager.profile.tr(),
-                  leading: false,
-                  actions: true),
+                  leading: true,
+                  actions: true,
+                  leadingIcon: IconButton(
+                      onPressed: () async{
+                        if(language == SingingCharacter.Arabic){
+                          setState(() {
+                            language = SingingCharacter.English;
+                          });
+                          await context.setLocale(const Locale('en'));
+
+                          await Methods().saveLocalazitaon(language: "en");
+                        }else{
+                          setState(() {
+                            language = SingingCharacter.Arabic;
+                          });
+                          await context.setLocale(const Locale('ar'));
+
+                          await Methods().saveLocalazitaon(language: "ar");
+                        }
+                      },
+                      icon: const Icon(Icons.language_outlined),
+                  ),
+              ),
               body: Padding(
                 padding: EdgeInsets.all(AppSize.defaultSize! * 1.5),
                 child: SingleChildScrollView(
@@ -150,8 +178,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       MainButton(
                         onTap: () {
-                          // todo change password
-                          Navigator.pushNamed(context, Routes.resetPassword);
+                          PersistentNavBarNavigator.pushNewScreen(
+                            context,
+                            screen: const ChangePasswordScreen(),
+                            withNavBar: false,
+                            pageTransitionAnimation: PageTransitionAnimation.fade,
+                          );
                         },
                         text: StringManager.changePassword.tr(),
                         textColor: Colors.black,
@@ -514,5 +546,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
         )
       ]),
     );
+  }
+
+  Future<void> intilanguage() async {
+    String key = await Methods().getlocalization();
+    if (key == "en") {
+      language = SingingCharacter.English;
+    } else if (key == "ar") {
+      language = SingingCharacter.Arabic;
+    } else {
+      language = SingingCharacter.English;
+    }
   }
 }

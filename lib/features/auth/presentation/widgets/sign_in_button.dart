@@ -28,14 +28,10 @@ class CustomSignInButton extends StatelessWidget {
         height: AppSize.defaultSize! * 5,
         width: double.maxFinite, // AppSize.screenWidth! * .9,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            // SizedBox(width: AppSize.defaultSize! *2,),
-            Padding(
-              padding:   EdgeInsets.only(left: AppSize.defaultSize!*3),
-              child: logo,
-            ),
-            SizedBox(width: AppSize.defaultSize!*5 ,),
+            logo,
+
             SizedBox(
               width:  AppSize.defaultSize! * 20,
               child: CustomText(
@@ -46,7 +42,8 @@ class CustomSignInButton extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            // SizedBox(width: AppSize.defaultSize! *10,),
+
+            SizedBox(width: AppSize.defaultSize!*5 ,),
           ],
         ),
       ),

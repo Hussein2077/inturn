@@ -12,3 +12,8 @@ class SignGoogleEvent extends BaseSignInWithPlatformEvent{
 
 
 }
+
+class SignAppleEvent extends BaseSignInWithPlatformEvent{
+
+
+}

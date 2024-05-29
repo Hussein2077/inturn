@@ -11,6 +11,7 @@ abstract class SignInWithPlatformState extends Equatable {
 }
 
 class SignInWithPlatformInitial extends SignInWithPlatformState {}
+
 class SignWithPlatFormLoadingState extends SignInWithPlatformState{
   const SignWithPlatFormLoadingState();
 }
@@ -28,5 +29,22 @@ class SignWithGoogleSuccesMessageState extends SignInWithPlatformState{
   final String userId ;
 
   const SignWithGoogleSuccesMessageState({  required this.userId,  required this.userData , required this.isCompleted, required this.complition,});
+
+}
+
+class SignWithAppleErrorMessageState extends SignInWithPlatformState{
+  final String errorMessage ;
+
+  const SignWithAppleErrorMessageState({required this.errorMessage});
+
+
+}
+class SignWithAppleSuccesMessageState extends SignInWithPlatformState{
+  final AuthWithAppleModel userData ;
+  final bool isCompleted ;
+  final int complition ;
+  final String userId ;
+
+  const SignWithAppleSuccesMessageState({  required this.userId,  required this.userData , required this.isCompleted, required this.complition,});
 
 }

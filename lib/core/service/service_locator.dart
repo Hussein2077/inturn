@@ -4,6 +4,7 @@ import 'package:inturn/features/auth/data/auth_remote_data_source.dart';
 import 'package:inturn/features/auth/data/repo_imp.dart';
 import 'package:inturn/features/auth/domain/repo/base_repo.dart';
 import 'package:inturn/features/auth/domain/use_case/add_info_uc.dart';
+import 'package:inturn/features/auth/domain/use_case/apple_sign.dart';
 import 'package:inturn/features/auth/domain/use_case/change_password.dart';
 import 'package:inturn/features/auth/domain/use_case/google_sign.dart';
 import 'package:inturn/features/auth/domain/use_case/login_with_email_and_password_use_case.dart';
@@ -43,11 +44,13 @@ import 'package:inturn/features/profile/data/data%20source/profile_remote_data_s
 import 'package:inturn/features/profile/data/repo%20imp/repo_imp.dart';
 import 'package:inturn/features/profile/domain/repo/profile_base_repo.dart';
 import 'package:inturn/features/home/domain/use_case/my_applications_us.dart';
+import 'package:inturn/features/profile/domain/use_case/change_password_uc.dart';
 import 'package:inturn/features/profile/domain/use_case/edit_profile_uc.dart';
 import 'package:inturn/features/profile/domain/use_case/get_my_data_uc.dart';
 import 'package:inturn/features/profile/domain/use_case/get_pdf_uc.dart';
 import 'package:inturn/features/profile/domain/use_case/get_profile_data_uc.dart';
 import 'package:inturn/features/profile/domain/use_case/upload_pdf.dart';
+import 'package:inturn/features/profile/presentation/controller/change_password/change_password_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/edit_profile/edit_profile_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_profile_data/get_my_profile_data_bloc.dart';
@@ -63,7 +66,7 @@ class ServerLocator {
     getIt.registerLazySingleton(() => LoginWithEmailAndPasswordBloc(
         loginWithEmailAndPasswordUseCase: getIt()));
     getIt.registerLazySingleton(
-        () => SignInWithPlatformBloc(signInWithGoogleUC: getIt()));
+        () => SignInWithPlatformBloc(signInWithGoogleUC: getIt(), signInWithAppleUC: getIt()));
     getIt.registerLazySingleton(() => SignUpWithEmailAndPasswordBloc(
           signUpWithEmailAndPasswordUseCase: getIt(),
         ));
@@ -114,9 +117,14 @@ class ServerLocator {
           verifyCodeUseCase: getIt(),
         ));
 
+    getIt.registerLazySingleton(
+            () => ChangePasswordFlowBloc(changePasswordUseCase: getIt()));
+
 //use_case
     getIt.registerFactory(
         () => GetMyProfileDataUseCase(baseRepositoryProfile: getIt()));
+    getIt.registerFactory(
+            () => ChangePasswordUseCase(baseRepository: getIt()));
     getIt.registerFactory(() => ResetPasswordUseCase(baseRepository: getIt()));
     getIt.registerFactory(() => SendCodeUseCase(baseRepository: getIt()));
     getIt.registerFactory(() => VerifyCodeUseCase(baseRepository: getIt()));
@@ -127,6 +135,7 @@ class ServerLocator {
     getIt.registerFactory(
         () => LoginWithEmailAndPasswordUseCase(baseRepository: getIt()));
     getIt.registerFactory(() => SignInWithGoogleUC(baseRepository: getIt()));
+    getIt.registerFactory(() => SignInWithAppleUC(baseRepository: getIt()));
     getIt.registerFactory(
         () => GetMyApplicationsUseCase(baseRepositoryHome: getIt()));
     getIt.registerFactory(

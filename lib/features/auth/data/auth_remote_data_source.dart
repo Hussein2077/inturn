@@ -14,9 +14,11 @@ import 'package:inturn/features/auth/domain/use_case/add_info_uc.dart';
 import 'package:inturn/features/auth/domain/use_case/login_with_email_and_password_use_case.dart';
 import 'package:inturn/features/auth/domain/use_case/sign_up_use_case.dart';
 import 'package:inturn/features/auth/presentation/add_info_flow/location_info.dart';
+import 'package:inturn/features/profile/domain/use_case/change_password_uc.dart';
 import 'package:inturn/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 abstract class BaseRemotelyDataSource {
   Future<Map<String, dynamic>> loginWithEmailAndPassword(AuthModel authModel);
 
@@ -28,8 +30,9 @@ abstract class BaseRemotelyDataSource {
   Future<Map<String, dynamic>> verifyCode(SignUpModel signUpModel);
 
   Future<Map<String, dynamic>> resetPassword(SignUpModel signUpModel);
-
   Future<AuthWithGoogleModel> sigInWithGoogle();
+
+  Future<AuthWithAppleModel> sigInWithApple();
 
   //add info
   Future<Map<String, dynamic>> addPersonalInfo(PersonalInfoParams params);
@@ -120,6 +123,48 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
         throw DioHelper.handleDioError(
             dioError: e, endpointName: "sigInWithGoogle");
       }
+    }
+  }
+
+  @override
+  Future<AuthWithAppleModel> sigInWithApple() async {
+    final AuthorizationCredentialAppleID? credential;
+    try{
+      credential = await SignInWithApple.getAppleIDCredential(scopes: [
+        AppleIDAuthorizationScopes.email,
+        AppleIDAuthorizationScopes.fullName,
+      ]);
+    }catch(e){
+      log(e.toString());
+      throw SiginApplexception();
+    }
+    Map<String, String> headers = await DioHelper().header();
+    final body = {
+      ConstantApi.email: credential.email,
+      "socicaID": credential.userIdentifier,
+      "userRole": "User",
+    };
+    try {
+      final response = await Dio().post(
+        ConstantApi.login,
+        data: body,
+        options: Options(
+          headers: headers,
+        ),
+      );
+
+      Map<String, dynamic> resultData = response.data;
+
+      MyDataModel userData = MyDataModel.fromMap(resultData);
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      preferences.remove(StringManager.userIDKey);
+      preferences.remove(StringManager.profileIDKey);
+      await  Methods.instance.saveUserToken(authToken: resultData['token']);
+      await Methods.instance.saveUserId(userId: resultData['userId']);
+      return AuthWithAppleModel(apiUserData: userData, userData: credential);
+    } on DioException catch (e) {
+      throw DioHelper.handleDioError(
+          dioError: e, endpointName: "sigInWithApple");
     }
   }
 
@@ -331,6 +376,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
     }
   }
 
+
   @override
   Future<String> sendCode(SignUpModel signUpModel) async {
     final body = {
@@ -381,4 +427,12 @@ class AuthWithGoogleModel {
   final MyDataModel apiUserData;
 
   AuthWithGoogleModel({required this.apiUserData, required this.userData});
+}
+
+class AuthWithAppleModel {
+  final AuthorizationCredentialAppleID userData;
+
+  final MyDataModel apiUserData;
+
+  AuthWithAppleModel({required this.apiUserData, required this.userData});
 }
