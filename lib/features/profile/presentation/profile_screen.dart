@@ -11,6 +11,8 @@ import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
+import 'package:inturn/core/utils/enums.dart';
+import 'package:inturn/core/utils/methods.dart';
 import 'package:inturn/core/widgets/app_bar.dart';
 import 'package:inturn/core/widgets/column_with_text_field.dart';
 import 'package:inturn/core/widgets/custom_text_field.dart';
@@ -47,6 +49,9 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  SingingCharacter language = SingingCharacter.no;
+
+
   late TextEditingController emailController;
   late TextEditingController firstNameController;
   late TextEditingController lastNameController;
@@ -82,7 +87,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     BlocProvider.of<GetMyProfileDataBloc>(context)
         .add(GetMyProfileDataEvent(widget.userId));
-
+    intilanguage();
     emailController = TextEditingController();
     firstNameController = TextEditingController();
     lastNameController = TextEditingController();
@@ -140,8 +145,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
             return Scaffold(
               appBar: appBar(context,
                   text: StringManager.profile.tr(),
-                  leading: false,
-                  actions: true),
+                  leading: true,
+                  actions: true,
+                  leadingIcon: IconButton(
+                      onPressed: () async{
+                        if(language == SingingCharacter.Arabic){
+                          setState(() {
+                            language = SingingCharacter.English;
+                          });
+                          await context.setLocale(const Locale('en'));
+
+                          await Methods().saveLocalazitaon(language: "en");
+                        }else{
+                          setState(() {
+                            language = SingingCharacter.Arabic;
+                          });
+                          await context.setLocale(const Locale('ar'));
+
+                          await Methods().saveLocalazitaon(language: "ar");
+                        }
+                      },
+                      icon: const Icon(Icons.language_outlined),
+                  ),
+              ),
               body: Padding(
                 padding: EdgeInsets.all(AppSize.defaultSize! * 1.5),
                 child: SingleChildScrollView(
@@ -514,5 +540,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
         )
       ]),
     );
+  }
+
+  Future<void> intilanguage() async {
+    String key = await Methods().getlocalization();
+    if (key == "en") {
+      language = SingingCharacter.English;
+    } else if (key == "ar") {
+      language = SingingCharacter.Arabic;
+    } else {
+      language = SingingCharacter.English;
+    }
   }
 }

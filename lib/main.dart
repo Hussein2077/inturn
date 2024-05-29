@@ -27,7 +27,6 @@ import 'package:inturn/features/home/presentation/controller/intern_search_bloc/
 import 'package:inturn/features/home/presentation/controller/suggested%20jobs%20in%20company/bloc.dart';
 import 'package:inturn/features/home/presentation/controller/suggested/bloc.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_bloc.dart';
-import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_event.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:inturn/features/home/presentation/controller/vacancy_details_bloc/bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/edit_profile/edit_profile_bloc.dart';

@@ -12,7 +12,7 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 AppBar appBar(BuildContext context,
-    {required String text, bool leading = true, bool actions = false}) {
+    {required String text, bool leading = true, bool actions = false, Widget? leadingIcon}) {
   return AppBar(
     backgroundColor: Colors.white,
     elevation: 1,
@@ -23,7 +23,7 @@ AppBar appBar(BuildContext context,
     ),
     centerTitle: true,
     leading: leading
-        ? IconButton(
+        ? leadingIcon ?? IconButton(
             onPressed: () {
               Navigator.pop(context);
             },

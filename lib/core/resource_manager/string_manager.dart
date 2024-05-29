@@ -38,7 +38,6 @@ class StringManager {
   static const String skillsRequired = "Skills Required";
   static const String internship = "Internship";
   static const String enterMobileNumber = "Enter Your Mobile No.";
-  static const String resendPassword = "Resend the code";
   static const String resendVerificationCode =
       "You can resend the verification code after";
   static const String verify = "Verify";

@@ -4,6 +4,7 @@ import 'package:inturn/features/auth/data/auth_remote_data_source.dart';
 import 'package:inturn/features/auth/data/repo_imp.dart';
 import 'package:inturn/features/auth/domain/repo/base_repo.dart';
 import 'package:inturn/features/auth/domain/use_case/add_info_uc.dart';
+import 'package:inturn/features/auth/domain/use_case/apple_sign.dart';
 import 'package:inturn/features/auth/domain/use_case/change_password.dart';
 import 'package:inturn/features/auth/domain/use_case/google_sign.dart';
 import 'package:inturn/features/auth/domain/use_case/login_with_email_and_password_use_case.dart';
@@ -63,7 +64,7 @@ class ServerLocator {
     getIt.registerLazySingleton(() => LoginWithEmailAndPasswordBloc(
         loginWithEmailAndPasswordUseCase: getIt()));
     getIt.registerLazySingleton(
-        () => SignInWithPlatformBloc(signInWithGoogleUC: getIt()));
+        () => SignInWithPlatformBloc(signInWithGoogleUC: getIt(), signInWithAppleUC: getIt()));
     getIt.registerLazySingleton(() => SignUpWithEmailAndPasswordBloc(
           signUpWithEmailAndPasswordUseCase: getIt(),
         ));
@@ -127,6 +128,7 @@ class ServerLocator {
     getIt.registerFactory(
         () => LoginWithEmailAndPasswordUseCase(baseRepository: getIt()));
     getIt.registerFactory(() => SignInWithGoogleUC(baseRepository: getIt()));
+    getIt.registerFactory(() => SignInWithAppleUC(baseRepository: getIt()));
     getIt.registerFactory(
         () => GetMyApplicationsUseCase(baseRepositoryHome: getIt()));
     getIt.registerFactory(

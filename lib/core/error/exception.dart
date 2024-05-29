@@ -9,6 +9,8 @@ class ErrorModelException implements Exception {
 }
 class SiginGoogleException implements Exception {}
 
+class SiginApplexception implements Exception {}
+
 class ServerException implements Exception {}
 
 class ConnectionTimeoutException implements Exception {}
