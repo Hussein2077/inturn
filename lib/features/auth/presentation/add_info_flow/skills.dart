@@ -93,7 +93,6 @@ class _SkillInfoState extends State<SkillInfo> {
                         children: [
                           BlocBuilder<OptionsBloc, GetOptionsStates>(
                             builder: (context, state) {
-                              log('sijvgwogbowgowrgb');
                               if(!SkillInfo.skillIds.contains(state.getSkills[0])) {
 
                                 SkillInfo.skillIds.add(state.getSkills[0]);
@@ -204,7 +203,6 @@ class _SkillInfoState extends State<SkillInfo> {
                               //   List<int> selectedSkillIds = _currentSegment
                               //       .map((index) => skillIds[index].skillId ?? 0)
                               //       .toList();
-                              //   log('${selectedSkillIds} _currentSegment');
                               //
                               //   // Ensure that there are actually IDs to send (e.g., handle null or default values if needed)
                               //   if (selectedSkillIds.any((id) => id != 0)) {

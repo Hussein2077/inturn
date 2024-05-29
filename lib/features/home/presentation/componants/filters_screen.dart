@@ -35,7 +35,6 @@ class _FiltersScreenState extends State<FiltersScreen> {
 
   @override
   Widget build(BuildContext context) {
-    log('${FiltersScreen.workPlace}huss ${FiltersScreen.careerLevel}');
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: appBar(context, text: StringManager.filterResults.tr()),

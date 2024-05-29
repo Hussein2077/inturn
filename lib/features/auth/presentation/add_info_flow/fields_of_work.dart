@@ -82,7 +82,6 @@ class _FieldsInfoState extends State<FieldsInfo> {
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
-                              log('${_currentSegment}avwegw');
                               return CustomAccordion(
                                   text: state.topFiveModel[index].field,
                                   // accordionElevation: 0,

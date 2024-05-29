@@ -1,11 +1,15 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:inturn/core/resource_manager/colors.dart';
+import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/widgets/app_bar.dart';
 import 'package:inturn/core/widgets/column_with_text_field.dart';
+import 'package:inturn/core/widgets/cutom_text.dart';
 import 'package:inturn/core/widgets/main_button.dart';
 import 'package:inturn/core/widgets/snack_bar.dart';
 import 'package:inturn/features/profile/presentation/controller/change_password/change_password_bloc.dart';
@@ -57,6 +61,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         if (state is ChangePasswordSuccessState) {
           EasyLoading.dismiss();
           EasyLoading.showSuccess(state.successMessage);
+          Navigator.pop(context);
         }
       },
       child: Scaffold(
@@ -79,6 +84,21 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   ),
                 ),
                 controller: oldPasswordController,
+              ),
+              SizedBox(height: AppSize.defaultSize!,),
+              Align(
+                alignment: Alignment.centerRight,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.forgetPassword);
+                  },
+                  child: CustomText(
+                    text: StringManager.forgetYourPassword.tr(),
+                    color: AppColors.primaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: AppSize.defaultSize! * 1.4,
+                  ),
+                ),
               ),
               ColumnWithTextField(
                 text: StringManager.newPassword.tr(),

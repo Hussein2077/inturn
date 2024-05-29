@@ -84,7 +84,6 @@ class _CitiesDropDownState extends State<CitiesDropDown> {
                         CitiesDropDown.selectedValue = newValue;
                         cityModel=newValue?.cities;
                       });
-                      log('${  CitiesDropDown.selectedValue?.countryId}ggggg${cityModel?[0].cityId}');
                     },
                     hint: Padding(
                       padding:   EdgeInsets.only(left: AppSize.defaultSize!),

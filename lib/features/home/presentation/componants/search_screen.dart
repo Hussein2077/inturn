@@ -40,7 +40,6 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    log('${FiltersScreen.workPlace}FiltersScreen.workPlace');
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: appBar(context, text: StringManager.searchResults.tr()),
@@ -172,7 +171,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                 return const EmptyWidget();
                               }
 
-                              // log('${state.vacancyModel[index].vacancyId}indexindex');
                               return Padding(
                                 padding:
                                     EdgeInsets.all(AppSize.defaultSize! * 1.2),

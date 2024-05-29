@@ -46,7 +46,6 @@ final int vacancyId;
 class _SuggestedViewState extends State<SuggestedView> {
   @override
   void initState() {
-    log('${widget.companyId}widget.companyId');
     BlocProvider.of<SuggestedJobsBloc>(context)
         .add(GetSuggestedBySearchEvent(
       companyId: widget.companyId,
@@ -76,8 +75,6 @@ class _SuggestedViewState extends State<SuggestedView> {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (item, index) {
-                log('${state.vacancyModel[index]}wwwwwwwwwwwww');
-                log('${state.vacancyModel[index].vacancyId}aeheeeeeeeeeee${widget.vacancyId}');
                 return Padding(
                   padding: EdgeInsets.all(AppSize.defaultSize! * 1.2),
                   child: JobCart(
