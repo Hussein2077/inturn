@@ -13,5 +13,5 @@ abstract class BaseRepositoryProfile {
   Future<Either<ProfileDataModel, Failure>> getMyProfileData( String id);
   Future<Either<String, Failure>> uploadPdf(UploadPDFParams uploadPDFParams);
   Future<Either<String, Failure>> getPdf();
-  Future<Either<String, Failure>> changePassword(ChangePasswordModel signUpModel);
+  Future<Either<Map<String, dynamic>, Failure>> changePassword(ChangePasswordModel signUpModel);
 }

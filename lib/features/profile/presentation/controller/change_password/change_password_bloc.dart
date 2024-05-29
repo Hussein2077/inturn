@@ -18,7 +18,7 @@ class ChangePasswordFlowBloc extends Bloc<BaseChangePasswordBaseEvent, ChangePas
           oldPassword: event.oldPassword, newPassword: event.newPassword, id: event.id));
       result.fold(
               (l) => emit(
-                  ChangePasswordSuccessState(successMessage: l)),
+                  ChangePasswordSuccessState(successMessage: l['message'])),
               (r) => emit(ChangePasswordErrorState(
               errorMessage: DioHelper().getTypeOfFailure(r))));
     });

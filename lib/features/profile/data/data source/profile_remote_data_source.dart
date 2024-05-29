@@ -26,7 +26,7 @@ abstract class BaseRemotelyDataSourceProfile {
 
   Future<String> getPdf();
 
-  Future<String> changePassword(ChangePasswordModel changePasswordModel);
+  Future<Map<String, dynamic>> changePassword(ChangePasswordModel changePasswordModel);
 }
 
 class ProfileRemotelyDateSource extends BaseRemotelyDataSourceProfile {
@@ -190,7 +190,7 @@ class ProfileRemotelyDateSource extends BaseRemotelyDataSourceProfile {
 
 
   @override
-  Future<String> changePassword(ChangePasswordModel signUpModel) async {
+  Future<Map<String, dynamic>> changePassword(ChangePasswordModel signUpModel) async {
     final body = {
       'newPassword' : signUpModel.newPassword,
       'currentPassword': signUpModel.oldPassword,
@@ -203,7 +203,7 @@ class ProfileRemotelyDateSource extends BaseRemotelyDataSourceProfile {
         data: body,
       );
 
-      String jsonData = response.data;
+      Map<String, dynamic> jsonData = response.data;
 
       return jsonData;
     } on DioException catch (e) {

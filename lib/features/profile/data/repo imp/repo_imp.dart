@@ -75,7 +75,7 @@ class ProfileRepositoryImp extends BaseRepositoryProfile {
   }
 
   @override
-  Future<Either<String, Failure>> changePassword(ChangePasswordModel signUpModel) async{
+  Future<Either<Map<String, dynamic>, Failure>> changePassword(ChangePasswordModel signUpModel) async{
     try {
       final result =
       await baseRemotelyDataSourceProfile.changePassword(signUpModel);
