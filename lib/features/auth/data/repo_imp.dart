@@ -21,6 +21,17 @@ class RepositoryImp extends BaseRepository {
       return Right(DioHelper.buildFailure(e));
     }
   }
+
+  @override
+  Future<Either<AuthWithAppleModel, Failure>> sigInWithApple() async {
+    try {
+      final result = await baseRemotelyDataSource.sigInWithApple();
+      return Left(result);
+    } on Exception catch (e) {
+      return Right(DioHelper.buildFailure(e));
+    }
+  }
+
   @override
   Future<Either<Map<String, dynamic>, Failure>> loginWithEmailAndPassword(AuthModel authModel) async {
     try {

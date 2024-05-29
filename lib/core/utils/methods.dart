@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -150,6 +151,21 @@ class Methods {
 
     return result;
   }
+
+  Future<void> saveLocalazitaon({required String language}) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString("languagne", language);
+  }
+
+  Future<String> getlocalization() async {
+    final String defaultLocale = Platform.localeName;
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String language =
+        preferences.getString("languagne") ?? defaultLocale.substring(0, 2);
+
+    return language;
+  }
+
 
 }
 class CommonType extends Equatable{

@@ -20,6 +20,7 @@ import 'package:inturn/features/auth/presentation/signup/sign_up.dart';
 import 'package:inturn/features/home/presentation/componants/filters_screen.dart';
 import 'package:inturn/features/home/presentation/componants/search_screen.dart';
 import 'package:inturn/features/main_screen.dart';
+import 'package:inturn/features/profile/presentation/component/change_password/change_password_screen.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_event.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_state.dart';
@@ -35,6 +36,7 @@ class Routes {
   static const String forgetPassword = "/forgetPassword";
   static const String sendOTPCode = "/sendOTPCode";
   static const String resetPassword = "/resetPassword";
+  static const String changePassword = "/ChangePasswordScreen";
   static const String personalInfo = "/personalInfo";
   static const String academicInfo = "/academicInfo";
   static const String experienceInfo = "/experienceInfo";
@@ -184,6 +186,11 @@ class RouteGenerator {
 
             pageBuilder: (context, animation, secondaryAnimation) =>
                   ResetPassword(email: email,),
+            transitionsBuilder: customAnimate);
+
+      case Routes.changePassword:
+        return PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) => ChangePasswordScreen(),
             transitionsBuilder: customAnimate);
       case Routes.profile:
         String userId = settings.arguments as String;

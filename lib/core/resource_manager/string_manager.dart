@@ -38,7 +38,6 @@ class StringManager {
   static const String skillsRequired = "Skills Required";
   static const String internship = "Internship";
   static const String enterMobileNumber = "Enter Your Mobile No.";
-  static const String resendPassword = "Resend the code";
   static const String resendVerificationCode =
       "You can resend the verification code after";
   static const String verify = "Verify";
@@ -101,6 +100,7 @@ class StringManager {
   static const String youHaveBeenMissed = "You Have Been Missed For Long Time";
   static const String email = "Email";
   static const String password = "Password";
+  static const String oldPassword = "Old Password";
   static const String confirmPassword = "Confirm password";
   static const String forgetYourPassword = "Forget Your Password ?";
   static const String forgetPassword = "Forget Password";

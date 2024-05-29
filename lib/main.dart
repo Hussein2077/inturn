@@ -27,9 +27,9 @@ import 'package:inturn/features/home/presentation/controller/intern_search_bloc/
 import 'package:inturn/features/home/presentation/controller/suggested%20jobs%20in%20company/bloc.dart';
 import 'package:inturn/features/home/presentation/controller/suggested/bloc.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_bloc.dart';
-import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_event.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:inturn/features/home/presentation/controller/vacancy_details_bloc/bloc.dart';
+import 'package:inturn/features/profile/presentation/controller/change_password/change_password_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/edit_profile/edit_profile_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_profile_data/get_my_profile_data_bloc.dart';
@@ -151,6 +151,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => getIt<PdfUploadBloc>()),
         BlocProvider(create: (context) => getIt<GetPdfBloc>()),
         BlocProvider(create: (context) => getIt<ResetPasswordFlowBloc>()),
+        BlocProvider(create: (context) => getIt<ChangePasswordFlowBloc>()),
 
       ],
       child: MaterialApp(

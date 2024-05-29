@@ -7,6 +7,7 @@ import 'package:inturn/core/models/profile_data_model.dart';
 import 'package:inturn/core/utils/api_helper.dart';
 import 'package:inturn/core/utils/constant_api.dart';
 import 'package:inturn/core/models/vacancey_model.dart';
+import 'package:inturn/features/profile/domain/use_case/change_password_uc.dart';
 import 'package:inturn/features/profile/domain/use_case/edit_profile_uc.dart';
 import 'package:inturn/features/profile/domain/use_case/upload_pdf.dart';
 import 'package:inturn/main.dart';
@@ -24,6 +25,8 @@ abstract class BaseRemotelyDataSourceProfile {
   Future<String> uploadPdf(UploadPDFParams uploadPDFParams);
 
   Future<String> getPdf();
+
+  Future<Map<String, dynamic>> changePassword(ChangePasswordModel changePasswordModel);
 }
 
 class ProfileRemotelyDateSource extends BaseRemotelyDataSourceProfile {
@@ -182,6 +185,30 @@ class ProfileRemotelyDateSource extends BaseRemotelyDataSourceProfile {
       return jsonData["fileName"];
     } on DioException catch (e) {
       throw DioHelper.handleDioError(dioError: e, endpointName: "getPdf");
+    }
+  }
+
+
+  @override
+  Future<Map<String, dynamic>> changePassword(ChangePasswordModel signUpModel) async {
+    final body = {
+      'newPassword' : signUpModel.newPassword,
+      'currentPassword': signUpModel.oldPassword,
+      'userId': signUpModel.id,
+    };
+
+    try {
+      final response = await Dio().post(
+        ConstantApi.changePassword,
+        data: body,
+      );
+
+      Map<String, dynamic> jsonData = response.data;
+
+      return jsonData;
+    } on DioException catch (e) {
+      throw DioHelper.handleDioError(
+          dioError: e, endpointName: "changePassword");
     }
   }
 }

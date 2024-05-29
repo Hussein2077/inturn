@@ -84,6 +84,7 @@ class ConstantApi {
   static const String sendCode = "${baseUrl}Auth/generate-otp";
   static const String verifyCode = "${baseUrl}Auth/validate-otp";
   static const String resetPassword  = "${baseUrl}Auth/reset-password-with-otp";
+  static const String changePassword  = "${baseUrl}Auth/Change-password";
   static const String googleRegister = "https://api.inturn.app/GLogin";
   static const String email = "email";
   static const String password = "password";
