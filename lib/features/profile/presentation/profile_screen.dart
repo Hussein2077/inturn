@@ -39,6 +39,7 @@ import 'package:inturn/main.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key, required this.userId});
+
   static bool isUploaded = false;
   final String userId;
 
@@ -119,12 +120,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               .add(GetMyProfileDataEvent(MyApp.userId.toString()));
         } else if (state is EditProfileErrorMessageState) {
           EasyLoading.dismiss();
-          log('${state.errorMessage}ssssssssss');
           EasyLoading.showError(state.errorMessage);
+        } else if (state is EditProfileLoadingState) {
+          EasyLoading.show();
         }
-          else if (state is EditProfileLoadingState) {
-            EasyLoading.show();
-          }
       },
       child: BlocBuilder<GetMyProfileDataBloc, GetMyProfileDataState>(
         builder: (context, state) {
@@ -136,7 +135,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             emailController.text = state.profileDataModel.user?.email ?? "";
             firstNameController.text = state.profileDataModel.firstName ?? "";
             lastNameController.text = state.profileDataModel.lastName ?? "";
-            descriptionController.text = state.profileDataModel.description ?? "";
+            descriptionController.text =
+                state.profileDataModel.description ?? "";
             return Scaffold(
               appBar: appBar(context,
                   text: StringManager.profile.tr(),
@@ -158,7 +158,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         color: AppColors.lightGreyColor,
                         fontWeight: FontWeight.bold,
                       ),
-
                       Padding(
                         padding: EdgeInsets.symmetric(
                             vertical: AppSize.defaultSize! * 2),
@@ -172,10 +171,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-
                       const PdfUploadForm(),
                       SizedBox(
-                        height: AppSize .defaultSize!*2,
+                        height: AppSize.defaultSize! * 2,
                       ),
                       Material(
                         borderRadius:
@@ -236,7 +234,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 //   height: AppSize.defaultSize! ,
                                 // ),
                                 ColumnWithTextField(
-                                  text:   StringManager.email.tr(),
+                                  text: StringManager.email.tr(),
                                   controller: emailController,
                                 ),
                                 SizedBox(
@@ -445,46 +443,56 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: MainButton(
                           onTap: () {
                             List<int>? mergeSkill = ProfileSkills.newSkills
-                                    .map((e) => e.id).toSet()
-                                    .toList();
-                            FieldsInfo.majorsId =  ProfileMajor.newMajors .map((e) => e.id).toList();
-                            if(  ProfileMajor.newMajors.isNotEmpty&&mergeSkill.isNotEmpty) {
+                                .map((e) => e.id)
+                                .toSet()
+                                .toList();
+                            FieldsInfo.majorsId = ProfileMajor.newMajors
+                                .map((e) => e.id)
+                                .toList();
+                            if (ProfileMajor.newMajors.isNotEmpty &&
+                                mergeSkill.isNotEmpty) {
                               BlocProvider.of<EditProfileBloc>(context)
-                                .add(EditProfileEvent(
-                              EditPersonalInfoParams(
-                                id: MyApp.userProfileId.toString(),
-                                firstName: firstNameController.text.isEmpty
-                                    ? state.profileDataModel.firstName
-                                    : firstNameController.text,
-                                lastName: lastNameController.text.isEmpty
-                                    ? state.profileDataModel.lastName
-                                    : lastNameController.text,
-                                UniversityId: (UniversityDropDown
-                                            .selectedValue?.universityId ??
-                                        state.profileDataModel.university
-                                            ?.universityId)
-                                    .toString(),
-                                FacultyId: (FacultyDropDown.selectedValue?.id ??
-                                        state.profileDataModel.faculty?.id)
-                                    .toString(),
-                                Description: descriptionController.text.isEmpty
-                                    ? state.profileDataModel.description
-                                    : descriptionController.text,
-                                JobLevelId: (jop + 1).toString(),
-                                GraduationStatusId: (education + 1).toString(),
-                                JobLocationTypeId: (location + 1).toString(),
-                                MajorIds: FieldsInfo.majorsId,
-                                SkillIds: mergeSkill,
-                                image: ProfileScreen.  isUploaded? UploadProfileImagePage.imageFile!:null,
-                                // CountryId: '',
-                                // CityId: '',
-                              ),
-                            ));
-                            }
-                            else if (ProfileMajor.newMajors.isEmpty) {
-                                errorSnackBar(context, StringManager.majorError.tr());
-                            }  else if (mergeSkill.isEmpty) {
-                                errorSnackBar(context, StringManager.pleaseAddSkill.tr());
+                                  .add(EditProfileEvent(
+                                EditPersonalInfoParams(
+                                  id: MyApp.userProfileId.toString(),
+                                  firstName: firstNameController.text.isEmpty
+                                      ? state.profileDataModel.firstName
+                                      : firstNameController.text,
+                                  lastName: lastNameController.text.isEmpty
+                                      ? state.profileDataModel.lastName
+                                      : lastNameController.text,
+                                  UniversityId: (UniversityDropDown
+                                              .selectedValue?.universityId ??
+                                          state.profileDataModel.university
+                                              ?.universityId)
+                                      .toString(),
+                                  FacultyId: (FacultyDropDown
+                                              .selectedValue?.id ??
+                                          state.profileDataModel.faculty?.id)
+                                      .toString(),
+                                  Description:
+                                      descriptionController.text.isEmpty
+                                          ? state.profileDataModel.description
+                                          : descriptionController.text,
+                                  JobLevelId: (jop + 1).toString(),
+                                  GraduationStatusId:
+                                      (education + 1).toString(),
+                                  JobLocationTypeId: (location + 1).toString(),
+                                  MajorIds: FieldsInfo.majorsId,
+                                  SkillIds: mergeSkill,
+                                  image: ProfileScreen.isUploaded
+                                      ? UploadProfileImagePage.imageFile!
+                                      : null,
+                                  // CountryId: '',
+                                  // CityId: '',
+                                ),
+                              ));
+                            } else if (ProfileMajor.newMajors.isEmpty) {
+                              errorSnackBar(
+                                  context, StringManager.majorError.tr());
+                            } else if (mergeSkill.isEmpty) {
+                              errorSnackBar(
+                                  context, StringManager.pleaseAddSkill.tr());
                             }
                           },
                           text: StringManager.confirm.tr(),

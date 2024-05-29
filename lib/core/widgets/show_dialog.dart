@@ -62,63 +62,62 @@ class CVPage extends StatelessWidget {
 
   Future<void> _createPDF() async {
     PdfDocument document = PdfDocument();
-    final page = document.pages.add();
-
+    PdfPage   page = document.pages.add();
     page.graphics.drawImage(
-        PdfBitmap(await _readImageData(AssetPath.bgCv)),
+        PdfBitmap(await _readImageData(AssetPath.logoCv)),
         Rect.fromLTWH(
-            0, 0, page
+            -50, -20, page
             .getClientSize()
             .width, page
             .getClientSize()
             .height));
-    page.graphics.drawImage(PdfBitmap(await _readImageData(AssetPath.logoPNG)),
-        const Rect.fromLTWH(0, 0, 120, 40));
+    // page.graphics.drawImage(PdfBitmap(await _readImageData(AssetPath.logoCv)),
+    //     const Rect.fromLTWH(0, 0, 120, 120));
     page.graphics.drawString(
         '${profileDataModel.firstName} ${profileDataModel.lastName}',
         PdfStandardFont(PdfFontFamily.helvetica, 30),
         brush: PdfBrushes.black,
-        bounds: const Rect.fromLTWH(0, 100, 400, 40));
+        bounds: const Rect.fromLTWH(20, 130, 400, 40));
     page.graphics.drawString(
         (profileDataModel.description ?? 'description').length > 175 ? profileDataModel
             .description!.substring(0, 175): (profileDataModel.description ?? 'description'),
         PdfStandardFont(PdfFontFamily.helvetica, 20),
-        brush: PdfBrushes.gray, bounds: const Rect.fromLTWH(0, 150, 400, 300));
+        brush: PdfBrushes.gray, bounds: const Rect.fromLTWH(20, 180, 400, 300));
     page.graphics.drawImage(
         PdfBitmap(await _readImageData(AssetPath.cvContacts)),
-        const Rect.fromLTWH(0, 280, 30, 110));
+        const Rect.fromLTWH(20, 310, 30, 110));
     page.graphics.drawString(
         profileDataModel.user?.phoneNumber ?? "+201125391736",
         PdfStandardFont(PdfFontFamily.helvetica, 20),
         brush: PdfBrushes.black,
-        bounds: const Rect.fromLTWH(40, 290, 400, 300));
+        bounds: const Rect.fromLTWH(60, 320, 400, 300));
     page.graphics.drawString(
         profileDataModel.user?.email ?? "",
         PdfStandardFont(PdfFontFamily.helvetica, 20),
         brush: PdfBrushes.black,
-        bounds: const Rect.fromLTWH(40, 320, 400, 300));
+        bounds: const Rect.fromLTWH(60, 350, 400, 300));
     page.graphics.drawString((profileDataModel.country?.countryNameEn ?? ""),
         PdfStandardFont(PdfFontFamily.helvetica, 20),
         brush: PdfBrushes.black,
-        bounds: const Rect.fromLTWH(40, 350, 400, 300));
+        bounds: const Rect.fromLTWH(60, 380 , 400, 300));
     page.graphics.drawString(
         'Education', PdfStandardFont(PdfFontFamily.helvetica, 25),
-        brush: PdfBrushes.black, bounds: const Rect.fromLTWH(0, 420, 400, 50));
+        brush: PdfBrushes.black, bounds: const Rect.fromLTWH(20, 450, 400, 50));
     page.graphics.drawString(profileDataModel.university?.universityName ?? "",
         PdfStandardFont(PdfFontFamily.helvetica, 20),
-        brush: PdfBrushes.black, bounds: const Rect.fromLTWH(0, 450, 400, 50));
+        brush: PdfBrushes.black, bounds: const Rect.fromLTWH(20, 480, 400, 50));
     page.graphics.drawString(
         profileDataModel.faculty?.name ?? "",
         PdfStandardFont(PdfFontFamily.helvetica, 20),
-        brush: PdfBrushes.gray, bounds: const Rect.fromLTWH(0, 480, 400, 50));
+        brush: PdfBrushes.gray, bounds: const Rect.fromLTWH(20, 510, 400, 50));
     // Create a PDF ordered list.
     final PdfOrderedList orderedList = PdfOrderedList(
       items: PdfListItemCollection(
         <String>['Skills'],
       ),
-      textIndent: 20,
-      indent: 20,
-      font: PdfStandardFont(PdfFontFamily.helvetica, 25),
+      textIndent: 15,
+      indent: 15,
+      font: PdfStandardFont(PdfFontFamily.helvetica, 20),
       marker: PdfOrderedMarker(
         style: PdfNumberStyle.none,
       ),
@@ -127,30 +126,72 @@ class CVPage extends StatelessWidget {
     );
     orderedList.brush = PdfBrushes.black;
 // Create a un ordered list and add it as a sublist.
+
     orderedList.items[0].subList = PdfUnorderedList(
         marker: PdfUnorderedMarker(
-            font: PdfStandardFont(PdfFontFamily.helvetica, 15),
+
+            font: PdfStandardFont(PdfFontFamily.helvetica, 12),
             style: PdfUnorderedMarkerStyle.disk),
         items: PdfListItemCollection(
             profileDataModel.user?.userSkills?.map((e) => e.skill
                 ?.skillNameEn ?? "").toList()),
-        font: PdfStandardFont(PdfFontFamily.helvetica, 15),
+        font: PdfStandardFont(PdfFontFamily.helvetica, 12),
         textIndent: 10,
         format: PdfStringFormat(
             lineSpacing: 10, lineAlignment: PdfVerticalAlignment.top),
         indent: 20);
-// Draw the list to the PDF page.
     orderedList.draw(
         page: page,
         format: PdfLayoutFormat(
           breakType: PdfLayoutBreakType.fitColumnsToPage,
         ),
         bounds: Rect.fromLTWH(
-            -35, 530, page
+            -15, 560, page
             .getClientSize()
             .width, page
             .getClientSize()
             .height));
+    if(profileDataModel.user!.userSkills!.length>6) {
+      var otherSkills=  profileDataModel.user?.userSkills?.sublist(7, profileDataModel.user?.userSkills?.length);
+      final PdfOrderedList orderedList2 = PdfOrderedList(
+        items: PdfListItemCollection(
+          <String>[' '],
+        ),
+        textIndent: 15,
+        indent: 15,
+        font: PdfStandardFont(PdfFontFamily.helvetica, 20),
+        marker: PdfOrderedMarker(
+          style: PdfNumberStyle.none,
+        ),
+        markerHierarchy: false,
+         format: PdfStringFormat(lineSpacing: 10),
+      );
+      orderedList2.brush = PdfBrushes.black;
+      orderedList2.items[0].subList = PdfUnorderedList(
+          marker: PdfUnorderedMarker(
+              font: PdfStandardFont(PdfFontFamily.helvetica, 12),
+              style: PdfUnorderedMarkerStyle.disk),
+          items: PdfListItemCollection(
+              (otherSkills)?.map((e) => e.skill
+                  ?.skillNameEn ?? "").toList()),
+          font: PdfStandardFont(PdfFontFamily.helvetica, 12),
+          textIndent: 10,
+          format: PdfStringFormat(
+              lineSpacing: 10, lineAlignment: PdfVerticalAlignment.top),
+          indent: 20);
+      orderedList2.draw(
+          page: page,
+          format: PdfLayoutFormat(
+            breakType: PdfLayoutBreakType.fitColumnsToPage,
+          ),
+          bounds: Rect.fromLTWH(
+              150, 560 , page
+              .getClientSize()
+              .width, page
+              .getClientSize()
+              .height));
+    }
+
 
     List<int> bytes = await document.save();
     document.dispose();
@@ -175,10 +216,10 @@ class CVPage extends StatelessWidget {
               borderRadius: BorderRadius.all(
                 Radius.circular(AppSize.defaultSize! * 2),
               ),
-              image: const DecorationImage(
-                image: AssetImage(AssetPath.bgCv),
-                fit: BoxFit.fitHeight,
-              ),
+              // image: const DecorationImage(
+              //   image: AssetImage(AssetPath.bgCv),
+              //   fit: BoxFit.fitHeight,
+              // ),
             ),
             child: Padding(
               padding: EdgeInsets.all(AppSize.defaultSize!),
@@ -201,9 +242,7 @@ class CVPage extends StatelessWidget {
                             ))
                       ],
                     ),
-                    SizedBox(
-                      height: AppSize.defaultSize! * 2,
-                    ),
+                    const Divider(color: AppColors.secondaryColor,),
                     CustomText(
                       text:
                       '${profileDataModel.firstName!} ${profileDataModel

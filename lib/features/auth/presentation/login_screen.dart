@@ -29,6 +29,7 @@ import 'package:inturn/features/auth/presentation/widgets/sign_in_button.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_event.dart';
 import 'package:inturn/main.dart';
+import 'package:linkedin_login/linkedin_login.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -141,6 +142,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
                   SizedBox(height: AppSize.defaultSize! * 2),
+                  // LinkedInAuthCodeWidget(
+                  //   redirectUrl: redirectUrl,
+                  //   clientId: '7758y5q1hruhet',
+                  //
+                  //   onGetAuthCode:
+                  //       (AuthorizationSucceededAction response) {
+                  //     print('Auth code ${response.codeResponse.code}');
+                  //     print('State: ${response.codeResponse.state}');
+                  //   },
+                  //   onError: (AuthorizationFailedAction e) {
+                  //     print('Error: ${e.toString()}');
+                  //   },
+                  // ),
                   CustomSignInButton(
                     text: StringManager.continueWithLinkedin.tr(),
                     logo: SvgPicture.asset(AssetPath.linkedin2,

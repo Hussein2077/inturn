@@ -4,6 +4,7 @@ class AssetPath {
   //new
   static const String logo = '$pathImage/logo.svg';
   static const String logoPNG = '$pathImage/logo.png';
+  static const String logoCv  = '$pathImage/cv_logo.png';
   static const String apple = '$pathImage/apple.svg';
   static const String  leading = '$pathImage/Asset 39.png';
   static const String google = '$pathImage/google.svg';
