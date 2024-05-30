@@ -51,14 +51,14 @@ class _ResetPasswordState extends State<ResetPassword> {
   Widget build(BuildContext context) {
     return BlocListener<ResetPasswordFlowBloc, ResetPasswordState>(
       listener: (context, state) {
-        if (state is ChangePasswordLoadingState) {
+        if (state is ResetPasswordLoadingState) {
           EasyLoading.show();
         }
-        if (state is ChangePasswordErrorMessageState) {
+        if (state is ResetPasswordErrorMessageState) {
           EasyLoading.dismiss();
           EasyLoading.showError(state.errorMessage);
         }
-        if (state is ChangePasswordSuccessMessageState) {
+        if (state is ResetPasswordSuccessMessageState) {
           EasyLoading.dismiss();
           EasyLoading.showSuccess(state.successMessage);
           Navigator.pushNamedAndRemoveUntil(

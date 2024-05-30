@@ -17,15 +17,15 @@ class ResetPasswordFlowBloc
       {required this.resetPasswordUseCase,
       required this.sendCodeUseCase,
       required this.verifyCodeUseCase})
-      : super(ChangePasswordInitial()) {
+      : super(ResetPasswordInitial()) {
     on<ResetPasswordEvent>((event, emit) async {
-      emit(const ChangePasswordLoadingState());
+      emit(const ResetPasswordLoadingState());
       final result = await resetPasswordUseCase.call(SignUpModel(
           password: event.password, email: event.email, code: event.code));
       result.fold(
           (l) => emit(
-              ChangePasswordSuccessMessageState(successMessage: l['message'])),
-          (r) => emit(ChangePasswordErrorMessageState(
+              ResetPasswordSuccessMessageState(successMessage: l['message'])),
+          (r) => emit(ResetPasswordErrorMessageState(
               errorMessage: DioHelper().getTypeOfFailure(r))));
     });
     on<SendCodeEvent>((event, emit) async {

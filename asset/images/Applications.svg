@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <g id="Applications" transform="translate(1.5 -3.86)">
+    <g id="Layer_1" data-name="Layer 1" transform="translate(2.5 7.86)">
+      <path id="Path_2168" data-name="Path 2168" d="M2.5,121.941V19.11a11.3,11.3,0,0,1,3.25-7.961A11.027,11.027,0,0,1,13.615,7.86h97.77a11.028,11.028,0,0,1,7.865,3.289,11.3,11.3,0,0,1,3.25,7.961v98.878a9.813,9.813,0,0,1-9.753,9.872H33.541" transform="translate(-2.5 -7.86)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="8"/>
+      <path id="Path_2169" data-name="Path 2169" d="M25.774,32.481V25.649a8.906,8.906,0,0,0-8.852-8.959h0A8.906,8.906,0,0,0,8.07,25.649v6.831Z" transform="translate(3.085 1.209)" fill="#fff"/>
+      <rect id="Rectangle_22" data-name="Rectangle 22" width="47.583" height="7.176" rx="1.77" transform="translate(11.716 40.541)" fill="#fff"/>
+      <rect id="Rectangle_23" data-name="Rectangle 23" width="76.021" height="7.176" rx="1.77" transform="translate(31.542 27.486)" fill="#fff"/>
+      <rect id="Rectangle_24" data-name="Rectangle 24" width="76.021" height="7.176" rx="1.77" transform="translate(11.235 52.865)" fill="#fff"/>
+      <path id="Path_2170" data-name="Path 2170" d="M72,80.649V64.818c0-10.7-11.676-19.378-26.035-19.378h0c-14.4,0-26.035,8.676-26.035,19.378" transform="translate(14.977 30.736)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="8"/>
+    </g>
+  </g>
+</svg>

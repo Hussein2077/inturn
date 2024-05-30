@@ -2,6 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:inturn/core/resource_manager/asset_path.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
@@ -17,9 +19,14 @@ import 'package:inturn/features/profile/presentation/profile_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key, required this.userID,    });
+  const MainScreen({
+    super.key,
+    required this.userID,
+  });
+
   static int mainIndex = 0;
-final String userID;
+  final String userID;
+
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
@@ -29,60 +36,87 @@ class _MainScreenState extends State<MainScreen> {
 
   List<Widget> _buildScreens() {
     return [
-        HomeScreen(userID: widget.userID,),
+      HomeScreen(
+        userID: widget.userID,
+      ),
       const ApplicationsScreen(),
       const CompaniesScreen(),
-        ProfileScreen(userId:  widget.userID),
-
+      ProfileScreen(userId: widget.userID),
     ];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: Icon(
-          Icons.home_outlined,
-          size: AppSize.defaultSize!*2.7,
+        icon:Image.asset(AssetPath.home,
+          width: AppSize.defaultSize! * 2,
+          height: AppSize.defaultSize! * 2,
+          color: AppColors.secondaryColor,
         ),
+        inactiveIcon: Image.asset(
+          AssetPath.home,
+          width: AppSize.defaultSize! * 2,
+          height: AppSize.defaultSize! * 2,
+          color: Colors.white,
+        ),
+
         title: StringManager.home.tr(),
-        textStyle:  TextStyle(fontSize: AppSize.defaultSize!*1.2),
+        textStyle: TextStyle(fontSize: AppSize.defaultSize! * 1.2),
         activeColorPrimary: AppColors.secondaryColor,
         inactiveColorPrimary: CupertinoColors.white,
       ),
       PersistentBottomNavBarItem(
-        icon:   Icon(
-          Icons.sticky_note_2_outlined,
-          size: AppSize.defaultSize!*2.7,
+        icon: Image.asset(
+          AssetPath.application,
+          width: AppSize.defaultSize! * 2,
+          height: AppSize.defaultSize! * 2,
         ),
         title: StringManager.applications.tr(),
-        textStyle:  TextStyle(fontSize: AppSize.defaultSize!*1.2),
-
+        inactiveIcon: Image.asset(
+          AssetPath.application,
+          width: AppSize.defaultSize! * 2,
+          height: AppSize.defaultSize! * 2,
+          color: Colors.white,
+        ),
+        textStyle: TextStyle(fontSize: AppSize.defaultSize! * 1.2),
         activeColorPrimary: AppColors.secondaryColor,
         inactiveColorPrimary: CupertinoColors.white,
       ),
       PersistentBottomNavBarItem(
-        icon:   Icon(
-          Icons.warehouse_outlined,
-          size: AppSize.defaultSize!*2.7,
+        icon:Image.asset(AssetPath.company,
+          width: AppSize.defaultSize! * 2,
+          height: AppSize.defaultSize! * 2,
+          color: AppColors.secondaryColor,
+    ),
+        inactiveIcon: Image.asset(
+          AssetPath.company,
+          width: AppSize.defaultSize! * 2,
+          height: AppSize.defaultSize! * 2,
+          color: Colors.white,
         ),
+
         title: StringManager.companies.tr(),
         activeColorPrimary: AppColors.secondaryColor,
         inactiveColorPrimary: CupertinoColors.white,
-        textStyle:  TextStyle(fontSize: AppSize.defaultSize!*1.2),
-
+        textStyle: TextStyle(fontSize: AppSize.defaultSize! * 1.2),
       ),
       PersistentBottomNavBarItem(
-        icon:   Icon(
-          Icons.person_outline,
-          size: AppSize.defaultSize!*2.7,
+        icon:Image.asset(AssetPath.profile,
+          width: AppSize.defaultSize! * 2,
+          height: AppSize.defaultSize! * 2,
+          color: AppColors.secondaryColor,
+        ),
+        inactiveIcon: Image.asset(
+          AssetPath.profile,
+          width: AppSize.defaultSize! * 2,
+          height: AppSize.defaultSize! * 2,
+          color: Colors.white,
         ),
         title: StringManager.profile.tr(),
-        textStyle:  TextStyle(fontSize: AppSize.defaultSize!*1.2),
+        textStyle: TextStyle(fontSize: AppSize.defaultSize! * 1.2),
         activeColorPrimary: AppColors.secondaryColor,
         inactiveColorPrimary: CupertinoColors.white,
       ),
-
-
     ];
   }
 
@@ -95,6 +129,7 @@ class _MainScreenState extends State<MainScreen> {
     _controller = PersistentTabController(initialIndex: MainScreen.mainIndex);
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     AppSize().init(context);
@@ -108,7 +143,7 @@ class _MainScreenState extends State<MainScreen> {
         items: _navBarsItems(),
         confineInSafeArea: true,
 
-        backgroundColor:AppColors.homeColor,
+        backgroundColor: AppColors.homeColor,
         // Default is Colors.white.
         handleAndroidBackButtonPress: true,
 
@@ -121,7 +156,7 @@ class _MainScreenState extends State<MainScreen> {
         // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
         decoration: NavBarDecoration(
           borderRadius: BorderRadius.circular(AppSize.defaultSize!),
-          colorBehindNavBar:AppColors.homeColor,
+          colorBehindNavBar: AppColors.homeColor,
         ),
         popAllScreensOnTapOfSelectedTab: true,
         popActionScreens: PopActionScreensType.all,
@@ -137,7 +172,7 @@ class _MainScreenState extends State<MainScreen> {
           duration: Duration(milliseconds: 200),
         ),
         navBarStyle:
-            NavBarStyle.style6, // Choose the nav bar style with this property.
+            NavBarStyle.style1, // Choose the nav bar style with this property.
       ),
     );
   }

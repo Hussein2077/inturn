@@ -4,12 +4,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inturn/core/resource_manager/asset_path.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/widgets/app_bar.dart';
 import 'package:inturn/core/widgets/country_drop_down.dart';
 import 'package:inturn/core/widgets/custom_text_field.dart';
+import 'package:inturn/core/widgets/cutom_text.dart';
 import 'package:inturn/core/widgets/empty_widget.dart';
 import 'package:inturn/core/widgets/loading_widget.dart';
 import 'package:inturn/core/widgets/main_button.dart';
@@ -51,40 +53,54 @@ class _SearchScreenState extends State<SearchScreen> {
             children: [
               Center(
                 child: CustomTextField(
-                  controller: searchController,
-                  onChanged: (value) {
-
-                    Future.delayed(const Duration(milliseconds: 500), () {
-                      BlocProvider.of<GetInternshipsBySearchBloc>(context)
-                          .add(GetInternshipsBySearchEvent(title: value,
-                        vacancyLevelId: FiltersScreen.careerLevel,
-                        cityId: CitiesDropDown.selectedValue2?.cityId,
-                        countryId: CitiesDropDown.selectedValue?.countryId ?? 1,
-                        vacancyWorkPlace: FiltersScreen.workPlace,
-                      ));
-                    });
-                  },
-                  hintText: StringManager.searchForJobs.tr(),
-                  fillColor: Colors.white,
-                  hintStyle: TextStyle(
-                      fontSize: AppSize.defaultSize! * 1.3,
-                      color: AppColors.greyColor),
-                  suffixIcon: MainButton(
-                    text: StringManager.search.tr(),
-                    width: AppSize.defaultSize! * 10,
-                    padding: AppSize.defaultSize! * .5,
-                    onTap: () {
-                      BlocProvider.of<GetInternshipsBySearchBloc>(context)
-                          .add(GetInternshipsBySearchEvent(
-                        title: searchController.text,
-                        vacancyLevelId: FiltersScreen.careerLevel,
-                        cityId: CitiesDropDown.selectedValue2?.cityId,
-                        vacancyWorkPlace: FiltersScreen.workPlace,
-                        countryId: CitiesDropDown.selectedValue?.countryId ?? 1,
-                      ));
+                    controller: searchController,
+                    onChanged: (value) {
+                      Future.delayed(const Duration(milliseconds: 500), () {
+                        BlocProvider.of<GetInternshipsBySearchBloc>(context)
+                            .add(GetInternshipsBySearchEvent(
+                          title: value,
+                          vacancyLevelId: FiltersScreen.careerLevel,
+                          cityId: CitiesDropDown.selectedValue2?.cityId,
+                          countryId:
+                              CitiesDropDown.selectedValue?.countryId ?? 1,
+                          vacancyWorkPlace: FiltersScreen.workPlace,
+                        ));
+                      });
                     },
-                  ),
-                ),
+                    hintText: StringManager.searchForJobs.tr(),
+                    fillColor: Colors.white,
+                    hintStyle: TextStyle(
+                        fontSize: AppSize.defaultSize! * 1.3,
+                        color: AppColors.greyColor),
+                    suffixIcon: Padding(
+                      padding: EdgeInsets.all(AppSize.defaultSize! * .5),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryColor,
+                          borderRadius:
+                              BorderRadius.circular(AppSize.defaultSize! * 2),
+                        ),
+                        width: AppSize.defaultSize! * 9.6,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              AssetPath.search1,
+                              width: AppSize.defaultSize! * 1.6,
+                              height: AppSize.defaultSize! * 1.6,
+                            ),
+                            SizedBox(
+                              width: AppSize.defaultSize! * .5,
+                            ),
+                            CustomText(
+                              text: StringManager.search.tr(),
+                              color: AppColors.secondaryColor,
+                              fontSize: AppSize.defaultSize! * 1.4,
+                            )
+                          ],
+                        ),
+                      ),
+                    )),
               ),
               BlocBuilder<GetInternshipsBySearchBloc,
                   GetInternshipsBySearchState>(
@@ -117,13 +133,17 @@ class _SearchScreenState extends State<SearchScreen> {
                                     pageTransitionAnimation:
                                         PageTransitionAnimation.fade,
                                   ).then((value) {
-                                    BlocProvider.of<GetInternshipsBySearchBloc>(context)
+                                    BlocProvider.of<GetInternshipsBySearchBloc>(
+                                            context)
                                         .add(GetInternshipsBySearchEvent(
                                       title: searchController.text,
                                       vacancyLevelId: FiltersScreen.careerLevel,
-                                      cityId: CitiesDropDown.selectedValue2?.cityId,
-                                      countryId: CitiesDropDown.selectedValue?.countryId ?? 1,
-                                        vacancyWorkPlace: FiltersScreen.workPlace,
+                                      cityId:
+                                          CitiesDropDown.selectedValue2?.cityId,
+                                      countryId: CitiesDropDown
+                                              .selectedValue?.countryId ??
+                                          1,
+                                      vacancyWorkPlace: FiltersScreen.workPlace,
                                     ));
                                   });
                                 },
@@ -163,11 +183,13 @@ class _SearchScreenState extends State<SearchScreen> {
                           ),
                         ),
                         ListView.builder(
-                            itemCount:state.vacancyModel.isEmpty?0: state.vacancyModel.length,
+                            itemCount: state.vacancyModel.isEmpty
+                                ? 0
+                                : state.vacancyModel.length,
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (item, index) {
-                              if(state.vacancyModel.isEmpty){
+                              if (state.vacancyModel.isEmpty) {
                                 return const EmptyWidget();
                               }
 
@@ -192,7 +214,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                           .vacancyModel[index].requirements,
                                       responsibilities: state
                                           .vacancyModel[index].responsibilities,
-                                      description: state.vacancyModel[index].description,
+                                      description:
+                                          state.vacancyModel[index].description,
                                     ),
                                     matchmakingPercentage: 0,
                                   ),

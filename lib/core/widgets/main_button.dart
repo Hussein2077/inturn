@@ -15,7 +15,7 @@ class MainButton extends StatelessWidget {
     this.padding,
     this.fontSize,
     this.fontWeight,
-    this.child,
+    this.child, this.child2,
   });
 
   final void Function()? onTap;
@@ -28,6 +28,7 @@ class MainButton extends StatelessWidget {
   final double? fontSize;
   final FontWeight? fontWeight;
   final Widget? child;
+  final Widget? child2;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +45,7 @@ class MainButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2),
             ),
           ),
-          child:child==null? CustomText(
+          child:child2 ?? (child==null? CustomText(
             text: text,
             color: textColor ?? AppColors.secondaryColor,
             fontSize: fontSize ?? AppSize.defaultSize! * 1.5,
@@ -63,7 +64,9 @@ class MainButton extends StatelessWidget {
               const Spacer(flex: 2,),
               child!,
             ],
-          ),
+          )),
+
+
         ),
       ),
     );

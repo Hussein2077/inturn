@@ -1,6 +1,13 @@
 const String pathImage = "asset/images";
 
 class AssetPath {
+  //home
+  static const String application  = '$pathImage/Applications.png';
+  static const String company  = '$pathImage/companies.png';
+  static const String profile  = '$pathImage/Profile.png';
+  static const String home  = '$pathImage/home.png';
+  static const String search1  = '$pathImage/search.png';
+  static const String changePassword   = '$pathImage/Change Password.png';
   //new
   static const String logo = '$pathImage/logo.svg';
   static const String logoPNG = '$pathImage/logo.png';
@@ -23,8 +30,7 @@ class AssetPath {
   static const String website = '$pathImage/website.png';
   static const String bgCv = '$pathImage/bg_cv.png';
   static const String cvContacts  = '$pathImage/cv_contacts.png';
-  static const String home  = '$pathImage/Asset 63.png';
-  static const String  search  = '$pathImage/Asset 76.svg';
+
 
 //Images
   static const String logoLarge = '$pathImage/logo@2x.jpg';
@@ -51,13 +57,5 @@ class AssetPath {
 
 //Icons
   static const String notification = '$pathImage/notification.png';
-
   static const String menu = '$pathImage/menu.png';
-  static const String lolipop = '$pathImage/lolipop.png';
-
-  static const String skillIcon = 'assets/icons/skill_icon.png';
-  static const String skillIconBlack = 'assets/icons/skill_icon_black.png';
-  static const String title = 'assets/icons/title.png';
-  static const String location1 = 'assets/icons/location.png';
-  static const String employer = 'assets/icons/employer.png';
 }

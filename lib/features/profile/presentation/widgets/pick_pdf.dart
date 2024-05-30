@@ -58,7 +58,7 @@ class _PdfUploadFormState extends State<PdfUploadForm> {
 
             return MainButton(
               text: StringManager.uploaded.tr(),
-              textColor: Colors.black,
+              textColor: AppColors.primaryColor,
               color: AppColors.lightGreyColor,
               fontWeight: FontWeight.bold,
               child: IconButton(
@@ -78,7 +78,7 @@ class _PdfUploadFormState extends State<PdfUploadForm> {
                 },
                 icon: const Icon(
                   Icons.edit,
-                  color: Colors.black,
+                  color: AppColors.primaryColor,
                 ),
               ),
               onTap: () async {
@@ -103,7 +103,7 @@ class _PdfUploadFormState extends State<PdfUploadForm> {
         text: result == null
             ? StringManager.uploadCV.tr()
             : result!.files.single.name,
-        textColor: Colors.black,
+        textColor: AppColors.primaryColor,
         color: AppColors.lightGreyColor,
         fontWeight: FontWeight.bold,
         onTap: () async {

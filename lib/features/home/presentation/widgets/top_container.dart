@@ -88,21 +88,33 @@ class _TopContainerState extends State<TopContainer> {
           hintStyle: TextStyle(
               fontSize: AppSize.defaultSize! * 1.3,
               color: AppColors.greyColor),
-          suffixIcon: MainButton(
-              text: StringManager.search.tr(),
-              width: AppSize.defaultSize! * 10,
-              padding: AppSize.defaultSize! * .5,
-              onTap: () {
-                PersistentNavBarNavigator.pushNewScreen(
-                  context,
-                  screen: const SearchScreen(),
-                  withNavBar: false,
-                  // OPTIONAL VALUE. True by default.
-                  pageTransitionAnimation: PageTransitionAnimation.fade,
-                );
-              }),
-        )
-      ]),
+          suffixIcon:
+          Padding(
+            padding:  EdgeInsets.all(AppSize.defaultSize! * .5),
+            child: Container(
+                decoration: BoxDecoration(
+                  color: AppColors.primaryColor,
+                  borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2),
+                ),
+                width: AppSize.defaultSize! * 9.6,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(AssetPath.search1,
+                      width: AppSize.defaultSize! * 1.6,
+                      height: AppSize.defaultSize! * 1.6,
+                    ),
+                    SizedBox(width: AppSize.defaultSize!*.5 ,)
+,                    CustomText(
+                      text: StringManager.search.tr(),
+                      color: AppColors.secondaryColor,
+                      fontSize: AppSize.defaultSize! * 1.4,
+                    )
+                  ],
+                ),
+                    ),
+          )
+        ) ]),
     );
   }
 }

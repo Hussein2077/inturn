@@ -54,7 +54,6 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   SingingCharacter language = SingingCharacter.no;
 
-
   late TextEditingController emailController;
   late TextEditingController firstNameController;
   late TextEditingController lastNameController;
@@ -145,30 +144,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
             descriptionController.text =
                 state.profileDataModel.description ?? "";
             return Scaffold(
-              appBar: appBar(context,
-                  text: StringManager.profile.tr(),
-                  leading: true,
-                  actions: true,
-                  leadingIcon: IconButton(
-                      onPressed: () async{
-                        if(language == SingingCharacter.Arabic){
-                          setState(() {
-                            language = SingingCharacter.English;
-                          });
-                          await context.setLocale(const Locale('en'));
+              appBar: appBar(
+                context,
+                text: StringManager.profile.tr(),
+                leading: true,
+                actions: true,
+                leadingIcon: IconButton(
+                  onPressed: () async {
+                    if (language == SingingCharacter.Arabic) {
+                      setState(() {
+                        language = SingingCharacter.English;
+                      });
+                      await context.setLocale(const Locale('en'));
 
-                          await Methods().saveLocalazitaon(language: "en");
-                        }else{
-                          setState(() {
-                            language = SingingCharacter.Arabic;
-                          });
-                          await context.setLocale(const Locale('ar'));
+                      await Methods().saveLocalazitaon(language: "en");
+                    } else {
+                      setState(() {
+                        language = SingingCharacter.Arabic;
+                      });
+                      await context.setLocale(const Locale('ar'));
 
-                          await Methods().saveLocalazitaon(language: "ar");
-                        }
-                      },
-                      icon: const Icon(Icons.language_outlined),
-                  ),
+                      await Methods().saveLocalazitaon(language: "ar");
+                    }
+                  },
+                  icon: const Icon(Icons.language_outlined),
+                ),
               ),
               body: Padding(
                 padding: EdgeInsets.all(AppSize.defaultSize! * 1.5),
@@ -182,12 +182,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             context,
                             screen: const ChangePasswordScreen(),
                             withNavBar: false,
-                            pageTransitionAnimation: PageTransitionAnimation.fade,
+                            pageTransitionAnimation:
+                                PageTransitionAnimation.fade,
                           );
                         },
                         text: StringManager.changePassword.tr(),
                         textColor: Colors.black,
                         color: AppColors.lightGreyColor,
+                        child2: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              AssetPath.changePassword,
+                              width: AppSize.defaultSize! * 2.5,
+                              height: AppSize.defaultSize! *2.5,
+                            ),
+                            SizedBox(
+                              width: AppSize.defaultSize! * .5,
+                            ),
+                            CustomText(
+                              text: StringManager.changePassword.tr(),
+                              color: AppColors.primaryColor,
+                              fontSize: AppSize.defaultSize! * 1.4,
+                              fontWeight: FontWeight.bold,
+                            )
+                          ],
+                        ),
                         fontWeight: FontWeight.bold,
                       ),
                       Padding(
@@ -198,7 +218,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             showCV(context, state.profileDataModel);
                           },
                           text: StringManager.downloadCV.tr(),
-                          textColor: Colors.black,
+                          textColor:AppColors.primaryColor,
                           color: AppColors.lightGreyColor,
                           fontWeight: FontWeight.bold,
                         ),
