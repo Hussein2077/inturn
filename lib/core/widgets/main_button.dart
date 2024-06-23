@@ -39,10 +39,13 @@ class MainButton extends StatelessWidget {
         width: width ?? AppSize.screenWidth! * .9,
         child: ElevatedButton(
           onPressed: onTap,
+
           style: ElevatedButton.styleFrom(
+            padding:EdgeInsets.zero,
             backgroundColor: color ?? AppColors.primaryColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2),
+
             ),
           ),
           child:child2 ?? (child==null? CustomText(

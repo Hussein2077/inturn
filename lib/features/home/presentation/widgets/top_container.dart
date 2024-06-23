@@ -23,11 +23,10 @@ class TopContainer extends StatefulWidget {
 class _TopContainerState extends State<TopContainer> {
   @override
   Widget build(BuildContext context) {
-    return   Container(
+    return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-            image: AssetImage(AssetPath.backgroundInturn),
-            fit: BoxFit.fill),
+            image: AssetImage(AssetPath.backgroundInturn), fit: BoxFit.fill),
       ),
       height: AppSize.defaultSize! * 22,
       width: double.infinity,
@@ -35,9 +34,10 @@ class _TopContainerState extends State<TopContainer> {
         SizedBox(
           height: AppSize.defaultSize! * 3.5,
         ),
-        SvgPicture.asset(AssetPath.logo,
-          width:  AppSize.defaultSize! * 3,
-          height:  AppSize.defaultSize! * 3,
+        SvgPicture.asset(
+          AssetPath.logo,
+          width: AppSize.defaultSize! * 3,
+          height: AppSize.defaultSize! * 3,
         )
             .animate()
             .fadeIn() // uses `Animate.defaultDuration`
@@ -72,26 +72,25 @@ class _TopContainerState extends State<TopContainer> {
           height: AppSize.defaultSize!,
         ),
         CustomTextField(
-          readOnly: true,
-          onTap: (){
-            PersistentNavBarNavigator.pushNewScreen(
-              context,
-              screen: const SearchScreen(),
-              withNavBar: false,
-              // OPTIONAL VALUE. True by default.
-              pageTransitionAnimation: PageTransitionAnimation.fade,
-            );
-          },
-          hintText: StringManager.searchForJobs.tr(),
-          fillColor: Colors.white,
-          width: AppSize.screenWidth! * .9,
-          hintStyle: TextStyle(
-              fontSize: AppSize.defaultSize! * 1.3,
-              color: AppColors.greyColor),
-          suffixIcon:
-          Padding(
-            padding:  EdgeInsets.all(AppSize.defaultSize! * .5),
-            child: Container(
+            readOnly: true,
+            onTap: () {
+              PersistentNavBarNavigator.pushNewScreen(
+                context,
+                screen: const SearchScreen(),
+                withNavBar: false,
+                // OPTIONAL VALUE. True by default.
+                pageTransitionAnimation: PageTransitionAnimation.fade,
+              );
+            },
+            hintText: StringManager.searchForJobs.tr(),
+            fillColor: Colors.white,
+            width: AppSize.screenWidth! * .9,
+            hintStyle: TextStyle(
+                fontSize: AppSize.defaultSize! * 1.3,
+                color: AppColors.greyColor),
+            suffixIcon: Padding(
+              padding: EdgeInsets.all(AppSize.defaultSize! * .5),
+              child: Container(
                 decoration: BoxDecoration(
                   color: AppColors.primaryColor,
                   borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2),
@@ -100,21 +99,24 @@ class _TopContainerState extends State<TopContainer> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(AssetPath.search1,
+                    Image.asset(
+                      AssetPath.search1,
                       width: AppSize.defaultSize! * 1.6,
                       height: AppSize.defaultSize! * 1.6,
                     ),
-                    SizedBox(width: AppSize.defaultSize!*.5 ,)
-,                    CustomText(
+                    SizedBox(
+                      width: AppSize.defaultSize! * .5,
+                    ),
+                    CustomText(
                       text: StringManager.search.tr(),
                       color: AppColors.secondaryColor,
                       fontSize: AppSize.defaultSize! * 1.4,
                     )
                   ],
                 ),
-                    ),
-          )
-        ) ]),
+              ),
+            ))
+      ]),
     );
   }
 }

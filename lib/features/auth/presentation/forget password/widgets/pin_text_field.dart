@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/utils/app_size.dart';
+import 'package:inturn/features/auth/presentation/signup/sign_up.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class CustomPinCodeTextField extends StatefulWidget {
-  const CustomPinCodeTextField({super.key});
+  const CustomPinCodeTextField({super.key, this.onCompleted});
   static String otp = "";
+  final void Function(String)? onCompleted;
   @override
   State<CustomPinCodeTextField> createState() => _CustomPinCodeTextFieldState();
 }
@@ -62,15 +64,17 @@ class _CustomPinCodeTextFieldState extends State<CustomPinCodeTextField> {
       enableActiveFill: true,
       errorAnimationController: errorController,
       controller: controller,
-      onCompleted: (v) {
+      onCompleted:widget.onCompleted ?? (v) {
         print("Completed");
         CustomPinCodeTextField.otp = v;
+
       },
       onChanged: (value) {
         print(value);
         setState(() {
           currentText = value;
           CustomPinCodeTextField.otp = value;
+
 
         });
       },

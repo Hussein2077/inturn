@@ -61,7 +61,8 @@ class UploadProfileImagePageState extends State<UploadProfileImagePage> {
           borderRadius: BorderRadius.circular(AppSize.defaultSize! * 7.5),
         ),
         child: (UploadProfileImagePage.imageFile != null)
-            ? ClipRRect(
+            ?
+        ClipRRect(
                 borderRadius: BorderRadius.circular(AppSize.defaultSize! * 7.5),
                 child: (widget.imagePath != null&&ProfileScreen.isUploaded)
                     ? CachedNetworkCustom(url: widget.imagePath!)

@@ -1,60 +1,58 @@
+import 'dart:math';
+
+import 'package:animated_visibility/animated_visibility.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/widgets/app_bar.dart';
-import 'package:inturn/core/widgets/main_button.dart';
 import 'package:inturn/core/widgets/column_with_text_field.dart';
-import 'package:inturn/core/widgets/major_drop_down.dart';
+import 'package:inturn/core/widgets/main_button.dart';
 import 'package:inturn/core/widgets/snack_bar.dart';
-import 'package:inturn/core/widgets/university.dart';
 import 'package:inturn/features/auth/presentation/controller/sign_up_bloc/sign_up_with_email_and_password_bloc.dart';
-import 'package:inturn/features/auth/presentation/controller/sign_up_bloc/sign_up_with_email_and_password_events.dart';
 import 'package:inturn/features/auth/presentation/controller/sign_up_bloc/sign_up_with_email_and_password_states.dart';
+import 'package:inturn/features/auth/presentation/forget%20password/widgets/pin_text_field.dart';
 import 'package:inturn/main.dart';
-
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
+
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  late TextEditingController emailController;
   late TextEditingController phoneController;
   late TextEditingController passwordController;
   late TextEditingController passwordConfirmController;
-  late TextEditingController firstNameController;
-  late TextEditingController lastNameController;
-  String eduLevel = 'hhhh';
-  String graduationYear = '2023';
-  bool isVisible = false;
-
+  bool otpVisible = false;
+  String phoneNumber = '';
+  bool  passAndConfirmVisible = false;
+  bool passwordVisible = true;
+  bool confirmPasswordVisible = true;
   @override
   void initState() {
-    emailController = TextEditingController();
     phoneController = TextEditingController();
     passwordController = TextEditingController();
     passwordConfirmController = TextEditingController();
-    firstNameController = TextEditingController();
-    lastNameController = TextEditingController();
+
     super.initState();
   }
 
   @override
   void dispose() {
-    emailController.dispose();
     phoneController.dispose();
     passwordController.dispose();
     passwordConfirmController.dispose();
-    firstNameController.dispose();
-    lastNameController.dispose();
+    passAndConfirmVisible= false;
     super.dispose();
   }
 
@@ -67,7 +65,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           EasyLoading.dismiss();
 
           Navigator.pushNamedAndRemoveUntil(
-              context, Routes.main, (route) => false,arguments: MyApp.userId);
+              context, Routes.main, (route) => false,
+              arguments: MyApp.userId);
         } else if (state is SignUpWithEmailAndPasswordErrorMessageState) {
           EasyLoading.dismiss();
           errorSnackBar(context, StringManager.unexpectedError.tr());
@@ -79,169 +78,134 @@ class _SignUpScreenState extends State<SignUpScreen> {
         appBar: appBar(context, text: StringManager.signUp.tr()),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: AppSize.defaultSize! * 2),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  height: AppSize.defaultSize! * 4.8,
-                  decoration: const BoxDecoration(
-                    color: AppColors.containerColor,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        StringManager.youAlready.tr(),
-                        style: TextStyle(
-                            color: AppColors.greyColor,
-                            fontSize: AppSize.defaultSize! * 1.4,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      InkWell(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: AppSize.defaultSize! * 3,
+              ),
+              Padding(
+                padding: EdgeInsets.all(AppSize.defaultSize!),
+                child: IntlPhoneField(
+                  decoration: InputDecoration(
+                    labelText: 'Phone Number',
+                    labelStyle: TextStyle(
+                        color: AppColors.black,
+                        fontSize: AppSize.defaultSize! * 1.4),
+                    hintText: '1123456789',
+                    hintStyle: TextStyle(
+                      fontSize: AppSize.defaultSize! * 1.4,
+                    ),
+                    suffixIcon: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: MainButton(
+                        text:otpVisible?  StringManager.resend  :StringManager.sendCode ,
+                        width: AppSize.defaultSize! * 10,
+                        // height: AppSize.defaultSize! * 2,
+                        color: AppColors.primaryColor,
+                        fontSize: AppSize.defaultSize!*1.2 ,
+                        textColor: Colors.white,
                         onTap: () {
-                          Navigator.pushNamed(context, Routes.login);
+                          if(phoneNumber.length==10) {
+                            setState(() {
+                            otpVisible = true;
+                            });
+                          }
                         },
-                        child: Text(
-                          StringManager.signIn.tr(),
-                          style: TextStyle(
-                              color: AppColors.primaryColor,
-                              fontSize: AppSize.defaultSize! * 1.5,
-                              fontWeight: FontWeight.w700),
-                        ),
                       ),
-                    ],
-                  ),
-                ),
-                Row(
-                  children: [
-                    ColumnWithTextField(
-                      text: StringManager.firstName.tr(),
-                      controller: firstNameController,
-                      width: AppSize.screenWidth! * .4,
                     ),
-                    const Spacer(),
-                    ColumnWithTextField(
-                      text: StringManager.secondName.tr(),
-                      controller: lastNameController,
-                      width: AppSize.screenWidth! * .4,
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(color: AppColors.greyColor),
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(AppSize.defaultSize!)),
                     ),
-                  ],
-                ),
-                ColumnWithTextField(
-                  text: StringManager.phoneNum.tr(),
-                  controller: phoneController,
-                  keyboardType: TextInputType.phone,
-                ),
-                ColumnWithTextField(
-                  text: StringManager.email.tr(),
-                  controller: emailController,
-                  keyboardType: TextInputType.emailAddress,
-                ),
-                SizedBox(
-                  height: AppSize.defaultSize! * 3,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    StatefulBuilder(builder: (context, setState) {
-                      return dropDownSignUp(
-                          text: StringManager.educationLevel.tr(),
-                          hintText: StringManager.selectEdu.tr(),
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              eduLevel = newValue!;
-                            });
-                          },
-                          selectedValue: eduLevel,
-                          data: ['hhhh', 'hhhhhh']);
-                    }),
-                    StatefulBuilder(builder: (context, setState) {
-                      return dropDownSignUp(
-                          text: StringManager.graduationYear.tr(),
-                          hintText: StringManager.selectGrad.tr(),
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              graduationYear = newValue!;
-                            });
-                          },
-                          selectedValue: graduationYear,
-                          data: ['2023', '2022']);
-                    }),
-                  ],
-                ),
-                SizedBox(
-                  height: AppSize.defaultSize! * 3,
-                ),
-                const UniversityDropDown(),
-                SizedBox(
-                  height: AppSize.defaultSize! * 3,
-                ),
-                const FacultyDropDown(),
-                ColumnWithTextField(
-                  text: StringManager.password.tr(),
-                  controller: passwordController,
-                  suffixIcon: InkWell(
-                    onTap: () {
-                      setState(() {
-                        isVisible = !isVisible;
-                      });
-                    },
-                    child: Icon(
-                      isVisible ? Icons.visibility_off : Icons.visibility,
-                      color: Colors.grey,
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          const BorderSide(color: AppColors.primaryColor),
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(AppSize.defaultSize!)),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: AppColors.greyColor),
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(AppSize.defaultSize!)),
                     ),
                   ),
-                ),
-                ColumnWithTextField(
-                  text: StringManager.confirmPassword.tr(),
-                  suffixIcon: InkWell(
-                    onTap: () {
-                      setState(() {
-                        isVisible = !isVisible;
-                      });
-                    },
-                    child: Icon(
-                      isVisible ? Icons.visibility_off : Icons.visibility,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  controller: passwordConfirmController,
-                ),
-                SizedBox(
-                  height: AppSize.defaultSize! * 3,
-                ),
-                MainButton(
-                  text: StringManager.signUp.tr(),
-                  onTap: () {
-                    if (validation()) {
-                      BlocProvider.of<SignUpWithEmailAndPasswordBloc>(context)
-                          .add(SignUpWithEmailAndPasswordEvent(
-                        phone: phoneController.text,
-                        password: passwordController.text,
-                        major:
-                            FacultyDropDown.selectedValue?.id.toString() ?? "0",
-                        universityID: UniversityDropDown
-                                .selectedValue?.universityId
-                                .toString() ??
-                            "0",
-                        name: firstNameController.text,
-                        email: emailController.text,
-                        lastName: lastNameController.text,
-                        eduLevel: eduLevel,
-                        graduationYear: graduationYear, confirmPassword: passwordConfirmController.text,
-                      ));
-                    } else {
-                      errorSnackBar(
-                          context, StringManager.pleaseCompleteYourData.tr());
-                    }
+                  initialCountryCode: 'EG',
+                  onChanged: (phone) {
+                    phoneNumber = phone.number;
                   },
                 ),
-                SizedBox(
-                  height: AppSize.defaultSize! * 3,
+              ),
+
+              AnimatedVisibility(
+                visible:otpVisible,
+                enter: slideInVertically( initialOffsetY: -1),
+                exit: fadeOut() + slideOutHorizontally(),
+                child:   Padding(
+                  padding: EdgeInsets.all(AppSize.defaultSize!),
+                  child: CustomPinCodeTextField(
+                    onCompleted: (v) {
+                      print("Completed");
+                      CustomPinCodeTextField.otp = v;
+                        passAndConfirmVisible=true;
+                      setState(() {
+
+                      });
+                    },
+                  ),
                 ),
-              ],
-            ),
+              ),
+
+              Padding(
+                padding: EdgeInsets.all(AppSize.defaultSize!),
+                child: AnimatedVisibility(
+                  visible:   passAndConfirmVisible,
+                  enter: slideInVertically( initialOffsetY: -1),
+                  exit: fadeOut() + slideOutHorizontally(),
+                 child: StatefulBuilder(builder: (context, setState) {
+
+                   return Column(
+                     children: [
+                       ColumnWithTextField(
+                         text: StringManager.password.tr(),
+                         controller: passwordController,
+                         obscureText: passwordVisible,
+
+                         suffixIcon: InkWell(
+                           onTap: () {
+                             setState(() {
+                               passwordVisible = !passwordVisible;
+                             });
+                           },
+                           child: Icon(
+                             passwordVisible ? Icons.visibility_off : Icons.visibility,
+                             color: Colors.grey,
+                           ),
+                         ),
+                       ),
+                       ColumnWithTextField(
+                         text: StringManager.confirmPassword.tr(),
+                         obscureText: confirmPasswordVisible,
+                         suffixIcon: InkWell(
+                           onTap: () {
+                             setState(() {
+                               confirmPasswordVisible = !confirmPasswordVisible;
+                             });
+                           },
+                           child: Icon(
+                             confirmPasswordVisible ? Icons.visibility_off : Icons.visibility,
+                             color: Colors.grey,
+                           ),
+                         ),
+                         controller: passwordConfirmController,
+                       ),
+                     ],
+                   );
+                 }),
+                             ),
+              )
+            ],
           ),
         ),
       ),
@@ -306,27 +270,5 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ],
     );
-  }
-
-  bool validation() {
-    if (emailController.text == '') {
-      return false;
-    } else if (firstNameController.text == '') {
-      return false;
-    } else if (lastNameController.text == '') {
-      return false;
-    } else if (phoneController.text == '') {
-      return false;
-    }else if (passwordController.text == '') {
-      return false;
-    } else if (passwordConfirmController.text == '') {
-      return false;
-    } else if (eduLevel == '') {
-      return false;
-    } else if (graduationYear == '') {
-      return false;
-    } else {
-      return true;
-    }
   }
 }

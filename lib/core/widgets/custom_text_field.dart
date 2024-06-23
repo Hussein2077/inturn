@@ -63,9 +63,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
             }
             return null;
           },
+
           decoration: InputDecoration(
             labelText: widget.labelText,
             fillColor: widget.fillColor,
+
             filled: widget.fillColor != null ? true : false,
             hintText: widget.hintText,
             hintStyle: widget.hintStyle,

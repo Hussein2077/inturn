@@ -115,6 +115,7 @@ class StringManager {
   static const String signUp = "Sign up";
   static const String signIn = "Sign in";
   static const String sendCode = "Send Code";
+  static const String   resend = "Resend";
   static const String doNotHaveAccount = "Don't have an account?   ";
   static const String youAlready = "You Already have an account?   ";
   static const String youCanResend =

@@ -12,6 +12,7 @@ class ColumnWithTextField extends StatefulWidget {
     this.width,
     this.height,
     this.readOnly = false,
+    this.obscureText = false,
     this.onTap,
     this.labelText,
     this.hintText,
@@ -26,6 +27,7 @@ class ColumnWithTextField extends StatefulWidget {
   final double? width;
   final double? height;
   final bool readOnly;
+  final bool obscureText;
   final Widget? suffixIcon;
   final void Function()? onTap;
   final TextInputType keyboardType;
@@ -65,9 +67,11 @@ class _ColumnWithTextFieldState extends State<ColumnWithTextField> {
               readOnly: widget.readOnly,
               onTap: widget.onTap,
               labelText: widget.labelText,
+              obscureText:    widget.obscureText,
               hintText: widget.hintText,
               suffixIcon: widget.suffixIcon,
               keyboardType: widget.keyboardType,
+              maxLines: 1,
             )),
       ],
     );
