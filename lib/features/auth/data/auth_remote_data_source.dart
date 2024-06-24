@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:inturn/core/error/exception.dart';
 import 'package:inturn/core/models/my_data_model.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
@@ -18,7 +17,6 @@ import 'package:inturn/features/profile/domain/use_case/change_password_uc.dart'
 import 'package:inturn/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http_parser/http_parser.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 abstract class BaseRemotelyDataSource {
   Future<Map<String, dynamic>> loginWithEmailAndPassword(AuthModel authModel);
 
@@ -30,9 +28,7 @@ abstract class BaseRemotelyDataSource {
   Future<Map<String, dynamic>> verifyCode(SignUpModel signUpModel);
 
   Future<Map<String, dynamic>> resetPassword(SignUpModel signUpModel);
-  Future<AuthWithGoogleModel> sigInWithGoogle();
 
-  Future<AuthWithAppleModel> sigInWithApple();
 
   //add info
   Future<Map<String, dynamic>> addPersonalInfo(PersonalInfoParams params);
@@ -54,9 +50,8 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
   Future<Map<String, dynamic>> loginWithEmailAndPassword(
       AuthModel authModel) async {
     final body = {
-      'email': authModel.email,
+      'phonenumber': authModel.phone,
       "password": authModel.password,
-      "socialID": authModel.socialID,
       "userRole": "User",
     };
 
@@ -79,94 +74,6 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
   }
 
 
-  @override
-  Future<AuthWithGoogleModel> sigInWithGoogle() async {
-    // ignore: no_leading_underscores_for_local_identifiers
-    final _googleSignIn = GoogleSignIn(scopes: ['email']);
-    Future<GoogleSignInAccount?> login() => _googleSignIn.signIn();
-    // // ignore: unused_element
-    // Future logout() => _googleSignIn.disconnect();
-    final userModel = await login();
-    log('${userModel?.id}_googleSignIn');
-    log('${userModel?.email}_googleSignIn');
-    // final devicedata =
-    // await DioHelper().initPlatformState(); // to get information device
-    Map<String, String> headers = await DioHelper().header();
-
-    if (userModel == null) {
-      throw SiginGoogleException();
-    } else {
-      final body = {
-        ConstantApi.email: userModel.email,
-        "socicaID": userModel.id,
-        "userRole": "User",
-      };
-      try {
-        final response = await Dio().post(
-          ConstantApi.login,
-          data: body,
-          options: Options(
-            headers: headers,
-          ),
-        );
-
-        Map<String, dynamic> resultData = response.data;
-
-        MyDataModel userData = MyDataModel.fromMap(resultData);
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        preferences.remove(StringManager.userIDKey);
-        preferences.remove(StringManager.profileIDKey);
-        await  Methods.instance.saveUserToken(authToken: resultData['token']);
-       await Methods.instance.saveUserId(userId: resultData['userId']);
-        return AuthWithGoogleModel(apiUserData: userData, userData: userModel);
-      } on DioException catch (e) {
-        throw DioHelper.handleDioError(
-            dioError: e, endpointName: "sigInWithGoogle");
-      }
-    }
-  }
-
-  @override
-  Future<AuthWithAppleModel> sigInWithApple() async {
-    final AuthorizationCredentialAppleID? credential;
-    try{
-      credential = await SignInWithApple.getAppleIDCredential(scopes: [
-        AppleIDAuthorizationScopes.email,
-        AppleIDAuthorizationScopes.fullName,
-      ]);
-    }catch(e){
-      log(e.toString());
-      throw SiginApplexception();
-    }
-    Map<String, String> headers = await DioHelper().header();
-    final body = {
-      ConstantApi.email: credential.email,
-      "socicaID": credential.userIdentifier,
-      "userRole": "User",
-    };
-    try {
-      final response = await Dio().post(
-        ConstantApi.login,
-        data: body,
-        options: Options(
-          headers: headers,
-        ),
-      );
-
-      Map<String, dynamic> resultData = response.data;
-
-      MyDataModel userData = MyDataModel.fromMap(resultData);
-      SharedPreferences preferences = await SharedPreferences.getInstance();
-      preferences.remove(StringManager.userIDKey);
-      preferences.remove(StringManager.profileIDKey);
-      await  Methods.instance.saveUserToken(authToken: resultData['token']);
-      await Methods.instance.saveUserId(userId: resultData['userId']);
-      return AuthWithAppleModel(apiUserData: userData, userData: credential);
-    } on DioException catch (e) {
-      throw DioHelper.handleDioError(
-          dioError: e, endpointName: "sigInWithApple");
-    }
-  }
 
   @override
   Future<Map<String, dynamic>> addPersonalInfo(
@@ -319,16 +226,8 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
   Future<Map<String, dynamic>> signUpWithEmailAndPassword(
       SignUpModel signUpModel) async {
     final body = {
-      ConstantApi.email: signUpModel.email,
       ConstantApi.password: signUpModel.password,
-      'firstName': signUpModel.name,
-      'lastName': signUpModel.lastName,
       'phonenumber': signUpModel.phone,
-      'confirmPassword': signUpModel.password,
-      'educationLevel': signUpModel.phone,
-      'graduationYear': signUpModel.phone,
-      'majorID': signUpModel.phone,
-      'universityID': signUpModel.phone,
     };
 
     try {
@@ -338,8 +237,6 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       );
       Map<String, dynamic> jsonData = response.data;
       await Methods.instance.saveUserToken(authToken: jsonData['token']);
-      await  Methods.instance.saveUserId(userId: jsonData['userID']);
-
       if (jsonData['token'] == null) {
         DioException? e;
         throw DioHelper.handleDioError(
@@ -357,7 +254,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
   Future<Map<String, dynamic>> resetPassword(SignUpModel signUpModel) async {
     final body = {
       'newPassword' : signUpModel.password,
-      'email': signUpModel.email,
+      'email': signUpModel.phone,
       'otp': signUpModel.code,
     };
 
@@ -380,7 +277,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
   @override
   Future<String> sendCode(SignUpModel signUpModel) async {
     final body = {
-      'email': signUpModel.email,
+      'email': signUpModel.phone,
     };
 
     try {
@@ -401,7 +298,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
   @override
   Future<Map<String, dynamic>> verifyCode(SignUpModel signUpModel) async {
     final body = {
-      'email': signUpModel.email,
+      'email': signUpModel.phone,
       'otp': signUpModel.code,
     };
 
@@ -421,18 +318,3 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
 
 }
 
-class AuthWithGoogleModel {
-  final GoogleSignInAccount userData;
-
-  final MyDataModel apiUserData;
-
-  AuthWithGoogleModel({required this.apiUserData, required this.userData});
-}
-
-class AuthWithAppleModel {
-  final AuthorizationCredentialAppleID userData;
-
-  final MyDataModel apiUserData;
-
-  AuthWithAppleModel({required this.apiUserData, required this.userData});
-}

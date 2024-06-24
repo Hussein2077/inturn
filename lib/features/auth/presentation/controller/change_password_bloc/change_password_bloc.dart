@@ -21,7 +21,7 @@ class ResetPasswordFlowBloc
     on<ResetPasswordEvent>((event, emit) async {
       emit(const ResetPasswordLoadingState());
       final result = await resetPasswordUseCase.call(SignUpModel(
-          password: event.password, email: event.email, code: event.code));
+          password: event.password, phone: event.email, code: event.code));
       result.fold(
           (l) => emit(
               ResetPasswordSuccessMessageState(successMessage: l['message'])),
@@ -31,7 +31,7 @@ class ResetPasswordFlowBloc
     on<SendCodeEvent>((event, emit) async {
       emit(const SendCodeLoadingState());
       final result =
-          await sendCodeUseCase.call(SignUpModel(email: event.email));
+          await sendCodeUseCase.call(SignUpModel(phone: event.email));
       result.fold(
           (l) => emit(SendCodeSuccessMessageState(successMessage: l)),
           (r) => emit(SendCodeErrorMessageState(
@@ -40,7 +40,7 @@ class ResetPasswordFlowBloc
     on<VerifyCodeEvent>((event, emit) async {
       emit(const VerifyCodeLoadingState());
       final result = await verifyCodeUseCase
-          .call(SignUpModel(code: event.code, email: event.email));
+          .call(SignUpModel(code: event.code, phone: event.email));
       result.fold(
           (l) =>
               emit(VerifyCodeSuccessMessageState(successMessage: l['message'])),

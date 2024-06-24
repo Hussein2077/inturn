@@ -21,28 +21,13 @@ class SignUpWithEmailAndPasswordUseCase
 
 class SignUpModel {
   final String? phone;
-  final String? email;
   final String? password;
-  final String? confirmPassword;
-  final String? name;
-  final String? lastName;
-  final String? major;
-  final String? eduLevel;
-  final String? graduationYear;
-  final String? universityID;
   final String? code;
 
   const SignUpModel({
     this.phone,
-    this.email,
-    this.password,
-    this.name,
-    this.lastName,
-    this.major,
-    this.eduLevel,
-    this.graduationYear,
-    this.universityID,
     this.code,
-    this.confirmPassword,
+    this.password,
+
   });
 }

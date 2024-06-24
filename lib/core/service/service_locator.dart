@@ -4,9 +4,7 @@ import 'package:inturn/features/auth/data/auth_remote_data_source.dart';
 import 'package:inturn/features/auth/data/repo_imp.dart';
 import 'package:inturn/features/auth/domain/repo/base_repo.dart';
 import 'package:inturn/features/auth/domain/use_case/add_info_uc.dart';
-import 'package:inturn/features/auth/domain/use_case/apple_sign.dart';
 import 'package:inturn/features/auth/domain/use_case/change_password.dart';
-import 'package:inturn/features/auth/domain/use_case/google_sign.dart';
 import 'package:inturn/features/auth/domain/use_case/login_with_email_and_password_use_case.dart';
 import 'package:inturn/features/auth/domain/use_case/send_code.dart';
 import 'package:inturn/features/auth/domain/use_case/sign_up_use_case.dart';
@@ -15,7 +13,6 @@ import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_i
 import 'package:inturn/features/auth/presentation/controller/add_skill/bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/change_password_bloc/change_password_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/login_bloc/login_with_email_and_password_bloc.dart';
-import 'package:inturn/features/auth/presentation/controller/sign_in_with_platform_bloc/sign_in_with_platform_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/sign_up_bloc/sign_up_with_email_and_password_bloc.dart';
 import 'package:inturn/features/home/data/data%20source/home_remote_data_source.dart';
 import 'package:inturn/features/home/data/repo%20imp/repo_imp.dart';
@@ -65,8 +62,7 @@ class ServerLocator {
 
     getIt.registerLazySingleton(() => LoginWithEmailAndPasswordBloc(
         loginWithEmailAndPasswordUseCase: getIt()));
-    getIt.registerLazySingleton(
-        () => SignInWithPlatformBloc(signInWithGoogleUC: getIt(), signInWithAppleUC: getIt()));
+
     getIt.registerLazySingleton(() => SignUpWithEmailAndPasswordBloc(
           signUpWithEmailAndPasswordUseCase: getIt(),
         ));
@@ -134,8 +130,7 @@ class ServerLocator {
         () => GetCompaniesUseCase(baseRepositoryHome: getIt()));
     getIt.registerFactory(
         () => LoginWithEmailAndPasswordUseCase(baseRepository: getIt()));
-    getIt.registerFactory(() => SignInWithGoogleUC(baseRepository: getIt()));
-    getIt.registerFactory(() => SignInWithAppleUC(baseRepository: getIt()));
+
     getIt.registerFactory(
         () => GetMyApplicationsUseCase(baseRepositoryHome: getIt()));
     getIt.registerFactory(

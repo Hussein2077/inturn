@@ -17,10 +17,6 @@ import 'package:inturn/core/widgets/snack_bar.dart';
 import 'package:inturn/features/auth/presentation/controller/login_bloc/login_with_email_and_password_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/login_bloc/login_with_email_and_password_events.dart';
 import 'package:inturn/features/auth/presentation/controller/login_bloc/login_with_email_and_password_states.dart';
-import 'package:inturn/features/auth/presentation/controller/sign_in_with_platform_bloc/sign_in_with_platform_bloc.dart';
-import 'package:inturn/features/auth/presentation/controller/sign_in_with_platform_bloc/sign_in_with_platform_event.dart';
-import 'package:inturn/features/auth/presentation/controller/sign_in_with_platform_bloc/sign_in_with_platform_state.dart';
-import 'package:inturn/features/auth/presentation/widgets/sign_in_button.dart';
 import 'package:inturn/main.dart';
 
 class LoginScreen extends StatefulWidget {

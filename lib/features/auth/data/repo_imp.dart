@@ -12,25 +12,7 @@ class RepositoryImp extends BaseRepository {
   final BaseRemotelyDataSource baseRemotelyDataSource;
 
   RepositoryImp({required this.baseRemotelyDataSource});
-  @override
-  Future<Either<AuthWithGoogleModel, Failure>> signWithGoogle() async {
-    try {
-      final result = await baseRemotelyDataSource.sigInWithGoogle();
-      return Left(result);
-    } on Exception catch (e) {
-      return Right(DioHelper.buildFailure(e));
-    }
-  }
 
-  @override
-  Future<Either<AuthWithAppleModel, Failure>> sigInWithApple() async {
-    try {
-      final result = await baseRemotelyDataSource.sigInWithApple();
-      return Left(result);
-    } on Exception catch (e) {
-      return Right(DioHelper.buildFailure(e));
-    }
-  }
 
   @override
   Future<Either<Map<String, dynamic>, Failure>> loginWithEmailAndPassword(AuthModel authModel) async {

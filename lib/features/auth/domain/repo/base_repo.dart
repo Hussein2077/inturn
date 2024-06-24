@@ -17,8 +17,7 @@ abstract class BaseRepository {
       SignUpModel signUpModel);
   Future<Either<Map<String, dynamic>, Failure>> verifyCode(
       SignUpModel signUpModel);
-  Future<Either<AuthWithGoogleModel, Failure>> signWithGoogle();
-  Future<Either<AuthWithAppleModel, Failure>> sigInWithApple();
+
   Future<Either<Map<String, dynamic>, Failure>> addPersonalInfo(PersonalInfoParams params);
   Future<Either<dynamic, Failure>> sendUniversityFacultyIds(String universityId, String facultyId);
   Future<Either<dynamic, Failure>> sendExperienceLevel(String typeID, String jobLevelId);

@@ -15,7 +15,8 @@ class MainButton extends StatelessWidget {
     this.padding,
     this.fontSize,
     this.fontWeight,
-    this.child, this.child2,
+    this.child,
+    this.child2,
   });
 
   final void Function()? onTap;
@@ -39,37 +40,37 @@ class MainButton extends StatelessWidget {
         width: width ?? AppSize.screenWidth! * .9,
         child: ElevatedButton(
           onPressed: onTap,
-
           style: ElevatedButton.styleFrom(
-            padding:EdgeInsets.zero,
+            padding: EdgeInsets.zero,
             backgroundColor: color ?? AppColors.primaryColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(AppSize.defaultSize! * 2),
-
             ),
           ),
-          child:child2 ?? (child==null? CustomText(
-            text: text,
-            color: textColor ?? AppColors.secondaryColor,
-            fontSize: fontSize ?? AppSize.defaultSize! * 1.5,
-            fontWeight: fontWeight,
-          ):
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Spacer(flex: 3),
-              CustomText(
-                text: text,
-                color: textColor ?? AppColors.secondaryColor,
-                fontSize: fontSize ?? AppSize.defaultSize! * 1.5,
-                fontWeight: fontWeight,
-              ),
-              const Spacer(flex: 2,),
-              child!,
-            ],
-          )),
-
-
+          child: child2 ??
+              (child == null
+                  ? CustomText(
+                      text: text,
+                      color: textColor ?? AppColors.secondaryColor,
+                      fontSize: fontSize ?? AppSize.defaultSize! * 1.5,
+                      fontWeight: fontWeight,
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Spacer(flex: 3),
+                        CustomText(
+                          text: text,
+                          color: textColor ?? AppColors.secondaryColor,
+                          fontSize: fontSize ?? AppSize.defaultSize! * 1.5,
+                          fontWeight: fontWeight,
+                        ),
+                        const Spacer(
+                          flex: 2,
+                        ),
+                        child!,
+                      ],
+                    )),
         ),
       ),
     );

@@ -37,9 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   dio: ^5.4.0
   shared_preferences: ^2.2.2
-  flutter_riverpod: ^2.4.9
   flutter_svg: ^2.0.9
-  carousel_slider: ^4.2.1
   dartz: ^0.10.1
   equatable: ^2.0.5
   flutter_bloc: ^8.1.3
@@ -56,8 +54,6 @@ dependencies:
   shimmer: ^3.0.0
   loading_animation_widget: ^1.2.0+4
   flutter_easyloading: ^3.0.5
-  google_sign_in: ^6.2.1
-  firebase_core: ^2.25.4
   smooth_page_indicator: ^1.1.0
   percent_indicator: ^4.2.3
   syncfusion_flutter_pdf: ^25.1.40
@@ -68,8 +64,6 @@ dependencies:
   searchfield: ^1.0.1
   flutter_native_splash: ^2.4.0
   video_player: ^2.8.6
-  sign_in_with_apple: ^6.1.0
-  linkedin_login: ^3.0.5
   pdf: ^3.10.8
   intl_phone_field: ^3.2.0
   animated_visibility: ^0.0.4

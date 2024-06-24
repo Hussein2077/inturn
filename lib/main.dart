@@ -13,7 +13,6 @@ import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_i
 import 'package:inturn/features/auth/presentation/controller/add_skill/bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/change_password_bloc/change_password_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/login_bloc/login_with_email_and_password_bloc.dart';
-import 'package:inturn/features/auth/presentation/controller/sign_in_with_platform_bloc/sign_in_with_platform_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/sign_up_bloc/sign_up_with_email_and_password_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/apply_bloc/get_jobs_bloc.dart';
 import 'package:inturn/features/home/presentation/controller/company_bloc/get_companies_bloc.dart';
@@ -27,7 +26,6 @@ import 'package:inturn/features/home/presentation/controller/intern_search_bloc/
 import 'package:inturn/features/home/presentation/controller/suggested%20jobs%20in%20company/bloc.dart';
 import 'package:inturn/features/home/presentation/controller/suggested/bloc.dart';
 import 'package:inturn/features/home/presentation/controller/top_five_and_blogs/get_top_five_bloc.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:inturn/features/home/presentation/controller/vacancy_details_bloc/bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/change_password/change_password_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/edit_profile/edit_profile_bloc.dart';
@@ -35,7 +33,6 @@ import 'package:inturn/features/profile/presentation/controller/get_my_data/get_
 import 'package:inturn/features/profile/presentation/controller/get_my_profile_data/get_my_profile_data_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/get_pdf/bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/upload_p_d_f/bloc.dart';
-import 'package:inturn/firebase_options.dart';
 
 String? token;
 
@@ -48,9 +45,7 @@ void main() async {
 
   await EasyLocalization.ensureInitialized();
   token = await Methods.instance.returnUserToken();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+
   FlutterNativeSplash.remove();
 
   runApp(EasyLocalization(
@@ -104,9 +99,6 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => getIt<GetMyApplicationsBloc>(),
-        ),
-        BlocProvider(
-          create: (context) => getIt<SignInWithPlatformBloc>(),
         ),
         BlocProvider(
           create: (context) => getIt<OptionsBloc>()

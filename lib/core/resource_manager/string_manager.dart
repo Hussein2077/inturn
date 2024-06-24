@@ -4,6 +4,7 @@ class StringManager {
   static const String continueWithGoogle = "Continue with Google";
   static const String continueWithLinkedin = "Continue with Linkedin";
   static const String continueWithApple = "Continue with Apple";
+  static const String continue1 = "Continue";
   static const String uploadProfileImage = "Upload Profile Image";
   static const String next = "Next";
   static const String searchForIntern =
