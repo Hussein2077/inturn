@@ -272,12 +272,10 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
           dioError: e, endpointName: "changePassword");
     }
   }
-
-
   @override
   Future<String> sendCode(SignUpModel signUpModel) async {
     final body = {
-      'email': signUpModel.phone,
+      'phoneNumber': signUpModel.phone,
     };
 
     try {
@@ -286,9 +284,9 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
         data: body,
       );
 
-      String jsonData = response.data;
+      // String jsonData = response.data;
 
-      return jsonData;
+      return 'Success';
     } on DioException catch (e) {
       throw DioHelper.handleDioError(
           dioError: e, endpointName: "sendCode");

@@ -19,6 +19,6 @@ class VerifyCodeEvent extends BaseChangePasswordEvent{
   const VerifyCodeEvent({  required this.email,required this.code});
 }
 class SendCodeEvent extends BaseChangePasswordEvent{
-  final String email ;
-  const SendCodeEvent({  required this.email});
+  final String phone ;
+  const SendCodeEvent({  required this.phone});
 }

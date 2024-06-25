@@ -38,18 +38,19 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   Widget build(BuildContext context) {
     return BlocListener<ResetPasswordFlowBloc, ResetPasswordState>(
       listener: (context, state) {
-       if(state is SendCodeLoadingState){
-      EasyLoading.show();
-       }
-       if(state is SendCodeErrorMessageState){
-         EasyLoading.dismiss();
-         EasyLoading.showError(state.errorMessage);
-       }
-       if(state is SendCodeSuccessMessageState){
-         EasyLoading.dismiss();
-         EasyLoading.showSuccess(state.successMessage);
-         Navigator.pushNamed(context, Routes.sendOTPCode,arguments: emailController.text);
-       }
+        if (state is SendCodeLoadingState) {
+          EasyLoading.show();
+        }
+        if (state is SendCodeErrorMessageState) {
+          EasyLoading.dismiss();
+          EasyLoading.showError(state.errorMessage);
+        }
+        if (state is SendCodeSuccessMessageState) {
+          EasyLoading.dismiss();
+          EasyLoading.showSuccess(state.successMessage);
+          Navigator.pushNamed(context, Routes.sendOTPCode,
+              arguments: emailController.text);
+        }
       },
       child: Scaffold(
         appBar: appBar(context, text: StringManager.forgetPassword.tr()),
@@ -73,15 +74,17 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               SizedBox(
                 height: AppSize.defaultSize! * 4,
               ),
-              MainButton(text: StringManager.sendCode.tr(), onTap: () {
-                if (emailController.text.isNotEmpty) {
-                  BlocProvider.of<ResetPasswordFlowBloc>(context).add(
-                      SendCodeEvent(email: emailController.text));
-                }
-                else {
-                  EasyLoading.showError(StringManager.enterEmail.tr());
-                }
-              },)
+              MainButton(
+                text: StringManager.sendCode.tr(),
+                onTap: () {
+                  if (emailController.text.isNotEmpty) {
+                    BlocProvider.of<ResetPasswordFlowBloc>(context)
+                        .add(SendCodeEvent(phone: emailController.text));
+                  } else {
+                    EasyLoading.showError(StringManager.enterEmail.tr());
+                  }
+                },
+              )
             ],
           ),
         ),

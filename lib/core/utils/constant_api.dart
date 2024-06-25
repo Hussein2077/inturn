@@ -81,7 +81,7 @@ class ConstantApi {
   static const String getJobs = "${baseUrl}Jobs/GetVacancy";
   static const String getGetInternships = "${baseUrl}Jobs/GetInternships";
   static const String signUp = "https://api.inturn.app/Register";
-  static const String sendCode = "${baseUrl}Auth/generate-otp";
+  static const String sendCode = "${baseUrl}NewAuth/generate-otp";
   static const String verifyCode = "${baseUrl}Auth/validate-otp";
   static const String resetPassword  = "${baseUrl}Auth/reset-password-with-otp";
   static const String changePassword  = "${baseUrl}Auth/Change-password";

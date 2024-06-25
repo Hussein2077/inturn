@@ -31,7 +31,7 @@ class ResetPasswordFlowBloc
     on<SendCodeEvent>((event, emit) async {
       emit(const SendCodeLoadingState());
       final result =
-          await sendCodeUseCase.call(SignUpModel(phone: event.email));
+          await sendCodeUseCase.call(SignUpModel(phone: event.phone));
       result.fold(
           (l) => emit(SendCodeSuccessMessageState(successMessage: l)),
           (r) => emit(SendCodeErrorMessageState(

@@ -16,6 +16,8 @@ import 'package:inturn/core/widgets/app_bar.dart';
 import 'package:inturn/core/widgets/column_with_text_field.dart';
 import 'package:inturn/core/widgets/main_button.dart';
 import 'package:inturn/core/widgets/snack_bar.dart';
+import 'package:inturn/features/auth/presentation/controller/change_password_bloc/change_password_bloc.dart';
+import 'package:inturn/features/auth/presentation/controller/change_password_bloc/change_password_events.dart';
 import 'package:inturn/features/auth/presentation/controller/sign_up_bloc/sign_up_with_email_and_password_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/sign_up_bloc/sign_up_with_email_and_password_events.dart';
 import 'package:inturn/features/auth/presentation/controller/sign_up_bloc/sign_up_with_email_and_password_states.dart';
@@ -109,16 +111,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           fontSize: AppSize.defaultSize! * 1.2,
                           textColor: Colors.white,
                           onTap: () {
-                            if (phoneNumber.length == 10) {
-                              setState(() {
-                                otpVisible = true;
-                              });
+                            if (phoneNumber.length == 10&&!otpVisible) {
+                              BlocProvider.of<ResetPasswordFlowBloc>(context)
+                                  .add(SendCodeEvent(phone: phoneNumber));
+                              // setState(() {
+                              //   otpVisible = true;
+                              // });
                             }
                           },
                         ),
                       ),
                       border: OutlineInputBorder(
-                        borderSide: const BorderSide(color: AppColors.greyColor),
+                        borderSide:
+                            const BorderSide(color: AppColors.greyColor),
                         borderRadius: BorderRadius.all(
                             Radius.circular(AppSize.defaultSize!)),
                       ),
@@ -129,7 +134,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             Radius.circular(AppSize.defaultSize!)),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: AppColors.greyColor),
+                        borderSide:
+                            const BorderSide(color: AppColors.greyColor),
                         borderRadius: BorderRadius.all(
                             Radius.circular(AppSize.defaultSize!)),
                       ),
@@ -215,15 +221,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   enter: slideInVertically(initialOffsetY: 5),
                   exit: fadeOut() + slideOutHorizontally(),
                   child: MainButton(
-                      text: StringManager.continue1.tr(), onTap: () {
-                    // if (phoneNumber.length == 10) {
-                    //   BlocProvider.of<SignUpWithEmailAndPasswordBloc>(context)
-                    //       .add(SignUpWithEmailAndPasswordEvent(
-                    //     phone: phoneNumber,
-                    //     password: passwordController.text,
-                    //   ));
-                    // }
-                  }),
+                      text: StringManager.continue1.tr(),
+                      onTap: () {
+                        // if (phoneNumber.length == 10) {
+                        //   BlocProvider.of<SignUpWithEmailAndPasswordBloc>(context)
+                        //       .add(SignUpWithEmailAndPasswordEvent(
+                        //     phone: phoneNumber,
+                        //     password: passwordController.text,
+                        //   ));
+                        // }
+                      }),
                 )
               ],
             ),
