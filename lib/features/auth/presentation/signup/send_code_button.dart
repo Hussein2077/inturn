@@ -27,8 +27,13 @@ class _SendCodeButtonState extends State<SendCodeButton> {
     return        MainButton(
       text:widget.text ,
       width: AppSize.defaultSize! * 10,
+
       // height: AppSize.defaultSize! * 2,
       color: widget.color,
+
+      
+
+
       fontSize: AppSize.defaultSize! * 1.2,
       textColor: Colors.white,
       onTap: () {
