@@ -17,6 +17,7 @@ import 'package:inturn/features/profile/domain/use_case/change_password_uc.dart'
 import 'package:inturn/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http_parser/http_parser.dart';
+
 abstract class BaseRemotelyDataSource {
   Future<Map<String, dynamic>> loginWithEmailAndPassword(AuthModel authModel);
 
@@ -28,7 +29,6 @@ abstract class BaseRemotelyDataSource {
   Future<Map<String, dynamic>> verifyCode(SignUpModel signUpModel);
 
   Future<Map<String, dynamic>> resetPassword(SignUpModel signUpModel);
-
 
   //add info
   Future<Map<String, dynamic>> addPersonalInfo(PersonalInfoParams params);
@@ -65,15 +65,13 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       preferences.remove(StringManager.userIDKey);
       preferences.remove(StringManager.profileIDKey);
       await Methods.instance.saveUserToken(authToken: jsonData['token']);
-      await  Methods.instance.saveUserId(userId: jsonData['userId']);
+      await Methods.instance.saveUserId(userId: jsonData['userId']);
       return jsonData;
     } on DioException catch (e) {
       throw DioHelper.handleDioError(
           dioError: e, endpointName: "loginWithEmailAndPassword");
     }
   }
-
-
 
   @override
   Future<Map<String, dynamic>> addPersonalInfo(
@@ -85,19 +83,18 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
 
     // File file = params.image;
     // String fileName = file.path.split('/').last;
-   //  var formData = FormData.fromMap({
-   //                  'img': await MultipartFile.fromFile(params.image.path,
-   //                      filename:params.image.path.split('/').last.toString(),
-   //                      contentType: MediaType("image", "jpeg")),
-   // });
+    //  var formData = FormData.fromMap({
+    //                  'img': await MultipartFile.fromFile(params.image.path,
+    //                      filename:params.image.path.split('/').last.toString(),
+    //                      contentType: MediaType("image", "jpeg")),
+    // });
 
     FormData formData = FormData.fromMap({
       'UserId': params.userId,
       'FirstName': params.firstName,
       'LastName': params.lastName,
-      'ImageFile':
-      await MultipartFile.fromFile(params.image.path,
-          filename:params.image.path.split('/').last.toString(),
+      'ImageFile': await MultipartFile.fromFile(params.image.path,
+          filename: params.image.path.split('/').last.toString(),
           contentType: MediaType("image", "jpeg")),
     });
 
@@ -131,7 +128,9 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
 
     try {
       final response = await Dio().post(
-        ConstantApi.sendUniversityFacultyIds(MyApp.userId,),
+        ConstantApi.sendUniversityFacultyIds(
+          MyApp.userId,
+        ),
         data: body,
       );
       return response.data;
@@ -152,7 +151,9 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
 
     try {
       final response = await Dio().post(
-        ConstantApi.sendExperienceLevel(MyApp.userId, ),
+        ConstantApi.sendExperienceLevel(
+          MyApp.userId,
+        ),
         data: body,
       );
       return response.data;
@@ -164,7 +165,6 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
 
   @override
   Future<dynamic> locationType(LocationTypeParams locationTypeParams) async {
-
     final body = {
       'jobLocationTypeId': locationTypeParams.locationTypeID,
       'userId': MyApp.userId,
@@ -175,7 +175,9 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
 
     try {
       final response = await Dio().post(
-        ConstantApi.sendLocationTypeIds(MyApp.userId,),
+        ConstantApi.sendLocationTypeIds(
+          MyApp.userId,
+        ),
         data: body,
       );
       return response.data;
@@ -194,7 +196,9 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
 
     try {
       final response = await Dio().post(
-        ConstantApi.sendMajorIds(MyApp.userId,),
+        ConstantApi.sendMajorIds(
+          MyApp.userId,
+        ),
         data: body,
       );
       return response.data;
@@ -214,7 +218,9 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
 
     try {
       final response = await Dio().post(
-        ConstantApi.sendSkills(MyApp.userId,),
+        ConstantApi.sendSkills(
+          MyApp.userId,
+        ),
         data: body,
       );
       return response.data;
@@ -222,12 +228,18 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       throw DioHelper.handleDioError(dioError: e, endpointName: "sendSkills");
     }
   }
+
   @override
   Future<Map<String, dynamic>> signUpWithEmailAndPassword(
       SignUpModel signUpModel) async {
+    log(  '${signUpModel.phone}siuwgwiugwiuogwougbopw');
+    log(  '${signUpModel.code}siuwgwiugwiuogwougbopw');
+    log(  '${signUpModel.password}siuwgwiugwiuogwougbopw');
     final body = {
       ConstantApi.password: signUpModel.password,
       'phonenumber': signUpModel.phone,
+      'otp': signUpModel.code,
+      'userRole': "User"
     };
 
     try {
@@ -237,6 +249,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       );
       Map<String, dynamic> jsonData = response.data;
       await Methods.instance.saveUserToken(authToken: jsonData['token']);
+      await Methods.instance.saveUserId(userId: jsonData['userId']);
       if (jsonData['token'] == null) {
         DioException? e;
         throw DioHelper.handleDioError(
@@ -253,7 +266,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
   @override
   Future<Map<String, dynamic>> resetPassword(SignUpModel signUpModel) async {
     final body = {
-      'newPassword' : signUpModel.password,
+      'newPassword': signUpModel.password,
       'email': signUpModel.phone,
       'otp': signUpModel.code,
     };
@@ -272,6 +285,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
           dioError: e, endpointName: "changePassword");
     }
   }
+
   @override
   Future<String> sendCode(SignUpModel signUpModel) async {
     final body = {
@@ -288,8 +302,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
 
       return 'Success';
     } on DioException catch (e) {
-      throw DioHelper.handleDioError(
-          dioError: e, endpointName: "sendCode");
+      throw DioHelper.handleDioError(dioError: e, endpointName: "sendCode");
     }
   }
 
@@ -313,6 +326,4 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       throw DioHelper.handleDioError(dioError: e, endpointName: "verifyCode");
     }
   }
-
 }
-

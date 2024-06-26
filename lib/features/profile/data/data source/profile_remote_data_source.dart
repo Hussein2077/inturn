@@ -32,6 +32,7 @@ abstract class BaseRemotelyDataSourceProfile {
 class ProfileRemotelyDateSource extends BaseRemotelyDataSourceProfile {
   @override
   Future<MyDataModel> getMyData(String id) async {
+    log('${id}_getMyData ${MyApp.userId}');
     try {
       final response = await Dio().post(
         ConstantApi.myData(id),

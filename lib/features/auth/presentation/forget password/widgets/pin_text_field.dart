@@ -32,7 +32,6 @@ class _CustomPinCodeTextFieldState extends State<CustomPinCodeTextField> {
 
   @override
   void dispose() {
-    controller.dispose();
     errorController!.close();
 
     super.dispose();
@@ -42,7 +41,8 @@ class _CustomPinCodeTextFieldState extends State<CustomPinCodeTextField> {
   Widget build(BuildContext context) {
     return PinCodeTextField(
       appContext: context,
-      length: 6,
+      length: 4,
+
       keyboardType: TextInputType.phone,
       obscureText: false,
       animationType: AnimationType.fade,

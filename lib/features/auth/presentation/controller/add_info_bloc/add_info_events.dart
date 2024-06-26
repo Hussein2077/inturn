@@ -13,8 +13,11 @@ class AddPersonalInfoButtonPressedEvent extends AddPersonalInfoEvent {
   final String firstName;
   final String lastName;
   final String userID;
-
-  const AddPersonalInfoButtonPressedEvent({required this.image, required this.firstName, required this.lastName, required this.userID});
+final String email;
+  final String address;
+  const AddPersonalInfoButtonPressedEvent({required this.image, required this.firstName,
+    required this.email, required this.address,
+    required this.lastName, required this.userID});
   @override
   List<Object> get props => [image, firstName, lastName];
 }

@@ -18,10 +18,13 @@ class SignUpWithEmailAndPasswordBloc extends Bloc<
       final result = await signUpWithEmailAndPasswordUseCase.call(SignUpModel(
         password: event.password,
         phone: event.phone,
-
+      code: event.otp
       ));
       result.fold(
           (l) => emit(SignUpWithEmailAndPasswordSuccessMessageState(
+              isCompleted: l['isCompleted'],
+              completion: l['complition'],
+              userId: l['userId'],
               successMessage: StringManager.loginSuccessfully.tr())),
           (r) => emit(SignUpWithEmailAndPasswordErrorMessageState(
               errorMessage: DioHelper().getTypeOfFailure(r))));

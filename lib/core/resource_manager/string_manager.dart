@@ -7,6 +7,7 @@ class StringManager {
   static const String continue1 = "Continue";
   static const String uploadProfileImage = "Upload Profile Image";
   static const String next = "Next";
+  static const String codeSent = "OTP Sent";
   static const String searchForIntern =
       "Search for intern according to your skills.";
   static const String internInformation =
@@ -100,6 +101,7 @@ class StringManager {
   static const String loading = " loading...";
   static const String youHaveBeenMissed = "You Have Been Missed For Long Time";
   static const String email = "Email";
+  static const String address  = "Address";
   static const String password = "Password";
   static const String oldPassword = "Old Password";
   static const String confirmPassword = "Confirm password";
@@ -112,11 +114,13 @@ class StringManager {
       "Please enter the code which sent to";
   static const String or = "Or sign in with";
   static const String enterEmail  = "Enter Your Email.";
+  static const String enterPhone   = "Enter Your phone.";
   static const String enterCode   = "Please Enter the Code.";
   static const String signUp = "Sign up";
   static const String signIn = "Sign in";
   static const String sendCode = "Send Code";
   static const String   resend = "Resend";
+  static const String   sent = "Sent";
   static const String doNotHaveAccount = "Don't have an account?   ";
   static const String youAlready = "You Already have an account?   ";
   static const String youCanResend =
@@ -174,6 +178,8 @@ class StringManager {
   static const String pleaseAddSkill= "Please add at least one skill";
   static const String pleaseUploadImage = "Please Upload your Image";
   static const String pleaseUploadName= "Please complete your name";
+  static const String pleaseUploadEmail= "Please complete your email";
+  static const String pleaseUploadAddress= "Please complete your address";
   static const String tabToUploadCV = "Tap here to \nUpload your CV";
   static const String thereIsNo = "There is no Jobs";
   static const String theMost = "The most ingenious recycled homes";

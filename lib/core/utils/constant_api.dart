@@ -9,6 +9,8 @@ class ConstantApi {
   static getPdf(String url) => 'https://api.intrn.app/Intrn/UsersCVs/$url';
 
   static const String login = "${baseUrl}Auth/Login";
+  static const String signUp = "${baseUrl}NewAuth/phone-signup";
+  static const String sendCode = "${baseUrl}NewAuth/generate-otp";
   static const String universities = "${baseUrl}Universities/GetAllUniversity";
   static const String uploadPdf = "${baseUrl}UploadCV/upload-cv";
   static const String updatePdf = "${baseUrl}UploadCV/updateUserCV";
@@ -29,7 +31,7 @@ class ConstantApi {
   static String myApplications(String userId) =>
       "${baseUrl}applications/GetMyApplicationsByUserId?userId=$userId";
 
-  static String myData(String id) => "${baseUrl}Auth/UserData?userId=$id";
+  static String myData(String id) => "${baseUrl}NewAuth/UserData?userId=${MyApp.userId}";
 
   static String getCV(String id) => "${baseUrl}UploadCV/getUserCV$id";
 
@@ -80,8 +82,7 @@ class ConstantApi {
 //////////////////////////////////////////////////////////////////////
   static const String getJobs = "${baseUrl}Jobs/GetVacancy";
   static const String getGetInternships = "${baseUrl}Jobs/GetInternships";
-  static const String signUp = "https://api.inturn.app/Register";
-  static const String sendCode = "${baseUrl}NewAuth/generate-otp";
+
   static const String verifyCode = "${baseUrl}Auth/validate-otp";
   static const String resetPassword  = "${baseUrl}Auth/reset-password-with-otp";
   static const String changePassword  = "${baseUrl}Auth/Change-password";
