@@ -1,10 +1,13 @@
+import 'package:animated_visibility/animated_visibility.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
+import 'package:inturn/core/resource_manager/themes/enums.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/widgets/app_bar.dart';
 import 'package:inturn/core/widgets/custom_text_field.dart';
@@ -14,6 +17,12 @@ import 'package:inturn/core/widgets/snack_bar.dart';
 import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_info_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_info_events.dart';
 import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_info_states.dart';
+import 'package:inturn/features/auth/presentation/controller/change_password_bloc/change_password_bloc.dart';
+import 'package:inturn/features/auth/presentation/controller/change_password_bloc/change_password_events.dart';
+import 'package:inturn/features/auth/presentation/controller/change_password_bloc/change_password_states.dart';
+import 'package:inturn/features/auth/presentation/forget%20password/widgets/pin_text_field.dart';
+import 'package:inturn/features/auth/presentation/signup/counter_by_widget.dart';
+import 'package:inturn/features/auth/presentation/signup/sign_up.dart';
 import 'package:inturn/features/auth/presentation/widgets/upload_photo.dart';
 
 class PersonalInfo extends StatefulWidget {
@@ -30,6 +39,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
   late TextEditingController secondNameController;
   late TextEditingController emailController;
   late TextEditingController addressController;
+  ValueNotifier<bool> otpVisibleNotifier = ValueNotifier<bool>(false);
+  ValueNotifier<bool> isVerifiedNotifier = ValueNotifier<bool>(false);
 
   @override
   void initState() {
@@ -64,7 +75,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
               EasyLoading.dismiss();
               Navigator.pushNamed(
                 context,
-                Routes.academicInfo,
+                Routes.experienceInfo,
               );
             } else if (state is AddPersonalInfoErrorState) {
               EasyLoading.dismiss();
@@ -73,98 +84,191 @@ class _PersonalInfoState extends State<PersonalInfo> {
               EasyLoading.show();
             }
           },
-          child: Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const UploadProfileImagePage(),
-                SizedBox(
-                  height: AppSize.defaultSize! * 2,
-                ),
-                CustomText(
-                  text: StringManager.uploadProfileImage.tr(),
-                  fontSize: AppSize.defaultSize! * 1.6,
-                  color: AppColors.primaryColor,
-                  fontWeight: FontWeight.w700,
-                ),
-                SizedBox(
-                  height: AppSize.defaultSize! * 2,
-                ),
-                CustomTextField(
-                  labelText: StringManager.firstName.tr(),
-                  controller: firstNameController,
-                ),
-                SizedBox(
-                  height: AppSize.defaultSize! * 2,
-                ),
-                CustomTextField(
-                  labelText: StringManager.secondName.tr(),
-                  controller: secondNameController,
-                ),
-                SizedBox(
-                  height: AppSize.defaultSize! * 2,
-                ),
-                CustomTextField(
-                  labelText: StringManager.address.tr(),
-                  keyboardType: TextInputType.streetAddress,
-                  controller: addressController,
-                ),
-                SizedBox(
-                  height: AppSize.defaultSize! * 2,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CustomTextField(
-                      labelText: StringManager.email.tr(),
-                      keyboardType: TextInputType.emailAddress,
-                      controller: emailController,
-                      width: AppSize.screenWidth!*.7,
-                    ),
+          child: SingleChildScrollView(
+            child: Column(
+                // mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const UploadProfileImagePage(),
+                  SizedBox(
+                    height: AppSize.defaultSize! * 2,
+                  ),
+                  CustomText(
+                    text: StringManager.uploadProfileImage.tr(),
+                    fontSize: AppSize.defaultSize! * 1.6,
+                    color: AppColors.primaryColor,
+                    fontWeight: FontWeight.w700,
+                  ),
+                  SizedBox(
+                    height: AppSize.defaultSize! * 2,
+                  ),
+                  CustomTextField(
+                    labelText: StringManager.firstName.tr(),
+                    controller: firstNameController,
+                  ),
+                  SizedBox(
+                    height: AppSize.defaultSize! * 2,
+                  ),
+                  CustomTextField(
+                    labelText: StringManager.secondName.tr(),
+                    controller: secondNameController,
+                  ),
+                  SizedBox(
+                    height: AppSize.defaultSize! * 2,
+                  ),
+                  CustomTextField(
+                    labelText: StringManager.address.tr(),
+                    keyboardType: TextInputType.streetAddress,
+                    controller: addressController,
+                  ),
+                  SizedBox(
+                    height: AppSize.defaultSize! * 2,
+                  ),
+                  BlocListener<ResetPasswordFlowBloc, ResetPasswordState>(
+                    listener: (context, state) {
+                      if (state is SendCodeSuccessMessageState) {
+                        EasyLoading.dismiss();
+                        EasyLoading.showSuccess(StringManager.codeSent.tr());
 
-                    MainButton(text: StringManager.sendCode.tr(), onTap: () {
-
+                        if (otpVisibleNotifier.value == false) {
+                          otpVisibleNotifier.value = true;
+                        }
+                      } else if (state is SendCodeErrorMessageState) {
+                        EasyLoading.dismiss();
+                        errorSnackBar(
+                            context,state.errorMessage);
+                      } else if (state is SendCodeLoadingState) {
+                        EasyLoading.show(status: 'loading...');
+                      }
+                      if(state is VerifyCodeLoadingState)
+                      {
+                        EasyLoading.show(status: 'loading...');
+                      }
+                      if(state is VerifyCodeSuccessMessageState)
+                      {
+                        EasyLoading.dismiss();
+                        EasyLoading.showSuccess(StringManager.codeVerified.tr());
+                        if (otpVisibleNotifier.value ) {
+                          otpVisibleNotifier.value = false;
+                        }
+                        isVerifiedNotifier.value = true;
+                      }
+                      if(state is VerifyCodeErrorMessageState)
+                      {
+                        EasyLoading.dismiss();
+                        errorSnackBar(context, state.errorMessage);
+                      }
                     },
-                    width:  AppSize.screenWidth!*.2,
-                      fontSize:   AppSize.defaultSize! * 1.2,
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: AppSize.defaultSize! * 2,
-                ),
-                MainButton(
-                  text: StringManager.next.tr(),
-                  onTap: () {
-                    if (UploadProfileImagePage.imageFile != null &&
-                        firstNameController.text.isNotEmpty &&
-                        secondNameController.text.isNotEmpty) {
-                      BlocProvider.of<AddPersonalInfoBloc>(context)
-                          .add(AddPersonalInfoButtonPressedEvent(
-                        image: UploadProfileImagePage.imageFile!,
-                        userID: widget.userId,
-                        firstName: firstNameController.text,
-                        lastName: secondNameController.text,
-                        email: emailController.text,
-                        address: addressController.text,
-                      ));
-                    } else if (UploadProfileImagePage.imageFile == null) {
-                      errorSnackBar(
-                          context, StringManager.pleaseUploadImage.tr());
-                    } else if (firstNameController.text.isEmpty ||
-                        secondNameController.text.isEmpty) {
-                      errorSnackBar(
-                          context, StringManager.pleaseUploadName.tr());
-                    } else if (emailController.text.isEmpty) {
-                      errorSnackBar(
-                          context, StringManager.pleaseUploadEmail.tr());
-                    } else if (addressController.text.isEmpty) {
-                      errorSnackBar(
-                          context, StringManager.pleaseUploadAddress.tr());
-                    }
-                  },
-                ),
-              ]),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CustomTextField(
+                          labelText: StringManager.email.tr(),
+                          keyboardType: TextInputType.emailAddress,
+                          controller: emailController,
+                          width: AppSize.screenWidth! * .7,
+                          suffixIcon: ValueListenableBuilder(
+                            valueListenable: isVerifiedNotifier,
+                            builder: (context, value, child) {
+                              if (value == false) {
+                                return const Icon(
+                                  Icons.verified_outlined,
+                                  color: AppColors.greyColor,
+                                );
+                              }else {
+                                return Icon(
+                                Icons.verified,
+                                color:  AppColors.primaryColor,
+                              );
+                              }
+                            }
+                          ),
+                        ),
+                        MainButton(
+                          text: otpVisibleNotifier.value == false
+                              ? StringManager.sendCode.tr()
+                              : StringManager.sent.tr(),
+                          color: otpVisibleNotifier.value == false
+                              ? AppColors.primaryColor
+                              : AppColors.greyColor,
+                          onTap: () {
+                            if (!otpVisibleNotifier.value) {
+                              BlocProvider.of<ResetPasswordFlowBloc>(context).add(
+                                  SendCodeEvent(
+                                      phoneOrEmail: emailController.text,
+                                      phoneOrEmailType: PhoneOrEmail.email));
+                            }
+                          },
+                          width: AppSize.screenWidth! * .2,
+                          fontSize: AppSize.defaultSize! * 1.2,
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: AppSize.defaultSize! * 2,
+                  ),
+                  ValueListenableBuilder(
+                    valueListenable: otpVisibleNotifier,
+                    builder: (context, value, child) => (value)
+                        ? Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: AppSize.defaultSize! * 4,
+                                vertical: AppSize.defaultSize!),
+                            child: Column(
+                              children: [
+                                CustomPinCodeTextField(
+
+                                  onCompleted: (v) {
+                                    print("Completedssssss");
+                                    CustomPinCodeTextField.otp = v;
+                                    BlocProvider.of<ResetPasswordFlowBloc>(context).add(
+                                        VerifyCodeEvent(
+                                            email: emailController.text,
+                                            code:v ));
+
+                                  },
+
+                                ),
+                                  CounterByMinute(email: emailController.text,),
+                              ],
+                            ),
+                          )
+                        : const SizedBox(),
+                  ),
+                  MainButton(
+                    text: StringManager.next.tr(),
+                    onTap: () {
+                      if (UploadProfileImagePage.imageFile != null &&
+                          firstNameController.text.isNotEmpty &&
+                          secondNameController.text.isNotEmpty) {
+                        BlocProvider.of<AddPersonalInfoBloc>(context)
+                            .add(AddPersonalInfoButtonPressedEvent(
+                          image: UploadProfileImagePage.imageFile!,
+                          userID: widget.userId,
+                          firstName: firstNameController.text,
+                          lastName: secondNameController.text,
+                          email: emailController.text,
+                          address: addressController.text,
+                        ));
+                      } else if (UploadProfileImagePage.imageFile == null) {
+                        errorSnackBar(
+                            context, StringManager.pleaseUploadImage.tr());
+                      } else if (firstNameController.text.isEmpty ||
+                          secondNameController.text.isEmpty) {
+                        errorSnackBar(
+                            context, StringManager.pleaseUploadName.tr());
+                      } else if (emailController.text.isEmpty) {
+                        errorSnackBar(
+                            context, StringManager.pleaseUploadEmail.tr());
+                      } else if (addressController.text.isEmpty) {
+                        errorSnackBar(
+                            context, StringManager.pleaseUploadAddress.tr());
+                      }
+                    },
+                  ),
+                ]),
+          ),
         ),
       ),
     );

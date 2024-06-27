@@ -38,6 +38,8 @@ class AddPersonalInfoBloc
         image: event.image,
         userId: event.userID,
         firstName: event.firstName,
+        address:  event.address,
+        email:  event.email,
         lastName: event.lastName));
     result.fold(
       (l) => emit(

@@ -12,6 +12,7 @@ import 'package:inturn/core/utils/methods.dart';
 class DioHelper {
   Future<Options> options() async {
     Map<String, String> headers = await DioHelper().header();
+    log('headers $headers');
     return Options(
       receiveDataWhenStatusError: true,
       sendTimeout: const Duration(milliseconds: 5000),
@@ -27,7 +28,8 @@ class DioHelper {
     }
 
     Map<String, String> headers = {
-      "Authorizations": 'Bearer $token',
+      "Authorization": 'Bearer $token',
+      'accept': 'application/json',
       'content-type': 'application/json; charset=utf-8',
       'date': 'Sun,18 Feb 2024 17:04:08 GMT',
       'server': 'Microsoft-IIS/10.0',

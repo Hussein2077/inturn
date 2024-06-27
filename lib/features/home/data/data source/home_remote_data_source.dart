@@ -44,9 +44,12 @@ abstract class BaseRemotelyDataSourceHome {
 class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
   @override
   Future<List<MatchedVacancyWrapper>> getMatchedJobs(String userId) async {
+     final Options options = await DioHelper().options();
     try {
       final response = await Dio().get(
+        options: options,
         ConstantApi.getVacancy(userId),
+
       );
       List<MatchedVacancyWrapper> jsonData = List<MatchedVacancyWrapper>.from(
           (response.data as List)
@@ -60,10 +63,13 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
 
   @override
   Future<List<VacancyModel>> getJobDetails(int id) async {
+     final Options options = await DioHelper().options();
     try {
       final response = await Dio().get(
+        options: options,
         ConstantApi.vacancyDetails(id),
       );
+
       List<VacancyModel> jsonData = List<VacancyModel>.from(
           (response.data as List).map((e) => VacancyModel.fromJson(e)));
       return jsonData;
@@ -75,10 +81,13 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
 
   @override
   Future<List<Country>> getCities() async {
+     final Options options = await DioHelper().options();
     try {
       final response = await Dio().get(
+        options: options,
         ConstantApi.provinces,
       );
+
       List<Country> jsonData = List<Country>.from(
           (response.data as List).map((e) => Country.fromJson(e)));
 
@@ -91,10 +100,13 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
 
   @override
   Future<List<FacultyModel>> getFaculty(int id) async {
+     final Options options = await DioHelper().options();
     try {
       final response = await Dio().get(
+        options: options,
         ConstantApi.faculty(id),
       );
+
       List<FacultyModel> jsonData = List<FacultyModel>.from(
           (response.data as List).map((e) => FacultyModel.fromJson(e)));
       return jsonData;
@@ -103,10 +115,13 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
     }
   }  @override
   Future<List<AreaModel>> getAreas(int cityId) async {
+     final Options options = await DioHelper().options();
     try {
       final response = await Dio().get(
+        options: options,
         ConstantApi.getAreas(cityId),
       );
+
       List<AreaModel> jsonData = List<AreaModel>.from(
           (response.data as List).map((e) => AreaModel.fromJson(e)));
       return jsonData;
@@ -117,10 +132,13 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
 
   @override
   Future<List<UniversityModel>> getUniversity() async {
+     final Options options = await DioHelper().options();
     try {
       final response = await Dio().get(
+        options: options,
         ConstantApi.universities,
       );
+
       List<UniversityModel> jsonData = List<UniversityModel>.from(
           (response.data as List).map((e) => UniversityModel.fromJson(e)));
 
@@ -133,10 +151,13 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
 
   @override
   Future<List<MajorModel>> getMajor() async {
+     final Options options = await DioHelper().options();
     try {
       final response = await Dio().get(
+        options: options,
         ConstantApi.getMajorsByCategory,
       );
+
       List<MajorModel> jsonData = List<MajorModel>.from(
           (response.data as List).map((e) => MajorModel.fromJson(e)));
       return jsonData;
@@ -147,10 +168,13 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
 
   @override
   Future<List<SkillModel>> getSkill() async {
+     final Options options = await DioHelper().options();
     try {
       final response = await Dio().get(
+        options: options,
         ConstantApi.getSkill,
       );
+
       List<SkillModel> jsonData = List<SkillModel>.from(
           (response.data as List).map((e) => SkillModel.fromJson(e)));
       return jsonData;
@@ -161,10 +185,13 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
 
   @override
   Future<List<ApplicationModel>> getMyApplications(String userId ) async {
+     final Options options = await DioHelper().options();
     try {
       final response = await Dio().get(
+        options: options,
         ConstantApi.myApplications(userId),
       );
+
       List<ApplicationModel> jsonData = List<ApplicationModel>.from(
           (response.data as List).map((e) => ApplicationModel.fromJson(e)));
       return jsonData;
@@ -176,10 +203,13 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
 
   @override
   Future<List<CompanyModel>> getCompanies() async {
+     final Options options = await DioHelper().options();
     try {
       final response = await Dio().get(
+        options: options,
         ConstantApi.getCompanies,
       );
+
       List<CompanyModel> jsonData = List<CompanyModel>.from(
           (response.data as List).map((e) => CompanyModel.fromJson(e)));
       return jsonData;
@@ -191,6 +221,7 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
 
   @override
   Future apply(VacancyApply vacancyApply) async {
+     final Options options = await DioHelper().options();
     log('${vacancyApply.userID}ehehhet ${vacancyApply.vacancyID}');
     final body = {
       // 'vacancyId ': vacancyApply.vacancyID,
@@ -198,8 +229,10 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
     };
     try {
       final response = await Dio().post(
+          options: options,
           ConstantApi.apply(vacancyApply.userID, vacancyApply.vacancyID),
           data: body);
+
       dynamic jsonData = response.data;
       return jsonData;
     } on DioException catch (e) {
@@ -210,6 +243,7 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
   @override
   Future<List<VacancyModel>> getInternshipsBySearch(
       VacancySearch vacancySearch) async {
+     final Options options = await DioHelper().options();
     log('${vacancySearch.vacancyWorkPlace}slfbnlbnwlnw');
     log('${vacancySearch.countryId}ehehhet\n ${vacancySearch.cityId}\n${vacancySearch.vacancyLevelId}\n${vacancySearch.companyId}\n${vacancySearch.title}\n${vacancySearch.userId}');
     final body = {
@@ -223,8 +257,10 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
     };
     try {
       final response = await Dio().post(
+        options: options,
         ConstantApi.getGetInternshipsBySearch,
         data: body,
+
       );
       List<VacancyModel> jsonData = List<VacancyModel>.from(
           (response.data as List).map((e) => VacancyModel.fromJson(e)));

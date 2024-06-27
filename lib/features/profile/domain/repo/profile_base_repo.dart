@@ -7,8 +7,8 @@ import 'package:inturn/features/profile/domain/use_case/edit_profile_uc.dart';
 import 'package:inturn/features/profile/domain/use_case/upload_pdf.dart';
 
 abstract class BaseRepositoryProfile {
-  Future<Either<MyDataModel, Failure>> getMyData( String id);
-  Future<Either<MyDataModel, Failure>> completeProfile( String id);
+  Future<Either<MyDataModel, Failure>> getMyData();
+  Future<Either<MyDataModel, Failure>> completeProfile();
   Future<Either<String, Failure>> editProfileData(EditPersonalInfoParams parameter);
   Future<Either<ProfileDataModel, Failure>> getMyProfileData( String id);
   Future<Either<String, Failure>> uploadPdf(UploadPDFParams uploadPDFParams);

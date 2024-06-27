@@ -62,13 +62,10 @@ class RouteGenerator {
     switch (settings.name) {
       case Routes.main:
         String? userId;
-        log("userIdbefffoof: $userId");
-
         userId = MyApp.userId;
-        log("userId: $userId");
         BlocProvider.of<GetMyDataBloc>(
                 getIt<NavigationService>().navigatorKey.currentContext!)
-            .add(GetMyDataEvent(userId));
+            .add(GetMyDataEvent());
         if (MyApp.fromLogin) {
           return PageRouteBuilder(
               settings: settings,
@@ -278,9 +275,9 @@ Widget getScreenFromCompletion(int completion, String userId) {
     case 20:
       return   PersonalInfo(userId: userId,);
     case 30:
-      return const AcademicInfo();
-    case 45:
       return const ExperienceInfo();
+    case 45:
+      return const AcademicInfo();
     case 60:
       return const LocationInfo();
     case 75:

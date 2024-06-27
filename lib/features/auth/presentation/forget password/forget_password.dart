@@ -79,7 +79,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 onTap: () {
                   if (emailController.text.isNotEmpty) {
                     BlocProvider.of<ResetPasswordFlowBloc>(context)
-                        .add(SendCodeEvent(phone: emailController.text));
+                        .add(SendCodeEvent(phoneOrEmail: emailController.text));
                   } else {
                     EasyLoading.showError(StringManager.enterEmail.tr());
                   }

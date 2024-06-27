@@ -114,7 +114,8 @@ class PersonalInfoParams {
   final File image;
   final String firstName;
   final String lastName;
-
+  final String email;
+  final String address;
   PersonalInfoParams(
-      {required this.image, required this.firstName, required this.lastName,  required this.userId});
+      {required this.image, required this.firstName, required this.lastName,  required this.userId, required this.email, required this.address});
 }

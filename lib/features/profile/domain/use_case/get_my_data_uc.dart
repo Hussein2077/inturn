@@ -4,26 +4,26 @@ import 'package:inturn/core/error/failure.dart';
 import 'package:inturn/core/models/my_data_model.dart';
 import 'package:inturn/features/profile/domain/repo/profile_base_repo.dart';
 
-class GetMyDataUseCase  extends BaseUseCase<MyDataModel, String> {
+class GetMyDataUseCase  extends BaseUseCase<MyDataModel, NoParameter> {
   final BaseRepositoryProfile baseRepositoryProfile;
 
   GetMyDataUseCase({required this.baseRepositoryProfile});
 
   @override
-  Future<Either<MyDataModel, Failure>> call(String parameter) async {
-    final result = await baseRepositoryProfile.getMyData( parameter);
+  Future<Either<MyDataModel, Failure>> call(NoParameter parameter) async {
+    final result = await baseRepositoryProfile.getMyData();
 
     return result;
   }
 }
-class CompleteProfileUseCase  extends BaseUseCase<MyDataModel, String> {
+class CompleteProfileUseCase  extends BaseUseCase<MyDataModel, NoParameter> {
   final BaseRepositoryProfile baseRepositoryProfile;
 
   CompleteProfileUseCase({required this.baseRepositoryProfile});
 
   @override
-  Future<Either<MyDataModel, Failure>> call(String parameter) async {
-    final result = await baseRepositoryProfile.completeProfile( parameter);
+  Future<Either<MyDataModel, Failure>> call(NoParameter parameter) async {
+    final result = await baseRepositoryProfile.completeProfile();
 
     return result;
   }

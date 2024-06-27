@@ -70,7 +70,9 @@ class Methods {
   navigateToAddInfo({required bool isComplete, required int completion,required String userId }) {
     MyApp.userId=userId;
     MyApp.userId=userId;
+    log('$completion _navigateToAddInfo');
     if (isComplete) {
+
       Navigator.pushNamedAndRemoveUntil(
           getIt<NavigationService>().navigatorKey.currentContext!,
           Routes.main,arguments: userId,
@@ -86,13 +88,13 @@ class Methods {
       else if(completion == 30){
         Navigator.pushNamedAndRemoveUntil(
             getIt<NavigationService>().navigatorKey.currentContext!,
-            Routes.academicInfo,
+            Routes.experienceInfo,
                 (route) => false);
       }
       else if(completion == 45){
         Navigator.pushNamedAndRemoveUntil(
             getIt<NavigationService>().navigatorKey.currentContext!,
-            Routes.experienceInfo,
+            Routes.academicInfo,
                 (route) => false);
       }
       else if(completion == 60){

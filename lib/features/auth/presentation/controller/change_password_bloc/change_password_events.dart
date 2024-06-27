@@ -1,5 +1,6 @@
 
 import 'package:equatable/equatable.dart';
+import 'package:inturn/core/resource_manager/themes/enums.dart';
 
 abstract class BaseChangePasswordEvent extends Equatable {
   const BaseChangePasswordEvent();
@@ -19,6 +20,7 @@ class VerifyCodeEvent extends BaseChangePasswordEvent{
   const VerifyCodeEvent({  required this.email,required this.code});
 }
 class SendCodeEvent extends BaseChangePasswordEvent{
-  final String phone ;
-  const SendCodeEvent({  required this.phone});
+  final String phoneOrEmail ;
+final PhoneOrEmail phoneOrEmailType ;
+  const SendCodeEvent( {  required this.phoneOrEmail,this.phoneOrEmailType=PhoneOrEmail.phone,});
 }

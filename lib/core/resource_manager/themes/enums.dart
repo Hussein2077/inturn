@@ -1,0 +1,4 @@
+enum PhoneOrEmail {
+  phone,
+  email,
+}

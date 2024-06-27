@@ -1,19 +1,14 @@
 import 'dart:developer';
-import 'dart:io';
 
-import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:inturn/core/error/exception.dart';
-import 'package:inturn/core/models/my_data_model.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
+import 'package:inturn/core/resource_manager/themes/enums.dart';
 import 'package:inturn/core/utils/api_helper.dart';
 import 'package:inturn/core/utils/constant_api.dart';
 import 'package:inturn/core/utils/methods.dart';
 import 'package:inturn/features/auth/domain/use_case/add_info_uc.dart';
 import 'package:inturn/features/auth/domain/use_case/login_with_email_and_password_use_case.dart';
 import 'package:inturn/features/auth/domain/use_case/sign_up_use_case.dart';
-import 'package:inturn/features/auth/presentation/add_info_flow/location_info.dart';
-import 'package:inturn/features/profile/domain/use_case/change_password_uc.dart';
 import 'package:inturn/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http_parser/http_parser.dart';
@@ -49,6 +44,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
   @override
   Future<Map<String, dynamic>> loginWithEmailAndPassword(
       AuthModel authModel) async {
+     final Options options = await DioHelper().options();
     final body = {
       'phonenumber': authModel.phone,
       "password": authModel.password,
@@ -59,6 +55,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       final response = await Dio().post(
         ConstantApi.login,
         data: body,
+         options: options,
       );
       Map<String, dynamic> jsonData = response.data;
       SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -76,6 +73,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
   @override
   Future<Map<String, dynamic>> addPersonalInfo(
       PersonalInfoParams params) async {
+     final Options options = await DioHelper().options();
     log('${params.userId}_addPersonalInfo');
     log('${params.firstName}_addPersonalInfo');
     log('${params.lastName}_addPersonalInfo');
@@ -96,12 +94,15 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       'ImageFile': await MultipartFile.fromFile(params.image.path,
           filename: params.image.path.split('/').last.toString(),
           contentType: MediaType("image", "jpeg")),
+      'Email':params.email,
+      'Address':params.address
     });
 
     try {
       final response = await Dio().post(
         ConstantApi.addPersonalInfo(),
         data: formData,
+         options: options,
       );
 
       Map<String, dynamic> jsonData = response.data as Map<String, dynamic>;
@@ -119,6 +120,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
   @override
   Future<dynamic> sendUniversityFacultyIds(
       String universityId, String facultyId) async {
+     final Options options = await DioHelper().options();
     final body = {
       'userId': MyApp.userId,
       'userProfileId': MyApp.userProfileId,
@@ -132,6 +134,8 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
           MyApp.userId,
         ),
         data: body,
+        options: options,
+
       );
       return response.data;
     } on DioException catch (e) {
@@ -142,6 +146,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
 
   @override
   Future<dynamic> sendExperienceLevel(String typeID, String jobLevelId) async {
+     final Options options = await DioHelper().options();
     final body = {
       'graduationStatusId': typeID,
       'jobLevelId': jobLevelId,
@@ -153,8 +158,10 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       final response = await Dio().post(
         ConstantApi.sendExperienceLevel(
           MyApp.userId,
+
         ),
         data: body,
+        options: options,
       );
       return response.data;
     } on DioException catch (e) {
@@ -165,6 +172,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
 
   @override
   Future<dynamic> locationType(LocationTypeParams locationTypeParams) async {
+     final Options options = await DioHelper().options();
     final body = {
       'jobLocationTypeId': locationTypeParams.locationTypeID,
       'userId': MyApp.userId,
@@ -177,8 +185,9 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       final response = await Dio().post(
         ConstantApi.sendLocationTypeIds(
           MyApp.userId,
+
         ),
-        data: body,
+        data: body,          options: options,
       );
       return response.data;
     } on DioException catch (e) {
@@ -188,6 +197,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
 
   @override
   Future<dynamic> majorOfFields(List<int> majorIds) async {
+     final Options options = await DioHelper().options();
     final body = {
       'majorIds': majorIds,
       'userId': MyApp.userId,
@@ -198,8 +208,9 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       final response = await Dio().post(
         ConstantApi.sendMajorIds(
           MyApp.userId,
+
         ),
-        data: body,
+        data: body,          options: options,
       );
       return response.data;
     } on DioException catch (e) {
@@ -210,6 +221,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
 
   @override
   Future<dynamic> sendSkills(List<int> skillIds) async {
+     final Options options = await DioHelper().options();
     final body = {
       'skillIds': skillIds,
       'userId': MyApp.userId,
@@ -220,8 +232,9 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       final response = await Dio().post(
         ConstantApi.sendSkills(
           MyApp.userId,
-        ),
+         ),
         data: body,
+        options: options,
       );
       return response.data;
     } on DioException catch (e) {
@@ -232,9 +245,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
   @override
   Future<Map<String, dynamic>> signUpWithEmailAndPassword(
       SignUpModel signUpModel) async {
-    log(  '${signUpModel.phone}siuwgwiugwiuogwougbopw');
-    log(  '${signUpModel.code}siuwgwiugwiuogwougbopw');
-    log(  '${signUpModel.password}siuwgwiugwiuogwougbopw');
+     final Options options = await DioHelper().options();
     final body = {
       ConstantApi.password: signUpModel.password,
       'phonenumber': signUpModel.phone,
@@ -246,6 +257,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       final response = await Dio().post(
         ConstantApi.signUp,
         data: body,
+         options: options,
       );
       Map<String, dynamic> jsonData = response.data;
       await Methods.instance.saveUserToken(authToken: jsonData['token']);
@@ -265,6 +277,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
 
   @override
   Future<Map<String, dynamic>> resetPassword(SignUpModel signUpModel) async {
+     final Options options = await DioHelper().options();
     final body = {
       'newPassword': signUpModel.password,
       'email': signUpModel.phone,
@@ -275,6 +288,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       final response = await Dio().post(
         ConstantApi.resetPassword,
         data: body,
+         options: options,
       );
 
       Map<String, dynamic> jsonData = response.data;
@@ -288,14 +302,26 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
 
   @override
   Future<String> sendCode(SignUpModel signUpModel) async {
-    final body = {
+     final Options options = await DioHelper().options();
+    late final Map<String, dynamic> body;
+    log('${ signUpModel.phoneOrEmailType} signUpModel.phoneOrEmailType');
+    if(signUpModel.phoneOrEmailType==PhoneOrEmail.phone) {
+      body = {
       'phoneNumber': signUpModel.phone,
     };
 
+    }
+    else {
+      body = {
+        'email': signUpModel.phone,
+      };
+    }
+
     try {
       final response = await Dio().post(
-        ConstantApi.sendCode,
+        signUpModel.phoneOrEmailType==PhoneOrEmail.phone?   ConstantApi.sendCode:ConstantApi.sendCodeToEmail,
         data: body,
+         options: options,
       );
 
       // String jsonData = response.data;
@@ -308,6 +334,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
 
   @override
   Future<Map<String, dynamic>> verifyCode(SignUpModel signUpModel) async {
+     final Options options = await DioHelper().options();
     final body = {
       'email': signUpModel.phone,
       'otp': signUpModel.code,
@@ -317,6 +344,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       final response = await Dio().post(
         ConstantApi.verifyCode,
         data: body,
+         options: options,
       );
 
       Map<String, dynamic> jsonData = response.data;

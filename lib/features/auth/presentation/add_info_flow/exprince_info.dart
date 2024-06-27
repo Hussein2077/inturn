@@ -55,7 +55,7 @@ class _ExperienceInfoState extends State<ExperienceInfo> {
             }
             else if (state is AddExperienceLevelSuccessState) {
               EasyLoading.dismiss();
-              Navigator.pushNamed(context, Routes.locationInfo,);
+              Navigator.pushNamed(context, Routes.academicInfo,);
 
             }
           },

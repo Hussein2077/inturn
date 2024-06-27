@@ -1,3 +1,6 @@
+
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,7 +48,6 @@ void main() async {
 
   await EasyLocalization.ensureInitialized();
   token = await Methods.instance.returnUserToken();
-
   FlutterNativeSplash.remove();
 
   runApp(EasyLocalization(
@@ -79,6 +81,7 @@ class _MyAppState extends State<MyApp> {
     Future.delayed(Duration.zero, () async {
       MyApp.userId = await Methods.instance.returnUserId();
       MyApp.userProfileId = await Methods.instance.returnProfileId();
+
       print('user id ${MyApp.userId}');
       print('user profile id ${MyApp.userProfileId}');
     });

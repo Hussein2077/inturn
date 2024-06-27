@@ -44,7 +44,7 @@ class _SendCodeButtonState extends State<SendCodeButton> {
         }
         if (SignUpScreen.phoneNumber.length == 10 && !SignUpScreen.otpVisible ) {
           BlocProvider.of<ResetPasswordFlowBloc>(context)
-              .add(SendCodeEvent(phone: '0${SignUpScreen.phoneNumber}'));
+              .add(SendCodeEvent(phoneOrEmail: '0${SignUpScreen.phoneNumber}'));
 
         }
       },

@@ -26,7 +26,7 @@ class AcademicInfo extends StatelessWidget {
           listener: (context, state) {
             if (state is AddUniversitySuccessState) {
               EasyLoading.dismiss();
-              Navigator.pushNamed(context, Routes.experienceInfo,);
+              Navigator.pushNamed(context, Routes.locationInfo,);
             }
             else if (state is AddUniversityErrorState) {
               EasyLoading.dismiss();

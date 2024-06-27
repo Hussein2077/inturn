@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
+import 'package:inturn/core/resource_manager/themes/enums.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/features/auth/presentation/controller/change_password_bloc/change_password_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/change_password_bloc/change_password_events.dart';
@@ -14,9 +15,9 @@ class CounterByMinute extends StatefulWidget {
 
   const CounterByMinute({
     super.key,
-
+this.email
   });
-
+final String? email;
   @override
   State<CounterByMinute> createState() => _CounterByMinuteState();
 }
@@ -56,8 +57,13 @@ class _CounterByMinuteState extends State<CounterByMinute> {
     setState(() {
       _start = 60;
       isRepeatingTime = true;
-      BlocProvider.of<ResetPasswordFlowBloc>(context)
-          .add(SendCodeEvent(phone: '0${SignUpScreen.phoneNumber}'));
+      if(widget.email!=null){
+        BlocProvider.of<ResetPasswordFlowBloc>(context)
+            .add(SendCodeEvent(phoneOrEmail: widget.email!,phoneOrEmailType: PhoneOrEmail.email));
+      }else {
+        BlocProvider.of<ResetPasswordFlowBloc>(context)
+          .add(SendCodeEvent(phoneOrEmail: '0${SignUpScreen.phoneNumber}'));
+      }
       // BlocProvider.of<SendCodeBloc>(context)
       //     .add(SendPhoneEvent(phone: widget.phone));
       // Reset to 5 minutes

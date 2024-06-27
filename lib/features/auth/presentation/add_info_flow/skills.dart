@@ -72,7 +72,7 @@ class _SkillInfoState extends State<SkillInfo> {
             if (state is AddSkillsSuccessState) {
               EasyLoading.dismiss();
               Navigator.pushNamedAndRemoveUntil(context, Routes.thanks,(route) => false);
-              BlocProvider.of<GetMyDataBloc>(context).add( CompleteProfileEvent(MyApp.userId));
+              BlocProvider.of<GetMyDataBloc>(context).add( CompleteProfileEvent());
             }
             else if (state is AddSkillsErrorState) {
               EasyLoading.dismiss();

@@ -7,6 +7,7 @@ class StringManager {
   static const String continue1 = "Continue";
   static const String uploadProfileImage = "Upload Profile Image";
   static const String next = "Next";
+  static const String codeVerified = "Code Verified";
   static const String codeSent = "OTP Sent";
   static const String searchForIntern =
       "Search for intern according to your skills.";
