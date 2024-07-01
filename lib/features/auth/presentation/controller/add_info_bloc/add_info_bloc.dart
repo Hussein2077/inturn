@@ -38,8 +38,8 @@ class AddPersonalInfoBloc
         image: event.image,
         userId: event.userID,
         firstName: event.firstName,
-        address:  event.address,
-        email:  event.email,
+        address: event.address,
+        email: event.email,
         lastName: event.lastName));
     result.fold(
       (l) => emit(
@@ -59,9 +59,13 @@ class AddPersonalInfoBloc
     emit(
       AddUniversityLoadingState(),
     );
-    final result = await sendUniversityFacultyIdsUseCase.call(
-        SendUniversityFacultyIdsParams(
-            universityId: event.universityId, facultyId: event.facultyId));
+    final result = await sendUniversityFacultyIdsUseCase
+        .call(SendUniversityFacultyIdsParams(
+      universityId: event.universityId,
+      facultyId: event.facultyId,
+      academicYear: event.academicYear,
+      graduationYear: event.graduationYear,
+    ));
     result.fold(
       (l) => emit(
         AddUniversitySuccessState(
@@ -138,5 +142,4 @@ class AddPersonalInfoBloc
       ),
     );
   }
-
 }

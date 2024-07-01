@@ -29,7 +29,8 @@ class Methods {
       preferences.setString(StringManager.userTokenKey, authToken ?? "noToken");
     }
 
-  }Future<void> saveUserId({String? userId}) async {
+  }
+  Future<void> saveUserId({String? userId}) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     log('$userId hussssssssssssssssmmm');
     if (userId != null) {
@@ -38,7 +39,8 @@ class Methods {
       preferences.setString(StringManager.userIDKey, userId ?? '0');
     }
 
-  }Future<void> saveProfileId({int? profileId}) async {
+  }Future<void>
+  saveProfileId({int? profileId}) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     log('$profileId hussssssssssssssssmmm');
     if (profileId != null) {
@@ -92,9 +94,15 @@ class Methods {
                 (route) => false);
       }
       else if(completion == 45){
+        bool? isStudent;
+        Future.delayed(Duration.zero, () async{
+          isStudent = await Methods.instance.returnIfStudent();
+          log('${isStudent}cvcvcv');
+        });
         Navigator.pushNamedAndRemoveUntil(
             getIt<NavigationService>().navigatorKey.currentContext!,
             Routes.academicInfo,
+                arguments: isStudent,
                 (route) => false);
       }
       else if(completion == 60){
@@ -168,6 +176,22 @@ class Methods {
     return language;
   }
 
+  saveIfStudent({bool ? isStudent}) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    if (isStudent != null) {
+      preferences.setBool(StringManager.ifStudent, isStudent );
+    } else {
+      preferences.setBool(StringManager.profileIDKey, isStudent ?? false);
+    }
+
+  }
+  Future<bool> returnIfStudent() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    bool ifStudent =
+        preferences.getBool(StringManager.ifStudent) ?? true;
+    return ifStudent;
+  }
 
 }
 class CommonType extends Equatable{

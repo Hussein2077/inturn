@@ -29,8 +29,7 @@ class SendUniversityFacultyIdsUseCase
   @override
   Future<Either<dynamic, Failure>> call(
       SendUniversityFacultyIdsParams params) async {
-    final result = await baseRepository.sendUniversityFacultyIds(
-        params.universityId, params.facultyId);
+    final result = await baseRepository.sendUniversityFacultyIds(params);
     return result;
   }
 }
@@ -61,24 +60,27 @@ class SendLocationTypeUseCase extends BaseUseCase<dynamic, LocationTypeParams> {
     return result;
   }
 }
+
 class SendMajorIDUseCase extends BaseUseCase<dynamic, List<int>> {
   BaseRepository baseRepository;
 
   SendMajorIDUseCase({required this.baseRepository});
 
   @override
-  Future<Either<dynamic, Failure>> call(  List<int> parameter) async {
-    final result = await baseRepository.majorOfFields( parameter);
+  Future<Either<dynamic, Failure>> call(List<int> parameter) async {
+    final result = await baseRepository.majorOfFields(parameter);
     return result;
   }
-}class SendSkillsIDUseCase extends BaseUseCase<dynamic, List<int>> {
+}
+
+class SendSkillsIDUseCase extends BaseUseCase<dynamic, List<int>> {
   BaseRepository baseRepository;
 
   SendSkillsIDUseCase({required this.baseRepository});
 
   @override
-  Future<Either<dynamic, Failure>> call(  List<int> parameter) async {
-    final result = await baseRepository.sendSkills( parameter);
+  Future<Either<dynamic, Failure>> call(List<int> parameter) async {
+    final result = await baseRepository.sendSkills(parameter);
     return result;
   }
 }
@@ -86,9 +88,14 @@ class SendMajorIDUseCase extends BaseUseCase<dynamic, List<int>> {
 class SendUniversityFacultyIdsParams {
   final String universityId;
   final String facultyId;
+  final String? academicYear;
+  final String graduationYear;
 
   SendUniversityFacultyIdsParams(
-      {required this.universityId, required this.facultyId});
+      {required this.universityId,
+      required this.facultyId,
+      this.academicYear,
+      required this.graduationYear});
 }
 
 class SendExperienceLevelParams {
@@ -116,6 +123,12 @@ class PersonalInfoParams {
   final String lastName;
   final String email;
   final String address;
+
   PersonalInfoParams(
-      {required this.image, required this.firstName, required this.lastName,  required this.userId, required this.email, required this.address});
+      {required this.image,
+      required this.firstName,
+      required this.lastName,
+      required this.userId,
+      required this.email,
+      required this.address});
 }

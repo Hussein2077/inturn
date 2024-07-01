@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -17,6 +19,9 @@ import 'package:inturn/core/widgets/snack_bar.dart';
 import 'package:inturn/features/auth/presentation/controller/login_bloc/login_with_email_and_password_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/login_bloc/login_with_email_and_password_events.dart';
 import 'package:inturn/features/auth/presentation/controller/login_bloc/login_with_email_and_password_states.dart';
+import 'package:inturn/features/auth/presentation/signup/intle_phone.dart';
+import 'package:inturn/features/auth/presentation/signup/send_code_button.dart';
+import 'package:inturn/features/auth/presentation/signup/sign_up.dart';
 import 'package:inturn/main.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -27,20 +32,17 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  late TextEditingController emailController;
   late TextEditingController passwordController;
   final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
-    emailController = TextEditingController();
     passwordController = TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
-    emailController.dispose();
     passwordController.dispose();
     super.dispose();
   }
@@ -97,11 +99,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   fontWeight: FontWeight.w700,
                 ),
                 SizedBox(height: AppSize.defaultSize! * 4),
-                CustomTextField(
-                  formKey: _formKey,
-                  labelText: StringManager.phoneNum.tr(),
-                  controller: emailController,
-                  keyboardType: TextInputType.phone,
+                IntlPhone(
+                  onChanged: (phone) {
+                    SignUpScreen.phoneNumber = phone.number;
+                    log('${SignUpScreen.phoneNumber}SignUpScreen.phoneNumber');
+                  },
+                  onSubmitted: (phone) {
+                    SignUpScreen.phoneNumber = phone;
+                    log('${SignUpScreen.phoneNumber}SignUpScreen.phoneNumber');
+                    // phoneNumber = phone;
+                  },
                 ),
                 SizedBox(height: AppSize.defaultSize! * 1.3),
                 CustomTextField(
@@ -159,17 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 MainButton(
                   text: StringManager.login.tr(),
                   onTap: () {
-                    if (validation()) {
-                      BlocProvider.of<LoginWithEmailAndPasswordBloc>(context)
-                          .add(LoginWithEmailAndPasswordEvent(
-                        email: emailController.text,
-                        password: passwordController.text,
-                      ));
-                      // Navigator.pushNamed(context, Routes.academicInfo);
-                    } else {
-                      errorSnackBar(
-                          context, StringManager.pleaseCompleteYourData.tr());
-                    }
+                    validation();
                   },
                 ),
                 SizedBox(
@@ -183,13 +180,17 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  bool validation() {
-    if (emailController.text == '') {
-      return false;
+  validation() {
+    if (SignUpScreen.phoneNumber.length != 10) {
+      errorSnackBar(context, StringManager.pleaseEnterValidPhoneNumber.tr());
     } else if (passwordController.text == '') {
-      return false;
+      errorSnackBar(context, StringManager.pleaseEnterPassword.tr());
     } else {
-      return true;
+      BlocProvider.of<LoginWithEmailAndPasswordBloc>(context)
+          .add(LoginWithEmailAndPasswordEvent(
+        email: '0${SignUpScreen.phoneNumber}',
+        password: passwordController.text,
+      ));
     }
   }
 }

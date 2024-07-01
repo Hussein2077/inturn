@@ -24,8 +24,9 @@ final String email;
 class AddUniversityAndFacultiesEvent extends AddPersonalInfoEvent {
   final String universityId;
   final String facultyId;
-
-  const AddUniversityAndFacultiesEvent({required this.universityId, required this.facultyId});
+  final String? academicYear;
+  final String graduationYear;
+  const AddUniversityAndFacultiesEvent({required this.universityId, required this.facultyId,    this.academicYear, required this.graduationYear});
 
   @override
   List<Object> get props => [universityId, facultyId];

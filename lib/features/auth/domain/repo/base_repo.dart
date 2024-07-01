@@ -19,7 +19,7 @@ abstract class BaseRepository {
       SignUpModel signUpModel);
 
   Future<Either<Map<String, dynamic>, Failure>> addPersonalInfo(PersonalInfoParams params);
-  Future<Either<dynamic, Failure>> sendUniversityFacultyIds(String universityId, String facultyId);
+  Future<Either<dynamic, Failure>> sendUniversityFacultyIds( SendUniversityFacultyIdsParams universityFacultyIdsParams);
   Future<Either<dynamic, Failure>> sendExperienceLevel(String typeID, String jobLevelId);
   Future<Either<dynamic, Failure>> locationType(LocationTypeParams locationTypeParams);
   Future<Either<dynamic, Failure>> majorOfFields(List<int> majorIds);

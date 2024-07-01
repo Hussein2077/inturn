@@ -96,6 +96,7 @@ class StringManager {
   static const String userTokenKey = "User Token Key";
   static const String userIDKey = "User Id Key";
   static const String profileIDKey = "profile Id Key";
+  static const String ifStudent = "ifStudent";
   static const String unexpectedError = "Unexpected Error";
   static const String loginSuccessfully = " Login Successfully";
   static const String login = " Login";
@@ -199,4 +200,35 @@ class StringManager {
   static const String all = "All";
   static const String freshGraduate = "Fresh Graduate";
   static const String majorError = "Please select your major";
+  static const String academicYear = "Academic Year";
+  static const String pleaseEnterPassword = "Please enter password";
+  static const String pleaseEnterValidPhoneNumber = "Please enter valid phone number";
+ static const List<String> graduationYears = [
+    '2020',
+    '2021',
+    '2022',
+    '2023',
+    '2024',
+    '2025',
+    '2026',
+    '2027',
+    '2028',
+    '2029',
+    '2030',
+    '2031',
+    '2032',
+    '2033',
+    '2034',
+    '2035'
+  ];
+ static const List<String> academicYears = [
+    '1st Year',
+    '2nd Year',
+    '3rd Year',
+    '4th Year',
+    '5th Year',
+    '6th Year',
+    '7th Year',
+  ];
+
 }

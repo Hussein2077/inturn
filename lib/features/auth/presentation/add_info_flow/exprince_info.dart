@@ -8,6 +8,7 @@ import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
+import 'package:inturn/core/utils/methods.dart';
 import 'package:inturn/core/widgets/app_bar.dart';
 import 'package:inturn/core/widgets/cutom_text.dart';
 import 'package:inturn/core/widgets/main_button.dart';
@@ -43,26 +44,31 @@ class _ExperienceInfoState extends State<ExperienceInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appBar(context, text: StringManager.experience.tr(),leading: true),
-        body: BlocListener<AddPersonalInfoBloc, AddPersonalInfoState >(
+        appBar:
+            appBar(context, text: StringManager.experience.tr(),   actions: true,
+                leading: false),
+        body: BlocListener<AddPersonalInfoBloc, AddPersonalInfoState>(
           listener: (context, state) {
             if (state is AddExperienceLevelLoadingState) {
               EasyLoading.show();
-            }
-          else  if (state is AddExperienceLevelErrorState) {
+            } else if (state is AddExperienceLevelErrorState) {
               EasyLoading.dismiss();
               errorSnackBar(context, StringManager.unexpectedError.tr());
-            }
-            else if (state is AddExperienceLevelSuccessState) {
-              EasyLoading.dismiss();
-              Navigator.pushNamed(context, Routes.academicInfo,);
+            } else if (state is AddExperienceLevelSuccessState) {
+              Methods.instance.saveIfStudent(isStudent:  ExperienceInfo.experience==0);
 
+              EasyLoading.dismiss();
+              Navigator.pushNamed(
+                context,
+                Routes.academicInfo,
+                arguments: ExperienceInfo.experience==0
+              );
             }
           },
           child: Padding(
             padding: EdgeInsets.all(AppSize.defaultSize! * 1.5),
             child:
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               CustomText(
                 text: StringManager.studentOrGraduated.tr(),
                 color: AppColors.thirdColor,
@@ -94,6 +100,7 @@ class _ExperienceInfoState extends State<ExperienceInfo> {
               MainButton(
                   text: StringManager.next.tr(),
                   onTap: () {
+
                     BlocProvider.of<AddPersonalInfoBloc>(context).add(
                       SendExperienceLevelEvent(
                           typeID: (ExperienceInfo.experience + 1).toString(),

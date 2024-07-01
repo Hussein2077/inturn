@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inturn/core/service/navigator_services.dart';
 import 'package:inturn/core/service/service_locator.dart';
+import 'package:inturn/core/utils/methods.dart';
 import 'package:inturn/core/widgets/loading_widget.dart';
 import 'package:inturn/features/auth/presentation/add_info_flow/acdemic_info.dart';
 import 'package:inturn/features/auth/presentation/add_info_flow/exprince_info.dart';
@@ -58,6 +59,8 @@ class Routes {
 }
 
 class RouteGenerator {
+  static bool isStudent = false;
+
   static Route<dynamic> getRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.main:
@@ -97,8 +100,8 @@ class RouteGenerator {
                 }
                 if (state is GetMyDataErrorMessageState) {
                   return const LoginScreen(
-                    // userID: userId ?? MyApp.userId,
-                  );
+                      // userID: userId ?? MyApp.userId,
+                      );
                 }
                 return MainScreen(
                   userID: userId ?? MyApp.userId,
@@ -117,7 +120,6 @@ class RouteGenerator {
                 const SplashScreen(),
             transitionsBuilder: customAnimate);
 
-
       case Routes.signUp:
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
@@ -126,14 +128,19 @@ class RouteGenerator {
       case Routes.personalInfo:
         String userId = settings.arguments as String;
         return PageRouteBuilder(
-          settings: settings,
+            settings: settings,
             pageBuilder: (context, animation, secondaryAnimation) =>
-                PersonalInfo(userId: userId,),
+                PersonalInfo(
+                  userId: userId,
+                ),
             transitionsBuilder: customAnimate);
       case Routes.academicInfo:
+        bool student = settings.arguments as bool;
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
-                const AcademicInfo(),
+                AcademicInfo(
+                  isStudent: student,
+                ),
             transitionsBuilder: customAnimate);
       case Routes.experienceInfo:
         return PageRouteBuilder(
@@ -175,19 +182,23 @@ class RouteGenerator {
         String email = settings.arguments as String;
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
-                  SendOTPCode(email: email,),
+                SendOTPCode(
+                  email: email,
+                ),
             transitionsBuilder: customAnimate);
       case Routes.resetPassword:
         String email = settings.arguments as String;
         return PageRouteBuilder(
-
             pageBuilder: (context, animation, secondaryAnimation) =>
-                  ResetPassword(email: email,),
+                ResetPassword(
+                  email: email,
+                ),
             transitionsBuilder: customAnimate);
 
       case Routes.changePassword:
         return PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) => ChangePasswordScreen(),
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                ChangePasswordScreen(),
             transitionsBuilder: customAnimate);
       case Routes.profile:
         String userId = settings.arguments as String;
@@ -271,13 +282,21 @@ Widget customAnimate(BuildContext context, Animation<double> animation,
 }
 
 Widget getScreenFromCompletion(int completion, String userId) {
+  Future.delayed(Duration.zero, () async {
+    RouteGenerator.isStudent = await Methods.instance.returnIfStudent();
+  });
+
   switch (completion) {
     case 20:
-      return   PersonalInfo(userId: userId,);
+      return PersonalInfo(
+        userId: userId,
+      );
     case 30:
       return const ExperienceInfo();
     case 45:
-      return const AcademicInfo();
+      return AcademicInfo(
+        isStudent: RouteGenerator.isStudent,
+      );
     case 60:
       return const LocationInfo();
     case 75:

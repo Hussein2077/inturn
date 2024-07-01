@@ -79,9 +79,9 @@ class RepositoryImp extends BaseRepository {
   }
 
   @override
-  Future<Either<dynamic, Failure>> sendUniversityFacultyIds(String universityId, String facultyId) async {
+  Future<Either<dynamic, Failure>> sendUniversityFacultyIds( SendUniversityFacultyIdsParams universityFacultyIdsParams) async {
     try {
-      final result = await baseRemotelyDataSource.sendUniversityFacultyIds(universityId, facultyId);
+      final result = await baseRemotelyDataSource.sendUniversityFacultyIds(universityFacultyIdsParams);
       return Left(result);
     } on Exception catch (e) {
       return right(DioHelper.buildFailure(e));
