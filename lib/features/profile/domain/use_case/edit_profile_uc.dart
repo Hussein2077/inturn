@@ -22,32 +22,38 @@ class EditPersonalInfoParams {
   final String id;
   final String? firstName;
   final String? lastName;
-
-  final String? UniversityId;
-  final String? FacultyId;
-  final String? Description;
-  final String? JobLevelId;
-  final String? GraduationStatusId;
-  final String? JobLocationTypeId;
-  final List<int>? MajorIds;
-  final List<int>? SkillIds;
-  final String? CountryId;
-  final String? CityId;
+  final String? universityId;
+  final String? facultyId;
+  final String? description;
+  final String? jobLevelId;
+  final String? graduationStatusId;
+  final String? jobLocationTypeId;
+  final List<int>? majorIds;
+  final List<int>? skillIds;
+  final String? countryId;
+  final String? cityId;
   final File? image;
+  final String? address;
+  final String? graduationDate;
+  final String? academicYear;
+
   EditPersonalInfoParams({
-     required this.id,
-     this.firstName,
-     this.lastName,
-     this.UniversityId,
-     this.FacultyId,
-     this.Description,
-     this.JobLevelId,
-     this.GraduationStatusId,
-     this.JobLocationTypeId,
-     this.MajorIds,
-     this.SkillIds,
-     this.CountryId,
-     this.CityId,
-    this.image
+    required this.id,
+    this.firstName,
+    this.lastName,
+    this.universityId,
+    this.facultyId,
+    this.description,
+    this.jobLevelId,
+    this.graduationStatusId,
+    this.jobLocationTypeId,
+    this.majorIds,
+    this.skillIds,
+    this.countryId,
+    this.cityId,
+    this.image,
+    this.address,
+    this.graduationDate,
+    this.academicYear,
   });
 }

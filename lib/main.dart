@@ -1,4 +1,3 @@
-
 import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
@@ -147,7 +146,6 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => getIt<GetPdfBloc>()),
         BlocProvider(create: (context) => getIt<ResetPasswordFlowBloc>()),
         BlocProvider(create: (context) => getIt<ChangePasswordFlowBloc>()),
-
       ],
       child: MaterialApp(
         locale: context.locale,

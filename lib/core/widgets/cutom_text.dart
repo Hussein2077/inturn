@@ -35,6 +35,7 @@ class CustomText extends StatelessWidget {
       text,
       style: TextStyle(
         height: lineHeight,
+
         color: color ?? Colors.black,
         decoration: textDecoration ?? TextDecoration.none,
 

@@ -76,7 +76,7 @@ class _AcademicInfoState extends State<AcademicInfo> {
                     height: AppSize.defaultSize! * 2,
                   ),
                   if(widget.isStudent)
-                  const AcademicYearsDropDown(),
+                    const AcademicYearsDropDown(),
                   SizedBox(
                     height: AppSize.defaultSize! * 4,
                   ),

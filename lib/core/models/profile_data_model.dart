@@ -128,7 +128,9 @@ class ProfileDataModel {
   int? cityId;
   Country? country;
   CityModel? city;
-
+    String? address;
+    String? graduationDate;
+    String? academicYear;
 
   ProfileDataModel({
     this.userProfileId,
@@ -149,7 +151,9 @@ class ProfileDataModel {
     this.cityId,
     this.country,
     this.city,
-
+    this.address,
+    this.graduationDate,
+    this.academicYear,
   });
 
   factory ProfileDataModel.fromJson(Map<String, dynamic> json) {
@@ -175,6 +179,9 @@ class ProfileDataModel {
       cityId: json['cityId'] ??0,
       country: json['country'] != null ? Country.fromJson(json['country']) : null,
       city: json['city'] != null ? CityModel.fromJson(json['city']) : null,
+      academicYear: json['academicYear'] ??"",
+      address: json['address'] ??"",
+      graduationDate: json['graduationDate'] ??"",
     );
   }
 }

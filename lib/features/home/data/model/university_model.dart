@@ -6,7 +6,7 @@ class UniversityModel extends Equatable{
   final String? universityName;
   final String? universityNameAr;
 
-  UniversityModel({
+  const UniversityModel({
       this.universityId,
       this.universityName,
       this.universityNameAr,

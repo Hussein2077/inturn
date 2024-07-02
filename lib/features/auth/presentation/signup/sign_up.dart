@@ -173,13 +173,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: MainButton(
                         text: StringManager.continue1.tr(),
                         onTap: () {
-                          print('asfaefgqeg${CustomPinCodeTextField.otp}');
-                          print('asfaefgqeg${passwordController.text}');
-
-                          print('asfaefgqeg${passwordConfirmController.text}');
-
-                          print('asfaefgqeg${SignUpScreen.phoneNumber}');
-
                           if (SignUpScreen.phoneNumber.length == 10 &&
                               passwordController.text ==
                                   passwordConfirmController.text &&

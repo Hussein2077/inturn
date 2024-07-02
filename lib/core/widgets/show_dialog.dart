@@ -433,6 +433,7 @@ class CVPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log('${profileDataModel.university?.universityName}profileDataModel.university?.universityName');
     return Column(
       children: [
         Container(
@@ -443,10 +444,7 @@ class CVPage extends StatelessWidget {
               borderRadius: BorderRadius.all(
                 Radius.circular(AppSize.defaultSize! * 2),
               ),
-              // image: const DecorationImage(
-              //   image: AssetImage(AssetPath.bgCv),
-              //   fit: BoxFit.fitHeight,
-              // ),
+
             ),
             child: Padding(
               padding: EdgeInsets.all(AppSize.defaultSize!),
@@ -557,7 +555,7 @@ class CVPage extends StatelessWidget {
                                 width: AppSize.screenWidth! * .6,
                                 child: CustomText(
                                   text:
-                                  profileDataModel.city?.cityNameEn ?? "",
+                                  profileDataModel.address?? "",
                                   color: AppColors.primaryColor,
                                   textAlign: TextAlign.start,
                                   fontSize: AppSize.defaultSize! * 1.4,
@@ -570,16 +568,19 @@ class CVPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    CustomText(
-                      text: StringManager.education.tr(),
-                      color: AppColors.primaryColor,
-                      fontSize: AppSize.defaultSize! * 1.6,
-                      fontWeight: FontWeight.w700,
+                    Padding(
+                      padding:   const EdgeInsets.symmetric(vertical: 2),
+                      child: CustomText(
+                        text: StringManager.education.tr(),
+                        color: AppColors.primaryColor,
+                        fontSize: AppSize.defaultSize! * 1.6,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                     CustomText(
                       text: profileDataModel.university?.universityName ?? "",
                       color: AppColors.primaryColor,
-                      fontSize: AppSize.defaultSize! * 1.4,
+                      fontSize: AppSize.defaultSize! * 1.3,
                       fontWeight: FontWeight.w700,
                     ),
                     CustomText(

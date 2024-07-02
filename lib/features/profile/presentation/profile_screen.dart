@@ -13,10 +13,12 @@ import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/utils/enums.dart';
 import 'package:inturn/core/utils/methods.dart';
+import 'package:inturn/core/widgets/academic_year_drop_down.dart';
 import 'package:inturn/core/widgets/app_bar.dart';
 import 'package:inturn/core/widgets/column_with_text_field.dart';
 import 'package:inturn/core/widgets/custom_text_field.dart';
 import 'package:inturn/core/widgets/cutom_text.dart';
+import 'package:inturn/core/widgets/graduation_years_drop_down.dart';
 import 'package:inturn/core/widgets/loading_widget.dart';
 import 'package:inturn/core/widgets/main_button.dart';
 import 'package:inturn/core/widgets/major_drop_down.dart';
@@ -54,14 +56,13 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   SingingCharacter language = SingingCharacter.no;
 
-  late TextEditingController emailController;
+  late TextEditingController addressController;
   late TextEditingController firstNameController;
   late TextEditingController lastNameController;
   late TextEditingController descriptionController;
 
   ProfileDataModel? profileDataModel;
-
-  int education = 0;
+   int education=0;
 
   void _onValueChangededucation(int newValue) {
     setState(() {
@@ -89,8 +90,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     BlocProvider.of<GetMyProfileDataBloc>(context)
         .add(GetMyProfileDataEvent(widget.userId));
+
     intilanguage();
-    emailController = TextEditingController();
+    addressController = TextEditingController();
     firstNameController = TextEditingController();
     lastNameController = TextEditingController();
     descriptionController = TextEditingController();
@@ -99,7 +101,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void dispose() {
-    emailController.dispose();
+    addressController.dispose();
     firstNameController.dispose();
     lastNameController.dispose();
     descriptionController.dispose();
@@ -134,11 +136,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: BlocBuilder<GetMyProfileDataBloc, GetMyProfileDataState>(
         builder: (context, state) {
           if (state is GetMyProfileDataSuccessMessageState) {
-            log('${profileDataModel?.graduationStatusId}profileDataModel?.graduationStatusId');
+            log('${state.profileDataModel.academicYear}state.profileDataModel.academicYear');
+            education = state.profileDataModel.graduationStatusId!;
+            log('${education}education');
+
             profileDataModel = state.profileDataModel;
             UniversityDropDown.selectedValue = profileDataModel?.university;
             FacultyDropDown.selectedValue = profileDataModel?.faculty;
-            emailController.text = state.profileDataModel.user?.email ?? "";
+            addressController.text = state.profileDataModel.address ?? "";
             firstNameController.text = state.profileDataModel.firstName ?? "";
             lastNameController.text = state.profileDataModel.lastName ?? "";
             descriptionController.text =
@@ -195,7 +200,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Image.asset(
                               AssetPath.changePassword,
                               width: AppSize.defaultSize! * 2.5,
-                              height: AppSize.defaultSize! *2.5,
+                              height: AppSize.defaultSize! * 2.5,
                             ),
                             SizedBox(
                               width: AppSize.defaultSize! * .5,
@@ -218,7 +223,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             showCV(context, state.profileDataModel);
                           },
                           text: StringManager.downloadCV.tr(),
-                          textColor:AppColors.primaryColor,
+                          textColor: AppColors.primaryColor,
                           color: AppColors.lightGreyColor,
                           fontWeight: FontWeight.bold,
                         ),
@@ -275,19 +280,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   text: StringManager.firstName.tr(),
                                   controller: firstNameController,
                                 ),
-                                // SizedBox(
-                                //   height: AppSize.defaultSize! ,
-                                // ),
                                 ColumnWithTextField(
                                   text: StringManager.secondName.tr(),
                                   controller: lastNameController,
                                 ),
-                                // SizedBox(
-                                //   height: AppSize.defaultSize! ,
-                                // ),
                                 ColumnWithTextField(
-                                  text: StringManager.email.tr(),
-                                  controller: emailController,
+                                  text: StringManager.address.tr(),
+                                  controller: addressController,
                                 ),
                                 SizedBox(
                                   height: AppSize.defaultSize! * 2,
@@ -345,6 +344,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   FacultyDropDown(
                                     facultyId: state.profileDataModel.faculty,
                                   ),
+                                  SizedBox(
+                                    height: AppSize.defaultSize! * 2,
+                                  ),
+                                  GraduationYearsDropDown(
+                                    initValue:
+                                        state.profileDataModel.graduationDate,
+                                  ),
+                                  SizedBox(
+                                    height: AppSize.defaultSize! * 2,
+                                  ),
+                                  if (state.profileDataModel.graduationStatusId==1)
+                                    AcademicYearsDropDown(
+                                      initValue:
+                                          state.profileDataModel.academicYear!.isEmpty?"1st Year":state.profileDataModel.academicYear,
+                                    ),
                                 ],
                               ),
                             ),
@@ -373,16 +387,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   color: AppColors.primaryColor,
                                   fontWeight: FontWeight.w700,
                                 ),
+                                if(state.profileDataModel.graduationStatusId==1)
                                 SizedBox(
                                   height: AppSize.defaultSize! * 1.6,
                                 ),
+                                if(state.profileDataModel.graduationStatusId==1)
                                 CustomText(
                                   text: StringManager.studentOrGraduated.tr(),
                                   color: AppColors.thirdColor,
                                 ),
+                                if(state.profileDataModel.graduationStatusId==1)
                                 SizedBox(
                                   height: AppSize.defaultSize! * 1.6,
                                 ),
+                                if(state.profileDataModel.graduationStatusId==1)
                                 CustomSegmentedButton(
                                   width: AppSize.defaultSize! * 15,
                                   initialSelectedIndex: (profileDataModel
@@ -494,6 +512,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             vertical: AppSize.defaultSize! * 2),
                         child: MainButton(
                           onTap: () {
+                            log('${   (education +1)}   (education +1)');
                             List<int>? mergeSkill = ProfileSkills.newSkills
                                 .map((e) => e.id)
                                 .toSet()
@@ -507,31 +526,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   .add(EditProfileEvent(
                                 EditPersonalInfoParams(
                                   id: MyApp.userProfileId.toString(),
+                                  address: addressController.text.isEmpty
+                                      ? state.profileDataModel.address
+                                      : addressController.text,
+                                  graduationDate:  GraduationYearsDropDown.selectedValue ,
+                                  academicYear:   AcademicYearsDropDown.selectedValue ,
                                   firstName: firstNameController.text.isEmpty
                                       ? state.profileDataModel.firstName
                                       : firstNameController.text,
                                   lastName: lastNameController.text.isEmpty
                                       ? state.profileDataModel.lastName
                                       : lastNameController.text,
-                                  UniversityId: (UniversityDropDown
+                                  universityId: (UniversityDropDown
                                               .selectedValue?.universityId ??
                                           state.profileDataModel.university
                                               ?.universityId)
                                       .toString(),
-                                  FacultyId: (FacultyDropDown
+                                  facultyId: (FacultyDropDown
                                               .selectedValue?.id ??
                                           state.profileDataModel.faculty?.id)
                                       .toString(),
-                                  Description:
+                                  description:
                                       descriptionController.text.isEmpty
                                           ? state.profileDataModel.description
                                           : descriptionController.text,
-                                  JobLevelId: (jop + 1).toString(),
-                                  GraduationStatusId:
-                                      (education + 1).toString(),
-                                  JobLocationTypeId: (location + 1).toString(),
-                                  MajorIds: FieldsInfo.majorsId,
-                                  SkillIds: mergeSkill,
+                                  jobLevelId: (jop + 1).toString(),
+                                  graduationStatusId:
+                                      (education).toString(),
+                                  jobLocationTypeId: (location + 1).toString(),
+                                  majorIds: FieldsInfo.majorsId,
+                                  skillIds: mergeSkill,
                                   image: ProfileScreen.isUploaded
                                       ? UploadProfileImagePage.imageFile!
                                       : null,

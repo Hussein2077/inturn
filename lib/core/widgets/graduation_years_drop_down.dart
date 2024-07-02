@@ -10,7 +10,9 @@ import 'package:inturn/core/widgets/cutom_text.dart';
 class GraduationYearsDropDown extends StatefulWidget {
   const GraduationYearsDropDown({
     super.key,
+    this.initValue,
   });
+  final String? initValue;
 static String? selectedValue;
 
 
@@ -21,6 +23,10 @@ static String? selectedValue;
 class _GraduationYearsDropDownState extends State<GraduationYearsDropDown> {
   @override
   void initState() {
+    if(widget.initValue != null){
+      GraduationYearsDropDown.selectedValue = widget.initValue;
+    }
+
     super.initState();
   }
 

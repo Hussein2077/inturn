@@ -75,16 +75,19 @@ class ProfileRemotelyDateSource extends BaseRemotelyDataSourceProfile {
         'FirstName': parameter.firstName,
         'LastName': parameter.lastName,
         'UniversityId':
-            parameter.UniversityId == '0' ? null : parameter.UniversityId,
-        'FacultyId': parameter.FacultyId,
-        'Description': parameter.Description,
-        'JobLevelId': parameter.JobLevelId,
-        'GraduationStatusId': parameter.GraduationStatusId,
-        'JobLocationTypeId': parameter.JobLocationTypeId,
-        'MajorIds': parameter.MajorIds,
-        'SkillIds': parameter.SkillIds,
-        'CountryId': parameter.CountryId,
-        'CityId': parameter.CityId,
+            parameter.universityId == '0' ? null : parameter.universityId,
+        'FacultyId': parameter.facultyId,
+        'Description': parameter.description,
+        'JobLevelId': parameter.jobLevelId,
+        'GraduationStatusId': parameter.graduationStatusId,
+        'JobLocationTypeId': parameter.jobLocationTypeId,
+        'MajorIds': parameter.majorIds,
+        'SkillIds': parameter.skillIds,
+        'CountryId': parameter.countryId,
+        'CityId': parameter.cityId,
+        'Address': parameter.address,
+        'GraduationDate': parameter.graduationDate,
+        'AcademicYear': parameter.academicYear,
       });
     } else {
       formData = FormData.fromMap({
@@ -92,45 +95,24 @@ class ProfileRemotelyDateSource extends BaseRemotelyDataSourceProfile {
         'FirstName': parameter.firstName,
         'LastName': parameter.lastName,
         'UniversityId':
-            parameter.UniversityId == '0' ? null : parameter.UniversityId,
-        'FacultyId': parameter.FacultyId,
-        'Description': parameter.Description,
-        'JobLevelId': parameter.JobLevelId,
-        'GraduationStatusId': parameter.GraduationStatusId,
-        'JobLocationTypeId': parameter.JobLocationTypeId,
-        'MajorIds': parameter.MajorIds,
-        'SkillIds': parameter.SkillIds,
-        'CountryId': parameter.CountryId,
-        'CityId': parameter.CityId,
+            parameter.universityId == '0' ? null : parameter.universityId,
+        'FacultyId': parameter.facultyId,
+        'Description': parameter.description,
+        'JobLevelId': parameter.jobLevelId,
+        'GraduationStatusId': parameter.graduationStatusId,
+        'JobLocationTypeId': parameter.jobLocationTypeId,
+        'MajorIds': parameter.majorIds,
+        'SkillIds': parameter.skillIds,
+        'CountryId': parameter.countryId,
+        'CityId': parameter.cityId,
         'ImageFile': await MultipartFile.fromFile(parameter.image!.path,
             filename: parameter.image?.path.split('/').last.toString(),
             contentType: MediaType("image", "jpeg")),
+        'Address': parameter.address,
+        'GraduationDate': parameter.graduationDate,
+        'AcademicYear': parameter.academicYear,
       });
     }
-
-    log('${parameter.firstName} firstname');
-
-    log('${parameter.lastName} lastname');
-
-    log('${parameter.UniversityId} UniversityId');
-
-    log('${parameter.FacultyId} FacultyId');
-
-    log('${parameter.Description} Description');
-
-    log('${parameter.JobLevelId} JobLevelId');
-
-    log('${parameter.GraduationStatusId} GraduationStatusId');
-
-    log('${parameter.JobLocationTypeId} JobLocationTypeId');
-
-    log('${parameter.MajorIds} MajorIds');
-
-    log('${parameter.SkillIds} SkillIds');
-
-    log('${parameter.CountryId} CountryId');
-
-    log('${parameter.CityId} CityId');
 
     log('${MyApp.userId} userId');
     try {

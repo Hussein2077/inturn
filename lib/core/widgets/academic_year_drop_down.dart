@@ -9,8 +9,9 @@ import 'package:inturn/core/utils/app_size.dart';
 
 class AcademicYearsDropDown extends StatefulWidget {
   const AcademicYearsDropDown({
-    super.key,
+    super.key,    this.initValue,
   });
+  final String? initValue;
   static String? selectedValue;
 
 
@@ -20,7 +21,13 @@ class AcademicYearsDropDown extends StatefulWidget {
 
 class _AcademicYearsDropDownState extends State<AcademicYearsDropDown> {
 
-
+@override
+  void initState() {
+    if(widget.initValue != null){
+      AcademicYearsDropDown.selectedValue = widget.initValue;
+    }
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return   Container(
