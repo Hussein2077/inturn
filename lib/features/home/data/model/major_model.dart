@@ -30,7 +30,7 @@ class Position extends Equatable {
 
 
 
-  Position({
+  const Position({
     required this.majorId,
     required this.majorNameEn,
     required this.majorNameAr,
