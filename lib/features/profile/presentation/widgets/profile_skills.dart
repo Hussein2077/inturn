@@ -148,6 +148,7 @@ class _ProfileSkillsState extends State<ProfileSkills> {
                 ValueListenableBuilder(
                     valueListenable: addToSkill,
                     builder: (context_, value, child) {
+                      ProfileSkills.newSkills=ProfileSkills.newSkills.toSet().toList();
                       return CustomSegmentedButton2(
                         onTapClose: (i) {
                           ProfileSkills.newSkills.removeAt(i);
@@ -155,13 +156,14 @@ class _ProfileSkillsState extends State<ProfileSkills> {
                         },
                         segments: ProfileSkills.newSkills
                             .map((e) => e.nameEn ?? "")
-                            .toList()
                             .toSet()
                             .toList(),
                         onValueChanged: (index) => _onValueChanged(index),
                         initialSelectedIndexes: ProfileSkills.newSkills
                             .map((e) => ProfileSkills.newSkills.indexOf(e))
-                            .toList().toSet().toList(),
+
+                            .toSet()
+                            .toList(),
                       );
                     }),
                 SizedBox(

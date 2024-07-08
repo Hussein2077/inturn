@@ -89,6 +89,7 @@ class _LocationInfoState extends State<LocationInfo> {
                               .toString() ?? '',
                           cityID: CitiesDropDown.selectedValue2?.cityId
                               .toString() ?? '',
+                          areaID: AreaDropDown.selectedValue2!.areaId!.toString(),
                           locationTypeID: (LocationInfo.locationSegment+1)
                               .toString(),)
                     );

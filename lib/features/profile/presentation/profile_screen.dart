@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -64,27 +65,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   ProfileDataModel? profileDataModel;
    int education=0;
 
-  void _onValueChangededucation(int newValue) {
-    setState(() {
-      education = newValue;
-    });
-  }
 
   int jop = 0;
 
-  void _onValueChangedJop(int newValue) {
-    setState(() {
-      jop = newValue;
-    });
-  }
+
 
   int location = 0;
 
-  void _onValueChangedLocation(int newValue) {
-    setState(() {
-      location = newValue;
-    });
-  }
 
   @override
   void initState() {
@@ -136,9 +123,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: BlocBuilder<GetMyProfileDataBloc, GetMyProfileDataState>(
         builder: (context, state) {
           if (state is GetMyProfileDataSuccessMessageState) {
-            log('${state.profileDataModel.academicYear}state.profileDataModel.academicYear');
+            log('${education}education1111111111111111111111111');
             education = state.profileDataModel.graduationStatusId!;
-            log('${education}education');
+            log('${education}educationssssssssssssssssssssssss');
 
             profileDataModel = state.profileDataModel;
             UniversityDropDown.selectedValue = profileDataModel?.university;
@@ -152,28 +139,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               appBar: appBar(
                 context,
                 text: StringManager.profile.tr(),
-                leading: true,
+                leading: false,
                 actions: true,
-                leadingIcon: IconButton(
-                  onPressed: () async {
-                    if (language == SingingCharacter.Arabic) {
-                      setState(() {
-                        language = SingingCharacter.English;
-                      });
-                      await context.setLocale(const Locale('en'));
 
-                      await Methods().saveLocalazitaon(language: "en");
-                    } else {
-                      setState(() {
-                        language = SingingCharacter.Arabic;
-                      });
-                      await context.setLocale(const Locale('ar'));
-
-                      await Methods().saveLocalazitaon(language: "ar");
-                    }
-                  },
-                  icon: const Icon(Icons.language_outlined),
-                ),
               ),
               body: Padding(
                 padding: EdgeInsets.all(AppSize.defaultSize! * 1.5),
@@ -401,22 +369,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   height: AppSize.defaultSize! * 1.6,
                                 ),
                                 if(state.profileDataModel.graduationStatusId==1)
-                                CustomSegmentedButton(
-                                  width: AppSize.defaultSize! * 15,
-                                  initialSelectedIndex: (profileDataModel
-                                                  ?.graduationStatusId ??
-                                              1) >
-                                          0
-                                      ? (profileDataModel?.graduationStatusId ??
-                                              1) -
-                                          1
-                                      : 0,
-                                  segments: [
-                                    StringManager.student.tr(),
-                                    StringManager.graduated.tr()
-                                  ],
-                                  onValueChanged: (index) =>
-                                      _onValueChangededucation(index),
+                                StatefulBuilder(
+                                  builder: (context, setState) {
+                                    return CustomSegmentedButton(
+                                      width: AppSize.defaultSize! * 15,
+                                      initialSelectedIndex: (profileDataModel
+                                                      ?.graduationStatusId ??
+                                                  1) >
+                                              0
+                                          ? (profileDataModel?.graduationStatusId ??
+                                                  1) -
+                                              1
+                                          : 0,
+                                      segments: [
+                                        StringManager.student.tr(),
+                                        StringManager.graduated.tr()
+                                      ],
+                                      onValueChanged: (index) =>
+                                          (int newValue) {
+                                        setState(() {
+                                          education = newValue;
+                                        });
+                                      },
+                                    );
+                                  }
                                 ),
                                 SizedBox(
                                   height: AppSize.defaultSize! * 2.4,
@@ -428,20 +404,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 SizedBox(
                                   height: AppSize.defaultSize! * 1.6,
                                 ),
-                                CustomSegmentedButton(
-                                  width: AppSize.defaultSize! * 15,
-                                  initialSelectedIndex:
-                                      (profileDataModel?.jobLevelId ?? 1) > 0
-                                          ? (profileDataModel?.jobLevelId ??
-                                                  1) -
-                                              1
-                                          : 0,
-                                  segments: [
-                                    StringManager.internship.tr(),
-                                    StringManager.entryLevel.tr()
-                                  ],
-                                  onValueChanged: (index) =>
-                                      _onValueChangedJop(index),
+                                StatefulBuilder(
+                                  builder: (context, setState) {
+                                    return CustomSegmentedButton(
+                                      width: AppSize.defaultSize! * 15,
+                                      initialSelectedIndex:
+                                          (profileDataModel?.jobLevelId ?? 1) > 0
+                                              ? (profileDataModel?.jobLevelId ??
+                                                      1) -
+                                                  1
+                                              : 0,
+                                      segments: [
+                                        StringManager.internship.tr(),
+                                        StringManager.entryLevel.tr()
+                                      ],
+                                      onValueChanged: (index) =>
+                                          (int newValue) {
+                                        setState(() {
+                                          jop = newValue;
+                                        });
+                                      },
+                                    );
+                                  }
                                 ),
                               ],
                             ),
@@ -476,24 +460,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   SizedBox(
                                     height: AppSize.defaultSize! * 1.6,
                                   ),
-                                  CustomSegmentedButton(
-                                    initialSelectedIndex:
-                                        (profileDataModel?.jobLocationTypeId ??
-                                                    0) >
-                                                0
-                                            ? (profileDataModel
-                                                        ?.jobLocationTypeId ??
-                                                    0) -
-                                                1
-                                            : 0,
-                                    segments: [
-                                      StringManager.onSite.tr(),
-                                      StringManager.remotely.tr(),
-                                      StringManager.hybrid.tr()
-                                    ],
-                                    onValueChanged: (index) =>
-                                        _onValueChangedLocation(index),
-                                    width: AppSize.defaultSize! * 9,
+                                  StatefulBuilder(
+                                    builder: (context, setState) {
+                                      return CustomSegmentedButton(
+                                        initialSelectedIndex:
+                                            (profileDataModel?.jobLocationTypeId ??
+                                                        0) >
+                                                    0
+                                                ? (profileDataModel
+                                                            ?.jobLocationTypeId ??
+                                                        0) -
+                                                    1
+                                                : 0,
+                                        segments: [
+                                          StringManager.onSite.tr(),
+                                          StringManager.remotely.tr(),
+                                          StringManager.hybrid.tr()
+                                        ],
+                                        onValueChanged: (index) =>
+                                            (int newValue) {
+                                          setState(() {
+                                            location = newValue;
+                                          });
+                                        },
+                                        width: AppSize.defaultSize! * 9,
+                                      );
+                                    }
                                   ),
                                 ],
                               ),
@@ -512,13 +504,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             vertical: AppSize.defaultSize! * 2),
                         child: MainButton(
                           onTap: () {
-                            log('${   (education +1)}   (education +1)');
+                            log('${   (education)}   (education +1)');
                             List<int>? mergeSkill = ProfileSkills.newSkills
                                 .map((e) => e.id)
                                 .toSet()
                                 .toList();
                             FieldsInfo.majorsId = ProfileMajor.newMajors
-                                .map((e) => e.id)
+                                .map((e) => e.id).toSet()
                                 .toList();
                             if (ProfileMajor.newMajors.isNotEmpty &&
                                 mergeSkill.isNotEmpty) {
@@ -552,7 +544,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           : descriptionController.text,
                                   jobLevelId: (jop + 1).toString(),
                                   graduationStatusId:
-                                      (education).toString(),
+                                      (education+1).toString(),
                                   jobLocationTypeId: (location + 1).toString(),
                                   majorIds: FieldsInfo.majorsId,
                                   skillIds: mergeSkill,

@@ -58,6 +58,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
     secondNameController.dispose();
     emailController.dispose();
     addressController.dispose();
+    UploadProfileImagePage.imageFile = null;
     super.dispose();
   }
 
@@ -136,26 +137,23 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         }
                       } else if (state is SendCodeErrorMessageState) {
                         EasyLoading.dismiss();
-                        errorSnackBar(
-                            context,state.errorMessage);
+                        errorSnackBar(context, state.errorMessage);
                       } else if (state is SendCodeLoadingState) {
                         EasyLoading.show(status: 'loading...');
                       }
-                      if(state is VerifyCodeLoadingState)
-                      {
+                      if (state is VerifyCodeLoadingState) {
                         EasyLoading.show(status: 'loading...');
                       }
-                      if(state is VerifyCodeSuccessMessageState)
-                      {
+                      if (state is VerifyCodeSuccessMessageState) {
                         EasyLoading.dismiss();
-                        EasyLoading.showSuccess(StringManager.codeVerified.tr());
-                        if (otpVisibleNotifier.value ) {
+                        EasyLoading.showSuccess(
+                            StringManager.codeVerified.tr());
+                        if (otpVisibleNotifier.value) {
                           otpVisibleNotifier.value = false;
                         }
                         isVerifiedNotifier.value = true;
                       }
-                      if(state is VerifyCodeErrorMessageState)
-                      {
+                      if (state is VerifyCodeErrorMessageState) {
                         EasyLoading.dismiss();
                         errorSnackBar(context, state.errorMessage);
                       }
@@ -169,21 +167,20 @@ class _PersonalInfoState extends State<PersonalInfo> {
                           controller: emailController,
                           width: AppSize.screenWidth! * .7,
                           suffixIcon: ValueListenableBuilder(
-                            valueListenable: isVerifiedNotifier,
-                            builder: (context, value, child) {
-                              if (value == false) {
-                                return const Icon(
-                                  Icons.verified_outlined,
-                                  color: AppColors.greyColor,
-                                );
-                              }else {
-                                return Icon(
-                                Icons.verified,
-                                color:  AppColors.primaryColor,
-                              );
-                              }
-                            }
-                          ),
+                              valueListenable: isVerifiedNotifier,
+                              builder: (context, value, child) {
+                                if (value == false) {
+                                  return const Icon(
+                                    Icons.verified_outlined,
+                                    color: AppColors.greyColor,
+                                  );
+                                } else {
+                                  return Icon(
+                                    Icons.verified,
+                                    color: AppColors.primaryColor,
+                                  );
+                                }
+                              }),
                         ),
                         MainButton(
                           text: otpVisibleNotifier.value == false
@@ -193,11 +190,15 @@ class _PersonalInfoState extends State<PersonalInfo> {
                               ? AppColors.primaryColor
                               : AppColors.greyColor,
                           onTap: () {
-                            if (!otpVisibleNotifier.value) {
-                              BlocProvider.of<ResetPasswordFlowBloc>(context).add(
-                                  SendCodeEvent(
+                            if (!otpVisibleNotifier.value &&
+                                emailController.text.isNotEmpty) {
+                              BlocProvider.of<ResetPasswordFlowBloc>(context)
+                                  .add(SendCodeEvent(
                                       phoneOrEmail: emailController.text,
                                       phoneOrEmailType: PhoneOrEmail.email));
+                            } else if (emailController.text.isEmpty) {
+                              errorSnackBar(
+                                  context, StringManager.enterEmail.tr());
                             }
                           },
                           width: AppSize.screenWidth! * .2,
@@ -219,19 +220,19 @@ class _PersonalInfoState extends State<PersonalInfo> {
                             child: Column(
                               children: [
                                 CustomPinCodeTextField(
-
                                   onCompleted: (v) {
                                     print("Completedssssss");
                                     CustomPinCodeTextField.otp = v;
-                                    BlocProvider.of<ResetPasswordFlowBloc>(context).add(
-                                        VerifyCodeEvent(
+                                    BlocProvider.of<ResetPasswordFlowBloc>(
+                                            context)
+                                        .add(VerifyCodeEvent(
                                             email: emailController.text,
-                                            code:v ));
-
+                                            code: v));
                                   },
-
                                 ),
-                                  CounterByMinute(email: emailController.text,),
+                                CounterByMinute(
+                                  email: emailController.text,
+                                ),
                               ],
                             ),
                           )
@@ -242,7 +243,9 @@ class _PersonalInfoState extends State<PersonalInfo> {
                     onTap: () {
                       if (UploadProfileImagePage.imageFile != null &&
                           firstNameController.text.isNotEmpty &&
-                          secondNameController.text.isNotEmpty) {
+                          secondNameController.text.isNotEmpty &&
+                          isVerifiedNotifier.value &&
+                          addressController.text.isNotEmpty) {
                         BlocProvider.of<AddPersonalInfoBloc>(context)
                             .add(AddPersonalInfoButtonPressedEvent(
                           image: UploadProfileImagePage.imageFile!,
@@ -259,12 +262,15 @@ class _PersonalInfoState extends State<PersonalInfo> {
                           secondNameController.text.isEmpty) {
                         errorSnackBar(
                             context, StringManager.pleaseUploadName.tr());
-                      } else if (emailController.text.isEmpty) {
-                        errorSnackBar(
-                            context, StringManager.pleaseUploadEmail.tr());
                       } else if (addressController.text.isEmpty) {
                         errorSnackBar(
                             context, StringManager.pleaseUploadAddress.tr());
+                      } else if (emailController.text.isEmpty) {
+                        errorSnackBar(
+                            context, StringManager.pleaseUploadEmail.tr());
+                      } else if (isVerifiedNotifier.value == false) {
+                        errorSnackBar(
+                            context, StringManager.pleaseVerifyEmail.tr());
                       }
                     },
                   ),

@@ -319,21 +319,13 @@ class Skill {
   int? skillId;
   String? skillNameEn;
   String? skillNameAr;
-  String? creationDate;
-  String? lastModificationTime;
-  String? creatorUserId;
-  int? lastModificationUserId;
-  int? deleteStatusId;
+
 
   Skill({
     this.skillId,
     this.skillNameEn,
     this.skillNameAr,
-    this.creationDate,
-    this.lastModificationTime,
-    this.creatorUserId,
-    this.lastModificationUserId,
-    this.deleteStatusId,
+
   });
 
   factory Skill.fromJson(Map<String, dynamic> json) {
@@ -341,11 +333,7 @@ class Skill {
       skillId: json['skillId'],
       skillNameEn: json['skillNameEn'],
       skillNameAr: json['skillNameAr'],
-      creationDate: json['creationDate'],
-      lastModificationTime: json['lastModificationTime'],
-      creatorUserId: json['creatorUserId'],
-      lastModificationUserId: json['lastModificationUserId'],
-      deleteStatusId: json['deleteStatusId'],
+
     );
   }
 }
@@ -356,11 +344,7 @@ class Major {
   String? majorNameAr;
   String? majorRank;
   int? majorCategoryId;
-  String? creationDate;
-  String? lastModificationTime;
-  String? creatorUserId;
-  int? lastModificationUserId;
-  int? deleteStatusId;
+
 
   Major({
     this.majorId,
@@ -368,11 +352,6 @@ class Major {
     this.majorNameAr,
     this.majorRank,
     this.majorCategoryId,
-    this.creationDate,
-    this.lastModificationTime,
-    this.creatorUserId,
-    this.lastModificationUserId,
-    this.deleteStatusId,
   });
 
   factory Major.fromJson(Map<String, dynamic> json) {
@@ -382,11 +361,7 @@ class Major {
       majorNameAr: json['majorNameAr'],
       majorRank: json['majorRank'],
       majorCategoryId: json['majorCategoryId'],
-      creationDate: json['creationDate'],
-      lastModificationTime: json['lastModificationTime'],
-      creatorUserId: json['creatorUserId'],
-      lastModificationUserId: json['lastModificationUserId'],
-      deleteStatusId: json['deleteStatusId'],
+
     );
   }
 }

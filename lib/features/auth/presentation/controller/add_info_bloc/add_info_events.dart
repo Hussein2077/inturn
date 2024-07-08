@@ -45,8 +45,8 @@ class SendLocationEvent extends AddPersonalInfoEvent {
   final String countryID;
   final String cityID;
   final String locationTypeID;
-
-  const SendLocationEvent({required this.countryID, required this.cityID, required this.locationTypeID});
+  final String areaID;
+  const SendLocationEvent({required this.countryID, required this.cityID, required this.locationTypeID, required this.areaID});
 
   @override
   List<Object> get props => [countryID, cityID, locationTypeID];

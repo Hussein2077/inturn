@@ -1,9 +1,5 @@
-import 'dart:developer';
-
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -17,7 +13,6 @@ import 'package:inturn/core/widgets/cutom_text.dart';
 import 'package:inturn/core/widgets/loading_widget.dart';
 import 'package:inturn/core/widgets/main_button.dart';
 import 'package:inturn/core/widgets/snack_bar.dart';
-import 'package:inturn/features/auth/presentation/add_info_flow/skills.dart';
 import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_info_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_info_events.dart';
 import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_info_states.dart';
@@ -37,9 +32,7 @@ class FieldsInfo extends StatefulWidget {
 }
 
 class _FieldsInfoState extends State<FieldsInfo> {
-  Map<int , List<int> > _currentSegment = {
-    0:[]
-  };
+  final Map<int, List<int>> _currentSegment = {0: []};
 
   @override
   void initState() {
@@ -84,11 +77,13 @@ class _FieldsInfoState extends State<FieldsInfo> {
                             itemBuilder: (context, index) {
                               return CustomAccordion(
                                   text: state.topFiveModel[index].field,
+                                  index: index,
                                   // accordionElevation: 0,
                                   widgetItems: MultiSegmentedButton(
                                     initialIndex: index,
                                     segments: state.topFiveModel,
-                                    initialSelectedIndices: _currentSegment[index] ?? [],
+                                    initialSelectedIndices:
+                                        _currentSegment[index] ?? [],
                                     ids: state.topFiveModel[index].positions
                                         .map((position) => position.majorId)
                                         .toList(),
@@ -108,7 +103,8 @@ class _FieldsInfoState extends State<FieldsInfo> {
                         MainButton(
                           text: StringManager.next.tr(),
                           onTap: () {
-                            if (FieldsInfo.majorsId.isNotEmpty) {
+                            if (FieldsInfo.majorsId.isNotEmpty &&
+                                _currentSegment.isNotEmpty) {
                               BlocProvider.of<AddPersonalInfoBloc>(context).add(
                                   SendMajorIdEvent(
                                       majorIds: FieldsInfo.majorsId
@@ -130,12 +126,10 @@ class _FieldsInfoState extends State<FieldsInfo> {
                   return MainButton(
                     text: StringManager.next.tr(),
                     onTap: () {
+                      Navigator.pushNamed(context, Routes.main);
 
-                        Navigator.pushNamed(context, Routes.main);
-
-                        errorSnackBar(
-                            context, StringManager.unexpectedError.tr());
-
+                      errorSnackBar(
+                          context, StringManager.unexpectedError.tr());
                     },
                   );
                 },

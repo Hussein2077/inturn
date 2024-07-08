@@ -109,6 +109,7 @@ class AddPersonalInfoBloc
       cityID: event.cityID,
       countryID: event.countryID,
       locationTypeID: event.locationTypeID,
+      areaID: event.areaID,
     ));
     result.fold(
       (l) => emit(

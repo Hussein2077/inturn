@@ -108,11 +108,13 @@ class SendExperienceLevelParams {
 class LocationTypeParams {
   final String countryID;
   final String cityID;
+  final String areaID;
   final String locationTypeID;
 
   LocationTypeParams(
       {required this.cityID,
       required this.countryID,
+      required this.areaID,
       required this.locationTypeID});
 }
 

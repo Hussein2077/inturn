@@ -8,10 +8,10 @@ import 'package:inturn/core/widgets/cutom_text.dart';
 
 class CustomAccordion extends StatefulWidget {
   const CustomAccordion(
-      {super.key, required this.text, required this.widgetItems});
+      {super.key, required this.text, required this.widgetItems, this.index});
 
   final String text;
-
+final int? index;
   final Widget widgetItems;
 
   @override
@@ -19,6 +19,8 @@ class CustomAccordion extends StatefulWidget {
 }
 
 class _CustomAccordionState extends State<CustomAccordion> {
+late  bool visible ;
+
   Widget closeIcon = Transform.rotate(
     angle: 180 * 3.14 / 180,
     child: SvgPicture.asset(
@@ -29,7 +31,17 @@ class _CustomAccordionState extends State<CustomAccordion> {
   Widget openIcon = SvgPicture.asset(
     AssetPath.collapsed,
   );
-  bool visible = false;
+
+  @override
+  void initState() {
+   if(widget.index == 0){
+     visible = true;
+   }
+   else {
+     visible = false;
+   }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

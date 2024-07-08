@@ -1,10 +1,13 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/widgets/cached_network_image.dart';
+import 'package:inturn/core/widgets/snack_bar.dart';
 import 'package:inturn/features/profile/presentation/profile_screen.dart';
 
 class UploadProfileImagePage extends StatefulWidget {
@@ -20,20 +23,30 @@ class UploadProfileImagePage extends StatefulWidget {
 }
 
 class UploadProfileImagePageState extends State<UploadProfileImagePage> {
+  var maxFileSizeInBytes = 5 * 1048576;
+
   void _openImagePicker() async {
     final pickedImage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
-    setState(() {
-      if (pickedImage != null) {
-        if (widget.isProfile == true) {
-          ProfileScreen.isUploaded = true;
-          log('messagemessagemessage');
+    var imagePath = await pickedImage!.readAsBytes();
+
+    var fileSize = imagePath.length; // Get the file size in bytes
+    if (fileSize <= maxFileSizeInBytes) {
+      setState(() {
+        if (pickedImage != null) {
+          if (widget.isProfile == true) {
+            ProfileScreen.isUploaded = true;
+            log('messagemessagemessage');
+          }
+          UploadProfileImagePage.imageFile = File(pickedImage.path);
+        } else {
+          print('No image selected.');
         }
-        UploadProfileImagePage.imageFile = File(pickedImage.path);
-      } else {
-        print('No image selected.');
-      }
-    });
+      });
+
+    } else {
+      errorSnackBar(context, StringManager.fileTooBig.tr());
+    }
   }
 
   File? image;
@@ -61,10 +74,9 @@ class UploadProfileImagePageState extends State<UploadProfileImagePage> {
           borderRadius: BorderRadius.circular(AppSize.defaultSize! * 7.5),
         ),
         child: (UploadProfileImagePage.imageFile != null)
-            ?
-        ClipRRect(
+            ? ClipRRect(
                 borderRadius: BorderRadius.circular(AppSize.defaultSize! * 7.5),
-                child: (widget.imagePath != null&&ProfileScreen.isUploaded)
+                child: (widget.imagePath != null && ProfileScreen.isUploaded)
                     ? CachedNetworkCustom(url: widget.imagePath!)
                     : Image.file(
                         UploadProfileImagePage.imageFile!,

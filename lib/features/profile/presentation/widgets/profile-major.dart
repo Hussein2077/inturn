@@ -39,7 +39,9 @@ class _ProfileMajorState extends State<ProfileMajor> {
   @override
   initState() {
     BlocProvider.of<GetMajorBloc>(context).add(GetMajorEvent());
-    for(int i = 0; i < widget.profileDataModel!.user!.userMajors!.length; i++){
+    for (int i = 0;
+        i < widget.profileDataModel!.user!.userMajors!.length;
+        i++) {
       ProfileMajor.newMajors.add(CommonType(
           widget.profileDataModel!.user!.userMajors![i].major!.majorNameEn!,
           widget.profileDataModel!.user!.userMajors![i].majorId!));
@@ -113,16 +115,16 @@ class _ProfileMajorState extends State<ProfileMajor> {
                           controller: controller,
                           itemHeight: AppSize.defaultSize! * 5,
                           onSuggestionTap: (v) {
+                            v.item!.majorId;
                             if (!ProfileMajor.newMajors.contains(CommonType(
                                 v.item!.majorNameEn, v.item!.majorId))) {
                               ProfileMajor.newMajors.add(CommonType(
                                   v.item!.majorNameEn, v.item!.majorId));
-
                             }
                             addToMajor.value++;
                             controller.clear();
-                            _currentSegment =FieldsInfo.majorsId
-                                .map((e) =>FieldsInfo.majorsId.indexOf(e))
+                            _currentSegment = FieldsInfo.majorsId
+                                .map((e) => FieldsInfo.majorsId.indexOf(e))
                                 .toList();
                           },
 
@@ -163,6 +165,9 @@ class _ProfileMajorState extends State<ProfileMajor> {
                         ValueListenableBuilder(
                             valueListenable: addToMajor,
                             builder: (context_, value, child) {
+                              ProfileMajor.newMajors =
+                                  ProfileMajor.newMajors.toSet().toList();
+                              log('${ProfileMajor.newMajors}  ProfileMajor.newMajors');
                               return CustomSegmentedButton2(
                                 onTapClose: (i) {
                                   ProfileMajor.newMajors.removeAt(i);
@@ -170,16 +175,12 @@ class _ProfileMajorState extends State<ProfileMajor> {
                                 },
                                 segments: ProfileMajor.newMajors
                                     .map((e) => e.nameEn ?? "")
-                                    .toList()
-                                    .toSet()
                                     .toList(),
                                 onValueChanged: (index) =>
                                     _onValueChanged(index),
                                 initialSelectedIndexes: ProfileMajor.newMajors
                                     .map((e) =>
                                         ProfileMajor.newMajors.indexOf(e))
-                                    .toList()
-                                    .toSet()
                                     .toList(),
                               );
                             }),

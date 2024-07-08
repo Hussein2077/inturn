@@ -173,6 +173,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: MainButton(
                         text: StringManager.continue1.tr(),
                         onTap: () {
+
                           if (SignUpScreen.phoneNumber.length == 10 &&
                               passwordController.text ==
                                   passwordConfirmController.text &&
@@ -187,15 +188,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               otp: CustomPinCodeTextField.otp,
                             ));
                           }
-                          // else if(SignUpScreen.phoneNumber.length != 10){
-                          //   errorSnackBar(context, StringManager.enterPhoneNumber.tr());
-                          // }
-                          // else if(passwordController.text != passwordConfirmController.text){
-                          //   errorSnackBar(context, StringManager.passwordsDontMatch.tr());
-                          // }
-                          // else if(CustomPinCodeTextField.otp.isEmpty){
-                          //   errorSnackBar(context, StringManager.enterOtp.tr());
-                          // }
+                          else if(SignUpScreen.phoneNumber.length != 10){
+                            errorSnackBar(context, StringManager.enterPhoneNumber.tr());
+                          }
+                          else if(passwordController.text != passwordConfirmController.text){
+                            errorSnackBar(context, StringManager.passwordsDontMatch.tr());
+                          }
+                          else if(CustomPinCodeTextField.otp.isEmpty){
+                            errorSnackBar(context, StringManager.enterOtp.tr());
+                          }
+
                         }),
                   )
                 ],

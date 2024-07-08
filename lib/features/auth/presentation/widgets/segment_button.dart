@@ -33,7 +33,6 @@ class CustomSegmentedButtonState extends State<CustomSegmentedButton> {
 
   @override
   Widget build(BuildContext context) {
-    log('${_selectedIndex}sdbadva');
     return Wrap(
       alignment: WrapAlignment.start,
       direction: Axis.horizontal,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
@@ -16,6 +17,10 @@ final void Function(PhoneNumber)? onChanged;
   @override
   Widget build(BuildContext context) {
     return IntlPhoneField(
+      inputFormatters: [
+        FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+
+      ],
       onSubmitted: onSubmitted,
       decoration: InputDecoration(
         labelText: 'Phone Number',
@@ -23,7 +28,6 @@ final void Function(PhoneNumber)? onChanged;
             color: AppColors.black,
             fontSize: AppSize.defaultSize! * 1.4),
         hintText: '1123456789',
-
         hintStyle: TextStyle(
           fontSize: AppSize.defaultSize! * 1.4,
         ),

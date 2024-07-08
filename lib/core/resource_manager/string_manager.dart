@@ -182,6 +182,7 @@ class StringManager {
   static const String pleaseUploadName= "Please complete your name";
   static const String pleaseUploadEmail= "Please complete your email";
   static const String pleaseUploadAddress= "Please complete your address";
+  static const String pleaseVerifyEmail= "Please verify your Email";
   static const String tabToUploadCV = "Tap here to \nUpload your CV";
   static const String thereIsNo = "There is no Jobs";
   static const String theMost = "The most ingenious recycled homes";
@@ -203,6 +204,15 @@ class StringManager {
   static const String academicYear = "Academic Year";
   static const String pleaseEnterPassword = "Please enter password";
   static const String pleaseEnterValidPhoneNumber = "Please enter valid phone number";
+  static const String enterPhoneNumber = "Enter Phone Number";
+  static const String pleaseEnterPasswordConfirm = "Please enter password confirm";
+  static const String pleaseEnterValidPassword = "Please enter valid password";
+  static const String pleaseEnterValidEmail = "Please enter valid email";
+  static const String pleaseEnterValidName = "Please enter valid name";
+  static const String passwordsDontMatch = "Passwords don't match";
+  static const String enterOtp = "Enter OTP";
+  static const String fileTooBig = "File too big";
+
  static const List<String> graduationYears = [
     '2020',
     '2021',

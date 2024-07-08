@@ -1,15 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:inturn/core/resource_manager/asset_path.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
-import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/widgets/country_drop_down.dart';
-import 'package:inturn/core/widgets/coming_soon.dart';
 import 'package:inturn/core/widgets/major_drop_down.dart';
 import 'package:inturn/core/widgets/university.dart';
 import 'package:inturn/features/home/presentation/componants/applications.dart';
@@ -55,8 +51,8 @@ class _MainScreenState extends State<MainScreen> {
         ),
         inactiveIcon: Image.asset(
           AssetPath.home,
-          width: AppSize.defaultSize! * 2,
-          height: AppSize.defaultSize! * 2,
+          width: AppSize.defaultSize! * 2.1,
+          height: AppSize.defaultSize! * 2.1,
           color: Colors.white,
         ),
 

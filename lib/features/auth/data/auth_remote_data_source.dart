@@ -171,12 +171,17 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
   @override
   Future<dynamic> locationType(LocationTypeParams locationTypeParams) async {
     final Options options = await DioHelper().options();
+    log('${locationTypeParams.locationTypeID}_locationType');
+    log('${locationTypeParams.cityID}_locationType');
+    log('${locationTypeParams.countryID}_locationType');
+    log('${locationTypeParams.countryID}_locationType');
+
     final body = {
       'jobLocationTypeId': locationTypeParams.locationTypeID,
       'userId': MyApp.userId,
-      'userProfileId': MyApp.userProfileId,
       'cityId': locationTypeParams.cityID,
       'countryId': locationTypeParams.countryID,
+      'areaId': locationTypeParams.areaID
     };
 
     try {
