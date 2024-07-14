@@ -21,7 +21,7 @@ import 'package:inturn/features/home/presentation/controller/intern_search_bloc/
 import 'package:inturn/features/home/presentation/controller/intern_search_bloc/get_internships_search_event.dart';
 import 'package:inturn/features/home/presentation/controller/intern_search_bloc/get_internships_search_state.dart';
 import 'package:inturn/features/home/presentation/widgets/job_cart.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});

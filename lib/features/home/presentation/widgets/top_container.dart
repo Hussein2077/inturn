@@ -11,7 +11,7 @@ import 'package:inturn/core/widgets/custom_text_field.dart';
 import 'package:inturn/core/widgets/cutom_text.dart';
 import 'package:inturn/core/widgets/main_button.dart';
 import 'package:inturn/features/home/presentation/componants/search_screen.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
 class TopContainer extends StatefulWidget {
   const TopContainer({super.key});

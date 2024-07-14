@@ -12,7 +12,7 @@ import 'package:inturn/features/home/presentation/componants/applications.dart';
 import 'package:inturn/features/home/presentation/componants/companies.dart';
 import 'package:inturn/features/home/presentation/home_screen.dart';
 import 'package:inturn/features/profile/presentation/profile_screen.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({
@@ -137,7 +137,7 @@ class _MainScreenState extends State<MainScreen> {
         controller: _controller,
         screens: _buildScreens(),
         items: _navBarsItems(),
-        confineInSafeArea: true,
+        // confineInSafeArea: true,
 
         backgroundColor: AppColors.homeColor,
         // Default is Colors.white.
@@ -148,25 +148,25 @@ class _MainScreenState extends State<MainScreen> {
         // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
         stateManagement: true,
         // Default is true.
-        hideNavigationBarWhenKeyboardShows: true,
+        // hideNavigationBarWhenKeyboardShows: true,
         // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
         decoration: NavBarDecoration(
           borderRadius: BorderRadius.circular(AppSize.defaultSize!),
           colorBehindNavBar: AppColors.homeColor,
         ),
-        popAllScreensOnTapOfSelectedTab: true,
-        popActionScreens: PopActionScreensType.all,
-        itemAnimationProperties: const ItemAnimationProperties(
-          // Navigation Bar's items animation properties.
-          duration: Duration(milliseconds: 200),
-          curve: Curves.ease,
-        ),
-        screenTransitionAnimation: const ScreenTransitionAnimation(
-          // Screen transition animation on change of selected tab.
-          animateTabTransition: true,
-          curve: Curves.ease,
-          duration: Duration(milliseconds: 200),
-        ),
+        // popAllScreensOnTapOfSelectedTab: true,
+        // popActionScreens: PopActionScreensType.all,
+        // itemAnimationProperties: const ItemAnimationProperties(
+        //   // Navigation Bar's items animation properties.
+        //   duration: Duration(milliseconds: 200),
+        //   curve: Curves.ease,
+        // ),
+        // screenTransitionAnimation: const ScreenTransitionAnimation(
+        //   // Screen transition animation on change of selected tab.
+        //   animateTabTransition: true,
+        //   curve: Curves.ease,
+        //   duration: Duration(milliseconds: 200),
+        // ),
         navBarStyle:
             NavBarStyle.style1, // Choose the nav bar style with this property.
       ),

@@ -16,7 +16,7 @@ class CompanyModel {
   final int? majorId;
   final int? countryId;
   final String? cityName;
-
+final int ? jobCount;
   CompanyModel({
     this.companyId,
     this.companyName,
@@ -35,6 +35,7 @@ class CompanyModel {
     this.majorId,
     this.countryId,
     this.cityName,
+    this.jobCount,
   });
 
   factory CompanyModel.fromJson(Map<String, dynamic> json) {
@@ -58,6 +59,7 @@ class CompanyModel {
       cityName:
       // json['cityId'] ??
       "Cairo, Egypt",
+      jobCount: json['jobCount']??0,
     );
   }
 

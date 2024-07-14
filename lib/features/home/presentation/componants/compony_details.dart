@@ -215,7 +215,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                 scale: AppSize.defaultSize! * .18,
                               ),
                               CustomText(
-                                text: ' 35 jobs',
+                                text: ' ${widget.data.jobCount} jobs',
                                 color: AppColors.thirdColor,
                                 fontSize: AppSize.defaultSize! * 1.4,
                               ),

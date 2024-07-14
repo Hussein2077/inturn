@@ -64,12 +64,12 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       await Methods.instance.saveUserId(userId: jsonData['userId']);
       return jsonData;
     } on DioException catch (e) {
+
       throw DioHelper.handleDioError(
           dioError: e, endpointName: "loginWithEmailAndPassword");
     }
   }
-
-  @override
+@override
   Future<Map<String, dynamic>> addPersonalInfo(
       PersonalInfoParams params) async {
     final Options options = await DioHelper().options();

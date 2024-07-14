@@ -13,7 +13,7 @@ import 'package:inturn/core/widgets/main_button.dart';
 import 'package:inturn/features/home/data/model/matched_model.dart';
 import 'package:inturn/features/home/presentation/componants/job_details.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
 class JobCart extends StatefulWidget {
   const JobCart(

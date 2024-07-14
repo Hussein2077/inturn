@@ -42,7 +42,7 @@ import 'package:inturn/features/profile/presentation/widgets/pick_pdf.dart';
 import 'package:inturn/features/profile/presentation/widgets/profile-major.dart';
 import 'package:inturn/features/profile/presentation/widgets/profile_skills.dart';
 import 'package:inturn/main.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key, required this.userId});

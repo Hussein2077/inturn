@@ -9,7 +9,7 @@ import 'package:inturn/core/widgets/cutom_text.dart';
 import 'package:inturn/core/widgets/main_button.dart';
 import 'package:inturn/features/home/data/model/company_model.dart';
 import 'package:inturn/features/home/presentation/componants/compony_details.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
 class CompanyCart extends StatelessWidget {
   const CompanyCart({super.key, this.width, this.description = false, required this.data});

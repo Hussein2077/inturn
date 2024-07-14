@@ -20,7 +20,7 @@ import 'package:inturn/features/home/presentation/widgets/top_container.dart';
 import 'package:inturn/features/main_screen.dart';
 import 'package:inturn/main.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, this.onPressedIntern, this.onPressedJob, required this.userID});

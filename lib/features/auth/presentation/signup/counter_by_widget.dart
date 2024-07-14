@@ -106,7 +106,7 @@ class _CounterByMinuteState extends State<CounterByMinute> {
         ),
         Text(
           _formatTime(_start),
-          style: Theme.of(context).textTheme.titleMedium,
+          // style: Theme.of(context).textTheme.titleMedium,
           textAlign: TextAlign.center,
         ),
       ],
