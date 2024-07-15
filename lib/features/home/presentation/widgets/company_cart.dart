@@ -25,7 +25,7 @@ class CompanyCart extends StatelessWidget {
         PersistentNavBarNavigator.pushNewScreen(
           context,
           screen: CompanyDetails(data: data!,),
-          withNavBar: false,
+          withNavBar: true,
           // OPTIONAL VALUE. True by default.
           pageTransitionAnimation: PageTransitionAnimation.fade,
         );

@@ -42,6 +42,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       body: Padding(
         padding: EdgeInsets.all(AppSize.defaultSize! * 1.6),
         child: SingleChildScrollView(

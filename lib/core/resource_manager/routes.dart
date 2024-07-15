@@ -136,31 +136,40 @@ class RouteGenerator {
             transitionsBuilder: customAnimate);
       case Routes.academicInfo:
         bool student = settings.arguments as bool;
+        bool? isFromPreviousPageForLeading = settings.arguments as bool?;
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
                 AcademicInfo(
                   isStudent: student,
+                  isFromPreviousPageForLeading: isFromPreviousPageForLeading??false,
                 ),
             transitionsBuilder: customAnimate);
       case Routes.experienceInfo:
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
-                const ExperienceInfo(),
+                  const ExperienceInfo(
+
+                  ),
             transitionsBuilder: customAnimate);
       case Routes.locationInfo:
+        bool? isFromPrevious = settings.arguments as bool?;
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
-                const LocationInfo(),
+                  LocationInfo(
+                  isFromPreviousPageForLeading: isFromPrevious??false,
+                ),
             transitionsBuilder: customAnimate);
       case Routes.fieldInfo:
+        bool? isFromPrevious = settings.arguments as bool?;
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
-                const FieldsInfo(),
+                  FieldsInfo(   isFromPreviousPageForLeading: isFromPrevious??false,),
             transitionsBuilder: customAnimate);
       case Routes.skillsInfo:
+        bool? isFromPrevious = settings.arguments as bool?;
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
-                const SkillInfo(),
+                  SkillInfo(   isFromPreviousPageForLeading: isFromPrevious??false,),
             transitionsBuilder: customAnimate);
       case Routes.thanks:
         return PageRouteBuilder(

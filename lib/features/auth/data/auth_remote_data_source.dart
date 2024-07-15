@@ -15,7 +15,7 @@ import 'package:http_parser/http_parser.dart';
 
 abstract class BaseRemotelyDataSource {
   Future<Map<String, dynamic>> loginWithEmailAndPassword(AuthModel authModel);
-
+Future <String> deleteAccount();
   Future<Map<String, dynamic>> signUpWithEmailAndPassword(
       SignUpModel signUpModel);
 
@@ -357,4 +357,23 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       throw DioHelper.handleDioError(dioError: e, endpointName: "verifyCode");
     }
   }
+
+  @override
+  Future<String> deleteAccount() async{
+    final Options options = await DioHelper().options();
+
+    try {
+      final response = await Dio().delete(
+        ConstantApi.deleteAccount,
+        options: options,
+      );
+
+     String jsonData = response.data;
+
+      return jsonData;
+    } on DioException catch (e) {
+      throw DioHelper.handleDioError(dioError: e, endpointName: "deleteAccount");
+    }
+  }
+
 }

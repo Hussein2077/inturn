@@ -153,6 +153,7 @@ class StringManager {
   static const String veryUsefulArticles = "Very Useful Articles";
   static const String options = "Options";
   static const String logOut = "LogOut";
+  static const String deleteAccount = "Delete Account";
   static const String resources = "Resources";
   static const String takeQuiz = "Take a Quiz";
   static const String whatAreYouLookingFor = "What are you looking for ?";
@@ -173,6 +174,7 @@ class StringManager {
   static const String pleaseCompleteYourData = "Please complete your data";
   static const String pleaseAddUniversity= "Please add your university";
   static const String pleaseAddFaculty= "Please add your Faculty";
+  static const String pleaseAddGraduationYear= "Please add your Graduation Year";
   static const String pleaseAddCountry= "Please add your Country";
   static const String pleaseAddCity= "Please add your City";
   static const String pleaseAddArea= "Please add your Area";
@@ -212,6 +214,9 @@ class StringManager {
   static const String passwordsDontMatch = "Passwords don't match";
   static const String enterOtp = "Enter OTP";
   static const String fileTooBig = "File too big";
+  static const String confirmLogout = "Confirm Logout";
+  static const String cancel = "cancel";
+  static const String areYouSureLogout = "Are you sure you want to logout?";
 
  static const List<String> graduationYears = [
     '2020',

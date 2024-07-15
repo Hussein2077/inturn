@@ -22,7 +22,8 @@ import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_i
 import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_info_states.dart';
 
 class AcademicInfo extends StatefulWidget {
-  const AcademicInfo({super.key, required this.isStudent});
+  const AcademicInfo({super.key, required this.isStudent, this.isFromPreviousPageForLeading = false});
+  final bool? isFromPreviousPageForLeading;
 final bool isStudent;
   @override
   State<AcademicInfo> createState() => _AcademicInfoState();
@@ -41,7 +42,7 @@ class _AcademicInfoState extends State<AcademicInfo> {
     return Scaffold(
         appBar: appBar(context,
             text: StringManager.fillAcademicInformation.tr(),
-            leading: true,
+            leading:  widget.isFromPreviousPageForLeading!,
             actions: true),
         body: BlocListener<AddPersonalInfoBloc, AddPersonalInfoState>(
           listener: (context, state) {
@@ -105,6 +106,13 @@ class _AcademicInfoState extends State<AcademicInfo> {
                         errorSnackBar(
                             context, StringManager.pleaseAddFaculty.tr());
                       }
+                      if(widget.isStudent)
+                     {
+                       if (GraduationYearsDropDown.selectedValue == null) {
+                         errorSnackBar(
+                             context, StringManager.pleaseAddGraduationYear.tr());
+                       }
+                     }
                     },
                   ),
                 ]),

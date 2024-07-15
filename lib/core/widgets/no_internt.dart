@@ -8,12 +8,12 @@ class NoInternetScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(
-       context,
-        text:  'No Internet',
-        leading: false
-
-      ),
+      // appBar: appBar(
+      //  context,
+      //   text:  'No Internet',
+      //   leading: false
+      //
+      // ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

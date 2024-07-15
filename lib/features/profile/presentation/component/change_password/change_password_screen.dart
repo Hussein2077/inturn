@@ -25,12 +25,12 @@ class ChangePasswordScreen extends StatefulWidget {
 }
 
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
-
   late TextEditingController oldPasswordController;
   late TextEditingController passwordController;
   late TextEditingController passwordConfirmController;
-  bool isVisible = false;
-
+  bool oldPasswordVisible = false;
+  bool passwordVisible = true;
+  bool confirmPasswordVisible = true;
   @override
   void initState() {
     oldPasswordController = TextEditingController();
@@ -72,20 +72,23 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             children: [
               ColumnWithTextField(
                 text: StringManager.oldPassword.tr(),
+                obscureText: oldPasswordVisible,
                 suffixIcon: InkWell(
                   onTap: () {
                     setState(() {
-                      isVisible = !isVisible;
+                      oldPasswordVisible = !oldPasswordVisible; ;
                     });
                   },
                   child: Icon(
-                    isVisible ? Icons.visibility_off : Icons.visibility,
+                    oldPasswordVisible ? Icons.visibility_off : Icons.visibility,
                     color: Colors.grey,
                   ),
                 ),
                 controller: oldPasswordController,
               ),
-              SizedBox(height: AppSize.defaultSize!,),
+              SizedBox(
+                height: AppSize.defaultSize!,
+              ),
               Align(
                 alignment: Alignment.centerRight,
                 child: InkWell(
@@ -102,14 +105,15 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               ),
               ColumnWithTextField(
                 text: StringManager.newPassword.tr(),
+                obscureText: passwordVisible,
                 suffixIcon: InkWell(
                   onTap: () {
                     setState(() {
-                      isVisible = !isVisible;
+                      passwordVisible = !passwordVisible;
                     });
                   },
                   child: Icon(
-                    isVisible ? Icons.visibility_off : Icons.visibility,
+                    passwordVisible ? Icons.visibility_off : Icons.visibility,
                     color: Colors.grey,
                   ),
                 ),
@@ -118,14 +122,15 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               ColumnWithTextField(
                 text: StringManager.confirmNewPassword.tr(),
                 controller: passwordConfirmController,
+                obscureText: confirmPasswordVisible,
                 suffixIcon: InkWell(
                   onTap: () {
                     setState(() {
-                      isVisible = !isVisible;
+                      confirmPasswordVisible = !confirmPasswordVisible;
                     });
                   },
                   child: Icon(
-                    isVisible ? Icons.visibility_off : Icons.visibility,
+                    confirmPasswordVisible ? Icons.visibility_off : Icons.visibility,
                     color: Colors.grey,
                   ),
                 ),
@@ -136,15 +141,27 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               MainButton(
                 text: StringManager.confirm.tr(),
                 onTap: () {
-                  if((passwordController.text == passwordConfirmController.text) && (passwordController.text != oldPasswordController.text) && (oldPasswordController.text.isNotEmpty) && (passwordController.text.isNotEmpty)){
+                  if ((passwordController.text ==
+                          passwordConfirmController.text) &&
+                      (passwordController.text != oldPasswordController.text) &&
+                      (oldPasswordController.text.isNotEmpty) &&
+                      (passwordController.text.isNotEmpty)) {
                     BlocProvider.of<ChangePasswordFlowBloc>(context).add(
                       ChangePasswordEvent(
-                        oldPassword: oldPasswordController.text,
-                        newPassword: passwordController.text,
-                        id: MyApp.userId
-                      ),
+                          oldPassword: oldPasswordController.text,
+                          newPassword: passwordController.text,
+                          id: MyApp.userId),
                     );
-                  }else {
+                  } else if (passwordController.text !=
+                      passwordConfirmController.text) {
+                    errorSnackBar(context, StringManager.passwordNotMatch.tr());
+                  } else if (oldPasswordController.text.isEmpty) {
+                    errorSnackBar(
+                        context, StringManager.pleaseEnterPassword.tr());
+                  } else if (passwordController.text.isEmpty) {
+                    errorSnackBar(
+                        context, StringManager.pleaseEnterPassword.tr());
+                  } else {
                     errorSnackBar(context, StringManager.fillAllFields.tr());
                   }
                 },

@@ -18,6 +18,8 @@ class CustomTextField extends StatefulWidget {
   final void Function()? onTap;
   final void Function(String)? onChanged;
   final TextStyle? hintStyle;
+  final TextStyle? labelStyle ;
+  final TextStyle? textStyle ;
   final GlobalKey<FormState>? formKey;
 
   const CustomTextField({
@@ -32,12 +34,14 @@ class CustomTextField extends StatefulWidget {
     this.onTap,
     this.hintText,
     this.hintStyle,
+    this.labelStyle,
     this.width,
     this.height,
     this.maxLines,
     this.formKey,
     this.fillColor,
     this.onChanged,
+    this.textStyle
   }) : super(key: key);
 
   @override
@@ -54,6 +58,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
         key: widget.formKey,
         child: TextFormField(
           onTap: widget.onTap,
+          style:  widget.textStyle??TextStyle(
+            fontSize: AppSize.defaultSize! * 1.5,
+          ),
           onChanged: widget.onChanged ,
           maxLines: widget.maxLines,
           readOnly: widget.readOnly,
@@ -73,7 +80,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             hintStyle: widget.hintStyle,
             suffixIcon: widget.suffixIcon,
             contentPadding: EdgeInsets.all(AppSize.defaultSize! * .8),
-            labelStyle: TextStyle(
+            labelStyle: widget.labelStyle ?? TextStyle(
               color: AppColors.greyColor,
               fontSize: AppSize.screenHeight! * .015,
             ),

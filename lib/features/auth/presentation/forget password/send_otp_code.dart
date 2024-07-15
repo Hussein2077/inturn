@@ -27,18 +27,19 @@ class _SendOTPCodeState extends State<SendOTPCode> {
   Widget build(BuildContext context) {
     return BlocListener<ResetPasswordFlowBloc, ResetPasswordState>(
       listener: (context, state) {
-      if(state is VerifyCodeLoadingState){
-        EasyLoading.show();
-      }
-      if(state is VerifyCodeErrorMessageState){
-        EasyLoading.dismiss();
-        EasyLoading.showError(state.errorMessage);
-      }
-      if(state is VerifyCodeSuccessMessageState){
-        EasyLoading.dismiss();
-        EasyLoading.showSuccess(state.successMessage);
-        Navigator.pushNamed(context, Routes.resetPassword,arguments: widget.email);
-      }
+        if (state is VerifyCodeLoadingState) {
+          EasyLoading.show();
+        }
+        if (state is VerifyCodeErrorMessageState) {
+          EasyLoading.dismiss();
+          EasyLoading.showError(state.errorMessage);
+        }
+        if (state is VerifyCodeSuccessMessageState) {
+          EasyLoading.dismiss();
+          EasyLoading.showSuccess(state.successMessage);
+          Navigator.pushNamed(context, Routes.resetPassword,
+              arguments: widget.email);
+        }
       },
       child: Scaffold(
         appBar: appBar(context, text: StringManager.forgetPassword.tr()),
@@ -84,16 +85,14 @@ class _SendOTPCodeState extends State<SendOTPCode> {
               MainButton(
                 text: StringManager.verify.tr(),
                 onTap: () {
-
                   if (CustomPinCodeTextField.otp.isNotEmpty &&
-                      CustomPinCodeTextField.otp.length == 6) {
+                      CustomPinCodeTextField.otp.length == 4) {
                     BlocProvider.of<ResetPasswordFlowBloc>(context).add(
                         VerifyCodeEvent(
                             code: CustomPinCodeTextField.otp,
                             email: widget.email));
-                  }
-                  else {
-                  errorSnackBar(context, StringManager.enterCode.tr());
+                  } else {
+                    errorSnackBar(context, StringManager.enterCode.tr());
                   }
                 },
               )

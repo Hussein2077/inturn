@@ -1,7 +1,4 @@
-import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -15,9 +12,6 @@ import 'package:inturn/core/widgets/cutom_text.dart';
 import 'package:inturn/core/widgets/loading_widget.dart';
 import 'package:inturn/core/widgets/main_button.dart';
 import 'package:inturn/core/widgets/snack_bar.dart';
-import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_info_bloc.dart';
-import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_info_events.dart';
-import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_info_states.dart';
 import 'package:inturn/features/auth/presentation/controller/add_skill/bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/add_skill/event.dart';
 import 'package:inturn/features/auth/presentation/controller/add_skill/state.dart';
@@ -27,13 +21,12 @@ import 'package:inturn/features/home/presentation/controller/get_cities_major_un
 import 'package:inturn/features/home/presentation/controller/get_cities_major_universtity/get_options_states.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/get_my_data/get_my_data_event.dart';
-import 'package:inturn/main.dart';
 import 'package:searchfield/searchfield.dart';
 
 class SkillInfo extends StatefulWidget {
-  const SkillInfo({super.key});
+  const SkillInfo({super.key, this.isFromPreviousPageForLeading=false});
 static   List<SkillModel> skillIds = [];
-
+  final  bool? isFromPreviousPageForLeading ;
   @override
   State<SkillInfo> createState() => _SkillInfoState();
 }
@@ -66,7 +59,7 @@ class _SkillInfoState extends State<SkillInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appBar(context, text: StringManager.yourSkills.tr(),leading: true),
+        appBar: appBar(context, text: StringManager.yourSkills.tr(),leading:  widget.isFromPreviousPageForLeading!,actions: true),
         body: BlocListener<AddSkillsBloc , AddSkillsState>(
           listener: (context, state) {
             if (state is AddSkillsSuccessState) {

@@ -9,7 +9,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:inturn/core/models/profile_data_model.dart';
 import 'package:inturn/core/resource_manager/asset_path.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
-import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/utils/enums.dart';
@@ -31,7 +30,6 @@ import 'package:inturn/features/auth/presentation/widgets/segment_button.dart';
 import 'package:inturn/features/auth/presentation/widgets/upload_photo.dart';
 import 'package:inturn/features/home/data/model/skill_model.dart';
 import 'package:inturn/features/profile/domain/use_case/edit_profile_uc.dart';
-import 'package:inturn/features/profile/presentation/component/change_password/change_password_screen.dart';
 import 'package:inturn/features/profile/presentation/controller/edit_profile/edit_profile_bloc.dart';
 import 'package:inturn/features/profile/presentation/controller/edit_profile/edit_profile_event.dart';
 import 'package:inturn/features/profile/presentation/controller/edit_profile/edit_profile_state.dart';
@@ -40,9 +38,10 @@ import 'package:inturn/features/profile/presentation/controller/get_my_profile_d
 import 'package:inturn/features/profile/presentation/controller/get_my_profile_data/get_my_profile_data_state.dart';
 import 'package:inturn/features/profile/presentation/widgets/pick_pdf.dart';
 import 'package:inturn/features/profile/presentation/widgets/profile-major.dart';
+import 'package:inturn/features/profile/presentation/widgets/profile_job_level.dart';
+import 'package:inturn/features/profile/presentation/widgets/profile_location_type.dart';
 import 'package:inturn/features/profile/presentation/widgets/profile_skills.dart';
 import 'package:inturn/main.dart';
-import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key, required this.userId});
@@ -66,11 +65,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
    int education=0;
 
 
-  int jop = 0;
-
-
-
-  int location = 0;
 
 
   @override
@@ -123,10 +117,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: BlocBuilder<GetMyProfileDataBloc, GetMyProfileDataState>(
         builder: (context, state) {
           if (state is GetMyProfileDataSuccessMessageState) {
-            log('${education}education1111111111111111111111111');
             education = state.profileDataModel.graduationStatusId!;
-            log('${education}educationssssssssssssssssssssssss');
-
             profileDataModel = state.profileDataModel;
             UniversityDropDown.selectedValue = profileDataModel?.university;
             FacultyDropDown.selectedValue = profileDataModel?.faculty;
@@ -136,7 +127,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             descriptionController.text =
                 state.profileDataModel.description ?? "";
             return Scaffold(
-              appBar: appBar(
+              appBar: profileAppBar(
                 context,
                 text: StringManager.profile.tr(),
                 leading: false,
@@ -151,50 +142,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       MainButton(
                         onTap: () {
-                          PersistentNavBarNavigator.pushNewScreen(
-                            context,
-                            screen: const ChangePasswordScreen(),
-                            withNavBar: false,
-                            pageTransitionAnimation:
-                                PageTransitionAnimation.fade,
-                          );
+                          showCV(context, state.profileDataModel);
                         },
-                        text: StringManager.changePassword.tr(),
-                        textColor: Colors.black,
+                        text: StringManager.downloadCV.tr(),
+                        textColor: AppColors.primaryColor,
                         color: AppColors.lightGreyColor,
-                        child2: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              AssetPath.changePassword,
-                              width: AppSize.defaultSize! * 2.5,
-                              height: AppSize.defaultSize! * 2.5,
-                            ),
-                            SizedBox(
-                              width: AppSize.defaultSize! * .5,
-                            ),
-                            CustomText(
-                              text: StringManager.changePassword.tr(),
-                              color: AppColors.primaryColor,
-                              fontSize: AppSize.defaultSize! * 1.4,
-                              fontWeight: FontWeight.bold,
-                            )
-                          ],
-                        ),
                         fontWeight: FontWeight.bold,
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: AppSize.defaultSize! * 2),
-                        child: MainButton(
-                          onTap: () {
-                            showCV(context, state.profileDataModel);
-                          },
-                          text: StringManager.downloadCV.tr(),
-                          textColor: AppColors.primaryColor,
-                          color: AppColors.lightGreyColor,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      SizedBox(
+                        height: AppSize.defaultSize! * 2,
                       ),
                       const PdfUploadForm(),
                       SizedBox(
@@ -404,29 +360,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 SizedBox(
                                   height: AppSize.defaultSize! * 1.6,
                                 ),
-                                StatefulBuilder(
-                                  builder: (context, setState) {
-                                    return CustomSegmentedButton(
-                                      width: AppSize.defaultSize! * 15,
-                                      initialSelectedIndex:
-                                          (profileDataModel?.jobLevelId ?? 1) > 0
-                                              ? (profileDataModel?.jobLevelId ??
-                                                      1) -
-                                                  1
-                                              : 0,
-                                      segments: [
-                                        StringManager.internship.tr(),
-                                        StringManager.entryLevel.tr()
-                                      ],
-                                      onValueChanged: (index) =>
-                                          (int newValue) {
-                                        setState(() {
-                                          jop = newValue;
-                                        });
-                                      },
-                                    );
-                                  }
-                                ),
+                         ProfileJobLevel( profileDataModel: profileDataModel!,),
                               ],
                             ),
                           ),
@@ -435,63 +369,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Padding(
                         padding: EdgeInsets.symmetric(
                             vertical: AppSize.defaultSize! * 2),
-                        child: Material(
-                          borderRadius:
-                              BorderRadius.circular(AppSize.defaultSize! * 1.5),
-                          elevation: 1,
-                          child: Container(
-                            width: AppSize.screenWidth!,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(
-                                  AppSize.defaultSize! * 1.5),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(AppSize.defaultSize! * 2),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CustomText(
-                                    text: StringManager.locationType.tr(),
-                                    fontSize: AppSize.defaultSize! * 1.6,
-                                    color: AppColors.primaryColor,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                  SizedBox(
-                                    height: AppSize.defaultSize! * 1.6,
-                                  ),
-                                  StatefulBuilder(
-                                    builder: (context, setState) {
-                                      return CustomSegmentedButton(
-                                        initialSelectedIndex:
-                                            (profileDataModel?.jobLocationTypeId ??
-                                                        0) >
-                                                    0
-                                                ? (profileDataModel
-                                                            ?.jobLocationTypeId ??
-                                                        0) -
-                                                    1
-                                                : 0,
-                                        segments: [
-                                          StringManager.onSite.tr(),
-                                          StringManager.remotely.tr(),
-                                          StringManager.hybrid.tr()
-                                        ],
-                                        onValueChanged: (index) =>
-                                            (int newValue) {
-                                          setState(() {
-                                            location = newValue;
-                                          });
-                                        },
-                                        width: AppSize.defaultSize! * 9,
-                                      );
-                                    }
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
+                        child:ProfileLocationType(profileDataModel: profileDataModel!,) ,
                       ),
                       ProfileMajor(
                         profileDataModel: profileDataModel,
@@ -504,7 +382,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             vertical: AppSize.defaultSize! * 2),
                         child: MainButton(
                           onTap: () {
-                            log('${   (education)}   (education +1)');
                             List<int>? mergeSkill = ProfileSkills.newSkills
                                 .map((e) => e.id)
                                 .toSet()
@@ -542,10 +419,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       descriptionController.text.isEmpty
                                           ? state.profileDataModel.description
                                           : descriptionController.text,
-                                  jobLevelId: (jop + 1).toString(),
+                                  jobLevelId: (  ProfileJobLevel.jop + 1).toString(),
                                   graduationStatusId:
                                       (education+1).toString(),
-                                  jobLocationTypeId: (location + 1).toString(),
+                                  jobLocationTypeId: (  ProfileLocationType. location + 1).toString(),
                                   majorIds: FieldsInfo.majorsId,
                                   skillIds: mergeSkill,
                                   image: ProfileScreen.isUploaded

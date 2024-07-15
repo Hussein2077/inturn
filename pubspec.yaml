@@ -67,7 +67,6 @@ dependencies:
   pdf: ^3.10.8
   intl_phone_field: ^3.2.0
   animated_visibility: ^0.0.4
-  connectivity_plus: ^6.0.3
 dev_dependencies:
   flutter_test:
     sdk: flutter

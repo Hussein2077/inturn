@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
@@ -14,6 +15,7 @@ class IntlPhone extends StatelessWidget {
 final Widget? suffixIcon;
 final void Function(PhoneNumber)? onChanged;
   final void Function(String)? onSubmitted;
+  static Country? country ;
   @override
   Widget build(BuildContext context) {
     return IntlPhoneField(
@@ -53,6 +55,10 @@ final void Function(PhoneNumber)? onChanged;
         ),
       ),
       initialCountryCode: 'EG',
+      onCountryChanged: (countryCode) {
+        IntlPhone.country =  countryCode;
+
+      },
       onChanged:onChanged,
 
     );

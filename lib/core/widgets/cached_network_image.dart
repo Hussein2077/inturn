@@ -4,10 +4,11 @@ import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/utils/constant_api.dart';
 import 'package:shimmer/shimmer.dart';
 class CachedNetworkCustom extends StatelessWidget {
-  const CachedNetworkCustom({super.key, required this.url,   this.height,   this.width});
+  const CachedNetworkCustom({super.key, required this.url,   this.height,   this.width, this.fit});
 final String url;
 final double? height;
 final double? width;
+final BoxFit? fit;
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
@@ -19,7 +20,7 @@ final double? width;
           borderRadius: BorderRadius.circular(AppSize.defaultSize!),
           image: DecorationImage(
               image: imageProvider,
-              fit: BoxFit.cover,
+              fit: fit??BoxFit.cover,
 
               // colorFilter:
               // const ColorFilter.mode(Colors.red, BlendMode.colorBurn)

@@ -24,4 +24,5 @@ abstract class BaseRepository {
   Future<Either<dynamic, Failure>> locationType(LocationTypeParams locationTypeParams);
   Future<Either<dynamic, Failure>> majorOfFields(List<int> majorIds);
   Future<Either<dynamic, Failure>> sendSkills(List<int> skillIds);
+  Future<Either<String, Failure>> deleteAccount ( );
 }

@@ -92,7 +92,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             }
           } else if (state is SendCodeErrorMessageState) {
             EasyLoading.dismiss();
-            errorSnackBar(context, StringManager.unexpectedError.tr());
+            errorSnackBar(context, state.errorMessage);
           } else if (state is SendCodeLoadingState) {
             EasyLoading.show(status: 'loading...');
           }

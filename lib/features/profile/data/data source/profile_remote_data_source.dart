@@ -70,6 +70,9 @@ class ProfileRemotelyDateSource extends BaseRemotelyDataSourceProfile {
      final Options options = await DioHelper().options();
     late FormData formData;
     if (parameter.image == null) {
+      log('${parameter.jobLocationTypeId}parameter.jobLocationTypeId');
+      log('${parameter.jobLevelId}parameter.JobLevelId');
+
       formData = FormData.fromMap({
         'UserId': MyApp.userId,
         'FirstName': parameter.firstName,

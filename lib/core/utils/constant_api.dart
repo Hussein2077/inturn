@@ -9,10 +9,11 @@ class ConstantApi {
   static getPdf(String url) => 'https://api.intrn.app/Intrn/UsersCVs/$url';
 
   static const String login = "${baseUrl}NewAuth/LoginWithPhone";
+  static const String deleteAccount = "${baseUrl}NewUserProfiles/DeleteUserProfileByUserId";
   static const String signUp = "${baseUrl}NewAuth/phone-signup";
-  //todo change url
-  static const String sendCode = "${baseUrl}NewAuth/generate-otp";
-  static const String sendCodeToEmail = "${baseUrl}NewAuth/generate-otp-Register";
+  static const String sendCode = "${baseUrl}NewAuth/generate-phone-otp";
+  static const String sendCodeToEmail =
+      "${baseUrl}NewAuth/generate-otp-Register";
   static const String verifyCode = "${baseUrl}NewAuth/validate-otp-register";
 
   static const String universities = "${baseUrl}Universities/GetAllUniversity";
@@ -35,11 +36,11 @@ class ConstantApi {
   static String myApplications(String userId) =>
       "${baseUrl}applications/GetMyApplicationsByUserId?userId=$userId";
 
-  static const String myData ="${baseUrl}NewAuth/UserData";
+  static const String myData = "${baseUrl}NewAuth/UserData";
 
   static String getCV(String id) => "${baseUrl}UploadCV/getUserCV$id";
 
-  static const String  complete = "${baseUrl}NewAuth/complete";
+  static const String complete = "${baseUrl}NewAuth/complete";
   static const String getCompanies = "${baseUrl}Companies/GetAllCompanies";
 
   static String editProfileData() =>
@@ -87,8 +88,8 @@ class ConstantApi {
   static const String getJobs = "${baseUrl}Jobs/GetVacancy";
   static const String getGetInternships = "${baseUrl}Jobs/GetInternships";
 
-  static const String resetPassword  = "${baseUrl}Auth/reset-password-with-otp";
-  static const String changePassword  = "${baseUrl}Auth/Change-password";
+  static const String resetPassword = "${baseUrl}Auth/reset-password-with-otp";
+  static const String changePassword = "${baseUrl}Auth/Change-password";
   static const String googleRegister = "https://api.inturn.app/GLogin";
   static const String email = "email";
   static const String password = "password";

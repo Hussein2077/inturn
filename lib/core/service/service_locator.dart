@@ -5,6 +5,7 @@ import 'package:inturn/features/auth/data/repo_imp.dart';
 import 'package:inturn/features/auth/domain/repo/base_repo.dart';
 import 'package:inturn/features/auth/domain/use_case/add_info_uc.dart';
 import 'package:inturn/features/auth/domain/use_case/change_password.dart';
+import 'package:inturn/features/auth/domain/use_case/delete_account_uc.dart';
 import 'package:inturn/features/auth/domain/use_case/login_with_email_and_password_use_case.dart';
 import 'package:inturn/features/auth/domain/use_case/send_code.dart';
 import 'package:inturn/features/auth/domain/use_case/sign_up_use_case.dart';
@@ -61,7 +62,7 @@ class ServerLocator {
     //bloc
 
     getIt.registerLazySingleton(() => LoginWithEmailAndPasswordBloc(
-        loginWithEmailAndPasswordUseCase: getIt()));
+        loginWithEmailAndPasswordUseCase: getIt(),deleteAccountUseCase: getIt()));
 
     getIt.registerLazySingleton(() => SignUpWithEmailAndPasswordBloc(
           signUpWithEmailAndPasswordUseCase: getIt(),
@@ -166,6 +167,7 @@ class ServerLocator {
     getIt.registerFactory(
         () => UploadPDFUseCase(baseRepositoryProfile: getIt()));
     getIt.registerFactory(() => GetPDFUseCase(baseRepositoryProfile: getIt()));
+    getIt.registerFactory(() => DeleteAccountUseCase(baseRepository: getIt()));
 
     //remote data
     getIt.registerLazySingleton<BaseRemotelyDataSource>(

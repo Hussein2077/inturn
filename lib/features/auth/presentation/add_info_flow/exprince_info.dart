@@ -19,8 +19,7 @@ import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_i
 import 'package:inturn/features/auth/presentation/widgets/segment_button.dart';
 
 class ExperienceInfo extends StatefulWidget {
-  const ExperienceInfo({super.key});
-
+  const ExperienceInfo({super.key, });
   static int jobLevel = 0;
   static int experience = 0;
 
@@ -46,7 +45,7 @@ class _ExperienceInfoState extends State<ExperienceInfo> {
     return Scaffold(
         appBar:
             appBar(context, text: StringManager.experience.tr(),   actions: true,
-                leading: false),
+                leading:false),
         body: BlocListener<AddPersonalInfoBloc, AddPersonalInfoState>(
           listener: (context, state) {
             if (state is AddExperienceLevelLoadingState) {

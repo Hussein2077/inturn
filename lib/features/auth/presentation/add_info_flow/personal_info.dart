@@ -163,9 +163,12 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       children: [
                         CustomTextField(
                           labelText: StringManager.email.tr(),
+
+
                           keyboardType: TextInputType.emailAddress,
                           controller: emailController,
-                          width: AppSize.screenWidth! * .7,
+                          width: AppSize.screenWidth! * .72,
+
                           suffixIcon: ValueListenableBuilder(
                               valueListenable: isVerifiedNotifier,
                               builder: (context, value, child) {
@@ -201,7 +204,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                   context, StringManager.enterEmail.tr());
                             }
                           },
-                          width: AppSize.screenWidth! * .2,
+                          width: AppSize.screenWidth! * .18,
                           fontSize: AppSize.defaultSize! * 1.2,
                         )
                       ],

@@ -104,7 +104,7 @@ class _UniversityDropDownState extends State<UniversityDropDown> {
                   return DropdownMenuItem(
                     value: value,
                     child: Padding(
-                      padding: EdgeInsets.only(left: AppSize.defaultSize!),
+                      padding: EdgeInsets.only(left: AppSize.defaultSize!*.5),
                       child: Text(
                         value.universityName ?? "",
                         style: TextStyle(

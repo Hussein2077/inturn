@@ -20,8 +20,8 @@ import 'package:inturn/features/auth/presentation/controller/add_info_bloc/add_i
 import 'package:inturn/features/auth/presentation/widgets/segment_button.dart';
 
 class LocationInfo extends StatefulWidget {
-  const LocationInfo({super.key});
-
+  const LocationInfo({super.key, this.isFromPreviousPageForLeading=false});
+  final  bool? isFromPreviousPageForLeading ;
   static int locationSegment = 0;
 
   @override
@@ -39,7 +39,7 @@ class _LocationInfoState extends State<LocationInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appBar(context, text: StringManager.workLocationAndType.tr(),leading: true),
+        appBar: appBar(context, text: StringManager.workLocationAndType.tr(),leading: widget.isFromPreviousPageForLeading!, actions: true),
         body: BlocListener<AddPersonalInfoBloc, AddPersonalInfoState >(
           listener: (context, state) {
             if(state is AddLocationTypeSuccessState){

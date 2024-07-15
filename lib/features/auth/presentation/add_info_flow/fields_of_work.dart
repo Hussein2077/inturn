@@ -23,8 +23,8 @@ import 'package:inturn/features/home/presentation/controller/get_major/event.dar
 import 'package:inturn/features/home/presentation/controller/get_major/state.dart';
 
 class FieldsInfo extends StatefulWidget {
-  const FieldsInfo({super.key});
-
+  const FieldsInfo({super.key, this.isFromPreviousPageForLeading=false});
+  final  bool? isFromPreviousPageForLeading ;
   static List<int> majorsId = [];
 
   @override
@@ -44,7 +44,7 @@ class _FieldsInfoState extends State<FieldsInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:
-          appBar(context, text: StringManager.fieldsOfWork.tr(), leading: true),
+          appBar(context, text: StringManager.fieldsOfWork.tr(), leading: widget.isFromPreviousPageForLeading!,actions: true),
       body: SingleChildScrollView(
         child: Column(
           children: [

@@ -27,4 +27,20 @@ class LoginWithEmailAndPasswordSuccessMessageState extends LoginWithEmailAndPass
   final String userId ;
   const LoginWithEmailAndPasswordSuccessMessageState(  {required this.userId,required this.successMessage,required this.isCompleted, required this.completion});
 
+}class DeleteAccountLoadingState extends LoginWithEmailAndPasswordState{
+  const DeleteAccountLoadingState();
+}
+class DeleteAccountErrorMessageState extends LoginWithEmailAndPasswordState{
+  final String errorMessage ;
+
+  const DeleteAccountErrorMessageState({required this.errorMessage});
+
+
+}
+
+class DeleteAccountSuccessMessageState extends LoginWithEmailAndPasswordState{
+  final String successMessage ;
+
+  const DeleteAccountSuccessMessageState(  {required this.successMessage,});
+
 }
