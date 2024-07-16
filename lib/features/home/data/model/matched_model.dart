@@ -21,6 +21,8 @@ class MatchedVacancyWrapper {
 class MatchedVacancy {
   final int? vacancyId;
   final int? vacancyLevelId;
+  final int? vacancyWorkPlaceId;
+
   final String? title;
   final String? responsibilities;
   final String? requirements;
@@ -46,6 +48,7 @@ class MatchedVacancy {
     this.company,
     this.description,
     this.cityName,
+    this.vacancyWorkPlaceId,
   });
 
   factory MatchedVacancy.fromJson(Map<String, dynamic> json) {
@@ -73,9 +76,10 @@ class MatchedVacancy {
           : json['country'] == null
               ? 'Unknown city'
               : (json['city']['cityNameEn'] +
-                      ',' +
+                      ', ' +
                       json['country']['countryNameEn'] ??
                   'Unknown city'),
+      vacancyWorkPlaceId: json['vacancyWorkPlaceId'] ??0,
     );
   }
 }

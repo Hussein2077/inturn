@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:inturn/core/models/vacancey_model.dart';
+import 'package:inturn/features/home/data/model/matched_model.dart';
 
 class SuggestedInCompanyState extends Equatable {
   const SuggestedInCompanyState();
@@ -22,7 +22,7 @@ class GetSuggestedInCompanyBySearchErrorMessageState
 
 class GetSuggestedInCompanyBySearchSuccessMessageState
     extends SuggestedInCompanyState {
-  final List<VacancyModel> vacancyModel;
+  final List<MatchedVacancyWrapper> vacancyModel;
 
   const GetSuggestedInCompanyBySearchSuccessMessageState({required this.vacancyModel});
 }

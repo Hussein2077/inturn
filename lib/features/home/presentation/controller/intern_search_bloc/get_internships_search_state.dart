@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import 'package:inturn/core/models/vacancey_model.dart';
+import 'package:inturn/features/home/data/model/matched_model.dart';
 
 abstract class GetInternshipsBySearchState extends Equatable {
   const GetInternshipsBySearchState();
@@ -24,7 +25,7 @@ class GetInternshipsBySearchErrorMessageState
 
 class GetInternshipsBySearchSuccessMessageState
     extends GetInternshipsBySearchState {
-  final List<VacancyModel> vacancyModel;
+  final List<MatchedVacancyWrapper> vacancyModel;
 
   const GetInternshipsBySearchSuccessMessageState({required this.vacancyModel});
 }

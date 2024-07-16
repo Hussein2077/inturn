@@ -37,7 +37,7 @@ abstract class BaseRemotelyDataSourceHome {
 
   Future<dynamic> apply(VacancyApply vacancyApply);
 
-  Future<List<VacancyModel>> getInternshipsBySearch(
+  Future<List<MatchedVacancyWrapper>> getInternshipsBySearch(
       VacancySearch vacancySearch);
 }
 
@@ -241,19 +241,41 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
   }
 
   @override
-  Future<List<VacancyModel>> getInternshipsBySearch(
+  Future<List<MatchedVacancyWrapper>> getInternshipsBySearch(
       VacancySearch vacancySearch) async {
      final Options options = await DioHelper().options();
     log('${vacancySearch.vacancyWorkPlace}slfbnlbnwlnw');
-    log('${vacancySearch.countryId}ehehhet\n ${vacancySearch.cityId}\n${vacancySearch.vacancyLevelId}\n${vacancySearch.companyId}\n${vacancySearch.title}\n${vacancySearch.userId}');
+    log('${vacancySearch.countryId}ehehhet\n ${vacancySearch.cityId}\n${vacancySearch.vacancyLevelId}\n${vacancySearch.companyId}\n${vacancySearch.title}\n${MyApp.userId}');
+    List cityIds = [];
+    List countryIds = [];
+    List areaIds = [];
+    List vacancyWorkPlaceIds = [];
+    if(vacancySearch.cityId != null) {
+      cityIds.add(vacancySearch.cityId);
+    }
+    if(vacancySearch.countryId != null) {
+      countryIds.add(vacancySearch.countryId);
+    }
+    if(vacancySearch.areaId != null) {
+      areaIds.add(vacancySearch.areaId);
+    }
+    if(vacancySearch.vacancyWorkPlace != null) {
+      vacancyWorkPlaceIds.add(vacancySearch.vacancyWorkPlace);
+    }
+
+    log('${cityIds}ccccccc');
+    log('${countryIds}ccccccccc');
+    log('${areaIds}cccccccc');
+    log('${vacancyWorkPlaceIds}cccccccccvcvcvcv');
+    log('${vacancySearch.vacancyLevelId}cccccccc');
     final body = {
-      'cityId': vacancySearch.cityId,
-      'countryId': vacancySearch.countryId,
+      'cityIds': cityIds ,
+      'countryIds': countryIds,
+      'areaIds': areaIds,
       'vacancyLevelId': vacancySearch.vacancyLevelId,
-      'vacancyWorkPlace': vacancySearch.vacancyWorkPlace??0,
-      'companyId': vacancySearch.companyId,
+      'vacancyWorkPlaceIds':  vacancyWorkPlaceIds,
       'title': vacancySearch.title,
-      'userId': vacancySearch.userId,
+      'userId': vacancySearch.userId??MyApp.userId,
     };
     try {
       final response = await Dio().post(
@@ -262,9 +284,9 @@ class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
         data: body,
 
       );
-      List<VacancyModel> jsonData = List<VacancyModel>.from(
-          (response.data as List).map((e) => VacancyModel.fromJson(e)));
-
+      List<MatchedVacancyWrapper> jsonData = List<MatchedVacancyWrapper>.from(
+          (response.data as List).map((e) => MatchedVacancyWrapper.fromJson(e)));
+  log('${response.data}jsonDatajsonDatajsonData');
       return jsonData;
     } on DioException catch (e) {
       throw DioHelper.handleDioError(

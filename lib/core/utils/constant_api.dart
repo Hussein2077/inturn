@@ -47,7 +47,7 @@ class ConstantApi {
       "${baseUrl}UserProfiles/EditUserProfileByUserId";
 
   static const String getGetInternshipsBySearch =
-      '${baseUrl}Vacancies/SearchVacancies';
+      '${baseUrl}Vacancies/SearchVacanciesByMatchedJobs';
 
 //add personal info
   static String addPersonalInfo() => "${baseUrl}UserProfiles/AddFormUserInfo";

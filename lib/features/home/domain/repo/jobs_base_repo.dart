@@ -6,7 +6,6 @@ import 'package:inturn/features/home/data/model/area_model.dart';
 import 'package:inturn/features/home/data/model/company_model.dart';
 import 'package:inturn/features/home/data/model/major_model.dart';
 import 'package:inturn/features/home/data/model/cities_model.dart';
-import 'package:inturn/features/home/data/model/intern_model.dart';
 import 'package:inturn/features/home/data/model/faculty_model.dart';
 import 'package:inturn/features/home/data/model/matched_model.dart';
 import 'package:inturn/features/home/data/model/skill_model.dart';
@@ -31,7 +30,7 @@ abstract class BaseRepositoryHome {
   Future<Either<List<ApplicationModel>, Failure>> getMyApplications(String userId);
 
   Future<Either<List<CompanyModel>, Failure>> getCompanies();
-  Future<Either<List<VacancyModel>, Failure>> getInternshipsBySearch(VacancySearch vacancySearch);
+  Future<Either<List<MatchedVacancyWrapper>, Failure>> getInternshipsBySearch(VacancySearch vacancySearch);
 
 
   Future<Either<dynamic, Failure>> apply(VacancyApply vacancyApply);

@@ -6,6 +6,7 @@ import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/widgets/app_bar.dart';
+import 'package:inturn/core/widgets/area_drop_down.dart';
 import 'package:inturn/core/widgets/country_drop_down.dart';
 
 class FiltersScreen extends StatefulWidget {
@@ -19,7 +20,15 @@ class FiltersScreen extends StatefulWidget {
 }
 
 class _FiltersScreenState extends State<FiltersScreen> {
-
+    @override
+  void initState() {
+    FiltersScreen.careerLevel = null;
+    FiltersScreen.workPlace = null;
+    CitiesDropDown.selectedValue2=null;
+    CitiesDropDown.selectedValue=null;
+    AreaDropDown.selectedValue2=null;
+    super.initState();
+  }
   List<Map> careerLevel = [
     {"name": StringManager.all.tr(), "isChecked": true, "id": 0},
     {"name": StringManager.internship.tr(), "isChecked": false, "id": 1},

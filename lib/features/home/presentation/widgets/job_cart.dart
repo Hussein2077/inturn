@@ -21,7 +21,8 @@ class JobCart extends StatefulWidget {
       this.linearCircle = true,
       this.skillRequired,
       this.height,
-      required this.vacancyModel, this.applicationStatusId});
+      required this.vacancyModel,
+      this.applicationStatusId});
 
   final bool linearCircle;
   final Widget? skillRequired;
@@ -46,9 +47,10 @@ class _JobCartState extends State<JobCart> {
 
   @override
   Widget build(BuildContext context) {
+
     return InkWell(
       onTap: () {
-        if(widget.skillRequired == null) {
+        if (widget.skillRequired == null) {
           PersistentNavBarNavigator.pushNewScreen(
             context,
             screen: JobDetailsScreen(
@@ -58,7 +60,6 @@ class _JobCartState extends State<JobCart> {
             pageTransitionAnimation: PageTransitionAnimation.fade,
           );
         }
-
       },
       child: SizedBox(
         width: AppSize.screenWidth,
@@ -109,14 +110,20 @@ class _JobCartState extends State<JobCart> {
                           width: AppSize.defaultSize! * 2,
                         ),
                         SizedBox(
-                          width: AppSize.defaultSize! * .5,
+                          width: AppSize.defaultSize! * .2,
                         ),
-                        CustomText(
-                          text: widget.vacancyModel.matchedVacancy.cityName! ??
-                              "",
-                          color: AppColors.greyColor,
-                          // textAlign: TextAlign.start,
-                          fontSize: AppSize.defaultSize! * 1.4,
+                        SizedBox(
+                          width: AppSize.defaultSize! * 10,
+                          child: CustomText(
+                            text:
+                                widget.vacancyModel.matchedVacancy.cityName! ??
+                                    "",
+                            color: AppColors.greyColor,
+                            textAlign: TextAlign.start,
+
+                            // textAlign: TextAlign.start,
+                            fontSize: AppSize.defaultSize! * 1.4,
+                          ),
                         ),
                         SizedBox(
                           width: AppSize.defaultSize! * 2,
@@ -132,16 +139,35 @@ class _JobCartState extends State<JobCart> {
                           textColor: Colors.white,
                           fontSize: AppSize.defaultSize!,
                           height: AppSize.defaultSize! * 2.5,
-                          width: AppSize.defaultSize! * 10,
-                        )
+                          width: AppSize.defaultSize! * 8,
+                        ),
+                        SizedBox(
+                          width: AppSize.defaultSize!,
+                        ),
+                        MainButton(
+                          text: (widget.vacancyModel.matchedVacancy
+                                      .vacancyWorkPlaceId ==
+                                  1)
+                              ? StringManager.onSite.tr()
+                              : ((widget.vacancyModel.matchedVacancy
+                                          .vacancyWorkPlaceId ==
+                                      2)
+                                  ? StringManager.remotely.tr()
+                                  : StringManager.hybrid.tr()),
+                          onTap: () {},
+                          color: AppColors.homeColor,
+                          textColor: Colors.white,
+                          fontSize: AppSize.defaultSize!,
+                          height: AppSize.defaultSize! * 2.5,
+                          width: AppSize.defaultSize! * 8,
+                        ),
                       ]),
                       SizedBox(
                         height: AppSize.defaultSize!,
                       ),
                       widget.skillRequired ?? const SizedBox(),
                       CustomText(
-                        text: widget
-                                .vacancyModel.matchedVacancy.description ??
+                        text: widget.vacancyModel.matchedVacancy.description ??
                             "",
                         maxLines: 10,
                         textAlign: TextAlign.start,
@@ -182,8 +208,7 @@ class _JobCartState extends State<JobCart> {
                               bottomLeft:
                                   Radius.circular(AppSize.defaultSize! * 2),
                             ),
-                            color: widget.applicationStatusId!=
-                                    1
+                            color: widget.applicationStatusId != 1
                                 ? AppColors.homeColor
                                 : AppColors.greyColor,
                           ),
@@ -196,16 +221,14 @@ class _JobCartState extends State<JobCart> {
                           ),
                         ),
                         SizedBox(
-                          width: AppSize.defaultSize! ,
+                          width: AppSize.defaultSize!,
                         ),
                         Container(
                           width: AppSize.defaultSize! * 10,
                           height: AppSize.defaultSize! * 2.4,
                           decoration: BoxDecoration(
-                            color: (widget.applicationStatusId ==
-                                        5 ||
-                                widget.applicationStatusId ==
-                                        2)
+                            color: (widget.applicationStatusId == 5 ||
+                                    widget.applicationStatusId == 2)
                                 ? AppColors.yellowColor
                                 : AppColors.greyColor,
                           ),
@@ -218,7 +241,7 @@ class _JobCartState extends State<JobCart> {
                           ),
                         ),
                         SizedBox(
-                          width: AppSize.defaultSize! ,
+                          width: AppSize.defaultSize!,
                         ),
                         Container(
                           width: AppSize.defaultSize! * 10,
@@ -230,18 +253,15 @@ class _JobCartState extends State<JobCart> {
                               bottomRight:
                                   Radius.circular(AppSize.defaultSize! * 2),
                             ),
-                            color: widget.applicationStatusId==
-                                    2
+                            color: widget.applicationStatusId == 2
                                 ? Colors.green
-                                : widget.applicationStatusId ==
-                                        3
+                                : widget.applicationStatusId == 3
                                     ? Colors.red
                                     : AppColors.greyColor,
                           ),
                           child: Center(
                             child: CustomText(
-                              text: widget.applicationStatusId ==
-                                      3
+                              text: widget.applicationStatusId == 3
                                   ? StringManager.rejected.tr()
                                   : StringManager.selection.tr(),
                               color: Colors.white,
@@ -249,7 +269,6 @@ class _JobCartState extends State<JobCart> {
                             ),
                           ),
                         ),
-
                       ],
                     ),
 

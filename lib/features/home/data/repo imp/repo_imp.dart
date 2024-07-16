@@ -8,7 +8,6 @@ import 'package:inturn/features/home/data/model/area_model.dart';
 import 'package:inturn/features/home/data/model/company_model.dart';
 import 'package:inturn/features/home/data/model/major_model.dart';
 import 'package:inturn/features/home/data/model/cities_model.dart';
-import 'package:inturn/features/home/data/model/intern_model.dart';
 import 'package:inturn/features/home/data/model/faculty_model.dart';
 import 'package:inturn/features/home/data/model/matched_model.dart';
 import 'package:inturn/features/home/data/model/skill_model.dart';
@@ -123,7 +122,7 @@ class HomeRepositoryImp extends BaseRepositoryHome {
     }
   }
   @override
-  Future<Either<List<VacancyModel>, Failure>> getInternshipsBySearch(VacancySearch vacancySearch) async {
+  Future<Either<List<MatchedVacancyWrapper>, Failure>> getInternshipsBySearch(VacancySearch vacancySearch) async {
     try {
       final result = await baseRemotelyDataSourceHome.getInternshipsBySearch(vacancySearch);
       return Left(result);

@@ -23,6 +23,7 @@ class GetInternshipsBySearchBloc extends Bloc<BaseGetInternshipsBySearchEvent, G
         companyId: event.companyId,
         vacancyLevelId: event.vacancyLevelId,
         userId: event.userId,
+        areaId: event.areaId,
         vacancyWorkPlace: event.vacancyWorkPlace
       ));
       result.fold(

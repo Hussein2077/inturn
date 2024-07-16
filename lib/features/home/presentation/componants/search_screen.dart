@@ -9,6 +9,7 @@ import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/widgets/app_bar.dart';
+import 'package:inturn/core/widgets/area_drop_down.dart';
 import 'package:inturn/core/widgets/country_drop_down.dart';
 import 'package:inturn/core/widgets/custom_text_field.dart';
 import 'package:inturn/core/widgets/cutom_text.dart';
@@ -141,9 +142,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                       cityId:
                                           CitiesDropDown.selectedValue2?.cityId,
                                       countryId: CitiesDropDown
-                                              .selectedValue?.countryId ??
-                                          1,
+                                              .selectedValue?.countryId
+                                          ,
                                       vacancyWorkPlace: FiltersScreen.workPlace,
+                                      areaId: AreaDropDown.selectedValue2?.areaId,
                                     ));
                                   });
                                 },
@@ -200,22 +202,26 @@ class _SearchScreenState extends State<SearchScreen> {
                                   vacancyModel: MatchedVacancyWrapper(
                                     matchedVacancy: MatchedVacancy(
                                       vacancyId:
-                                          state.vacancyModel[index].vacancyId,
-                                      title: state.vacancyModel[index].title,
+                                          state.vacancyModel[index].matchedVacancy.vacancyId,
+                                      title: state.vacancyModel[index].matchedVacancy.title,
                                       companyId:
-                                          state.vacancyModel[index].companyId,
+                                          state.vacancyModel[index].matchedVacancy.companyId,
                                       company:
-                                          state.vacancyModel[index].company,
+                                          state.vacancyModel[index].matchedVacancy.company,
                                       cityName:
-                                          state.vacancyModel[index].cityName,
+                                          state.vacancyModel[index].matchedVacancy.cityName,
                                       vacancyLevelId: state
-                                          .vacancyModel[index].vacancyLevelId,
+                                          .vacancyModel[index].matchedVacancy.vacancyLevelId,
                                       requirements: state
-                                          .vacancyModel[index].requirements,
+                                          .vacancyModel[index].matchedVacancy.requirements,
                                       responsibilities: state
-                                          .vacancyModel[index].responsibilities,
+                                          .vacancyModel[index].matchedVacancy.responsibilities,
                                       description:
-                                          state.vacancyModel[index].description,
+                                          state.vacancyModel[index].matchedVacancy.description,
+                                      vacancySkills: state.vacancyModel[index].matchedVacancy.vacancySkills,
+                                   vacancyWorkPlaceId: state.vacancyModel[index].matchedVacancy.vacancyWorkPlaceId,
+                                      majorId: state  .vacancyModel[index].matchedVacancy.majorId,
+                                      deadline: state.vacancyModel[index].matchedVacancy.deadline,
                                     ),
                                     matchmakingPercentage: 0,
                                   ),

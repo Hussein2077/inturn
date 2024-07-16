@@ -61,10 +61,11 @@ class VacancySearch {
   final int? companyId;
   final int? cityId;
   final int? countryId;
+  final int? areaId;
   final int? vacancyLevelId;
   final int? vacancyWorkPlace;
   final String? userId;
-  VacancySearch({
+  VacancySearch( {
     this.title,
     this.companyId,
     this.cityId,
@@ -72,8 +73,10 @@ class VacancySearch {
     this.vacancyLevelId,
     this.userId,
     this.vacancyWorkPlace,
+    this.areaId,
   });
-}class VacancyApply{
+}
+class VacancyApply{
   final int vacancyID;
   final String userID;
 
