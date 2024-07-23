@@ -12,10 +12,14 @@ class ConstantApi {
   static const String deleteAccount = "${baseUrl}NewUserProfiles/DeleteUserProfileByUserId";
   static const String signUp = "${baseUrl}NewAuth/phone-signup";
   static const String sendCode = "${baseUrl}NewAuth/generate-phone-otp";
+  static const String sendCodeForForgot = "${baseUrl}NewAuth/generate-otp";
   static const String sendCodeToEmail =
       "${baseUrl}NewAuth/generate-otp-Register";
   static const String verifyCode = "${baseUrl}NewAuth/validate-otp-register";
-
+  static const String verifyCodeForForgot = "${baseUrl}NewAuth/validate-otp";
+  static const String verifyCodeSignUp = "${baseUrl}NewAuth/validate-phone-otp";
+  static const String resetPassword = "${baseUrl}NewAuth/reset-password";
+  static const String changePassword = "${baseUrl}NewAuth/Change-password";
   static const String universities = "${baseUrl}Universities/GetAllUniversity";
   static const String uploadPdf = "${baseUrl}UploadCV/upload-cv";
   static const String updatePdf = "${baseUrl}UploadCV/updateUserCV";
@@ -88,8 +92,7 @@ class ConstantApi {
   static const String getJobs = "${baseUrl}Jobs/GetVacancy";
   static const String getGetInternships = "${baseUrl}Jobs/GetInternships";
 
-  static const String resetPassword = "${baseUrl}Auth/reset-password-with-otp";
-  static const String changePassword = "${baseUrl}Auth/Change-password";
+
   static const String googleRegister = "https://api.inturn.app/GLogin";
   static const String email = "email";
   static const String password = "password";

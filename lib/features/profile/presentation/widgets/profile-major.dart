@@ -144,6 +144,7 @@ class _ProfileMajorState extends State<ProfileMajor> {
                                 ),
                               )
                               .toList(),
+
                           hint: StringManager.searchForMajors.tr(),
                           searchStyle: TextStyle(
                             fontSize: AppSize.defaultSize! * 1.2,

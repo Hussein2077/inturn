@@ -13,9 +13,10 @@ import 'package:inturn/features/auth/presentation/controller/change_password_blo
 import 'package:inturn/features/auth/presentation/signup/sign_up.dart';
 
 class SendCodeButton extends StatefulWidget {
-  const SendCodeButton({super.key, required this.text, required this.color,});
+  const SendCodeButton({super.key, required this.text, required this.color, required this.readOnly,});
   final String text ;
   final Color color ;
+  final bool readOnly ;
   @override
   State<SendCodeButton> createState() => _SendCodeButtonState();
 }
@@ -42,7 +43,7 @@ class _SendCodeButtonState extends State<SendCodeButton> {
           errorSnackBar(context, StringManager.enterPhone.tr());
 
         }
-        if (SignUpScreen.phoneNumber.length == 10 && !SignUpScreen.otpVisible ) {
+        if (SignUpScreen.phoneNumber.length == 10 &&  !widget.readOnly ) {
           BlocProvider.of<ResetPasswordFlowBloc>(context)
               .add(SendCodeEvent(phoneOrEmail: '0${SignUpScreen.phoneNumber}'));
 

@@ -40,6 +40,21 @@ class SendCodeSuccessMessageState extends ResetPasswordState {
 
   const SendCodeSuccessMessageState({required this.successMessage});
 }
+class SendCodeForForgetLoadingState extends ResetPasswordState {
+  const SendCodeForForgetLoadingState();
+}
+
+class SendCodeForForgetErrorMessageState extends ResetPasswordState {
+  final String errorMessage;
+
+  const SendCodeForForgetErrorMessageState({required this.errorMessage});
+}
+
+class SendCodeForForgetSuccessMessageState extends ResetPasswordState {
+  final String successMessage;
+
+  const SendCodeForForgetSuccessMessageState({required this.successMessage});
+}
 
 class VerifyCodeLoadingState extends ResetPasswordState {
   const VerifyCodeLoadingState();
@@ -55,4 +70,19 @@ class VerifyCodeSuccessMessageState extends ResetPasswordState {
   final String successMessage;
 
   const VerifyCodeSuccessMessageState({required this.successMessage});
+}
+class VerifyCodeSignUpLoadingState extends ResetPasswordState {
+  const VerifyCodeSignUpLoadingState();
+}
+
+class VerifyCodeSignUpErrorMessageState extends ResetPasswordState {
+  final String errorMessage;
+
+  const VerifyCodeSignUpErrorMessageState({required this.errorMessage});
+}
+
+class VerifyCodeSignUpSuccessMessageState extends ResetPasswordState {
+  final String successMessage;
+
+  const VerifyCodeSignUpSuccessMessageState({required this.successMessage});
 }

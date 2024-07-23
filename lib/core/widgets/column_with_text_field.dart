@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/widgets/custom_text_field.dart';
@@ -17,6 +18,7 @@ class ColumnWithTextField extends StatefulWidget {
     this.labelText,
     this.hintText,
     this.suffixIcon,
+    this.inputFormatters,
     this.keyboardType = TextInputType.text, this.formKey,
   });
   final  GlobalKey<FormState>? formKey ;
@@ -31,7 +33,7 @@ class ColumnWithTextField extends StatefulWidget {
   final Widget? suffixIcon;
   final void Function()? onTap;
   final TextInputType keyboardType;
-
+  final List<TextInputFormatter>? inputFormatters;
   final TextEditingController? controller;
 
   @override
@@ -70,6 +72,7 @@ class _ColumnWithTextFieldState extends State<ColumnWithTextField> {
               obscureText:    widget.obscureText,
               hintText: widget.hintText,
               suffixIcon: widget.suffixIcon,
+              inputFormatters: widget.inputFormatters,
               keyboardType: widget.keyboardType,
               maxLines: 1,
             )),

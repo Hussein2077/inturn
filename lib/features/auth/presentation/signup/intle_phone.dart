@@ -11,8 +11,9 @@ import 'package:inturn/core/widgets/main_button.dart';
 import 'package:inturn/features/auth/presentation/controller/change_password_bloc/change_password_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/change_password_bloc/change_password_events.dart';
 class IntlPhone extends StatelessWidget {
-  const IntlPhone({super.key, this.suffixIcon, this.onChanged, this.onSubmitted});
+  const IntlPhone({super.key, this.suffixIcon, this.onChanged, this.onSubmitted,   this.readOnly});
 final Widget? suffixIcon;
+final bool? readOnly;
 final void Function(PhoneNumber)? onChanged;
   final void Function(String)? onSubmitted;
   static Country? country ;
@@ -24,6 +25,39 @@ final void Function(PhoneNumber)? onChanged;
 
       ],
       onSubmitted: onSubmitted,
+      countries: const [
+        Country(
+          name: "Egypt",
+          nameTranslations: {
+            "sk": "Egypt",
+            "se": "Egypt",
+            "pl": "Egipt",
+            "no": "Egypt",
+            "ja": "エジプト",
+            "it": "Egitto",
+            "zh": "埃及",
+            "nl": "Egypt",
+            "de": "Ägypt",
+            "fr": "Égypte",
+            "es": "Egipt",
+            "en": "Egypt",
+            "pt_BR": "Egito",
+            "sr-Cyrl": "Египат",
+            "sr-Latn": "Egipat",
+            "zh_TW": "埃及",
+            "tr": "Mısır",
+            "ro": "Egipt",
+            "ar": "مصر",
+            "fa": "مصر",
+            "yue": "埃及"
+          },
+          flag: "🇪🇬",
+          code: "EG",
+          dialCode: "20",
+          minLength: 10,
+          maxLength: 10,
+        ),
+      ],
       decoration: InputDecoration(
         labelText: 'Phone Number',
         labelStyle: TextStyle(
@@ -55,6 +89,8 @@ final void Function(PhoneNumber)? onChanged;
         ),
       ),
       initialCountryCode: 'EG',
+      readOnly: readOnly??false,
+
       onCountryChanged: (countryCode) {
         IntlPhone.country =  countryCode;
 

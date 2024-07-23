@@ -107,15 +107,16 @@ class StringManager {
   static const String password = "Password";
   static const String oldPassword = "Old Password";
   static const String confirmPassword = "Confirm password";
-  static const String forgetYourPassword = "Forget Your Password ?";
+  static const String forgetYourPassword = "Forgot Your Password ?";
   static const String forgetPassword = "Forget Password";
   static const String   resetPassword = "Reset Password";
   static const String weWillSend =
-      "We will send a code to your Email. to verify your Email. to set the new password";
+      "We will send a code to your Email. to verify your Email or Phone. to set the new password";
   static const String pleaseEnterYOurCode =
       "Please enter the code which sent to";
   static const String or = "Or sign in with";
   static const String enterEmail  = "Enter Your Email.";
+  static const String enterEmailOrPhone  = "Enter Your Email or Phone.";
   static const String enterPhone   = "Enter Your phone.";
   static const String enterCode   = "Please Enter the Code.";
   static const String signUp = "Sign up";

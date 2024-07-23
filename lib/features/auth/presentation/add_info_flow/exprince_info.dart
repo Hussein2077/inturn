@@ -36,6 +36,7 @@ class _ExperienceInfoState extends State<ExperienceInfo> {
 
   void _jobLevelChanged(int newValue) {
     setState(() {
+
       ExperienceInfo.jobLevel = newValue;
     });
   }

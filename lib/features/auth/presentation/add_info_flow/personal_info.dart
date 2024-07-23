@@ -41,6 +41,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
   late TextEditingController addressController;
   ValueNotifier<bool> otpVisibleNotifier = ValueNotifier<bool>(false);
   ValueNotifier<bool> isVerifiedNotifier = ValueNotifier<bool>(false);
+  ValueNotifier<bool> emailReadOnly = ValueNotifier<bool>(false);
+
 
   @override
   void initState() {
@@ -148,6 +150,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         EasyLoading.dismiss();
                         EasyLoading.showSuccess(
                             StringManager.codeVerified.tr());
+                        emailReadOnly.value = true;
                         if (otpVisibleNotifier.value) {
                           otpVisibleNotifier.value = false;
                         }
@@ -161,40 +164,45 @@ class _PersonalInfoState extends State<PersonalInfo> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        CustomTextField(
-                          labelText: StringManager.email.tr(),
+                        ValueListenableBuilder(
+                          valueListenable:  emailReadOnly,
+                          builder: (context,  value, child) {
+                            return CustomTextField(
+                              labelText: StringManager.email.tr(),
+                            readOnly: emailReadOnly.value,
 
+                              keyboardType: TextInputType.emailAddress,
+                              controller: emailController,
+                              width: AppSize.screenWidth! * .72,
 
-                          keyboardType: TextInputType.emailAddress,
-                          controller: emailController,
-                          width: AppSize.screenWidth! * .72,
-
-                          suffixIcon: ValueListenableBuilder(
-                              valueListenable: isVerifiedNotifier,
-                              builder: (context, value, child) {
-                                if (value == false) {
-                                  return const Icon(
-                                    Icons.verified_outlined,
-                                    color: AppColors.greyColor,
-                                  );
-                                } else {
-                                  return Icon(
-                                    Icons.verified,
-                                    color: AppColors.primaryColor,
-                                  );
-                                }
-                              }),
+                              suffixIcon: ValueListenableBuilder(
+                                  valueListenable: isVerifiedNotifier,
+                                  builder: (context, value, child) {
+                                    if (value == false) {
+                                      return const Icon(
+                                        Icons.verified_outlined,
+                                        color: AppColors.greyColor,
+                                      );
+                                    } else {
+                                      return Icon(
+                                        Icons.verified,
+                                        color: AppColors.primaryColor,
+                                      );
+                                    }
+                                  }),
+                            );
+                          }
                         ),
                         MainButton(
-                          text: otpVisibleNotifier.value == false
+                          text: (otpVisibleNotifier.value == false&&emailReadOnly.value==false)
                               ? StringManager.sendCode.tr()
                               : StringManager.sent.tr(),
-                          color: otpVisibleNotifier.value == false
+                          color:(otpVisibleNotifier.value == false&&emailReadOnly.value==false)
                               ? AppColors.primaryColor
                               : AppColors.greyColor,
                           onTap: () {
                             if (!otpVisibleNotifier.value &&
-                                emailController.text.isNotEmpty) {
+                                emailController.text.isNotEmpty&&emailReadOnly.value==false) {
                               BlocProvider.of<ResetPasswordFlowBloc>(context)
                                   .add(SendCodeEvent(
                                       phoneOrEmail: emailController.text,
@@ -230,7 +238,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                             context)
                                         .add(VerifyCodeEvent(
                                             email: emailController.text,
-                                            code: v));
+                                            code: v, fromForgot: false));
                                   },
                                 ),
                                 CounterByMinute(

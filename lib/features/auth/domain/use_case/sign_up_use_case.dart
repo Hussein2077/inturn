@@ -25,11 +25,12 @@ class SignUpModel {
   final String? password;
   final String? code;
   final PhoneOrEmail? phoneOrEmailType ;
-
+final bool? fromForgotForValidate;
   const SignUpModel( {
     this.phone,
     this.code,
     this.password,
     this.phoneOrEmailType,
+    this.fromForgotForValidate
   });
 }

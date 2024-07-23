@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
+import 'package:inturn/core/resource_manager/themes/enums.dart';
 import 'package:inturn/core/utils/app_size.dart';
+import 'package:inturn/core/utils/methods.dart';
 import 'package:inturn/core/widgets/app_bar.dart';
 import 'package:inturn/core/widgets/main_button.dart';
 import 'package:inturn/core/widgets/snack_bar.dart';
@@ -59,29 +61,34 @@ class _SendOTPCodeState extends State<SendOTPCode> {
               SizedBox(
                 height: AppSize.defaultSize! * 4,
               ),
-              const CustomPinCodeTextField(),
-              Text(
-                '${StringManager.youCanResend.tr()}2.00',
-                maxLines: 4,
-                style: TextStyle(
-                    fontSize: AppSize.defaultSize! * 1.6,
-                    fontWeight: FontWeight.w400,
-                    overflow: TextOverflow.ellipsis),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: AppSize.defaultSize! * 4,
+                    vertical: AppSize.defaultSize!),
+                child: const CustomPinCodeTextField(),
               ),
-              TextButton(
-                onPressed: () {},
-                child: Text(
-                  StringManager.resendCode.tr(),
-                  maxLines: 4,
-                  style: TextStyle(
-                      fontSize: AppSize.defaultSize! * 1.7,
-                      fontWeight: FontWeight.w700,
-                      decoration: TextDecoration.underline,
-                      decorationColor: Colors.grey,
-                      decorationThickness: 2,
-                      overflow: TextOverflow.ellipsis),
-                ),
-              ),
+              // Text(
+              //   '${StringManager.youCanResend.tr()}2.00',
+              //   maxLines: 4,
+              //   style: TextStyle(
+              //       fontSize: AppSize.defaultSize! * 1.6,
+              //       fontWeight: FontWeight.w400,
+              //       overflow: TextOverflow.ellipsis),
+              // ),
+              // TextButton(
+              //   onPressed: () {},
+              //   child: Text(
+              //     StringManager.resendCode.tr(),
+              //     maxLines: 4,
+              //     style: TextStyle(
+              //         fontSize: AppSize.defaultSize! * 1.7,
+              //         fontWeight: FontWeight.w700,
+              //         decoration: TextDecoration.underline,
+              //         decorationColor: Colors.grey,
+              //         decorationThickness: 2,
+              //         overflow: TextOverflow.ellipsis),
+              //   ),
+              // ),
               MainButton(
                 text: StringManager.verify.tr(),
                 onTap: () {
@@ -90,7 +97,13 @@ class _SendOTPCodeState extends State<SendOTPCode> {
                     BlocProvider.of<ResetPasswordFlowBloc>(context).add(
                         VerifyCodeEvent(
                             code: CustomPinCodeTextField.otp,
-                            email: widget.email));
+                            phoneOrEmailType: Methods.instance.isEmail(widget.email)
+                                ? PhoneOrEmail.email
+                                : PhoneOrEmail.phone,
+                            fromForgot: true,
+                            email: widget.email),
+
+                    );
                   } else {
                     errorSnackBar(context, StringManager.enterCode.tr());
                   }

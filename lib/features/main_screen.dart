@@ -5,6 +5,7 @@ import 'package:inturn/core/resource_manager/asset_path.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/utils/app_size.dart';
+import 'package:inturn/core/utils/methods.dart';
 import 'package:inturn/core/widgets/country_drop_down.dart';
 import 'package:inturn/core/widgets/major_drop_down.dart';
 import 'package:inturn/core/widgets/university.dart';

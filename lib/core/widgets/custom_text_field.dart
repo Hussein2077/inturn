@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/utils/app_size.dart';
 
@@ -21,7 +22,7 @@ class CustomTextField extends StatefulWidget {
   final TextStyle? labelStyle ;
   final TextStyle? textStyle ;
   final GlobalKey<FormState>? formKey;
-
+final List<TextInputFormatter>? inputFormatters;
   const CustomTextField({
     Key? key,
     this.labelText,
@@ -42,6 +43,7 @@ class CustomTextField extends StatefulWidget {
     this.fillColor,
     this.onChanged,
     this.textStyle
+    ,this.inputFormatters
   }) : super(key: key);
 
   @override
@@ -58,6 +60,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         key: widget.formKey,
         child: TextFormField(
           onTap: widget.onTap,
+          inputFormatters: widget. inputFormatters,
           style:  widget.textStyle??TextStyle(
             fontSize: AppSize.defaultSize! * 1.5,
           ),

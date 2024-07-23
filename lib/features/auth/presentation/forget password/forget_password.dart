@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
+import 'package:inturn/core/resource_manager/themes/enums.dart';
 import 'package:inturn/core/utils/app_size.dart';
+import 'package:inturn/core/utils/methods.dart';
 import 'package:inturn/core/widgets/app_bar.dart';
 import 'package:inturn/core/widgets/main_button.dart';
 import 'package:inturn/core/widgets/column_with_text_field.dart';
@@ -38,14 +40,14 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   Widget build(BuildContext context) {
     return BlocListener<ResetPasswordFlowBloc, ResetPasswordState>(
       listener: (context, state) {
-        if (state is SendCodeLoadingState) {
+        if (state is SendCodeForForgetLoadingState) {
           EasyLoading.show();
         }
-        if (state is SendCodeErrorMessageState) {
+        if (state is SendCodeForForgetErrorMessageState) {
           EasyLoading.dismiss();
           EasyLoading.showError(state.errorMessage);
         }
-        if (state is SendCodeSuccessMessageState) {
+        if (state is SendCodeForForgetSuccessMessageState) {
           EasyLoading.dismiss();
           EasyLoading.showSuccess(state.successMessage);
           Navigator.pushNamed(context, Routes.sendOTPCode,
@@ -67,7 +69,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     overflow: TextOverflow.ellipsis),
               ),
               ColumnWithTextField(
-                text: StringManager.enterEmail.tr(),
+                text: StringManager.enterEmailOrPhone.tr(),
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
               ),
@@ -78,8 +80,12 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 text: StringManager.sendCode.tr(),
                 onTap: () {
                   if (emailController.text.isNotEmpty) {
-                    BlocProvider.of<ResetPasswordFlowBloc>(context)
-                        .add(SendCodeEvent(phoneOrEmail: emailController.text));
+                    BlocProvider.of<ResetPasswordFlowBloc>(context).add(
+                        SendCodeForForgotEvent(
+                            phoneOrEmail: emailController.text,
+                            phoneOrEmailType: Methods.instance.isEmail(emailController.text)
+                                ? PhoneOrEmail.email
+                                : PhoneOrEmail.phone));
                   } else {
                     EasyLoading.showError(StringManager.enterEmail.tr());
                   }
@@ -91,4 +97,6 @@ class _ForgetPasswordState extends State<ForgetPassword> {
       ),
     );
   }
+
+
 }

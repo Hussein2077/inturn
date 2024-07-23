@@ -15,7 +15,11 @@ abstract class BaseRepository {
       SignUpModel signUpModel);
   Future<Either<String, Failure>> sendCode(
       SignUpModel signUpModel);
+  Future<Either<String, Failure>> sendCodeForForgot(
+      SignUpModel signUpModel);
   Future<Either<Map<String, dynamic>, Failure>> verifyCode(
+      SignUpModel signUpModel);
+  Future<Either< dynamic, Failure>> verifyCodeSignUp(
       SignUpModel signUpModel);
 
   Future<Either<Map<String, dynamic>, Failure>> addPersonalInfo(PersonalInfoParams params);

@@ -18,3 +18,17 @@ class VerifyCodeUseCase
     return result;
   }
 }
+class VerifyCodeSignUpUseCase
+    extends BaseUseCase< dynamic, SignUpModel> {
+  BaseRepository baseRepository;
+
+  VerifyCodeSignUpUseCase({required this.baseRepository});
+
+  @override
+  Future<Either<dynamic, Failure>> call(
+      SignUpModel parameter) async {
+    final result = await baseRepository.verifyCodeSignUp(parameter);
+
+    return result;
+  }
+}

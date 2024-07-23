@@ -16,4 +16,17 @@ class SendCodeUseCase
 
     return result;
   }
+}class SendCodeForForgotUseCase
+    extends BaseUseCase<String, SignUpModel> {
+  BaseRepository baseRepository;
+
+  SendCodeForForgotUseCase({required this.baseRepository});
+
+  @override
+  Future<Either<String, Failure>> call(
+      SignUpModel parameter) async {
+    final result = await baseRepository.sendCodeForForgot(parameter);
+
+    return result;
+  }
 }

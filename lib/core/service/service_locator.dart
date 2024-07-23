@@ -112,6 +112,8 @@ class ServerLocator {
           resetPasswordUseCase: getIt(),
           sendCodeUseCase: getIt(),
           verifyCodeUseCase: getIt(),
+      verifyCodeSignUpUseCase: getIt(),
+      sendCodeForForgotUseCase: getIt(),
         ));
 
     getIt.registerLazySingleton(
@@ -168,6 +170,8 @@ class ServerLocator {
         () => UploadPDFUseCase(baseRepositoryProfile: getIt()));
     getIt.registerFactory(() => GetPDFUseCase(baseRepositoryProfile: getIt()));
     getIt.registerFactory(() => DeleteAccountUseCase(baseRepository: getIt()));
+    getIt.registerFactory(() => VerifyCodeSignUpUseCase(baseRepository: getIt()));
+    getIt.registerFactory(() => SendCodeForForgotUseCase(baseRepository: getIt()));
 
     //remote data
     getIt.registerLazySingleton<BaseRemotelyDataSource>(

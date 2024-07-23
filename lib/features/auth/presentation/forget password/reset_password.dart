@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:inturn/core/resource_manager/routes.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
+import 'package:inturn/core/resource_manager/themes/enums.dart';
 import 'package:inturn/core/utils/app_size.dart';
+import 'package:inturn/core/utils/methods.dart';
 import 'package:inturn/core/widgets/app_bar.dart';
 import 'package:inturn/core/widgets/main_button.dart';
 import 'package:inturn/core/widgets/column_with_text_field.dart';
@@ -46,7 +48,7 @@ class _ResetPasswordState extends State<ResetPassword> {
 
     super.dispose();
   }
-
+  late bool  isLogin;
   @override
   Widget build(BuildContext context) {
     return BlocListener<ResetPasswordFlowBloc, ResetPasswordState>(
@@ -58,11 +60,20 @@ class _ResetPasswordState extends State<ResetPassword> {
           EasyLoading.dismiss();
           EasyLoading.showError(state.errorMessage);
         }
-        if (state is ResetPasswordSuccessMessageState) {
+        if (state is ResetPasswordSuccessMessageState)  {
           EasyLoading.dismiss();
           EasyLoading.showSuccess(state.successMessage);
+
+          Future.delayed(Duration.zero, ()async {
+               isLogin =await Methods.instance.returnUserToken()!='noToken';
+          });
+       if(!isLogin){
           Navigator.pushNamedAndRemoveUntil(
-              context, Routes.login, (Route<dynamic> route) => false);
+              context, Routes.login, (Route<dynamic> route) => false);}
+          else{
+            Navigator.pushNamedAndRemoveUntil(
+                context, Routes.main, (Route<dynamic> route) => false);
+          }
         }
       },
       child: Scaffold(
@@ -116,6 +127,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                         email: widget.email,
                         password: passwordController.text,
                         code: CustomPinCodeTextField.otp,
+                        phoneOrEmailType: Methods.instance.isEmail(widget.email)==true?PhoneOrEmail.email:PhoneOrEmail.phone
                       ),
                     );
                   } else if (passwordController.text !=

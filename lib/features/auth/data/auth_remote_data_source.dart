@@ -15,13 +15,19 @@ import 'package:http_parser/http_parser.dart';
 
 abstract class BaseRemotelyDataSource {
   Future<Map<String, dynamic>> loginWithEmailAndPassword(AuthModel authModel);
-Future <String> deleteAccount();
+
+  Future<String> deleteAccount();
+
   Future<Map<String, dynamic>> signUpWithEmailAndPassword(
       SignUpModel signUpModel);
 
   Future<String> sendCode(SignUpModel signUpModel);
 
+  Future<String> sendCodeForForgot(SignUpModel signUpModel);
+
   Future<Map<String, dynamic>> verifyCode(SignUpModel signUpModel);
+
+  Future<dynamic> verifyCodeSignUp(SignUpModel signUpModel);
 
   Future<Map<String, dynamic>> resetPassword(SignUpModel signUpModel);
 
@@ -64,12 +70,12 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       await Methods.instance.saveUserId(userId: jsonData['userId']);
       return jsonData;
     } on DioException catch (e) {
-
       throw DioHelper.handleDioError(
           dioError: e, endpointName: "loginWithEmailAndPassword");
     }
   }
-@override
+
+  @override
   Future<Map<String, dynamic>> addPersonalInfo(
       PersonalInfoParams params) async {
     final Options options = await DioHelper().options();
@@ -281,12 +287,25 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
   @override
   Future<Map<String, dynamic>> resetPassword(SignUpModel signUpModel) async {
     final Options options = await DioHelper().options();
-    final body = {
-      'newPassword': signUpModel.password,
-      'email': signUpModel.phone,
-      'otp': signUpModel.code,
-    };
+  var  body={};
+      log('${signUpModel.phoneOrEmailType}_resetPassword ${signUpModel.phone} ${signUpModel.password}   ');
+    if (signUpModel.phoneOrEmailType == PhoneOrEmail.phone) {
+      body = {
+        "forgotTypeId": 1,
+        "email": "",
+        "phoneNumber": signUpModel.phone,
+        "newPassword": signUpModel.password
+      };
+    } else {
+      body = {
+        "forgotTypeId": 2,
+        "email": signUpModel.phone,
+        "phoneNumber": "",
+        "newPassword": signUpModel.password
+      };
+    }
 
+log(body.toString()+'ssvif');
     try {
       final response = await Dio().post(
         ConstantApi.resetPassword,
@@ -327,7 +346,7 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
         options: options,
       );
 
-      // String jsonData = response.data;
+      var jsonData = response.data;
 
       return 'Success';
     } on DioException catch (e) {
@@ -336,16 +355,70 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
   }
 
   @override
-  Future<Map<String, dynamic>> verifyCode(SignUpModel signUpModel) async {
+  Future<String> sendCodeForForgot(SignUpModel signUpModel) async {
     final Options options = await DioHelper().options();
-    final body = {
-      'email': signUpModel.phone,
-      'otp': signUpModel.code,
-    };
+    late final Map<String, dynamic> body;
+    log('${signUpModel.phoneOrEmailType} signUpModel.phoneOrEmailType');
+    if (signUpModel.phoneOrEmailType == PhoneOrEmail.phone) {
+      body = {"phoneNumber": signUpModel.phone, "forgotTypeId": 1, "email": ""};
+    } else {
+      body = {"email": signUpModel.phone, "forgotTypeId": 2, "phoneNumber": ""};
+    }
 
     try {
       final response = await Dio().post(
-        ConstantApi.verifyCode,
+        ConstantApi.sendCodeForForgot,
+        data: body,
+        options: options,
+      );
+
+      var jsonData = response.data;
+
+      return 'Success';
+    } on DioException catch (e) {
+      throw DioHelper.handleDioError(
+          dioError: e, endpointName: "sendCodeForForgot");
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>> verifyCode(SignUpModel signUpModel) async {
+    final Options options = await DioHelper().options();
+    late  Map<String, dynamic> body;
+
+    if (signUpModel.fromForgotForValidate == true) {
+
+      if (signUpModel.phoneOrEmailType == PhoneOrEmail.phone) {
+        body = {
+          "phoneNumber": signUpModel.phone,
+          "forgotTypeId": 1,
+          "email": "",
+          "otp": signUpModel.code
+        };
+      } else {
+        log('messagemessagemessage${signUpModel.code}');
+        body = {
+          "email": signUpModel.phone,
+          "forgotTypeId": 2,
+          "phoneNumber": "",
+          "otp": signUpModel.code
+        };
+      }
+    }
+    else {
+      body = {
+        'email': signUpModel.phone,
+        'otp': signUpModel.code,
+      };
+    }
+
+
+
+    try {
+      final response = await Dio().post(
+        signUpModel.fromForgotForValidate == true
+            ? ConstantApi.verifyCodeForForgot
+            : ConstantApi.verifyCode,
         data: body,
         options: options,
       );
@@ -359,7 +432,32 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
   }
 
   @override
-  Future<String> deleteAccount() async{
+  Future<dynamic> verifyCodeSignUp(SignUpModel signUpModel) async {
+    final Options options = await DioHelper().options();
+    log('${signUpModel.phone}_verifyCodeSignUp ${signUpModel.code}_verifyCodeSignUp');
+    final body = {
+      'phoneNumber': '0${signUpModel.phone}',
+      'otp': signUpModel.code,
+    };
+
+    try {
+      final response = await Dio().post(
+        ConstantApi.verifyCodeSignUp,
+        data: body,
+        options: options,
+      );
+
+      var jsonData = response.data;
+
+      return jsonData;
+    } on DioException catch (e) {
+      throw DioHelper.handleDioError(
+          dioError: e, endpointName: "verifyCodeSignUp");
+    }
+  }
+
+  @override
+  Future<String> deleteAccount() async {
     final Options options = await DioHelper().options();
 
     try {
@@ -368,12 +466,12 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
         options: options,
       );
 
-     String jsonData = response.data;
+      String jsonData = response.data;
 
       return jsonData;
     } on DioException catch (e) {
-      throw DioHelper.handleDioError(dioError: e, endpointName: "deleteAccount");
+      throw DioHelper.handleDioError(
+          dioError: e, endpointName: "deleteAccount");
     }
   }
-
 }

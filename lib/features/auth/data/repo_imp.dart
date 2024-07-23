@@ -65,6 +65,15 @@ class RepositoryImp extends BaseRepository {
     } on Exception catch (e) {
       return right(DioHelper.buildFailure(e));
     }
+  }@override
+  Future<Either< String, Failure>> sendCodeForForgot(SignUpModel signUpModel)async{
+    try {
+      final result =
+      await baseRemotelyDataSource.sendCodeForForgot(signUpModel);
+      return Left(result);
+    } on Exception catch (e) {
+      return right(DioHelper.buildFailure(e));
+    }
   }
 
   @override
@@ -72,6 +81,15 @@ class RepositoryImp extends BaseRepository {
     try {
       final result =
       await baseRemotelyDataSource.verifyCode(signUpModel);
+      return Left(result);
+    } on Exception catch (e) {
+      return right(DioHelper.buildFailure(e));
+    }
+  }  @override
+  Future<Either< dynamic , Failure>> verifyCodeSignUp(SignUpModel signUpModel) async{
+    try {
+      final result =
+      await baseRemotelyDataSource.verifyCodeSignUp(signUpModel);
       return Left(result);
     } on Exception catch (e) {
       return right(DioHelper.buildFailure(e));

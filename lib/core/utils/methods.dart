@@ -140,6 +140,7 @@ class Methods {
     resultSet.addAll(list2);
     return resultSet.toList();
   }
+
   List<int> findCommonItems(List<Position> list1, List<Position> list2) {
     List<int> commonItems = [];
 
@@ -192,6 +193,11 @@ class Methods {
         preferences.getBool(StringManager.ifStudent) ?? true;
     return ifStudent;
   }
+  bool isEmail(String input) {
+    final RegExp emailRegex =
+    RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+    return emailRegex.hasMatch(input);
+  }
 
 }
 class CommonType extends Equatable{
@@ -202,5 +208,6 @@ class CommonType extends Equatable{
 
   @override
   List<Object> get props => [nameEn, id];
+
 }
 

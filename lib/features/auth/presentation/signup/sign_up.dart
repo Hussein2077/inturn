@@ -43,7 +43,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool passAndConfirmVisible = false;
   bool passwordVisible = true;
   bool confirmPasswordVisible = true;
-
+bool phoneReadOnly = false;
   @override
   void initState() {
     passwordController = TextEditingController();
@@ -59,6 +59,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     passAndConfirmVisible = false;
     SignUpScreen.otpVisible = false;
     SignUpScreen.phoneNumber = '';
+    EasyLoading.dismiss();
     super.dispose();
   }
 
@@ -96,6 +97,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
           } else if (state is SendCodeLoadingState) {
             EasyLoading.show(status: 'loading...');
           }
+          else if (state is VerifyCodeSignUpErrorMessageState) {
+            EasyLoading.dismiss();
+            errorSnackBar(context, state.errorMessage);
+          }
+          else if (state is VerifyCodeSignUpSuccessMessageState) {
+            EasyLoading.dismiss();
+            SignUpScreen.otpVisible = false;
+            passAndConfirmVisible = true;
+            phoneReadOnly = true;
+            setState(() {});
+          }
+          else if (state is VerifyCodeSignUpLoadingState) {
+            EasyLoading.show(status: 'loading...');
+          }
+
         },
         child: Scaffold(
           appBar: appBar(context, text: StringManager.signUp.tr()),
@@ -111,14 +127,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Padding(
                     padding: EdgeInsets.all(AppSize.defaultSize!),
                     child: IntlPhone(
+                      readOnly: phoneReadOnly,
                       suffixIcon: Padding(
                           padding: EdgeInsets.all(AppSize.defaultSize!),
+
                           child: SendCodeButton(
-                            text: SignUpScreen.otpVisible
+                            text: phoneReadOnly
                                 ? StringManager.sent
                                 : StringManager.sendCode,
                             color: SignUpScreen.otpVisible
-                                ?AppColors.greyColor:AppColors.primaryColor ,
+                                ?AppColors.greyColor:AppColors.primaryColor, readOnly: phoneReadOnly ,
                           )),
                       onChanged: (phone) {
                         SignUpScreen.phoneNumber = phone.number;
@@ -142,8 +160,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             onCompleted: (v) {
                               print("Completed");
                               CustomPinCodeTextField.otp = v;
-                              passAndConfirmVisible = true;
-                              setState(() {});
+
+                              BlocProvider.of< ResetPasswordFlowBloc>(
+                                  context
+                              ).add(VerifyCodeSignUpEvent(phone:  SignUpScreen.phoneNumber, code: CustomPinCodeTextField.otp ));
+
+
                             },
                           ),
                           const CounterByMinute(),
