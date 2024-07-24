@@ -461,7 +461,7 @@ log(body.toString()+'ssvif');
     final Options options = await DioHelper().options();
 
     try {
-      final response = await Dio().delete(
+      final response = await Dio().post(
         ConstantApi.deleteAccount,
         options: options,
       );

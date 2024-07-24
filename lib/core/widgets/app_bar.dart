@@ -21,9 +21,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 AppBar appBar(BuildContext context,
     {required String text,
-    bool leading = true,
-    bool actions = false,
-    Widget? leadingIcon}) {
+      bool leading = true,
+      bool actions = false,
+      Widget? leadingIcon}) {
   return AppBar(
     backgroundColor: Colors.white,
     elevation: 1,
@@ -34,48 +34,48 @@ AppBar appBar(BuildContext context,
     centerTitle: true,
     leading: leading
         ? leadingIcon ??
-            IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: Transform.rotate(
-                  angle: 180 * 3.14 / 180,
-                  child: Image.asset(
-                    AssetPath.leading,
-                    height: AppSize.defaultSize! * 2.5,
-                    width: AppSize.defaultSize! * 2.5,
-                  ),
-                ))
+        IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Transform.rotate(
+              angle: 180 * 3.14 / 180,
+              child: Image.asset(
+                AssetPath.leading,
+                height: AppSize.defaultSize! * 2.5,
+                width: AppSize.defaultSize! * 2.5,
+              ),
+            ))
         : null,
     actions: actions
         ? [
-            IconButton(
-                onPressed: () async {
-                  await Methods.instance.saveUserToken(authToken: null);
-                  SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
-                  await prefs.clear();
+      IconButton(
+          onPressed: () async {
+            await Methods.instance.saveUserToken(authToken: null);
+            SharedPreferences prefs =
+            await SharedPreferences.getInstance();
+            await prefs.clear();
 
-                  Navigator.of(getIt<NavigationService>()
-                          .navigatorKey
-                          .currentContext!)
-                      .pushNamedAndRemoveUntil(
-                          Routes.login, (Route<dynamic> route) => false);
-                },
-                icon: Icon(
-                  Icons.logout,
-                  size: AppSize.defaultSize! * 2,
-                ))
-          ]
+            Navigator.of(getIt<NavigationService>()
+                .navigatorKey
+                .currentContext!)
+                .pushNamedAndRemoveUntil(
+                Routes.login, (Route<dynamic> route) => false);
+          },
+          icon: Icon(
+            Icons.logout,
+            size: AppSize.defaultSize! * 2,
+          ))
+    ]
         : null,
   );
 }
 
 AppBar profileAppBar(BuildContext context,
     {required String text,
-    bool leading = true,
-    bool actions = false,
-    Widget? leadingIcon}) {
+      bool leading = true,
+      bool actions = false,
+      Widget? leadingIcon}) {
   return AppBar(
     backgroundColor: Colors.white,
     elevation: 1,
@@ -86,28 +86,28 @@ AppBar profileAppBar(BuildContext context,
     centerTitle: true,
     leading: leading
         ? leadingIcon ??
-            IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: Transform.rotate(
-                  angle: 180 * 3.14 / 180,
-                  child: Image.asset(
-                    AssetPath.leading,
-                    height: AppSize.defaultSize! * 2.5,
-                    width: AppSize.defaultSize! * 2.5,
-                  ),
-                ))
+        IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Transform.rotate(
+              angle: 180 * 3.14 / 180,
+              child: Image.asset(
+                AssetPath.leading,
+                height: AppSize.defaultSize! * 2.5,
+                width: AppSize.defaultSize! * 2.5,
+              ),
+            ))
         : null,
     actions: actions
         ? [
-            IconButton(
-              icon: const Icon(Icons.settings),
-              onPressed: () {
-                _showSettingsDialog(context);
-              },
-            ),
-          ]
+      IconButton(
+        icon: const Icon(Icons.settings),
+        onPressed: () {
+          _showSettingsDialog(context);
+        },
+      ),
+    ]
         : null,
   );
 }
@@ -194,44 +194,18 @@ void _showSettingsDialog(BuildContext context) {
                 _showLogoutConfirmationDialog(context);
               },
             ),
-            BlocListener<LoginWithEmailAndPasswordBloc,
-                LoginWithEmailAndPasswordState>(
-              listener: (context, state) {
-                if (state is DeleteAccountSuccessMessageState) {
-                  EasyLoading.dismiss();
-                  successSnackBar(context, state.successMessage);
-                  Future.delayed(const Duration(milliseconds: 5), () async {
-                    await Methods.instance.saveUserToken(authToken: null);
-                    SharedPreferences prefs =
-                        await SharedPreferences.getInstance();
-                    await prefs.clear();
-                  });
-                  Navigator.of(getIt<NavigationService>()
-                          .navigatorKey
-                          .currentContext!)
-                      .pushNamedAndRemoveUntil(
-                          Routes.login, (Route<dynamic> route) => false);
-                } else if (state is DeleteAccountErrorMessageState) {
-                  EasyLoading.dismiss();
-                  errorSnackBar(context, state.errorMessage);
-                } else if (state is DeleteAccountLoadingState) {
-                  EasyLoading.show();
-                }
-              },
-              child: ListTile(
-                leading: const Icon(Icons.delete),
-                title: CustomText(
-                  text: StringManager.deleteAccount.tr(),
-                  color: AppColors.primaryColor,
-                  fontSize: AppSize.defaultSize! * 1.4,
-                  fontWeight: FontWeight.bold,
-                ),
-                onTap: () async {
-                  Navigator.of(context).pop();
-                  BlocProvider.of<LoginWithEmailAndPasswordBloc>(context)
-                      .add(DeleteAccountEvent());
-                },
+            ListTile(
+              leading: const Icon(Icons.delete),
+              title: CustomText(
+                text: StringManager.deleteAccount.tr(),
+                color: AppColors.primaryColor,
+                fontSize: AppSize.defaultSize! * 1.4,
+                fontWeight: FontWeight.bold,
               ),
+              onTap: () async {
+                Navigator.of(context).pop();
+                _showDeleteConfirmationDialog(context);
+              },
             ),
           ],
         ),
@@ -291,10 +265,82 @@ void _showLogoutConfirmationDialog(BuildContext context) {
               await prefs.clear();
 
               Navigator.of(
-                      getIt<NavigationService>().navigatorKey.currentContext!)
+                  getIt<NavigationService>().navigatorKey.currentContext!)
                   .pushNamedAndRemoveUntil(
-                      Routes.login, (Route<dynamic> route) => false);
+                  Routes.login, (Route<dynamic> route) => false);
             },
+          ),
+        ],
+      );
+    },
+  );
+}
+
+void _showDeleteConfirmationDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: CustomText(
+          text: StringManager.confirmDelete.tr(),
+          color: AppColors.primaryColor,
+          fontSize: AppSize.defaultSize! * 1.4,
+          fontWeight: FontWeight.bold,
+        ),
+        content: CustomText(
+          text: StringManager.areYouSureDelete.tr(),
+          color: AppColors.primaryColor,
+          fontSize: AppSize.defaultSize! * 1.3,
+          fontWeight: FontWeight.normal,
+        ),
+        actions: [
+          TextButton(
+            child: CustomText(
+              text: StringManager.cancel.tr(),
+              color: AppColors.primaryColor,
+              fontSize: AppSize.defaultSize! * 1.4,
+              fontWeight: FontWeight.bold,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          BlocListener<LoginWithEmailAndPasswordBloc,
+              LoginWithEmailAndPasswordState>(
+            listener: (context, state) {
+              if (state is DeleteAccountSuccessMessageState) {
+                EasyLoading.dismiss();
+                successSnackBar(context, state.successMessage);
+                Future.delayed(const Duration(milliseconds: 5), () async {
+                  await Methods.instance.saveUserToken(authToken: null);
+                  SharedPreferences prefs =
+                  await SharedPreferences.getInstance();
+                  await prefs.clear();
+                });
+                Navigator.of(getIt<NavigationService>()
+                    .navigatorKey
+                    .currentContext!)
+                    .pushNamedAndRemoveUntil(
+                    Routes.login, (Route<dynamic> route) => false);
+              } else if (state is DeleteAccountErrorMessageState) {
+                EasyLoading.dismiss();
+                errorSnackBar(context, state.errorMessage);
+              } else if (state is DeleteAccountLoadingState) {
+                EasyLoading.show();
+              }
+            },
+            child: TextButton(
+              child: CustomText(
+                text: StringManager.deleteAccount.tr(),
+                color: Colors.red,
+                fontSize: AppSize.defaultSize! * 1.4,
+                fontWeight: FontWeight.bold,
+              ),
+              onPressed: () async {
+                BlocProvider.of<LoginWithEmailAndPasswordBloc>(context)
+                    .add(DeleteAccountEvent());
+              },
+            ),
           ),
         ],
       );

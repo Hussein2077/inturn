@@ -87,13 +87,6 @@ class ConstantApi {
 
   static String apply(String userId, int vacancyId) =>
       "${baseUrl}applications/apply?userId=${MyApp.userId}&vacancyId=$vacancyId";
-
-//////////////////////////////////////////////////////////////////////
-  static const String getJobs = "${baseUrl}Jobs/GetVacancy";
-  static const String getGetInternships = "${baseUrl}Jobs/GetInternships";
-
-
-  static const String googleRegister = "https://api.inturn.app/GLogin";
   static const String email = "email";
   static const String password = "password";
 }

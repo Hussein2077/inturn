@@ -48,7 +48,9 @@ class _ResetPasswordState extends State<ResetPassword> {
 
     super.dispose();
   }
-  late bool  isLogin;
+
+  late bool isLogin;
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<ResetPasswordFlowBloc, ResetPasswordState>(
@@ -60,17 +62,17 @@ class _ResetPasswordState extends State<ResetPassword> {
           EasyLoading.dismiss();
           EasyLoading.showError(state.errorMessage);
         }
-        if (state is ResetPasswordSuccessMessageState)  {
+        if (state is ResetPasswordSuccessMessageState) {
           EasyLoading.dismiss();
           EasyLoading.showSuccess(state.successMessage);
 
-          Future.delayed(Duration.zero, ()async {
-               isLogin =await Methods.instance.returnUserToken()!='noToken';
+          Future.delayed(Duration.zero, () async {
+            isLogin = await Methods.instance.returnUserToken() != 'noToken';
           });
-       if(!isLogin){
-          Navigator.pushNamedAndRemoveUntil(
-              context, Routes.login, (Route<dynamic> route) => false);}
-          else{
+          if (!isLogin) {
+            Navigator.pushNamedAndRemoveUntil(
+                context, Routes.login, (Route<dynamic> route) => false);
+          } else {
             Navigator.pushNamedAndRemoveUntil(
                 context, Routes.main, (Route<dynamic> route) => false);
           }
@@ -119,22 +121,23 @@ class _ResetPasswordState extends State<ResetPassword> {
                 text: StringManager.confirm.tr(),
                 onTap: () {
                   if (passwordController.text ==
-                      passwordConfirmController.text &&
+                          passwordConfirmController.text &&
                       passwordController.text.isNotEmpty &&
                       passwordConfirmController.text.isNotEmpty) {
                     BlocProvider.of<ResetPasswordFlowBloc>(context).add(
                       ResetPasswordEvent(
-                        email: widget.email,
-                        password: passwordController.text,
-                        code: CustomPinCodeTextField.otp,
-                        phoneOrEmailType: Methods.instance.isEmail(widget.email)==true?PhoneOrEmail.email:PhoneOrEmail.phone
-                      ),
+                          email: widget.email,
+                          password: passwordController.text,
+                          code: CustomPinCodeTextField.otp,
+                          phoneOrEmailType:
+                              Methods.instance.isEmail(widget.email) == true
+                                  ? PhoneOrEmail.email
+                                  : PhoneOrEmail.phone),
                     );
                   } else if (passwordController.text !=
                       passwordConfirmController.text) {
                     errorSnackBar(context, StringManager.passwordNotMatch.tr());
-                  }
-                  else {
+                  } else {
                     errorSnackBar(context, StringManager.fillAllFields.tr());
                   }
                 },

@@ -216,8 +216,10 @@ class StringManager {
   static const String enterOtp = "Enter OTP";
   static const String fileTooBig = "File too big";
   static const String confirmLogout = "Confirm Logout";
+  static const String confirmDelete  = "Confirm  Delete Account";
   static const String cancel = "cancel";
   static const String areYouSureLogout = "Are you sure you want to logout?";
+  static const String areYouSureDelete  = "Are you sure you want to   delete your account?";
 
  static const List<String> graduationYears = [
     '2020',
