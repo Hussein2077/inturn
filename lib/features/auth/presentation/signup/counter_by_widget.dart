@@ -8,6 +8,7 @@ import 'package:inturn/core/resource_manager/colors.dart';
 import 'package:inturn/core/resource_manager/string_manager.dart';
 import 'package:inturn/core/resource_manager/themes/enums.dart';
 import 'package:inturn/core/utils/app_size.dart';
+import 'package:inturn/features/auth/presentation/add_info_flow/personal_info.dart';
 import 'package:inturn/features/auth/presentation/controller/change_password_bloc/change_password_bloc.dart';
 import 'package:inturn/features/auth/presentation/controller/change_password_bloc/change_password_events.dart';
 import 'package:inturn/features/auth/presentation/signup/sign_up.dart';
@@ -58,6 +59,7 @@ class _CounterByMinuteState extends State<CounterByMinute> {
       _start = 60;
       isRepeatingTime = true;
       if(widget.email!=null){
+        PersonalInfo.otpVisibleNotifier.value ++;
         BlocProvider.of<ResetPasswordFlowBloc>(context)
             .add(SendCodeEvent(phoneOrEmail: widget.email!,phoneOrEmailType: PhoneOrEmail.email));
       }else {
@@ -85,6 +87,8 @@ class _CounterByMinuteState extends State<CounterByMinute> {
 
   @override
   Widget build(BuildContext context) {
+
+    log('${widget.email}emaillll');
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [

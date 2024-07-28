@@ -135,12 +135,12 @@ class RouteGenerator {
                 ),
             transitionsBuilder: customAnimate);
       case Routes.academicInfo:
-        bool student = settings.arguments as bool;
+        bool? student = settings.arguments as bool?;
         bool? isFromPreviousPageForLeading = settings.arguments as bool?;
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
                 AcademicInfo(
-                  isStudent: student,
+                  isStudent: student??true,
                   isFromPreviousPageForLeading: isFromPreviousPageForLeading??false,
                 ),
             transitionsBuilder: customAnimate);

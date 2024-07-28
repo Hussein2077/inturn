@@ -102,7 +102,7 @@ class Methods {
         Navigator.pushNamedAndRemoveUntil(
             getIt<NavigationService>().navigatorKey.currentContext!,
             Routes.academicInfo,
-                arguments: isStudent,
+                arguments: isStudent?? true,
                 (route) => false);
       }
       else if(completion == 60){

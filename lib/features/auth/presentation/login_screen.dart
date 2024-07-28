@@ -73,6 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Methods.instance.navigateToAddInfo(
                   isComplete: state.isCompleted,
                   userId: state.userId,
+
                   completion: state.completion);
             } else if (state is LoginWithEmailAndPasswordErrorMessageState) {
               EasyLoading.dismiss();

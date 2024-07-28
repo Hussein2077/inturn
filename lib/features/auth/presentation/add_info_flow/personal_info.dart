@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:animated_visibility/animated_visibility.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,6 +31,7 @@ class PersonalInfo extends StatefulWidget {
   const PersonalInfo({super.key, required this.userId});
 
   final String userId;
+ static ValueNotifier<int> otpVisibleNotifier = ValueNotifier<int>(0);
 
   @override
   State<PersonalInfo> createState() => _PersonalInfoState();
@@ -39,7 +42,6 @@ class _PersonalInfoState extends State<PersonalInfo> {
   late TextEditingController secondNameController;
   late TextEditingController emailController;
   late TextEditingController addressController;
-  ValueNotifier<bool> otpVisibleNotifier = ValueNotifier<bool>(false);
   ValueNotifier<bool> isVerifiedNotifier = ValueNotifier<bool>(false);
   ValueNotifier<bool> emailReadOnly = ValueNotifier<bool>(false);
 
@@ -134,8 +136,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         EasyLoading.dismiss();
                         EasyLoading.showSuccess(StringManager.codeSent.tr());
 
-                        if (otpVisibleNotifier.value == false) {
-                          otpVisibleNotifier.value = true;
+                        if (PersonalInfo.otpVisibleNotifier.value == 0) {
+                          PersonalInfo.otpVisibleNotifier.value++;
                         }
                       } else if (state is SendCodeErrorMessageState) {
                         EasyLoading.dismiss();
@@ -151,8 +153,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         EasyLoading.showSuccess(
                             StringManager.codeVerified.tr());
                         emailReadOnly.value = true;
-                        if (otpVisibleNotifier.value) {
-                          otpVisibleNotifier.value = false;
+                        if (PersonalInfo.otpVisibleNotifier.value!=0) {
+                          PersonalInfo.otpVisibleNotifier.value = 0;
                         }
                         isVerifiedNotifier.value = true;
                       }
@@ -184,7 +186,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                         color: AppColors.greyColor,
                                       );
                                     } else {
-                                      return Icon(
+                                      return const Icon(
                                         Icons.verified,
                                         color: AppColors.primaryColor,
                                       );
@@ -194,14 +196,14 @@ class _PersonalInfoState extends State<PersonalInfo> {
                           }
                         ),
                         MainButton(
-                          text: (otpVisibleNotifier.value == false&&emailReadOnly.value==false)
+                          text: (PersonalInfo.otpVisibleNotifier.value == 0&&emailReadOnly.value==false)
                               ? StringManager.sendCode.tr()
                               : StringManager.sent.tr(),
-                          color:(otpVisibleNotifier.value == false&&emailReadOnly.value==false)
+                          color:(PersonalInfo.otpVisibleNotifier.value == 0&&emailReadOnly.value==false)
                               ? AppColors.primaryColor
                               : AppColors.greyColor,
                           onTap: () {
-                            if (!otpVisibleNotifier.value &&
+                            if (PersonalInfo.otpVisibleNotifier.value==0 &&
                                 emailController.text.isNotEmpty&&emailReadOnly.value==false) {
                               BlocProvider.of<ResetPasswordFlowBloc>(context)
                                   .add(SendCodeEvent(
@@ -222,8 +224,10 @@ class _PersonalInfoState extends State<PersonalInfo> {
                     height: AppSize.defaultSize! * 2,
                   ),
                   ValueListenableBuilder(
-                    valueListenable: otpVisibleNotifier,
-                    builder: (context, value, child) => (value)
+                    valueListenable: PersonalInfo.otpVisibleNotifier,
+                    builder: (context, value, child) {
+                      log('sssssssssccsc${value} ${PersonalInfo.otpVisibleNotifier}');
+                      return (value!=0)
                         ? Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: AppSize.defaultSize! * 4,
@@ -247,7 +251,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
                               ],
                             ),
                           )
-                        : const SizedBox(),
+                        : const SizedBox();
+                    },
                   ),
                   MainButton(
                     text: StringManager.next.tr(),
