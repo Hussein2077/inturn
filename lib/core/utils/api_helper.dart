@@ -65,6 +65,7 @@ class DioHelper {
       case InternetException:
         return InternetFailure();
       case ErrorModelException:
+
         return ErrorMessageFailure(message: e.errorMessage);
       default:
         return ErrorMessageFailure(message: e.toString());

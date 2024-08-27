@@ -96,9 +96,9 @@ class AuthRemotelyDateSource extends BaseRemotelyDataSource {
       'UserId': params.userId,
       'FirstName': params.firstName,
       'LastName': params.lastName,
-      'ImageFile': await MultipartFile.fromFile(params.image.path,
-          filename: params.image.path.split('/').last.toString(),
-          contentType: MediaType("image", "jpeg")),
+        'ImageFile': await MultipartFile.fromFile(params.image.path,
+            filename: params.image.path.split('/').last.toString(),
+            contentType: MediaType("image", "jpeg")),
       'Email': params.email,
       'Address': params.address
     });

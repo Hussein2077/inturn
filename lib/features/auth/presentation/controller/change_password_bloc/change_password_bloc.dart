@@ -57,7 +57,7 @@ class ResetPasswordFlowBloc
           .call(SignUpModel(code: event.code, phone: event.email,phoneOrEmailType: event.phoneOrEmailType,fromForgotForValidate: event.fromForgot));
       result.fold(
           (l) =>
-              emit(VerifyCodeSuccessMessageState(successMessage: l['message'])),
+              emit(VerifyCodeSuccessMessageState(successMessage: l['message'],guid: l['Data'])),
           (r) => emit(VerifyCodeErrorMessageState(
               errorMessage: DioHelper().getTypeOfFailure(r))));
     });

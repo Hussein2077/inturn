@@ -19,10 +19,10 @@ import 'package:inturn/features/auth/presentation/forget%20password/widgets/pin_
 class ResetPassword extends StatefulWidget {
   const ResetPassword({
     super.key,
-    required this.email,
+    required this.resetPasswordParam,
   });
 
-  final String email;
+  final ResetPasswordParam  resetPasswordParam;
 
   @override
   State<ResetPassword> createState() => _ResetPasswordState();
@@ -126,11 +126,12 @@ class _ResetPasswordState extends State<ResetPassword> {
                       passwordConfirmController.text.isNotEmpty) {
                     BlocProvider.of<ResetPasswordFlowBloc>(context).add(
                       ResetPasswordEvent(
-                          email: widget.email,
+                          email: widget.resetPasswordParam.email,
                           password: passwordController.text,
                           code: CustomPinCodeTextField.otp,
+                          guid:widget.resetPasswordParam.guid ,
                           phoneOrEmailType:
-                              Methods.instance.isEmail(widget.email) == true
+                              Methods.instance.isEmail(widget.resetPasswordParam.email) == true
                                   ? PhoneOrEmail.email
                                   : PhoneOrEmail.phone),
                     );

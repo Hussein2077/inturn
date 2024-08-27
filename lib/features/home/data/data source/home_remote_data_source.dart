@@ -44,7 +44,7 @@ abstract class BaseRemotelyDataSourceHome {
 class HomeRemotelyDateSource extends BaseRemotelyDataSourceHome {
   @override
   Future<List<MatchedVacancyWrapper>> getMatchedJobs(String userId) async {
-     final Options options = await DioHelper().options();
+       final Options options = await DioHelper().options();
     try {
       final response = await Dio().get(
         options: options,

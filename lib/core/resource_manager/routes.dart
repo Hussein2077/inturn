@@ -95,7 +95,7 @@ class RouteGenerator {
                   } else {
                     return getScreenFromCompletion(
                         state.myDataModel.complition ?? 0,
-                        userId ?? MyApp.userId);
+                    userId ?? MyApp.userId);
                   }
                 }
                 if (state is GetMyDataErrorMessageState) {
@@ -196,11 +196,12 @@ class RouteGenerator {
                 ),
             transitionsBuilder: customAnimate);
       case Routes.resetPassword:
-        String email = settings.arguments as String;
+        ResetPasswordParam  resetPasswordParam = settings.arguments as ResetPasswordParam;
+
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
                 ResetPassword(
-                  email: email,
+                  resetPasswordParam: resetPasswordParam,
                 ),
             transitionsBuilder: customAnimate);
 
@@ -317,4 +318,9 @@ Widget getScreenFromCompletion(int completion, String userId) {
         userID: userId,
       );
   }
+}
+class ResetPasswordParam{
+  final String email;
+  final String guid;
+  ResetPasswordParam( {required this.email,required this.guid,});
 }

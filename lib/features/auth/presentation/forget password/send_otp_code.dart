@@ -8,6 +8,7 @@ import 'package:inturn/core/resource_manager/themes/enums.dart';
 import 'package:inturn/core/utils/app_size.dart';
 import 'package:inturn/core/utils/methods.dart';
 import 'package:inturn/core/widgets/app_bar.dart';
+import 'package:inturn/core/widgets/cutom_text.dart';
 import 'package:inturn/core/widgets/main_button.dart';
 import 'package:inturn/core/widgets/snack_bar.dart';
 import 'package:inturn/features/auth/presentation/controller/change_password_bloc/change_password_bloc.dart';
@@ -39,8 +40,12 @@ class _SendOTPCodeState extends State<SendOTPCode> {
         if (state is VerifyCodeSuccessMessageState) {
           EasyLoading.dismiss();
           EasyLoading.showSuccess(state.successMessage);
-          Navigator.pushNamed(context, Routes.resetPassword,
-              arguments: widget.email);
+          Navigator.pushNamed(
+            context,
+            Routes.resetPassword,
+            arguments:
+                ResetPasswordParam(email: widget.email, guid: state.guid ?? ""),
+          );
         }
       },
       child: Scaffold(
@@ -50,13 +55,12 @@ class _SendOTPCodeState extends State<SendOTPCode> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                StringManager.pleaseEnterYOurCode.tr(),
+              CustomText(
+             text:    StringManager.pleaseEnterYOurCode.tr(),
                 maxLines: 4,
-                style: TextStyle(
-                    fontSize: AppSize.defaultSize! * 1.6,
-                    fontWeight: FontWeight.w400,
-                    overflow: TextOverflow.ellipsis),
+                  fontSize: AppSize.defaultSize! * 1.6,
+                  fontWeight: FontWeight.w400,
+                  overflow: TextOverflow.ellipsis
               ),
               SizedBox(
                 height: AppSize.defaultSize! * 4,
@@ -95,14 +99,14 @@ class _SendOTPCodeState extends State<SendOTPCode> {
                   if (CustomPinCodeTextField.otp.isNotEmpty &&
                       CustomPinCodeTextField.otp.length == 4) {
                     BlocProvider.of<ResetPasswordFlowBloc>(context).add(
-                        VerifyCodeEvent(
-                            code: CustomPinCodeTextField.otp,
-                            phoneOrEmailType: Methods.instance.isEmail(widget.email)
-                                ? PhoneOrEmail.email
-                                : PhoneOrEmail.phone,
-                            fromForgot: true,
-                            email: widget.email),
-
+                      VerifyCodeEvent(
+                          code: CustomPinCodeTextField.otp,
+                          phoneOrEmailType:
+                              Methods.instance.isEmail(widget.email)
+                                  ? PhoneOrEmail.email
+                                  : PhoneOrEmail.phone,
+                          fromForgot: true,
+                          email: widget.email),
                     );
                   } else {
                     errorSnackBar(context, StringManager.enterCode.tr());

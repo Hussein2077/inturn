@@ -13,13 +13,15 @@ class ResetPasswordEvent extends BaseChangePasswordEvent{
   final String code ;
   final String email ;
   final PhoneOrEmail phoneOrEmailType ;
-  const ResetPasswordEvent({ required this.code, required this.email,  required this.password,required this.phoneOrEmailType});
+  final String? guid;
+  const ResetPasswordEvent({ required this.code, required this.email,  required this.password,required this.phoneOrEmailType,this.guid});
 }
 class VerifyCodeEvent extends BaseChangePasswordEvent{
   final String email ;
   final String code ;
   final PhoneOrEmail phoneOrEmailType ;
   final bool fromForgot;
+
   const VerifyCodeEvent({  required this.email,required this.code,this.phoneOrEmailType=PhoneOrEmail.email, required this.fromForgot});
 }
 class VerifyCodeSignUpEvent extends BaseChangePasswordEvent{

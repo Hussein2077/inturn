@@ -68,8 +68,8 @@ class VerifyCodeErrorMessageState extends ResetPasswordState {
 
 class VerifyCodeSuccessMessageState extends ResetPasswordState {
   final String successMessage;
-
-  const VerifyCodeSuccessMessageState({required this.successMessage});
+final String? guid;
+  const VerifyCodeSuccessMessageState({required this.successMessage,this.guid, });
 }
 class VerifyCodeSignUpLoadingState extends ResetPasswordState {
   const VerifyCodeSignUpLoadingState();
