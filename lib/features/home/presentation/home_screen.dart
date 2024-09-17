@@ -121,6 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                   return ListView.builder(
                       itemCount: state.vacancyModel.length,
+                      
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (item, index) {
