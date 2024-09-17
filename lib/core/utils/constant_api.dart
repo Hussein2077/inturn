@@ -20,15 +20,15 @@ class ConstantApi {
   static const String verifyCodeSignUp = "${baseUrl}NewAuth/validate-phone-otp";
   static const String resetPassword = "${baseUrl}NewAuth/reset-password";
   static const String changePassword = "${baseUrl}NewAuth/Change-password";
-  static const String universities = "${baseUrl}Universities/GetAllUniversity";
+  static const String universities = "${baseUrl}Universities/GetAll";
   static const String uploadPdf = "${baseUrl}UploadCV/upload-cv";
   static const String updatePdf = "${baseUrl}UploadCV/updateUserCV";
 
   static String faculty(int id) => "${baseUrl}Faculties/GetFacultiesBy$id";
 
   static String getAreas(int id) =>
-      "${baseUrl}Areas/GetAreaByCityId?cityId=$id";
-  static const String provinces = "${baseUrl}Countries/GetAllCountriesIncluded";
+      "${baseUrl}Areas/GetByCityId?cityId=$id";
+  static const String provinces = "${baseUrl}Countries/GetAll";
   static const String getMajorsByCategory =
       "${baseUrl}Majors/GetAllMajorsAsyncGroupedByCategory";
 
@@ -83,7 +83,7 @@ class ConstantApi {
 
   static String getMyData(String id) =>
       "${baseUrl}UserProfiles/GetUserProfileByUserId?userId=$id";
-  static const String getSkill = "${baseUrl}Skills/GetAllSkills";
+  static const String getSkill = "${baseUrl}Skills/GetAll";
 
   static String apply(String userId, int vacancyId) =>
       "${baseUrl}applications/apply?userId=${MyApp.userId}&vacancyId=$vacancyId";

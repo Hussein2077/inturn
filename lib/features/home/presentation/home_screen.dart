@@ -116,7 +116,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   return const LoadingWidget() ;
                 }
                 else if(state is GetMatchedVacancySuccessMessageState){
-                  print('${ state.vacancyModel[3].matchedVacancy.description}sdgwrwr');
                   if(state.vacancyModel.isEmpty){
                     return const EmptyWidget();
                   }
