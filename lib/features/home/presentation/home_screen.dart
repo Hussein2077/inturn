@@ -116,12 +116,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   return const LoadingWidget() ;
                 }
                 else if(state is GetMatchedVacancySuccessMessageState){
+
                   if(state.vacancyModel.isEmpty){
                     return const EmptyWidget();
                   }
                   return ListView.builder(
                       itemCount: state.vacancyModel.length,
-                      
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (item, index) {
