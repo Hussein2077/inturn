@@ -19,7 +19,7 @@ import 'package:inturn/features/home/presentation/widgets/company_cart.dart';
 import 'package:inturn/features/home/presentation/widgets/job_cart.dart';
 import 'package:inturn/features/home/presentation/widgets/suggested_view.dart';
 import 'package:inturn/main.dart';
-
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 class JobDetailsScreen extends StatefulWidget {
   const JobDetailsScreen({super.key, required this.matchedVacancyWrapper});
 
@@ -89,16 +89,27 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                     SizedBox(
                       height: AppSize.defaultSize! * 1.5,
                     ),
-                    CustomText(
-                      text: widget.matchedVacancyWrapper.matchedVacancy
-                              .responsibilities ??
-                          "",
-                      lineHeight: AppSize.defaultSize! * .2,
-                      maxLines: 100,
-                      fontSize: AppSize.defaultSize! * 1.2,
-                      color: AppColors.primaryColor,
-                      textAlign: TextAlign.start,
+                    HtmlWidget(
+
+                      '''${ widget.matchedVacancyWrapper.matchedVacancy
+                          .responsibilities}
+  ''',
+
+                      renderMode: RenderMode.column,
+                      textStyle: TextStyle(fontSize: AppSize.defaultSize! * 1.2,
+                        color: AppColors.primaryColor,
+                      ),
                     ),
+                    // CustomText(
+                    //   text: widget.matchedVacancyWrapper.matchedVacancy
+                    //           .responsibilities ??
+                    //       "",
+                    //   lineHeight: AppSize.defaultSize! * .2,
+                    //   maxLines: 100,
+                    //   fontSize: AppSize.defaultSize! * 1.2,
+                    //   color: AppColors.primaryColor,
+                    //   textAlign: TextAlign.start,
+                    // ),
                   ],
                 ),
               ),
@@ -109,6 +120,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+
                     CustomText(
                       text: StringManager.jobRequirements.tr(),
                       fontWeight: FontWeight.w700,
@@ -117,16 +129,27 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                     SizedBox(
                       height: AppSize.defaultSize! * 1.5,
                     ),
-                    CustomText(
-                      text: widget.matchedVacancyWrapper.matchedVacancy
-                              .requirements ??
-                          "",
-                      lineHeight: AppSize.defaultSize! * .2,
-                      maxLines: 100,
-                      fontSize: AppSize.defaultSize! * 1.2,
-                      color: AppColors.primaryColor,
-                      textAlign: TextAlign.start,
+                    HtmlWidget(
+
+                      '''${ widget.matchedVacancyWrapper.matchedVacancy
+                          .requirements}
+  ''',
+
+                      renderMode: RenderMode.column,
+                      textStyle: TextStyle(fontSize: AppSize.defaultSize! * 1.2,
+                        color: AppColors.primaryColor,
+                      ),
                     ),
+                    // CustomText(
+                    //   text: widget.matchedVacancyWrapper.matchedVacancy
+                    //           .requirements ??
+                    //       "",
+                    //   lineHeight: AppSize.defaultSize! * .2,
+                    //   maxLines: 100,
+                    //   fontSize: AppSize.defaultSize! * 1.2,
+                    //   color: AppColors.primaryColor,
+                    //   textAlign: TextAlign.start,
+                    // ),
                   ],
                 ),
               ),
